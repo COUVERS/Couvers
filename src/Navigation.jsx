@@ -1,13 +1,20 @@
+import './Nav.css'
+
 export default function Navigation() {
     return (
         <>
-            <h1>This is Navigation</h1>
-            <ul>
-                <li>Home</li>
-                <li>Course</li>
-                <li>Account</li>
-                <li>Sign Out</li>
-            </ul>
+            <img src="" alt="Logo" />
+            <div className="div-list">
+                <ul className="div-ul-top-nav">
+                    <li>Home</li>
+                    <li>Course</li>
+                </ul>
+
+                <ul className="div-ul-bottom-nav">
+                    <li>Account</li>
+                    <li>Sign Out</li>
+                </ul>
+            </div>
         </>
     )
 }
