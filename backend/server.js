@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
+// Health check endpoint to verify API is running
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, message: "API working" });
 });
