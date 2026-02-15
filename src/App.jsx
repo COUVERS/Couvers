@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 export default function App() {
-  const [courses, setCourses] = useState([]);
-  const [error, setError] = useState("");
+  const [courses, setCourses] = useState([])
+  const [error, setError] = useState("")
 
   useEffect(() => {
     fetch("http://localhost:5000/courses")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch courses");
-        return res.json();
+        return res.json()
       })
       .then((data) => setCourses(data))
-      .catch((err) => setError(err.message));
-  }, []);
+      .catch((err) => setError(err.message))
+  }, [])
 
   return (
     <main style={{ padding: 24 }}>
@@ -33,5 +33,5 @@ export default function App() {
         </ul>
       )}
     </main>
-  );
+  )
 }
