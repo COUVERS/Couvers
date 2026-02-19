@@ -11,12 +11,12 @@ export default function App() {
       console.error(err);
       alert(err.message);
     }
-  };
+  }
 
   return (
     <div>
       <h1>Storage Test</h1>
       <button onClick={handleDownload}>Download test PDF</button>
     </div>
-  );
+  )
 }
