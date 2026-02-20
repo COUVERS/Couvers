@@ -1,9 +1,10 @@
-
+import Buttons from './Reusable-Components/Buttons'
 function App() {
 
   return (
     <>
-      <h1>This is a Render</h1>
+      <h1>This is a set up</h1>
+      <Buttons />
     </>
   )
 }
