@@ -1,15 +1,15 @@
-import { ref, getDownloadURL } from "firebase/storage";
-import { storage } from "./firebase";
+import { ref, getDownloadURL } from "firebase/storage"
+import { storage } from "./firebase"
 
 export default function App() {
   const handleDownload = async () => {
     try {
-      const fileRef = ref(storage, "certificates/test.pdf");
-      const url = await getDownloadURL(fileRef);
-      window.open(url, "_blank");
+      const fileRef = ref(storage, "certificates/test.pdf")
+      const url = await getDownloadURL(fileRef)
+      window.open(url, "_blank")
     } catch (err) {
-      console.error(err);
-      alert(err.message);
+      console.error(err)
+      alert(err.message)
     }
   }
 

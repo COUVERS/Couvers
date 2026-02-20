@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app"
 
-import { getStorage } from "firebase/storage";
+import { getStorage } from "firebase/storage"
 
 // Firebase configuration
 const firebaseConfig = {
@@ -10,9 +10,9 @@ const firebaseConfig = {
     projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
-};
+}
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 
-export const storage = getStorage(app);
+export const storage = getStorage(app)
