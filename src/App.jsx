@@ -1,11 +1,17 @@
+import { useState } from "react"
+import LoginForm from "./LoginForm"
+import SignupForm from "./SignupForm"
 
-function App() {
+export default function App() {
+  const [mode, setMode] = useState("login"); // "login" | "signup"
 
   return (
-    <>
-      <h1>This is a set up</h1>
-    </>
+    <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
+      {mode === "login" ? (
+        <LoginForm onGoSignup={() => setMode("signup")} />
+      ) : (
+        <SignupForm onGoLogin={() => setMode("login")} />
+      )}
+    </div>
   )
 }
-
-export default App
