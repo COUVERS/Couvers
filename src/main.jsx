@@ -2,10 +2,14 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import CertificateTest from './CertificateTest.jsx'
-import { Button } from '@mui/material'
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './theme'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+      <CertificateTest />
+    </ThemeProvider>
   </StrictMode>,
 )
