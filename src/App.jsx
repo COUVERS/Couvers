@@ -1,4 +1,4 @@
-import Buttons from './Reusable-Components/Buttons'
+import Buttons from './Reusable-Components/CustomButton'
 function App() {
 
   return (
