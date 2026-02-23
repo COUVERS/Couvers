@@ -6,6 +6,5 @@ import CertificateTest from './pages/CertificateTest.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    <CertificateTest />
   </StrictMode>,
 )
