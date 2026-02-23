@@ -1,4 +1,5 @@
 import Navigation from './components/Navigation'
+import CertificateTest from './pages/CertificateTest'
 
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
   return (
     <>
       <Navigation />
+      <CertificateTest />
     </>
   )
 }
