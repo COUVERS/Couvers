@@ -1,12 +1,12 @@
 import { ref, getDownloadURL } from "firebase/storage"
 import { storage } from "./firebase"
 import CustomButton from "./Reusable-Components/CustomButton"
+import { getCertificateDownloadUrl } from "../services/certificates"
 
-export default function App() {
+export default function CertificateTest() {
   const handleDownload = async () => {
     try {
-      const fileRef = ref(storage, "certificates/test.pdf")
-      const url = await getDownloadURL(fileRef)
+      const url = await getCertificateDownloadUrl("certificates/test.pdf")
       window.open(url, "_blank")
     } catch (err) {
       console.error(err)
