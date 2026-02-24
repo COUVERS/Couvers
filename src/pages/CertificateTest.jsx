@@ -1,3 +1,6 @@
+import { ref, getDownloadURL } from "firebase/storage"
+import { storage } from "../firebase"
+import CustomButton from "../Reusable-Components/CustomButton"
 import { getCertificateDownloadUrl } from "../services/certificates"
 
 export default function CertificateTest() {
@@ -14,7 +17,14 @@ export default function CertificateTest() {
   return (
     <div>
       <h1>Storage Test</h1>
-      <button onClick={handleDownload}>Download test PDF</button>
+      <CustomButton
+        onClick={handleDownload}
+        variant="contained"
+        color="primary"
+        size="large"
+      >
+        Download test PDF
+      </CustomButton>
     </div>
   )
 }
