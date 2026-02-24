@@ -1,4 +1,3 @@
-import '../global.css'
 import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import {
@@ -110,7 +109,6 @@ export default function Navigation({ page, setPage }) {
                                         <ListItemIcon sx={{
                                             minWidth: 0, mb: 0.5,
                                             justifyContent: 'center',
-                                            // color: 'inherit'
                                         }}>
                                             {item.icon}
                                         </ListItemIcon>
