@@ -32,7 +32,7 @@ const Drawer = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(({ 
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
     }),
-    overflowX: 'hidden',
+    // overflowX: 'hidden',
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
