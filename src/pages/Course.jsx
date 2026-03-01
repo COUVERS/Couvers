@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import FundamentalOfTeaching from "../assets/icons/FundamentalOfTeaching"
 
 export default function Course() {
     const [courses, setCourses] = useState([])
@@ -17,6 +18,9 @@ export default function Course() {
         })()
     }, [])
 
+    // const courseIcons = [
+    //     { text: "FundamentalOfTeaching", icon: <FundamentalOfTeaching /> },
+    // ]
     return (
         <div style={{ padding: 16 }}>
             <h1>Courses</h1>
@@ -25,7 +29,10 @@ export default function Course() {
             <ul>
                 {courses.map((c) => (
                     <li key={c._id} style={{ marginBottom: 12 }}>
-                        <strong>{c.title}</strong>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                            <FundamentalOfTeaching size={24} />
+                            <strong>{c.title}</strong>
+                        </div>
                         <div>{c.description}</div>
                     </li>
                 ))}

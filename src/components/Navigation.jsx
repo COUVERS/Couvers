@@ -40,7 +40,6 @@ const Drawer = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(({ 
     boxShadow: '0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 8px 10px -5px rgba(0, 0, 0, 0.20)',
     padding: '40px 0',
     boxSizing: 'border-box',
-    overflowX: 'hidden'
 }))
 
 export default function Navigation({ page, setPage }) {
@@ -111,7 +110,6 @@ export default function Navigation({ page, setPage }) {
                                         <ListItemIcon sx={{
                                             minWidth: 0, mb: 0.5,
                                             justifyContent: 'center',
-                                            // color: 'inherit'
                                         }}>
                                             {item.icon}
                                         </ListItemIcon>

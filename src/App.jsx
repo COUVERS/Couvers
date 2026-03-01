@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Navigation from './components/Navigation'
-import Course from './pages/Courses'
+import Course from './pages/Course'
 
 function App() {
   const [page, setPage] = useState("home")
