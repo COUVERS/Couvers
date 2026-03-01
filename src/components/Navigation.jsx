@@ -43,17 +43,17 @@ const Drawer = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(({ 
     overflowX: 'hidden'
 }))
 
-export default function Navigation() {
+export default function Navigation({ page, setPage }) {
     const [isExpanded, setIsExpanded] = useState(true)
     const toggleDrawer = () => setIsExpanded(!isExpanded)
 
     const navItems = [
-        { text: 'Home', icon: <HomeIcon /> },
-        { text: 'Course', icon: <CourseIcon /> },
+        { text: "Home", icon: <HomeIcon />, pageKey: "home" },
+        { text: "Course", icon: <CourseIcon />, pageKey: "courses" },
     ]
     const bottomItems = [
-        { text: 'Account', icon: <ProfileIcon /> },
-        { text: 'Sign Out', icon: <SignOutIcon /> },
+        { text: "Account", icon: <ProfileIcon />, pageKey: "account" },
+        { text: "Sign Out", icon: <SignOutIcon />, pageKey: "signout" },
     ]
 
     return (
@@ -98,13 +98,15 @@ export default function Navigation() {
                     <List sx={{ flexGrow: 1, px: 1 }}>
                         {navItems.map((item) => (
                             <ListItem key={item.text} disablePadding sx={{ display: 'block', mb: 1 }}>
-                                <ListItemButton sx={{
-                                    minHeight: 48,
-                                    flexDirection: isExpanded ? 'row' : 'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    px: 1
-                                }}>
+                                <ListItemButton
+                                    onClick={() => setPage(item.pageKey)}
+                                    sx={{
+                                        minHeight: 48,
+                                        flexDirection: isExpanded ? 'row' : 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        px: 1
+                                    }}>
                                     {!isExpanded && (
                                         <ListItemIcon sx={{
                                             minWidth: 0, mb: 0.5,
