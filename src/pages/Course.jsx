@@ -22,7 +22,7 @@ export default function Course() {
     ]
     return (
         <div style={{ padding: 16 }}>
-            <h1>Courses</h1>
+            <h1>Lessons</h1>
             {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
             <ul>

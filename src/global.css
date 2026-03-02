@@ -34,9 +34,13 @@
     --fw-caption: 400;
 }
 
+* {
+    font-family: var(--font-family) !important;
+}
+
 body {
     margin: 0;
     background-color: var(--color-background);
     color: var(--color-on-surface);
-    font-family: var(--font-family);
+    font-family: var(--font-family) !important;
 }

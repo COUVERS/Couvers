@@ -22,7 +22,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 
 //Convert Figma values into constants
-const drawerWidth = 206
+const drawerWidth = 240
 const shrunkWidth = 88
 
 // Customize Drawer style

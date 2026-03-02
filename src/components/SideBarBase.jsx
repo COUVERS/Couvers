@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/material'
 
-export const drawerWidth = 206
+export const drawerWidth = 240
 export const shrunkWidth = 88
 
 export const SidebarBase = styled(Box, {

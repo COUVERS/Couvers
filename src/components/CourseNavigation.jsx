@@ -20,7 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 const CourseDrawer = styled(SidebarBase)({
     backgroundColor: 'var(--brand-indigo-900)',
-    padding: '40px 8px',
+    height: '100vh',
 })
 
 const CategoryIcon = styled(Box, { shouldForwardProp: (p) => p !== 'active' })(({ active }) => ({
@@ -66,16 +66,22 @@ export default function CourseNavigation() {
                         Course Categories
                     </Typography>
                 ) : (
-                    <Typography sx={{ color: '#fff', fontWeight: 800 }}>C</Typography>
+                    <Typography sx={{
+                        color: '#fff',
+                        fontWeight: 500,
+                        fontSize: '12px'
+                    }}>
+                        Course Categories
+                    </Typography>
                 )}
             </Box>
 
             <Stack
-                spacing={2}
+                spacing={6}
                 sx={{
                     px: open ? 2 : 1,
-                    flex: 1,
-                    alignItems: open ? 'stretch' : 'center'
+                    alignSelf: 'stretch',
+
                 }}
             >
                 {courseCategories.map((course) => (
@@ -88,8 +94,8 @@ export default function CourseNavigation() {
                         <ListItemButton
                             onClick={() => setActiveId(course.id)}
                             sx={{
-                                borderRadius: '12px',
-                                p: 1,
+                                borderRadius: '8px',
+                                p: '8px',
                                 backgroundColor: activeId === course.id ? '#FFF' : 'transparent',
                                 color: activeId === course.id ? '#2D2D5A' : '#FFF',
                                 justifyContent: open ? 'flex-start' : 'center',
@@ -121,10 +127,10 @@ export default function CourseNavigation() {
                 ))}
             </Stack>
 
-            <Box sx={{ p: 2, textAlign: 'center' }}>
+            <Box sx={{ p: 2 }}>
                 <IconButton
                     onClick={() => setOpen(!open)}
-                    sx={{ color: '#fff', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
+                    sx={{ color: '#fff', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
                 >
                     {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                 </IconButton>
