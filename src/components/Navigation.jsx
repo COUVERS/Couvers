@@ -21,7 +21,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 
 //Convert Figma values into constants
-const drawerWidth = 206
+const drawerWidth = 240
 const shrunkWidth = 88
 
 // Customize Drawer style
@@ -39,20 +39,19 @@ const Drawer = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(({ 
     boxShadow: '0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 8px 10px -5px rgba(0, 0, 0, 0.20)',
     padding: '40px 0',
     boxSizing: 'border-box',
-    overflowX: 'hidden'
 }))
 
-export default function Navigation() {
+export default function Navigation({ page, setPage }) {
     const [isExpanded, setIsExpanded] = useState(true)
     const toggleDrawer = () => setIsExpanded(!isExpanded)
 
     const navItems = [
-        { text: 'Home', icon: <HomeIcon /> },
-        { text: 'Course', icon: <CourseIcon /> },
+        { text: "Home", icon: <HomeIcon />, pageKey: "home" },
+        { text: "Course", icon: <CourseIcon />, pageKey: "courses" },
     ]
     const bottomItems = [
-        { text: 'Account', icon: <ProfileIcon /> },
-        { text: 'Sign Out', icon: <SignOutIcon /> },
+        { text: "Account", icon: <ProfileIcon />, pageKey: "account" },
+        { text: "Sign Out", icon: <SignOutIcon />, pageKey: "signout" },
     ]
 
     return (
@@ -97,13 +96,15 @@ export default function Navigation() {
                     <List sx={{ flexGrow: 1, px: 1 }}>
                         {navItems.map((item) => (
                             <ListItem key={item.text} disablePadding sx={{ display: 'block', mb: 1 }}>
-                                <ListItemButton sx={{
-                                    minHeight: 48,
-                                    flexDirection: isExpanded ? 'row' : 'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    px: 1
-                                }}>
+                                <ListItemButton
+                                    onClick={() => setPage(item.pageKey)}
+                                    sx={{
+                                        minHeight: 48,
+                                        flexDirection: isExpanded ? 'row' : 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        px: 1
+                                    }}>
                                     {!isExpanded && (
                                         <ListItemIcon sx={{
                                             minWidth: 0, mb: 0.5,

@@ -1,33 +1,35 @@
+import { useState } from "react"
 import CustomButton from './Reusable-Components/CustomButton'
 import Navigation from './components/Navigation'
 import CertificateTest from './pages/CertificateTest'
 import Quiz from './components/Quiz'
 import { quizQuestions } from './services/quizData'
+import Course from './pages/Course'
+import CourseNavigation from './components/CourseNavigation'
 
 function App() {
+  const [page, setPage] = useState("home")
+  const currentQuestion = quizQuestions[0]
+  return (
+    <div style={{ display: "flex", height: "100vh" }}>
 
-   const currentQuestion = quizQuestions[0]
+      <Navigation
+        page={page}
+        setPage={setPage}
+        forceCollapsed={page === "courses"}
+      />
 
- return (
-    <div style={{ display: "flex" }}>
+      {page === "courses" && <CourseNavigation />}
 
-      <Navigation />
-
-      <div style={{ flex: 1, padding: "40px" }}>
-
-        <h1>This is a set up</h1>
-
-        <CustomButton />
-
-        <Quiz
-          question={currentQuestion}
-          questionNumber={1}
-          totalQuestions={quizQuestions.length}
-        />
-
-        <CertificateTest />
-
-      </div>
+      <main style={{ flex: 1, padding: 16 }}>
+        {page === "home" && <h1>Home</h1>}
+        {page === "courses" && <Course />}
+      </main>
+      <Quiz
+        question={currentQuestion}
+        questionNumber={1}
+        totalQuestions={quizQuestions.length}
+      />
 
     </div>
   )
