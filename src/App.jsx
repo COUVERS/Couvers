@@ -22,14 +22,14 @@ function App() {
       {page === "courses" && <CourseNavigation />}
 
       <main style={{ flex: 1, padding: 16 }}>
-        {page === "home" && <h1>Home</h1>}
+        {page === "home" && <h1></h1>}
         {page === "courses" && <Course />}
+        <Quiz
+          question={currentQuestion}
+          questionNumber={1}
+          totalQuestions={quizQuestions.length}
+        />
       </main>
-      <Quiz
-        question={currentQuestion}
-        questionNumber={1}
-        totalQuestions={quizQuestions.length}
-      />
 
     </div>
   )
