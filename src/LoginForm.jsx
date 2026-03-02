@@ -69,7 +69,7 @@ export default function LoginForm({ onGoSignup }) {
                 >
                 Password Reset
                 </button>
-          ded  </div>
+            </div>
 
         <button className="auth-btn" disabled={disabled}>
             {loading ? "Signing In..." : "Sign In"}
