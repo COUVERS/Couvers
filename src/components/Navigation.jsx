@@ -110,6 +110,7 @@ export default function Navigation({ page, setPage }) {
                                         <ListItemIcon sx={{
                                             minWidth: 0, mb: 0.5,
                                             justifyContent: 'center',
+                                            // color: 'inherit'
                                         }}>
                                             {item.icon}
                                         </ListItemIcon>
