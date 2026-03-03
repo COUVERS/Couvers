@@ -1,26 +1,14 @@
 import { Button } from "@mui/material"
 
-const CustomButton = ({
-    children,
-    variant = "contained",
-    color = "primary",
-    size = "medium",
-    startIcon,
-    endIcon,
-    ...props
-}) => {
+const ButtonTest = () => {
     return (
-        <Button
-            variant={variant}
-            color={color}
-            size={size}
-            startIcon={startIcon}
-            endIcon={endIcon}
-            {...props} // Inherit other props like onClick
-        >
-            {children}
-        </Button>
+        <>
+            <Button variant="contained" size="large">Large</Button>
+            <Button variant="outlined" size="medium">Medium</Button>
+            <Button variant="text" size="small">Small</Button>
+        </>
     )
 }
 
-export default CustomButton
+export default ButtonTest
+
