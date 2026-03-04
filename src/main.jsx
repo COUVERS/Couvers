@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './styles/global.css'
 import { ThemeProvider } from '@mui/material/styles'
-import theme from './Reusable-Components/theme'
+import theme from './styles/theme.js'
 
 
 

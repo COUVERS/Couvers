@@ -10,12 +10,12 @@ import {
     ListItemText,
     IconButton
 } from '@mui/material'
-import LogoLarge from '../assets/Logo_large_dark.png'
-import LogoSmall from '../assets/Logo_small_dark.png'
-import HomeIcon from '../assets/icons/HomeIcon'
-import CourseIcon from '../assets/icons/CourseIcon'
-import ProfileIcon from '../assets/icons/ProfileIcon'
-import SignOutIcon from '../assets/icons/SignOutIcon'
+import LogoLarge from '../../assets/Logo_large_dark.png'
+import LogoSmall from '../../assets/Logo_small_dark.png'
+import HomeIcon from '../../assets/icons/HomeIcon'
+import CourseIcon from '../../assets/icons/CourseIcon'
+import ProfileIcon from '../../assets/icons/ProfileIcon'
+import SignOutIcon from '../../assets/icons/SignOutIcon'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 

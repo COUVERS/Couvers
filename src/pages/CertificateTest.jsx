@@ -1,6 +1,6 @@
 import { ref, getDownloadURL } from "firebase/storage"
 import { storage } from "../firebase"
-import CustomButton from "../Reusable-Components/CustomButton"
+import CustomButton from "../components/reusable/CustomButton"
 import { getCertificateDownloadUrl } from "../services/certificates"
 
 export default function CertificateTest() {

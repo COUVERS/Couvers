@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react"
 import { styled } from "@mui/material/styles"
 import { Box } from "@mui/material"
-import Navigation from "../components/Navigation"
+import Navigation from "../components/navigation/Navigation"
 import ContentsSidebar from "../components/ContentsSidebar"
-import LectureContent from "../components/LectureContent"
-import CustomButton from "../Reusable-Components/CustomButton"
+import LectureContent from "../components/main/LectureContent"
+import CustomButton from "../components/reusable/CustomButton"
 
 const Page = styled(Box)(() => ({
     display: "flex",
@@ -41,54 +41,54 @@ export default function LecturePage({
     onTakeQuiz,
 }) {
     const activeLesson = useMemo(
-    () => lessons.find((l) => String(l._id) === String(activeLessonId)) || lessons[0],
-    [lessons, activeLessonId]
+        () => lessons.find((l) => String(l._id) === String(activeLessonId)) || lessons[0],
+        [lessons, activeLessonId]
     )
 
     const [openLessonId, setOpenLessonId] = useState(
-    activeLesson ? String(activeLesson._id) : null
+        activeLesson ? String(activeLesson._id) : null
     )
 
     const handleSelectLesson = (id) => {
-    setOpenLessonId(String(id))
-    onSelectLesson?.(String(id))
+        setOpenLessonId(String(id))
+        onSelectLesson?.(String(id))
     }
 
     return (
-    <Page>
-        {/* <Navigation /> */}
+        <Page>
+            {/* <Navigation /> */}
 
-        <Right>
-        <ContentsSidebar
-            lessons={lessons}
-            activeLessonId={activeLesson ? String(activeLesson._id) : ""}
-            openLessonId={openLessonId}
-            onToggleLesson={(id) =>
-            setOpenLessonId((prev) => (prev === String(id) ? null : String(id)))
-            }
-            onSelectLesson={handleSelectLesson}
-            onSelectQuiz={(lessonId) => onTakeQuiz?.(String(lessonId))}
-        />
+            <Right>
+                <ContentsSidebar
+                    lessons={lessons}
+                    activeLessonId={activeLesson ? String(activeLesson._id) : ""}
+                    openLessonId={openLessonId}
+                    onToggleLesson={(id) =>
+                        setOpenLessonId((prev) => (prev === String(id) ? null : String(id)))
+                    }
+                    onSelectLesson={handleSelectLesson}
+                    onSelectQuiz={(lessonId) => onTakeQuiz?.(String(lessonId))}
+                />
 
-        <Main>
-            <LectureContent lesson={activeLesson} />
+                <Main>
+                    <LectureContent lesson={activeLesson} />
 
-            <Footer>
-            <CustomButton variant="outlined" color="secondary" onClick={onExit}>
-                Exit a Lecture
-            </CustomButton>
+                    <Footer>
+                        <CustomButton variant="outlined" color="secondary" onClick={onExit}>
+                            Exit a Lecture
+                        </CustomButton>
 
-            <CustomButton
-                variant="contained"
-                color="primary"
-                onClick={() => onTakeQuiz?.(String(activeLesson?._id))}
-                disabled={!activeLesson}
-            >
-                Take a Quiz
-            </CustomButton>
-            </Footer>
-        </Main>
-        </Right>
-    </Page>
+                        <CustomButton
+                            variant="contained"
+                            color="primary"
+                            onClick={() => onTakeQuiz?.(String(activeLesson?._id))}
+                            disabled={!activeLesson}
+                        >
+                            Take a Quiz
+                        </CustomButton>
+                    </Footer>
+                </Main>
+            </Right>
+        </Page>
     )
 }
