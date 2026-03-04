@@ -56,7 +56,7 @@ export default function LecturePage({
 
     return (
     <Page>
-        <Navigation />
+        {/* <Navigation /> */}
 
         <Right>
         <ContentsSidebar

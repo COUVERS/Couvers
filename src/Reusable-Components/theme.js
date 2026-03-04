@@ -10,6 +10,7 @@ const theme = createTheme({
         },
     },
     shape: { borderRadius: 4 },
+
     typography: {
         fontFamily: "IBM Plex Sans",
         button: { textTransform: "none", fontWeight: 500 },
@@ -18,17 +19,33 @@ const theme = createTheme({
     components: {
         MuiButton: {
             defaultProps: {
-                disableElevation: true,
+                disableElevation: false,
             },
 
             styleOverrides: {
-                root: {
+                root: ({ theme }) => ({
                     gap: 8,
-                    "&.Mui-focusVisible": {
-                        outline: "3px solid var(--Color-Secondary-_States-FocusVisible)",
-                        outlineOffset: 2,
+
+                    "&.MuiButton-contained": {
+                        boxShadow: theme.shadows[2], // Default
+
+                        "&:hover": {
+                            boxShadow: theme.shadows[4],
+                            background: "var(--Color-Primary-Dark)"// Hover
+                        },
+
+                        "&:active": {
+                            boxShadow: theme.shadows[6],
+                            background: "var(--Color-Primary-Main)" // Press
+                        },
+
+                        "&.Mui-focusVisible": {
+                            boxShadow: theme.shadows[6], // Focus shadow
+                            outline: "3px solid var(--Color-Secondary-_States-FocusVisible)", // Focus ring
+                            outlineOffset: 2,
+                        },
                     },
-                },
+                }),
             },
 
             variants: [
@@ -37,7 +54,13 @@ const theme = createTheme({
                     props: { variant: "contained" },
                     style: {
                         background: "var(--Color-Primary-Main)",
-                        color: "var(--Color-Primary-Contrast)"
+                        color: "var(--Color-Primary-Contrast)",
+
+                        "&.Mui-disabled": {
+                            background: "var(--Color-Action-Disabled)",
+                            color: "var(--Color-Text-Disabled)",
+                            boxShadow: "none",
+                        },
                     },
                 },
 
@@ -45,7 +68,7 @@ const theme = createTheme({
                 {
                     props: { variant: "outlined" },
                     style: {
-                        border: "1.5px solid var(--Color-Border-Default)",
+                        "--variant-outlinedBorder": "var(--Color-Secondary-_States-Outlined)",
                         color: "var(--Color-Secondary-Main)"
                     },
                 },
@@ -62,22 +85,31 @@ const theme = createTheme({
                 {
                     props: { size: "large" },
                     style: {
-                        width: "160px",
+                        width: 160,
                         height: 48,
-                        paddingInline: 18,
+                        padding: "12px 22px",
                         fontSize: 15,
-                        fontWeight: 500,
-                        lineHeight: "normal",
-                        letterSpacing: "0.2px"
+
                     },
                 },
                 {
                     props: { size: "medium" },
-                    style: { height: 40, paddingInline: 14, fontSize: 14 },
+                    style: {
+                        padding: "6px 16px",
+                        width: 120,
+                        height: 32,
+                        fontSize: 14,
+                    },
                 },
                 {
                     props: { size: "small" },
-                    style: { height: 32, paddingInline: 12, fontSize: 13 },
+                    style: {
+                        padding: "4px 10px",
+                        width: 59,
+                        height: 28,
+                        fontSize: 14,
+
+                    },
                 },
 
             ],

@@ -7,6 +7,7 @@ import Quiz from './components/Quiz'
 import { quizQuestions } from './services/quizData'
 import Course from './pages/Course'
 import CourseNavigation from './components/CourseNavigation'
+import ButtonTest from "./Reusable-Components/CustomButton";
 
 const demoLessons = [
   {
@@ -71,34 +72,34 @@ function App() {
     <>
       <div style={{ display: "flex", height: "100vh" }}>
 
-        <Navigation
+        {/* <Navigation
           page={page}
           setPage={setPage}
           forceCollapsed={page === "courses"}
-        />
+        /> */}
 
-        {page === "courses" && <CourseNavigation />}
+        {/* {page === "courses" && <CourseNavigation />}
 
         <main style={{ flex: 1, padding: 16 }}>
           {page === "home" && <h1>Home</h1>}
           {page === "courses" && <Course />}
-        </main>
-        <Quiz
+        </main> */}
+        {/* <Quiz
           question={currentQuestion}
           questionNumber={1}
           totalQuestions={quizQuestions.length}
-        />
+        /> */}
 
-        <LecturePage
+        {/* <LecturePage
           lessons={lessons}
           activeLessonId={activeLessonId}
           onSelectLesson={setActiveLessonId}
           onExit={() => console.log("Exit lecture")}
           onTakeQuiz={(lessonId) => console.log("Take quiz for:", lessonId)}
-        />
-
+        /> */}
+        <ButtonTest />
       </div>
-      <ButtonTest />
+      {/* <ButtonTest /> */}
     </>
   )
 }
