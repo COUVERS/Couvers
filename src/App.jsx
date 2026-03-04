@@ -1,15 +1,14 @@
 import { useState } from "react"
 import LoginForm from "./LoginForm"
 import SignupForm from "./SignupForm"
-import { useState } from "react";
 import LecturePage from "./pages/LecturePage";
-import CustomButton from './Reusable-Components/CustomButton'
-import Navigation from './components/Navigation'
+import CustomButton from './components/reusable/CustomButton'
+import Navigation from './components/navigation/Navigation'
 import CertificateTest from './pages/CertificateTest'
-import Quiz from './components/Quiz'
+import Quiz from './components/main/Quiz'
 import { quizQuestions } from './services/quizData'
 import Course from './pages/Course'
-import CourseNavigation from './components/CourseNavigation'
+import CourseNavigation from './components/navigation/CourseNavigation'
 
 const demoLessons = [
   {

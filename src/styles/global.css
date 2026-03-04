@@ -4,6 +4,10 @@
 @import "./colors.css";
 @import "./typography.css";
 
+* {
+    font-family: var(--font-family) !important;
+}
+
 body {
     margin: 0;
     background-color: var(--color-background);

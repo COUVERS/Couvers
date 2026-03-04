@@ -1,7 +1,7 @@
-import '../global.css'
+import '../../styles/global.css'
 import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
-import SidebarBase from './SideBarBase'
+import SidebarBase from '../reusable/SideBarBase'
 import {
     Box,
     Typography,
@@ -10,11 +10,11 @@ import {
     Tooltip,
     IconButton
 } from '@mui/material'
-import FundamentalOfTeaching from "../assets/icons/FundamentalOfTeaching"
-import EffectiveCommunication from "../assets/icons/EffectiveCommunication"
-import EmpathyAndClassroom from "../assets/icons/EmpathyAndClassroom"
-import AssessmentAndFeedback from "../assets/icons/AssessmentAndFeedback"
-import LessonPlanning from "../assets/icons/LessonPlanning"
+import FundamentalOfTeaching from "../../assets/icons/FundamentalOfTeaching"
+import EffectiveCommunication from "../../assets/icons/EffectiveCommunication"
+import EmpathyAndClassroom from "../../assets/icons/EmpathyAndClassroom"
+import AssessmentAndFeedback from "../../assets/icons/AssessmentAndFeedback"
+import LessonPlanning from "../../assets/icons/LessonPlanning"
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
