@@ -1,3 +1,6 @@
+import { useState } from "react"
+import LoginForm from "./LoginForm"
+import SignupForm from "./SignupForm"
 import { useState } from "react";
 import LecturePage from "./pages/LecturePage";
 import CustomButton from './Reusable-Components/CustomButton'
@@ -60,15 +63,25 @@ const demoLessons = [
   },
 ];
 
-function App() {
+export default function App() {
   const [page, setPage] = useState("home")
   const currentQuestion = quizQuestions[0]
 
   const [lessons] = useState(demoLessons);
   const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
 
+  const [mode, setMode] = useState("login"); // "login" | "signup"
+
+
   return (
     <>
+      <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
+        {mode === "login" ? (
+          <LoginForm onGoSignup={() => setMode("signup")} />
+        ) : (
+          <SignupForm onGoLogin={() => setMode("login")} />
+        )}
+      </div>
       <div style={{ display: "flex", height: "100vh" }}>
 
         <Navigation
@@ -100,5 +113,3 @@ function App() {
     </>
   )
 }
-
-export default App
