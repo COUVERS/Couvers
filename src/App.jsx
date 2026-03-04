@@ -1,3 +1,6 @@
+import { useState } from "react"
+import LoginForm from "./LoginForm"
+import SignupForm from "./SignupForm"
 import { useState } from "react";
 import LecturePage from "./pages/LecturePage";
 import CustomButton from './Reusable-Components/CustomButton'
@@ -100,7 +103,20 @@ function App() {
       </div>
       <ButtonTest />
     </>
+import { useState } from "react"
+import LoginForm from "./LoginForm"
+import SignupForm from "./SignupForm"
+
+export default function App() {
+  const [mode, setMode] = useState("login"); // "login" | "signup"
+
+  return (
+    <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
+      {mode === "login" ? (
+        <LoginForm onGoSignup={() => setMode("signup")} />
+      ) : (
+        <SignupForm onGoLogin={() => setMode("login")} />
+      )}
+    </div>
   )
 }
-
-export default App
