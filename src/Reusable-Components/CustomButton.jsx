@@ -18,12 +18,6 @@ const ButtonTest = () => {
                         Label
                     </Button>
                 </Stack>
-                <Button
-                    variant="contained"
-                    fullWidth
-                >
-                    fullWidth
-                </Button>
             </Stack>
         </Container>
 
