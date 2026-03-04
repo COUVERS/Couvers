@@ -109,9 +109,7 @@ export default function App() {
           onExit={() => console.log("Exit lecture")}
           onTakeQuiz={(lessonId) => console.log("Take quiz for:", lessonId)}
         />
-
       </div>
-      <ButtonTest />
     </>
   )
 }
