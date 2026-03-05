@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import LinearProgressBar from "./LinearProgress";
 
 export default function ProgressBar({ title, value }) {
-    const safe = Math.max(0, Math.min(100, Number(value) || 0));
+    const safe = Math.max(0, Math.min(100, Number(value) || 0))
 
     return (
         <Box

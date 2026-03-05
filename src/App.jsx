@@ -63,14 +63,6 @@ const demoLessons = [
   },
 ];
 
-const items = [
-  { id: 1, title: "Fundamentals of Teaching", value: 100 },
-  { id: 2, title: "Effective Communication", value: 60 },
-  { id: 3, title: "Empathy and Classroom Management", value: 80 },
-  { id: 4, title: "Lesson Planning", value: 40 },
-  { id: 5, title: "Assessment and Feedback", value: 0 },
-]
-
 export default function App() {
   // const [page, setPage] = useState("home")
   // const currentQuestion = quizQuestions[0]
@@ -119,7 +111,7 @@ export default function App() {
         />
       </div> */}
       <div style={{ padding: 24 }}>
-        <CourseCompletionProgress items={items} />
+        <CourseCompletionProgress />
         <CustomButton />
       </div>
     </>

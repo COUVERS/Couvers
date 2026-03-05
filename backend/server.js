@@ -3,12 +3,14 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
+require("./db/connection");
+
 const Course = require("./models/course");
 const Lesson = require("./models/lesson");
 const Quiz = require("./models/quiz");
-const express = require("express")
-const cors = require("cors")
-const db = require("./db/connection")
+// const express = require("express")
+// const cors = require("cors")
+// const db = require("./db/connection")
 
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
