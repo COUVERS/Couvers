@@ -1,7 +1,7 @@
 import '../../styles/global.css'
 import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
-import SidebarBase from '../reusable/SideBarBase'
+import SidebarBase from '../reusable-ui/SideBarBase'
 import {
     Box,
     Typography,

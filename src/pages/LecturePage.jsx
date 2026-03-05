@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react"
 import { styled } from "@mui/material/styles"
 import { Box } from "@mui/material"
-import Navigation from "../components/navigation/Navigation"
+import Navigation from "../components/layout/Navigation"
 import ContentsSidebar from "../components/ContentsSidebar"
-import LectureContent from "../components/main/LectureContent"
-import CustomButton from "../components/reusable/CustomButton"
+import LectureContent from "../components/features/LectureContent"
+import CustomButton from "../components/reusable-ui/CustomButton"
 
 const Page = styled(Box)(() => ({
     display: "flex",

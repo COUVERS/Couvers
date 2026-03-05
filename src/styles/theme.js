@@ -12,7 +12,7 @@ const theme = createTheme({
     shape: { borderRadius: 4 },
 
     typography: {
-        fontFamily: "IBM Plex Sans",
+        fontFamily: '"IBM Plex Sans", system-ui, -apple-system, sans-serif',
         button: { textTransform: "none", fontWeight: 500 },
     },
 

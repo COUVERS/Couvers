@@ -2,13 +2,14 @@ import { useState } from "react"
 import LoginForm from "./LoginForm"
 import SignupForm from "./SignupForm"
 import LecturePage from "./pages/LecturePage";
-import CustomButton from './components/reusable/CustomButton'
-import Navigation from './components/navigation/Navigation'
+import CustomButton from './components/reusable-ui/CustomButton'
+import Navigation from './components/layout/Navigation'
 import CertificateTest from './pages/CertificateTest'
-import Quiz from './components/main/Quiz'
+import Quiz from './components/features/Quiz'
 import { quizQuestions } from './services/quizData'
 import Course from './pages/Course'
-import CourseNavigation from './components/navigation/CourseNavigation'
+import CourseNavigation from './components/layout/CourseNavigation'
+import CourseCompletionProgress from "./components/features/CourseCompletionBar";
 
 const demoLessons = [
   {
@@ -62,19 +63,27 @@ const demoLessons = [
   },
 ];
 
+const items = [
+  { id: 1, title: "Fundamentals of Teaching", value: 100 },
+  { id: 2, title: "Effective Communication", value: 60 },
+  { id: 3, title: "Empathy and Classroom Management", value: 80 },
+  { id: 4, title: "Lesson Planning", value: 40 },
+  { id: 5, title: "Assessment and Feedback", value: 0 },
+]
+
 export default function App() {
-  const [page, setPage] = useState("home")
-  const currentQuestion = quizQuestions[0]
+  // const [page, setPage] = useState("home")
+  // const currentQuestion = quizQuestions[0]
 
-  const [lessons] = useState(demoLessons);
-  const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
+  // const [lessons] = useState(demoLessons);
+  // const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
 
-  const [mode, setMode] = useState("login"); // "login" | "signup"
+  // const [mode, setMode] = useState("login"); // "login" | "signup"
 
 
   return (
     <>
-      <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
+      {/* <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
         {mode === "login" ? (
           <LoginForm onGoSignup={() => setMode("signup")} />
         ) : (
@@ -108,6 +117,10 @@ export default function App() {
           onExit={() => console.log("Exit lecture")}
           onTakeQuiz={(lessonId) => console.log("Take quiz for:", lessonId)}
         />
+      </div> */}
+      <div style={{ padding: 24 }}>
+        <CourseCompletionProgress items={items} />
+        <CustomButton />
       </div>
     </>
   )
