@@ -10,6 +10,7 @@ import { quizQuestions } from './services/quizData'
 import Course from './pages/Course'
 import CourseNavigation from './components/layout/CourseNavigation'
 import CourseCompletionProgress from "./components/features/CourseCompletionBar";
+import LessonNumberBadge from './components/reusable-ui/LessonNumberBadge'
 
 
 const demoLessons = [
@@ -112,11 +113,11 @@ export default function App() {
         />
       </div> */}
 
-      <Links href="/courses">Courses</Links>
+      <LessonNumberBadge number={1} variant="completed" />
 
-<AppLink underline="always" href="/profile">
-  Profile
-</AppLink>
+      <LessonNumberBadge number={2} variant="default" />
+
+      <LessonNumberBadge variant="locked" />
     </>
   )
 }
