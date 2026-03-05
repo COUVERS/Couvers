@@ -95,7 +95,7 @@ export default function App() {
 
         {/* {page === "courses" && <CourseNavigation />} */}
 
-        <main style={{ flex: 1, padding: 16 }}>
+        <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
           {page === "home" && <h1>Home</h1>}
           {page === "courses" && <Course />}
         </main>
