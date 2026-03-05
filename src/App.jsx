@@ -11,6 +11,7 @@ import Course from './pages/Course'
 import CourseNavigation from './components/layout/CourseNavigation'
 import CourseCompletionProgress from "./components/features/CourseCompletionBar";
 import LessonNumberBadge from './components/reusable-ui/LessonNumberBadge'
+import LessonList from './pages/LessonList'
 
 
 const demoLessons = [
@@ -118,6 +119,8 @@ export default function App() {
       <LessonNumberBadge number={2} variant="default" />
 
       <LessonNumberBadge variant="locked" />
+
+      <LessonList lessons={demoLessons} />
     </>
   )
 }

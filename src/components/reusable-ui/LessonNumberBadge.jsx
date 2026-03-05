@@ -37,3 +37,10 @@ export default function LessonNumberBadge({ number, variant = "default" }) {
         </Badge>
     )
 }
+
+// HOW TO USE
+//    <LessonNumberBadge number={1} variant="completed" />
+
+//       <LessonNumberBadge number={2} variant="default" />
+
+//       <LessonNumberBadge variant="locked" />
