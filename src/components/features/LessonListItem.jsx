@@ -24,6 +24,7 @@ export default function LessonListItem({
             <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
                 {/* Title*/}
                 <Links
+                    href={`/lesson/${order}`}
                     underline="always"
                     sx={{
                         fontFamily: "IBM Plex Sans",
