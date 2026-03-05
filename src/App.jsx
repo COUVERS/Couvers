@@ -9,7 +9,7 @@ import Quiz from './components/features/Quiz'
 import { quizQuestions } from './services/quizData'
 import Course from './pages/Course'
 import CourseNavigation from './components/layout/CourseNavigation'
-import CourseCompletionProgress from "./components/features/CourseCompletionBar";
+
 
 
 const demoLessons = [
@@ -65,18 +65,18 @@ const demoLessons = [
 ];
 
 export default function App() {
-  // const [page, setPage] = useState("home")
-  // const currentQuestion = quizQuestions[0]
+  const [page, setPage] = useState("home")
+  const currentQuestion = quizQuestions[0]
 
-  // const [lessons] = useState(demoLessons);
-  // const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
+  const [lessons] = useState(demoLessons);
+  const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
 
-  // const [mode, setMode] = useState("login"); // "login" | "signup"
+  const [mode, setMode] = useState("login"); // "login" | "signup"
 
 
   return (
     <>
-      {/* <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
+      <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
         {mode === "login" ? (
           <LoginForm onGoSignup={() => setMode("signup")} />
         ) : (
@@ -110,13 +110,7 @@ export default function App() {
           onExit={() => console.log("Exit lecture")}
           onTakeQuiz={(lessonId) => console.log("Take quiz for:", lessonId)}
         />
-      </div> */}
-
-      <Links href="/courses">Courses</Links>
-
-<AppLink underline="always" href="/profile">
-  Profile
-</AppLink>
+      </div>
     </>
   )
 }
