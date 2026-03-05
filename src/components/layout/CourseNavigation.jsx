@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 const CourseDrawer = styled(SidebarBase)({
-    backgroundColor: 'var(--brand-indigo-900)',
+    backgroundColor: 'var(--Brand-Indigo-900)',
     height: '100vh',
 })
 
@@ -35,15 +35,15 @@ const CategoryIcon = styled(Box, { shouldForwardProp: (p) => p !== 'active' })((
     color: active ? '#2D2D5A' : '#fff',
 }))
 
-const courseCategories = [
-    { id: 1, title: "Fundamentals of Teaching", icon: <FundamentalOfTeaching /> },
-    { id: 2, title: "Effective Communication", icon: <EffectiveCommunication /> },
-    { id: 3, title: "Empathy and Classroom Management", icon: <EmpathyAndClassroom /> },
-    { id: 4, title: "Lesson Planning", icon: <LessonPlanning /> },
-    { id: 5, title: "Assessment and Feedback", icon: <AssessmentAndFeedback /> },
-];
+const iconMap = {
+    "Fundamentals of Teaching": <FundamentalOfTeaching />,
+    "Effective Communication": <EffectiveCommunication />,
+    "Empathy and Classroom Management": <EmpathyAndClassroom />,
+    "Lesson Planning": <LessonPlanning />,
+    "Assessment and Feedback": <AssessmentAndFeedback />,
+}
 
-export default function CourseNavigation() {
+export default function CourseNavigation({ courses = [], selectedCourseId, onSelectCourse }) {
     const [open, setOpen] = useState(true)
     const [activeId, setActiveId] = useState(1)
 
@@ -84,29 +84,31 @@ export default function CourseNavigation() {
 
                 }}
             >
-                {courseCategories.map((course) => (
+                {courses.map((course) => (
                     <Tooltip
-                        key={course.id}
+                        key={course._id}
                         title={!open ? course.title : ""}
                         placement="right"
                         arrow
                     >
                         <ListItemButton
-                            onClick={() => setActiveId(course.id)}
+                            onClick={() => {
+                                onSelectCourse?.(course._id)
+                            }}
                             sx={{
                                 borderRadius: '8px',
                                 p: '8px',
-                                backgroundColor: activeId === course.id ? '#FFF' : 'transparent',
-                                color: activeId === course.id ? '#2D2D5A' : '#FFF',
+                                backgroundColor: activeId === course._id ? '#FFF' : 'transparent',
+                                color: activeId === course._id ? '#2D2D5A' : '#FFF',
                                 justifyContent: open ? 'flex-start' : 'center',
                                 transition: '0.2s',
                                 '&:hover': {
-                                    backgroundColor: activeId === course.id ? '#FFF' : 'rgba(255,255,255,0.08)'
+                                    backgroundColor: activeId === course._id ? '#FFF' : 'rgba(255,255,255,0.08)'
                                 }
                             }}
                         >
-                            <CategoryIcon active={activeId === course.id}>
-                                {course.icon}
+                            <CategoryIcon active={selectedCourseId === course._id}>
+                                {iconMap[course.title]}
                             </CategoryIcon>
 
                             {open && (

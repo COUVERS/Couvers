@@ -1,41 +1,84 @@
 import { useEffect, useState } from "react"
+import Box from "@mui/material/Box"
 
-export default function Course() {
+import CourseNavigation from "../components/layout/CourseNavigation"
+import LessonList from "./LessonList"
+// import { demoLessons } from "../library/demoLessons"
+
+export default function CoursePage() {
     const [courses, setCourses] = useState([])
-    const [error, setError] = useState("")
+    const [selectedCourseId, setSelectedCourseId] = useState(null)
 
+    const [course, setCourse] = useState(null)
+    const [lessons, setLessons] = useState([])
+
+    const [error, setError] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+
+    // load courses list
     useEffect(() => {
         ; (async () => {
             try {
-                const res = await fetch("/api/courses")
+                setError("")
+                const res = await fetch("http://127.0.0.1:5050/api/courses")
                 if (!res.ok) throw new Error(`HTTP ${res.status}`)
                 const data = await res.json()
                 setCourses(data)
+
+                // first course
+                if (data.length > 0) setSelectedCourseId(data[0]._id)
             } catch (e) {
                 setError(e.message)
             }
         })()
     }, [])
 
-    const courseNumber = [
-        { },
-    ]
-    return (
-        <div style={{ padding: 16 }}>
-            <h1>Lessons</h1>
-            {error && <p style={{ color: "red" }}>Error: {error}</p>}
+    //load selected course + lessons
+    useEffect(() => {
+        if (!selectedCourseId) return
 
-            <ul>
-                {courses.map((c) => (
-                    <li key={c._id} style={{ marginBottom: 12 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            {}
-                            <strong>{c.title}</strong>
-                        </div>
-                        <div>{c.description}</div>
-                    </li>
-                ))}
-            </ul>
-        </div>
+            ; (async () => {
+                try {
+                    setIsLoading(true)
+                    setError("")
+
+                    const res = await fetch(`/api/courses/${selectedCourseId}/full`)
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                    const data = await res.json()
+
+                    setCourse(data.course)
+                    setLessons(data.lessons)
+                } catch (e) {
+                    setError(e.message)
+                    setCourse(null)
+                    setLessons([])
+                } finally {
+                    setIsLoading(false)
+                }
+            })()
+    }, [selectedCourseId])
+
+    return (
+        <Box sx={{ display: "flex", minHeight: "100vh" }}>
+            <CourseNavigation
+                courses={courses}
+                selectedCourseId={selectedCourseId}
+                onSelectCourse={setSelectedCourseId}
+            />
+
+            <Box sx={{ flex: 1, p: 4 }}>
+                {isLoading && <p>Loading...</p>}
+                {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+                {course && (
+                    <Box sx={{ mb: 3 }}>
+                        <h1 style={{ margin: 0 }}>{course.title}</h1>
+                        <p style={{ marginTop: 8 }}>{course.description}</p>
+                    </Box>
+                )}
+
+                <LessonList lessons={lessons} />
+            </Box>
+        </Box>
     )
 }
