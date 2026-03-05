@@ -64,18 +64,18 @@ const demoLessons = [
 ];
 
 export default function App() {
-  // const [page, setPage] = useState("home")
-  // const currentQuestion = quizQuestions[0]
+  const [page, setPage] = useState("home")
+  const currentQuestion = quizQuestions[0]
 
-  // const [lessons] = useState(demoLessons);
-  // const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
+  const [lessons] = useState(demoLessons);
+  const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
 
-  // const [mode, setMode] = useState("login"); // "login" | "signup"
+  const [mode, setMode] = useState("login"); // "login" | "signup"
 
 
   return (
     <>
-      {/* <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
+      <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
         {mode === "login" ? (
           <LoginForm onGoSignup={() => setMode("signup")} />
         ) : (
@@ -109,10 +109,6 @@ export default function App() {
           onExit={() => console.log("Exit lecture")}
           onTakeQuiz={(lessonId) => console.log("Take quiz for:", lessonId)}
         />
-      </div> */}
-      <div style={{ padding: 24 }}>
-        <CourseCompletionProgress />
-        <CustomButton />
       </div>
     </>
   )
