@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 const CourseDrawer = styled(SidebarBase)({
-    backgroundColor: 'var(--brand-indigo-900)',
+    backgroundColor: 'var(--Brand-Indigo-900)',
     height: '100vh',
 })
 
@@ -43,7 +43,7 @@ const courseCategories = [
     { id: 5, title: "Assessment and Feedback", icon: <AssessmentAndFeedback /> },
 ];
 
-export default function CourseNavigation() {
+export default function CourseNavigation({ onSelectCourse }) {
     const [open, setOpen] = useState(true)
     const [activeId, setActiveId] = useState(1)
 
@@ -92,7 +92,10 @@ export default function CourseNavigation() {
                         arrow
                     >
                         <ListItemButton
-                            onClick={() => setActiveId(course.id)}
+                            onClick={() => {
+                                setActiveId(course.id)
+                                onSelectCourse?.(course.id)
+                            }}
                             sx={{
                                 borderRadius: '8px',
                                 p: '8px',
