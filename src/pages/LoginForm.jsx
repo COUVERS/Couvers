@@ -1,5 +1,5 @@
 import { useState } from "react"
-import "./auth.css"
+import "../auth.css"
 
 export default function LoginForm({ onGoSignup, onLoginSuccess }) {
     const [email, setEmail] = useState("")
