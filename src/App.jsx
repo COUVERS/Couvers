@@ -25,7 +25,7 @@ export default function App() {
         {/* Login */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* After Login */}
+        {/* Home */}
         <Route
           path="/"
           element={
@@ -37,6 +37,7 @@ export default function App() {
           }
         />
 
+        {/* Course Page */}
         <Route
           path="/courses"
           element={
@@ -48,7 +49,7 @@ export default function App() {
           }
         />
 
-        {/* Course Page */}
+        {/* Lecture Page */}
         <Route
           path="/courses/:courseId/lessons/:lessonId/lecture"
           element={

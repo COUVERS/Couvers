@@ -3,7 +3,6 @@ import Box from "@mui/material/Box"
 
 import CourseNavigation from "../components/layout/CourseNavigation"
 import LessonList from "./LessonList"
-// import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
     const [courses, setCourses] = useState([])
