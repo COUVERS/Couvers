@@ -41,7 +41,7 @@ const Drawer = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(({ 
     boxSizing: 'border-box',
 }))
 
-export default function Navigation({ page, setPage }) {
+export default function Navigation({ page, setPage, forceCollapsed = false }) {
     const [isExpanded, setIsExpanded] = useState(true)
     const toggleDrawer = () => setIsExpanded(!isExpanded)
 
