@@ -1,5 +1,7 @@
 /* Typography - Web */
 :root {
+    --font-family: "IBM Plex Sans", sans-serif;
+
     --FontSize-Headings-h1: 48px;
     --FontSize-Headings-h2: 32px;
     --FontSize-Headings-h3: 20px;
