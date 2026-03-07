@@ -16,19 +16,6 @@ export default function CoursePage() {
     const [isLoading, setIsLoading] = useState(false)
 
 
-    const openLesson = (lessonId) => {
-        setActiveLessonId(lessonId)
-        setNavMode("contents")
-        setViewMode("lecture")
-    }
-
-    const backToCourse = () => {
-        setNavMode("course")
-        setViewMode("lessonList")
-        setActiveLessonId(null)
-    }
-
-
     // load courses list
     useEffect(() => {
         ; (async () => {
@@ -47,9 +34,31 @@ export default function CoursePage() {
         })()
     }, [])
 
-    const courseNumber = [
-        { },
-    ]
+    //load selected course + lessons
+    useEffect(() => {
+        if (!selectedCourseId) return
+
+            ; (async () => {
+                try {
+                    setIsLoading(true)
+                    setError("")
+
+                    const res = await fetch(`/api/courses/${selectedCourseId}/full`)
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                    const data = await res.json()
+
+                    setCourse(data.course)
+                    setLessons(data.lessons)
+                } catch (e) {
+                    setError(e.message)
+                    setCourse(null)
+                    setLessons([])
+                } finally {
+                    setIsLoading(false)
+                }
+            })()
+    }, [selectedCourseId])
+
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
             <CourseNavigation
@@ -62,17 +71,15 @@ export default function CoursePage() {
                 {isLoading && <p>Loading...</p>}
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
-            <ul>
-                {courses.map((c) => (
-                    <li key={c._id} style={{ marginBottom: 12 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            {}
-                            <strong>{c.title}</strong>
-                        </div>
-                        <div>{c.description}</div>
-                    </li>
-                ))}
-            </ul>
-        </div>
+                {course && (
+                    <Box sx={{ mb: 3 }}>
+                        <h1 style={{ margin: 0 }}>{course.title}</h1>
+                        <p style={{ marginTop: 8 }}>{course.description}</p>
+                    </Box>
+                )}
+
+                <LessonList lessons={lessons} />
+            </Box>
+        </Box>
     )
 }
