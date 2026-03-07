@@ -2,10 +2,9 @@ import { useState } from "react"
 import LoginForm from "./LoginForm"
 import SignupForm from "./SignupForm"
 import LecturePage from "./pages/LecturePage"
-import CustomButton from "./components/reusable-ui/CustomButton"
+// import CustomButton from "./components/reusable-ui/CustomButton"
 import Navigation from "./components/layout/Navigation"
-import CertificateTest from "./pages/CertificateTest"
-import Quiz from "./components/features/Quiz"
+// import Quiz from "./components/features/Quiz"
 import { quizQuestions } from "./services/quizData"
 import Course from "./pages/Course"
 import CourseNavigation from "./components/layout/CourseNavigation"
@@ -66,7 +65,7 @@ import LessonList from "./pages/LessonList"
 
 export default function App() {
   const [page, setPage] = useState("home")
-  const currentQuestion = quizQuestions[0]
+  // const currentQuestion = quizQuestions[0]
 
   // const [lessons] = useState(demoLessons);
   // const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
@@ -98,11 +97,11 @@ export default function App() {
 
         </main>
 
-        <Quiz
+        {/* <Quiz
           question={currentQuestion}
           questionNumber={1}
           totalQuestions={quizQuestions.length}
-        />
+        /> */}
 
 
         {/* <LecturePage
