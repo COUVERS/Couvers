@@ -96,21 +96,14 @@ export default function App() {
           {page === "home" && <h1>Home</h1>}
           {page === "courses" && <Course />}
 
-          {/* 
-<div style={{ padding: "40px" }}>
-  <h1>This is a set up</h1>
-  <CustomButton />
-</div>
-*/}
         </main>
 
-        {/* <Quiz
+        <Quiz
           question={currentQuestion}
           questionNumber={1}
           totalQuestions={quizQuestions.length}
-        /> */}
+        />
 
-        {/* <CertificateTest /> */}
 
         {/* <LecturePage
           lessons={lessons}
