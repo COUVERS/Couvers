@@ -1,18 +1,16 @@
 import { useState } from "react"
 import LoginForm from "./LoginForm"
 import SignupForm from "./SignupForm"
-import LecturePage from "./pages/LecturePage";
-import CustomButton from './components/reusable-ui/CustomButton'
-import Navigation from './components/layout/Navigation'
-import CertificateTest from './pages/CertificateTest'
-import Quiz from './components/features/Quiz'
-import { quizQuestions } from './services/quizData'
-import Course from './pages/Course'
-import CourseNavigation from './components/layout/CourseNavigation'
+import LecturePage from "./pages/LecturePage"
+import CustomButton from "./components/reusable-ui/CustomButton"
+import Navigation from "./components/layout/Navigation"
+import CertificateTest from "./pages/CertificateTest"
+import Quiz from "./components/features/Quiz"
+import { quizQuestions } from "./services/quizData"
+import Course from "./pages/Course"
+import CourseNavigation from "./components/layout/CourseNavigation"
 import { demoLessons } from "./library/demoLessons"
-import LessonList from './pages/LessonList'
-
-
+import LessonList from "./pages/LessonList"
 
 // const demoLessons = [
 //   {
@@ -68,13 +66,12 @@ import LessonList from './pages/LessonList'
 
 export default function App() {
   const [page, setPage] = useState("home")
-  // const currentQuestion = quizQuestions[0]
+  const currentQuestion = quizQuestions[0]
 
   // const [lessons] = useState(demoLessons);
   // const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
 
   // const [mode, setMode] = useState("login"); // "login" | "signup"
-
 
   return (
     <>
@@ -85,8 +82,8 @@ export default function App() {
           <SignupForm onGoLogin={() => setMode("login")} />
         )}
       </div> */}
-      <div style={{ display: "flex", height: "100vh" }}>
 
+      <div style={{ display: "flex", height: "100vh" }}>
         <Navigation
           page={page}
           setPage={setPage}
@@ -98,14 +95,24 @@ export default function App() {
         <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
           {page === "home" && <h1>Home</h1>}
           {page === "courses" && <Course />}
+
+          {/* 
+<div style={{ padding: "40px" }}>
+  <h1>This is a set up</h1>
+  <CustomButton />
+</div>
+*/}
         </main>
-        {/* <Quiz
+
+        <Quiz
           question={currentQuestion}
           questionNumber={1}
           totalQuestions={quizQuestions.length}
         />
 
-        <LecturePage
+        {/* <CertificateTest /> */}
+
+        {/* <LecturePage
           lessons={lessons}
           activeLessonId={activeLessonId}
           onSelectLesson={setActiveLessonId}

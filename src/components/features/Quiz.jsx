@@ -14,7 +14,7 @@ import {
 ========================= */
 
 const Container = styled(Box)(() => ({
-  backgroundColor: "var(--Color-Background-Paper)",
+  backgroundColor: "var(--color-surface)",
   borderRadius: "16px",
   padding: "48px",
   maxWidth: "900px"
@@ -29,6 +29,8 @@ const SectionTitle = styled(Typography)(() => ({
 const QuestionTitle = styled(Typography)(() => ({
   fontSize: "var(--FontSize-Headings-h3)",
   fontWeight: 600,
+  padding: "0 56px",
+  marginTop: "32px",
   marginBottom: "24px"
 }))
 
@@ -38,20 +40,39 @@ const BodyText = styled(Typography)(() => ({
   color: "var(--Color-Text-Secondary)"
 }))
 
+const AnswersContainer = styled(Box)(() => ({
+  display: "flex",
+  padding: "16px 56px 32px 56px",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "24px",
+  alignSelf: "stretch",
+  borderRadius: "8px",
+  backgroundColor: "var(--color-surface)",
+  width: "100%"
+}))
+
 const OptionWrapper = styled(Box, {
   shouldForwardProp: (prop) => prop !== "selected"
 })(({ selected }) => ({
   border: selected
-    ? "2px solid var(--Color-Border-Active)"
-    : "1px solid var(--Color-Border-Default)",
+    ? "2px solid var(--color-primary)"
+    : "2px solid var(--color-outline)",
   borderRadius: "12px",
   padding: "18px 20px",
-  marginBottom: "16px",
+  width: "100%",
   backgroundColor: selected
-    ? "var(--Color-Primary-_States-Selected)"
+    ? "rgba(107, 99, 255, 0.18)"
     : "transparent",
   transition: "all 0.2s ease",
-  cursor: "pointer"
+  cursor: "pointer",
+
+  "&:hover": {
+    border: "2px solid var(--color-primary)",
+    backgroundColor: selected
+      ? "rgba(107, 99, 255, 0.18)"
+      : "rgba(107, 99, 255, 0.05)"
+  }
 }))
 
 const SubmitButton = styled(Button)(() => ({
@@ -62,6 +83,16 @@ const SubmitButton = styled(Button)(() => ({
   "&:hover": {
     backgroundColor: "var(--Color-Primary-Dark)"
   }
+}))
+
+const ScenarioWrapper = styled(Box)(() => ({
+  display: "flex",
+  padding: "32px 56px",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "24px",
+  alignSelf: "stretch",
+  background: "var(--color-surface)"
 }))
 
 /* =========================
@@ -85,62 +116,69 @@ export default function Quiz({
   return (
     <Container>
 
-      {/* Scenario */}
-      <SectionTitle>Scenario</SectionTitle>
-      <BodyText>{question.scenario}</BodyText>
+     <ScenarioWrapper>
 
-      {/* Question */}
-      <SectionTitle>
-        Question ({questionNumber}/{totalQuestions})
-      </SectionTitle>
+  <SectionTitle>Scenario</SectionTitle>
+  <BodyText>{question.scenario}</BodyText>
 
-      <Typography
-        sx={{
-          fontSize: "var(--FontSize-Body1)",
-          marginBottom: "40px"
-        }}
-      >
-        {question.question}
-      </Typography>
+  <SectionTitle>
+    Question ({questionNumber}/{totalQuestions})
+  </SectionTitle>
 
+  <Typography sx={{ fontSize: "var(--FontSize-Body1)" }}>
+    {question.question}
+  </Typography>
+
+</ScenarioWrapper>
+
+      {/* Answers */}
       <QuestionTitle>Select Your Answer</QuestionTitle>
 
-      <RadioGroup
-        value={selected}
-        onChange={(e) => setSelected(e.target.value)}
-      >
-        {question.options.map((option, index) => (
-          <OptionWrapper
-            key={index}
-            selected={selected === option}
-          >
-            <FormControlLabel
-              value={option}
-              control={
-                <Radio
-                  sx={{
-                    color: "var(--Color-Primary-Main)",
-                    "&.Mui-checked": {
-                      color: "var(--Color-Primary-Main)"
-                    }
-                  }}
-                />
-              }
-              label={
-                <Typography
-                  sx={{
-                    fontSize: "var(--FontSize-Body1)",
-                    color: "var(--Color-Text-Primary)"
-                  }}
-                >
-                  {option}
-                </Typography>
-              }
-            />
-          </OptionWrapper>
-        ))}
-      </RadioGroup>
+      <AnswersContainer>
+        <RadioGroup
+  value={selected}
+  onChange={(e) => setSelected(e.target.value)}
+  sx={{
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: "24px"
+  }}
+>
+          {question.options.map((option, index) => (
+            <OptionWrapper
+              key={index}
+              selected={selected === option}
+            >
+              <FormControlLabel
+                value={option}
+                control={
+                  <Radio
+                    sx={{
+                      color: "var(--Color-Primary-Main)",
+                      "&.Mui-checked": {
+                        color: "var(--Color-Primary-Main)"
+                      }
+                    }}
+                  />
+                }
+                label={
+                  <Typography
+                    sx={{
+                      fontSize: "var(--FontSize-Body1)",
+                      color: "var(--Color-Text-Primary)"
+                    }}
+                  >
+                    {option}
+                  </Typography>
+                }
+              />
+            </OptionWrapper>
+          ))}
+        </RadioGroup>
+      </AnswersContainer>
 
+      {/* Submit */}
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "48px" }}>
         <SubmitButton
           variant="contained"
