@@ -4,6 +4,20 @@ export default function Course() {
     const [courses, setCourses] = useState([])
     const [error, setError] = useState("")
 
+
+    const openLesson = (lessonId) => {
+        setActiveLessonId(lessonId)
+        setNavMode("contents")
+        setViewMode("lecture")
+    }
+
+    const backToCourse = () => {
+        setNavMode("course")
+        setViewMode("lessonList")
+        setActiveLessonId(null)
+    }
+
+
     useEffect(() => {
         ; (async () => {
             try {
@@ -18,7 +32,7 @@ export default function Course() {
     }, [])
 
     const courseNumber = [
-        { },
+        {},
     ]
     return (
         <div style={{ padding: 16 }}>
@@ -29,7 +43,7 @@ export default function Course() {
                 {courses.map((c) => (
                     <li key={c._id} style={{ marginBottom: 12 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            {}
+                            { }
                             <strong>{c.title}</strong>
                         </div>
                         <div>{c.description}</div>
