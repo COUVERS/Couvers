@@ -68,7 +68,7 @@ import LessonList from './pages/LessonList'
 
 export default function App() {
   const [page, setPage] = useState("home")
-  // const currentQuestion = quizQuestions[0]
+   const currentQuestion = quizQuestions[0]
 
   // const [lessons] = useState(demoLessons);
   // const [activeLessonId, setActiveLessonId] = useState(demoLessons[0]?._id);
@@ -99,19 +99,19 @@ export default function App() {
           {page === "home" && <h1>Home</h1>}
           {page === "courses" && <Course />}
         </main>
-        {/* <Quiz
+        <Quiz
           question={currentQuestion}
           questionNumber={1}
           totalQuestions={quizQuestions.length}
         />
 
-        <LecturePage
+       {/* <LecturePage }
           lessons={lessons}
           activeLessonId={activeLessonId}
           onSelectLesson={setActiveLessonId}
           onExit={() => console.log("Exit lecture")}
           onTakeQuiz={(lessonId) => console.log("Take quiz for:", lessonId)}
-        /> */}
+        {/>  */}
       </div>
     </>
   )
