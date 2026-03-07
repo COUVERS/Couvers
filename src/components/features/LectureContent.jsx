@@ -9,13 +9,13 @@ import {
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
-const HeaderCard = styled(Box)(() => ({
-    backgroundColor: "var(--Color-Background-Paper)",
-    borderRadius: "16px",
-    padding: "32px",
-    boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
-    border: "1px solid var(--Color-Divider)",
-}))
+// const HeaderCard = styled(Box)(() => ({
+//     backgroundColor: "var(--Color-Background-Paper)",
+//     borderRadius: "16px",
+//     padding: "32px",
+//     boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
+//     border: "1px solid var(--Color-Divider)",
+// }))
 
 const Title = styled(Typography)(() => ({
     fontSize: "var(--FontSize-Display-Medium)",
@@ -69,10 +69,10 @@ export default function LectureContent({ lesson }) {
 
     return (
     <>
-        <HeaderCard>
+        {/* <HeaderCard>
         <Title>{lesson.title}</Title>
         <Desc>{lesson.lessonDescription}</Desc>
-        </HeaderCard>
+        </HeaderCard> */}
 
         {(lesson.sections || []).map((sec, idx) => {
         const key = `${idx}-${sec.heading}`
