@@ -1,0 +1,24 @@
+/* Typography - Web */
+:root {
+    --font-family: "IBM Plex Sans", sans-serif;
+
+    --FontSize-Headings-h1: 48px;
+    --FontSize-Headings-h2: 32px;
+    --FontSize-Headings-h3: 20px;
+    --FontSize-Display-Large: 64px;
+    --FontSize-Display-Medium: 56px;
+    --FontSize-Body1: 16px;
+    --FontSize-Body2: 14px;
+    --FontSize-Caption: 12px;
+    --FontSize-Overline: 12px;
+    --LineHeight-Display-Large: 64px;
+    --LineHeight-Display-Medium: 60px;
+    --LineHeight-Headings-h1: 57.599998474121094px;
+    --LineHeight-Body1: 24px;
+    --LineHeight-Body2: 21px;
+    --LetterSpace-DisplayLarge: -1.2799999713897705px;
+    --LetterSpace-DisplayMedium: -0.5600000023841858px;
+    --LetterSpace-h1: -0.20000000298023224px;
+    --LetterSpace-Body1: 0px;
+    --FontSize-UIText-Tooltip-Label: 10px;
+}
