@@ -107,21 +107,31 @@ export default function CoursePage() {
                 {isLoading && <p>Loading...</p>}
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
-                {course && (
-                    <Box sx={{ mb: 3 }}>
-                        <h1 style={{ margin: 0 }}>{course.title}</h1>
-                        <p style={{ marginTop: 8 }}>{course.description}</p>
-                    </Box>
-                )}
+                {viewMode === "lessonList" && (
+                    <>
+                        {course && (
+                            <Box sx={{ mb: 3 }}>
+                                <h1 style={{ margin: 0 }}>{course.title}</h1>
+                                <p style={{ marginTop: 8 }}>{course.description}</p>
+                            </Box>
+                        )}
 
-                <LessonList
-                    lessons={lessons}
-                    onOpenLesson={handleOpenLesson}
-                />
+                        <LessonList
+                            lessons={lessons}
+                            onOpenLesson={handleOpenLesson}
+                        />
+                    </>
+                )}
 
                 {viewMode === "lecture" && selectedLesson && (
-                    <Lecture lesson={selectedLesson} />
+                    <Lecture
+                        lessons={lessons}
+                        activeLessonId={selectedLesson._id}
+                        onExit={handleBackToLessonList}
+                    />
                 )}
+
+
             </Box>
         </Box>
     )
