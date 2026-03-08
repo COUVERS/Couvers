@@ -1,35 +1,39 @@
-const Header = ({ title, description }) => {
+import Box from "@mui/material/Box"
 
-  const wrapperStyle = {
-    maxWidth: "880px",
-    margin: "0 auto",
-    padding: "10px 16px 18px",
-    backgroundColor: "#ffffff"
-  };
-
-  const titleStyle = {
-    margin: 0,
-    fontSize: "clamp(28px, 2.4vw, 44px)",
-    lineHeight: 1.15,
-    fontWeight: 700,
-    color: "#111111"
-  };
-
-  const descStyle = {
-    marginTop: "10px",
-    marginBottom: 0,
-    fontSize: "clamp(14px, 1.1vw, 16px)",
-    lineHeight: 1.6,
-    color: "rgba(0, 0, 0, 0.65)",
-    maxWidth: "70ch"
-  };
-
+export default function Header({ title, description }) {
   return (
-    <header style={wrapperStyle}>
-      <h1 style={titleStyle}>{title}</h1>
-      {description && <p style={descStyle}>{description}</p>}
-    </header>
-  );
-};
+    <Box
+      sx={{
+        backgroundColor: "var(--color-surface)",
+        borderRadius: "12px",
+        p: 4,
+        mb: 4,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
+      }}
+    >
+      <Box
+        component="h1"
+        sx={{
+          m: 0,
+          fontSize: "36px",
+          fontWeight: 600,
+          color: "var(--color-primary)"
+        }}
+      >
+        {title}
+      </Box>
 
-export default Header;
+      <Box
+        component="p"
+        sx={{
+          mt: 1,
+          fontSize: "16px",
+          lineHeight: "24px",
+          color: "var(--color-on-surface-variant)"
+        }}
+      >
+        {description}
+      </Box>
+    </Box>
+  )
+}

@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import CourseNavigation from "../components/layout/CourseNavigation"
 import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
+import Header from "../Header"
 import Lecture from "./LecturePage"
 import QuizPage from "./QuizPage"
 // import { demoLessons } from "../library/demoLessons"
@@ -22,6 +23,14 @@ export default function CoursePage() {
 
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+
+    const [quizzes, setQuizzes] = useState([])
+    const quizItems =
+  quizzes.find(q => String(q.lessonId) === String(selectedLesson?._id))?.items || []
+
+    const handleTakeQuiz = () => {
+  setViewMode("quiz")
+}
 
 
     // load courses list
@@ -56,7 +65,8 @@ export default function CoursePage() {
                     const data = await res.json()
 
                     setCourse(data.course)
-                    setLessons(data.lessons)
+setLessons(data.lessons)
+setQuizzes(data.quizzes)
 
                     // initialize if back to course
                     setSelectedLesson(null)
@@ -116,6 +126,12 @@ export default function CoursePage() {
                 {isLoading && <p>Loading...</p>}
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
+                {course && (
+  <Header
+    title={course.title}
+    description={course.description}
+  />
+)}
                 {viewMode === "lessonList" && (
                     <>
                         {course && (
@@ -137,14 +153,6 @@ export default function CoursePage() {
                         lessons={lessons}
                         activeLessonId={selectedLesson._id}
                         onExit={handleBackToLessonList}
-                        onTakeQuiz={handleTakeQuiz}
-                    />
-                )}
-
-                {viewMode === "quiz" && selectedLesson && (
-                    <QuizPage
-                        lesson={selectedLesson}
-                        onBack={handleBackToLecture}
                     />
                 )}
 
