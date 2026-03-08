@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import CourseNavigation from "../components/layout/CourseNavigation"
 import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
+import Header from "../Header"
 import Lecture from "./LecturePage"
 // import { demoLessons } from "../library/demoLessons"
 
@@ -107,6 +108,12 @@ export default function CoursePage() {
                 {isLoading && <p>Loading...</p>}
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
+                {course && (
+  <Header
+    title={course.title}
+    description={course.description}
+  />
+)}
                 {viewMode === "lessonList" && (
                     <>
                         {course && (
