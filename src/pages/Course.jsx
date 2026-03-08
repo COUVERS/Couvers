@@ -6,7 +6,7 @@ import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
 import Header from "../Header"
 import Lecture from "./LecturePage"
-import Quiz from "../components/features/Quiz"
+import QuizPage from "./QuizPage"
 // import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
@@ -96,6 +96,14 @@ setQuizzes(data.quizzes)
         setViewMode("lessonList")
     }
 
+    const handleTakeQuiz = () => {
+        setViewMode("quiz")
+    }
+
+    const handleBackToLecture = () => {
+        setViewMode("lecture")
+    }
+
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
 
@@ -140,22 +148,13 @@ setQuizzes(data.quizzes)
                     </>
                 )}
 
-              {viewMode === "lecture" && selectedLesson && (
-  <Lecture
-    lessons={lessons}
-    activeLessonId={selectedLesson._id}
-    onExit={handleBackToLessonList}
-    onTakeQuiz={handleTakeQuiz}
-  />
-)}
-
-{viewMode === "quiz" && quizItems.length > 0 && (
-  <Quiz
-    question={quizItems[0]}
-    questionNumber={1}
-    totalQuestions={quizItems.length}
-  />
-)}
+                {viewMode === "lecture" && selectedLesson && (
+                    <Lecture
+                        lessons={lessons}
+                        activeLessonId={selectedLesson._id}
+                        onExit={handleBackToLessonList}
+                    />
+                )}
 
 
             </Box>
