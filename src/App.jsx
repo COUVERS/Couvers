@@ -104,12 +104,13 @@ export default function App() {
 */}
         </main>
 
-        <Quiz
-          question={currentQuestion}
-          questionNumber={1}
-          totalQuestions={quizQuestions.length}
-        />
-
+       {/* 
+<Quiz
+  question={currentQuestion}
+  questionNumber={1}
+  totalQuestions={quizQuestions.length}
+/>
+*/}
         {/* <CertificateTest /> */}
 
         {/* <LecturePage

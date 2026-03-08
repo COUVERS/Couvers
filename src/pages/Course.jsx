@@ -3,6 +3,7 @@ import Box from "@mui/material/Box"
 
 import CourseNavigation from "../components/layout/CourseNavigation"
 import LessonList from "./LessonList"
+import Header from "../Header"
 // import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
@@ -71,11 +72,11 @@ export default function CoursePage() {
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
                 {course && (
-                    <Box sx={{ mb: 3 }}>
-                        <h1 style={{ margin: 0 }}>{course.title}</h1>
-                        <p style={{ marginTop: 8 }}>{course.description}</p>
-                    </Box>
-                )}
+  <Header
+    title={course.title}
+    description={course.description}
+  />
+)}
 
                 <LessonList lessons={lessons} />
             </Box>
