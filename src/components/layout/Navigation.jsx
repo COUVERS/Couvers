@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { styled } from '@mui/material/styles'
 import {
     Box,
-    Drawer as MuiDrawer,
     List,
     ListItem,
     ListItemButton,
@@ -20,10 +18,6 @@ import ProfileIcon from '../../assets/icons/ProfileIcon'
 import SignOutIcon from '../../assets/icons/SignOutIcon'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-
-//Convert Figma values into constants
-const drawerWidth = 240
-const shrunkWidth = 88
 
 export default function Navigation({ page, setPage, forceCollapsed = false }) {
     const [isExpanded, setIsExpanded] = useState(true)
