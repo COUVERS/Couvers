@@ -7,6 +7,7 @@ export const demoLessons = [
             "This lesson introduces empathy as an instructional skill that supports effective classroom management.",
         completedAt: "2025/12/01",
         badgeVariant: "completed",
+        status: "processing",
     },
     {
         _id: "l2",
@@ -15,6 +16,7 @@ export const demoLessons = [
         lessonDescription:
             "Learn why learners behave the way they do and how instructors can respond effectively.",
         badgeVariant: "default",
+        status: "complete",
     },
     {
         _id: "l3",
@@ -23,6 +25,7 @@ export const demoLessons = [
         lessonDescription:
             "This lesson focuses on strategies instructors can use to manage their own reactions during challenging situations.",
         badgeVariant: "locked",
+        status: "locked",
     },
     {
         _id: "l4",
@@ -33,3 +36,5 @@ export const demoLessons = [
         badgeVariant: "locked",
     },
 ]
+
+export default demoLessons

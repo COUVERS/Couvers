@@ -82,7 +82,6 @@ export default function Navigation({ page, setPage, forceCollapsed = false }) {
                                         flexDirection: isExpanded ? 'row' : 'column',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        px: 1,
                                         '&.Mui-selected': {
                                             backgroundColor: '#fff',
                                             color: '#1F2430',
@@ -129,7 +128,6 @@ export default function Navigation({ page, setPage, forceCollapsed = false }) {
                                             flexDirection: isExpanded ? 'row' : 'column',
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            px: 1
                                         }}
                                     >
                                         <ListItemIcon
@@ -137,6 +135,7 @@ export default function Navigation({ page, setPage, forceCollapsed = false }) {
                                                 minWidth: 0,
                                                 mr: isExpanded ? 2 : 0,
                                                 justifyContent: 'center',
+                                        
                                             }}
                                         >
                                             {item.icon}
