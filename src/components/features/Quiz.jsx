@@ -226,11 +226,11 @@ export default function Quiz({
 
       </AnswersContainer>
 
-     {showResult && (
-  <Typography sx={{ marginTop: "16px" }}>
-    <strong>Review:</strong> {question.review}
-  </Typography>
-)}
+      {showResult && (
+        <Typography sx={{ marginTop: "16px" }}>
+          <strong>Review:</strong> {question.review}
+        </Typography>
+      )}
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "48px" }}>
         <SubmitButton
