@@ -6,6 +6,7 @@ import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
 import Header from "../Header"
 import Lecture from "./LecturePage"
+import Quiz from "../components/features/Quiz"
 // import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
@@ -22,6 +23,14 @@ export default function CoursePage() {
 
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+
+    const [quizzes, setQuizzes] = useState([])
+    const quizItems =
+  quizzes.find(q => String(q.lessonId) === String(selectedLesson?._id))?.items || []
+
+    const handleTakeQuiz = () => {
+  setViewMode("quiz")
+}
 
 
     // load courses list
@@ -56,7 +65,8 @@ export default function CoursePage() {
                     const data = await res.json()
 
                     setCourse(data.course)
-                    setLessons(data.lessons)
+setLessons(data.lessons)
+setQuizzes(data.quizzes)
 
                     // initialize if back to course
                     setSelectedLesson(null)
@@ -130,13 +140,22 @@ export default function CoursePage() {
                     </>
                 )}
 
-                {viewMode === "lecture" && selectedLesson && (
-                    <Lecture
-                        lessons={lessons}
-                        activeLessonId={selectedLesson._id}
-                        onExit={handleBackToLessonList}
-                    />
-                )}
+              {viewMode === "lecture" && selectedLesson && (
+  <Lecture
+    lessons={lessons}
+    activeLessonId={selectedLesson._id}
+    onExit={handleBackToLessonList}
+    onTakeQuiz={handleTakeQuiz}
+  />
+)}
+
+{viewMode === "quiz" && quizItems.length > 0 && (
+  <Quiz
+    question={quizItems[0]}
+    questionNumber={1}
+    totalQuestions={quizItems.length}
+  />
+)}
 
 
             </Box>

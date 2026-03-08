@@ -44,59 +44,68 @@ const AnswersContainer = styled(Box)(() => ({
   display: "flex",
   padding: "16px 56px 32px 56px",
   flexDirection: "column",
-  alignItems: "flex-start",
   gap: "24px",
-  alignSelf: "stretch",
-  borderRadius: "8px",
-  backgroundColor: "var(--color-surface)",
   width: "100%"
 }))
 
-const OptionWrapper = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "selected"
-})(({ selected }) => ({
-  border: selected
-    ? "2px solid var(--color-primary)"
-    : "2px solid var(--color-outline)",
-  borderRadius: "12px",
-  padding: "18px 20px",
-  width: "100%",
-  backgroundColor: selected
-    ? "rgba(107, 99, 255, 0.18)"
-    : "transparent",
-  transition: "all 0.2s ease",
-  cursor: "pointer",
+/* =========================
+   OPTION STYLE
+========================= */
 
-  "&:hover": {
-    border: "2px solid var(--color-primary)",
-    backgroundColor: selected
-      ? "rgba(107, 99, 255, 0.18)"
-      : "rgba(107, 99, 255, 0.05)"
+const OptionWrapper = styled(Box, {
+  shouldForwardProp: (prop) =>
+    prop !== "selected" &&
+    prop !== "correct" &&
+    prop !== "incorrect"
+})(({ selected, correct, incorrect }) => {
+
+  let border = "2px solid var(--color-outline)"
+  let background = "transparent"
+  let color = "inherit"
+
+  if (correct) {
+    border = "2px solid #22c55e"
+    background = "#22c55e"
+    color = "white"
+  } else if (incorrect) {
+    border = "2px solid #ef4444"
+    background = "#ef4444"
+    color = "white"
+  } else if (selected) {
+    border = "2px solid var(--color-primary)"
+    background = "rgba(107, 99, 255, 0.18)"
   }
-}))
+
+  return {
+    border,
+    borderRadius: "12px",
+    padding: "18px 20px",
+    width: "100%",
+    backgroundColor: background,
+    color,
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+    transition: "all 0.2s ease"
+  }
+})
 
 const SubmitButton = styled(Button)(() => ({
   backgroundColor: "var(--Color-Primary-Main)",
   textTransform: "none",
   borderRadius: "8px",
-  padding: "10px 28px",
-  "&:hover": {
-    backgroundColor: "var(--Color-Primary-Dark)"
-  }
+  padding: "10px 28px"
 }))
 
 const ScenarioWrapper = styled(Box)(() => ({
   display: "flex",
   padding: "32px 56px",
   flexDirection: "column",
-  alignItems: "flex-start",
-  gap: "24px",
-  alignSelf: "stretch",
-  background: "var(--color-surface)"
+  gap: "24px"
 }))
 
 /* =========================
-   Component
+   COMPONENT
 ========================= */
 
 export default function Quiz({
@@ -105,55 +114,89 @@ export default function Quiz({
   totalQuestions,
   onSubmit
 }) {
+
   const [selected, setSelected] = useState("")
+  const [showResult, setShowResult] = useState(false)
 
   if (!question) return null
 
   const handleSubmit = () => {
+    setShowResult(true)
     if (onSubmit) onSubmit(selected)
   }
 
   return (
     <Container>
 
-     <ScenarioWrapper>
+      <ScenarioWrapper>
 
-  <SectionTitle>Scenario</SectionTitle>
-  <BodyText>{question.scenario}</BodyText>
+        <SectionTitle>Scenario</SectionTitle>
+        <BodyText>{question.scenario}</BodyText>
 
-  <SectionTitle>
-    Question ({questionNumber}/{totalQuestions})
-  </SectionTitle>
+        <SectionTitle>
+          Question ({questionNumber}/{totalQuestions})
+        </SectionTitle>
 
-  <Typography sx={{ fontSize: "var(--FontSize-Body1)" }}>
-    {question.question}
-  </Typography>
+        <Typography sx={{ fontSize: "var(--FontSize-Body1)" }}>
+          {question.question}
+        </Typography>
 
-</ScenarioWrapper>
+      </ScenarioWrapper>
 
-      {/* Answers */}
       <QuestionTitle>Select Your Answer</QuestionTitle>
 
       <AnswersContainer>
+
         <RadioGroup
-  value={selected}
-  onChange={(e) => setSelected(e.target.value)}
-  sx={{
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    gap: "24px"
-  }}
->
-          {question.options.map((option, index) => (
-            <OptionWrapper
-              key={index}
-              selected={selected === option}
-            >
-              <FormControlLabel
-                value={option}
-                control={
+          value={selected}
+          onChange={(e) => {
+            if (!showResult) setSelected(e.target.value)
+          }}
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "24px"
+          }}
+        >
+
+          {(question.choices || []).map((option, index) => {
+
+            const isSelected = selected === option
+            const isCorrect = index === question.correctIndex
+
+            const correct = showResult && isCorrect
+            const incorrect = showResult && isSelected && !isCorrect
+
+            return (
+
+              <OptionWrapper
+                key={index}
+                selected={isSelected}
+                correct={correct}
+                incorrect={incorrect}
+              >
+
+                {/* ICON LEFT */}
+
+                {showResult && correct && (
+                  <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
+                    ✓
+                  </Typography>
+                )}
+
+                {showResult && incorrect && (
+                  <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
+                    ✕
+                  </Typography>
+                )}
+
+                {/* RADIO ONLY BEFORE RESULT */}
+
+                {!showResult && (
                   <Radio
+                    value={option}
+                    checked={selected === option}
                     sx={{
                       color: "var(--Color-Primary-Main)",
                       "&.Mui-checked": {
@@ -161,24 +204,34 @@ export default function Quiz({
                       }
                     }}
                   />
-                }
-                label={
-                  <Typography
-                    sx={{
-                      fontSize: "var(--FontSize-Body1)",
-                      color: "var(--Color-Text-Primary)"
-                    }}
-                  >
-                    {option}
-                  </Typography>
-                }
-              />
-            </OptionWrapper>
-          ))}
+                )}
+
+                {/* TEXT */}
+
+                <Typography
+                  sx={{
+                    fontSize: "var(--FontSize-Body1)",
+                    color: "inherit"
+                  }}
+                >
+                  {option}
+                </Typography>
+
+              </OptionWrapper>
+
+            )
+          })}
+
         </RadioGroup>
+
       </AnswersContainer>
 
-      {/* Submit */}
+     {showResult && (
+  <Typography sx={{ marginTop: "16px" }}>
+    <strong>Review:</strong> {question.review}
+  </Typography>
+)}
+
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "48px" }}>
         <SubmitButton
           variant="contained"
