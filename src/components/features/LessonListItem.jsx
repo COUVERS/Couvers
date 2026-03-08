@@ -10,6 +10,7 @@ export default function LessonListItem({
     description,
     badgeVariant = "default",   // "completed" | "default" | "locked"
     completedAt,
+    onClick,
 }) {
     return (
         <Box
@@ -24,7 +25,8 @@ export default function LessonListItem({
             <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
                 {/* Title*/}
                 <Links
-                    href={`/lesson/${order}`}
+                    component="button"
+                    onClick={onClick}
                     underline="always"
                     sx={{
                         fontFamily: "IBM Plex Sans",

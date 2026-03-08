@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react"
 import { styled } from "@mui/material/styles"
 import { Box } from "@mui/material"
-import Navigation from "../components/layout/Navigation"
-import ContentsSidebar from "../components/ContentsSidebar"
+import Button from "@mui/material/Button"
 import LectureContent from "../components/features/LectureContent"
-import CustomButton from "../components/reusable-ui/CustomButton"
+import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+// import CustomButton from "../components/reusable-ui/CustomButton"
 
 const Page = styled(Box)(() => ({
     display: "flex",
@@ -12,10 +12,10 @@ const Page = styled(Box)(() => ({
     background: "var(--Color-Background-Default)",
 }))
 
-const Right = styled(Box)(() => ({
-    flex: 1,
-    display: "flex",
-}))
+// const Right = styled(Box)(() => ({
+//     flex: 1,
+//     display: "flex",
+// }))
 
 const Main = styled(Box)(() => ({
     flex: 1,
@@ -36,7 +36,7 @@ const Footer = styled(Box)(() => ({
 export default function LecturePage({
     lessons = [],
     activeLessonId,
-    onSelectLesson,
+    // onSelectLesson,
     onExit,
     onTakeQuiz,
 }) {
@@ -45,20 +45,18 @@ export default function LecturePage({
         [lessons, activeLessonId]
     )
 
-    const [openLessonId, setOpenLessonId] = useState(
-        activeLesson ? String(activeLesson._id) : null
-    )
+    // const [openLessonId, setOpenLessonId] = useState(
+    //     activeLesson ? String(activeLesson._id) : null
+    // )
 
-    const handleSelectLesson = (id) => {
-        setOpenLessonId(String(id))
-        onSelectLesson?.(String(id))
-    }
+    // const handleSelectLesson = (id) => {
+    //     setOpenLessonId(String(id))
+    //     onSelectLesson?.(String(id))
+    // }
 
     return (
         <Page>
-            {/* <Navigation /> */}
-
-            <Right>
+            {/* <Right>
                 <ContentsSidebar
                     lessons={lessons}
                     activeLessonId={activeLesson ? String(activeLesson._id) : ""}
@@ -68,27 +66,31 @@ export default function LecturePage({
                     }
                     onSelectLesson={handleSelectLesson}
                     onSelectQuiz={(lessonId) => onTakeQuiz?.(String(lessonId))}
-                />
+                /> */}
 
-                <Main>
-                    <LectureContent lesson={activeLesson} />
+            <Main>
+                <LectureContent lesson={activeLesson} />
 
-                    <Footer>
-                        <CustomButton variant="outlined" color="secondary" onClick={onExit}>
-                            Exit a Lecture
-                        </CustomButton>
+                <Footer>
+                    <Button
+                        variant="outlined"
+                        size="medium"
+                        onClick={onExit}
+                    >
+                        Exit a Lecture
+                    </Button>
 
-                        <CustomButton
-                            variant="contained"
-                            color="primary"
-                            onClick={() => onTakeQuiz?.(String(activeLesson?._id))}
-                            disabled={!activeLesson}
-                        >
-                            Take a Quiz
-                        </CustomButton>
-                    </Footer>
-                </Main>
-            </Right>
+                    <Button
+                        variant="contained"
+                        size="large"
+                        endIcon={<ChevronRightIcon />}
+                        onClick={onTakeQuiz}
+                    >
+                        Take a Quiz
+                    </Button>
+                </Footer>
+            </Main>
+            {/* </Right> */}
         </Page>
     )
 }

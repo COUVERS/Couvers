@@ -2,8 +2,10 @@ import { useEffect, useState } from "react"
 import Box from "@mui/material/Box"
 
 import CourseNavigation from "../components/layout/CourseNavigation"
+import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
 import Header from "../Header"
+import Lecture from "./LecturePage"
 // import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
@@ -13,8 +15,14 @@ export default function CoursePage() {
     const [course, setCourse] = useState(null)
     const [lessons, setLessons] = useState([])
 
+    const [selectedLesson, setSelectedLesson] = useState(null)
+
+    const [navMode, setNavMode] = useState("course") // "course" | "contents"
+    const [viewMode, setViewMode] = useState("lessonList") // "lessonList" | "lecture"
+
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+
 
     // load courses list
     useEffect(() => {
@@ -49,23 +57,52 @@ export default function CoursePage() {
 
                     setCourse(data.course)
                     setLessons(data.lessons)
+
+                    // initialize if back to course
+                    setSelectedLesson(null)
+                    setNavMode("course")
+                    setViewMode("lessonList")
                 } catch (e) {
                     setError(e.message)
                     setCourse(null)
                     setLessons([])
+
+
                 } finally {
                     setIsLoading(false)
                 }
             })()
     }, [selectedCourseId])
 
+    const handleOpenLesson = (lesson) => {
+        setSelectedLesson(lesson)
+        setNavMode("contents")
+        setViewMode("lecture")
+    }
+
+    const handleBackToLessonList = () => {
+        setSelectedLesson(null)
+        setNavMode("course")
+        setViewMode("lessonList")
+    }
+
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
-            <CourseNavigation
-                courses={courses}
-                selectedCourseId={selectedCourseId}
-                onSelectCourse={setSelectedCourseId}
-            />
+
+            {navMode === "course" ? (
+                <CourseNavigation
+                    courses={courses}
+                    selectedCourseId={selectedCourseId}
+                    onSelectCourse={setSelectedCourseId}
+                />
+            ) : (
+                <ContentsNavigation
+                    lessons={lessons}
+                    selectedLesson={selectedLesson}
+                    onSelectLesson={handleOpenLesson}
+                    onBack={handleBackToLessonList}
+                />
+            )}
 
             <Box sx={{ flex: 1, p: 4 }}>
                 {isLoading && <p>Loading...</p>}
@@ -77,8 +114,31 @@ export default function CoursePage() {
     description={course.description}
   />
 )}
+                {viewMode === "lessonList" && (
+                    <>
+                        {course && (
+                            <Box sx={{ mb: 3 }}>
+                                <h1 style={{ margin: 0 }}>{course.title}</h1>
+                                <p style={{ marginTop: 8 }}>{course.description}</p>
+                            </Box>
+                        )}
 
-                <LessonList lessons={lessons} />
+                        <LessonList
+                            lessons={lessons}
+                            onOpenLesson={handleOpenLesson}
+                        />
+                    </>
+                )}
+
+                {viewMode === "lecture" && selectedLesson && (
+                    <Lecture
+                        lessons={lessons}
+                        activeLessonId={selectedLesson._id}
+                        onExit={handleBackToLessonList}
+                    />
+                )}
+
+
             </Box>
         </Box>
     )
