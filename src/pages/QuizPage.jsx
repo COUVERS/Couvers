@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Quiz from "../components/features/Quiz"
-import { quizQuestions } from "../services/quizData" //仮
+import { quizQuestions } from "../services/quizData" //temporary
 
 export default function QuizPage({ lesson, onBack }) {
     // console.log("lesson:", lesson)
