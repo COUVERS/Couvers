@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "../auth.css"
+import LogoLarge from "../assets/Logo_large_dark.png"
 
 export default function SignupForm({ onGoLogin }) {
     const [email, setEmail] = useState("")
@@ -12,18 +13,18 @@ export default function SignupForm({ onGoLogin }) {
         setMessage("")
         setLoading(true)
 
-    try {
-        const res = await fetch("http://localhost:5050/auth/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-        })
+        try {
+            const res = await fetch("http://localhost:5050/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            })
 
-        const data = await res.json()
-        if (!res.ok) throw new Error(data.message || "Signup failed")
+            const data = await res.json()
+            if (!res.ok) throw new Error(data.message || "Signup failed")
 
-        setMessage(`✅ ${data.message} (${data.user.email})`)
-        onGoLogin()
+            setMessage(`✅ ${data.message} (${data.user.email})`)
+            if (onGoLogin) onGoLogin()
         } catch (err) {
             setMessage(`❌ ${err.message}`)
         } finally {
@@ -34,43 +35,47 @@ export default function SignupForm({ onGoLogin }) {
     const disabled = loading || !email.trim() || password.length < 6
 
     return (
-        <div className="auth-shell">
-            <h1 className="auth-title">Create Your Account</h1>
+        <div className="auth-page">
+            <div className="auth-card">
+                <img src={LogoLarge} alt="TeTe" className="auth-logo" />
 
-        <form className="auth-form" onSubmit={handleSignup}>
-            <label className="auth-label">
-            E-mail
-            <input
-            className="auth-input"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            />
-            </label>
+                <h1 className="auth-title">Create Your Account</h1>
 
-            <label className="auth-label">
-            Password (min 6 chars)
-            <input
-            className="auth-input"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            />
-            </label>
+                <form className="auth-form" onSubmit={handleSignup}>
+                    <label className="auth-label">
+                        E-mail
+                        <input
+                            className="auth-input"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </label>
 
-        <button className="auth-btn" disabled={disabled}>
-            {loading ? "Signing Up..." : "Sign Up"}
-        </button>
+                    <label className="auth-label">
+                        Password
+                        <input
+                            className="auth-input"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </label>
 
-        <div className="auth-footer">
-            <span>Already have an account?</span>
-            <button type="button" className="auth-link" onClick={onGoLogin}>
-                Sign in
-            </button>
+                    <button className="auth-btn" disabled={disabled}>
+                        {loading ? "Signing Up..." : "Sign Up"}
+                    </button>
+
+                    <div className="auth-footer">
+                        <span>Already have an account?</span>
+                        <button type="button" className="auth-link" onClick={onGoLogin}>
+                            Sign in
+                        </button>
+                    </div>
+
+                    {message && <p className="auth-message">{message}</p>}
+                </form>
+            </div>
         </div>
-
-            {message && <p className="auth-message">{message}</p>}
-        </form>
-    </div>
-  )
+    )
 }

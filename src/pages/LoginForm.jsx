@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "../auth.css"
+import LogoLarge from "../assets/Logo_large_dark.png"
 
 export default function LoginForm({ onGoSignup, onLoginSuccess }) {
     const [email, setEmail] = useState("")
@@ -19,26 +20,16 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                 body: JSON.stringify({ email, password }),
             })
 
-            const text = await res.text()
-            let data 
-            try {
-                data = JSON.parse(text)
-            } catch {
-                throw new Error("Server did not return valid JSON")
-            }
-
+            const data = await res.json()
             if (!res.ok) throw new Error(data.message || "Login failed")
 
-            setMessage(`✅ ${data.message} (${data.user.email})`)
-
             if (data.token) {
-            localStorage.setItem("token", data.token)
+                localStorage.setItem("token", data.token)
             }
 
             if (onLoginSuccess) {
                 onLoginSuccess(data)
             }
-
         } catch (err) {
             setMessage(`❌ ${err.message}`)
         } finally {
@@ -49,56 +40,58 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
     const disabled = loading || !email.trim() || !password
 
     return (
-        <div className="auth-shell">
-            <h1 className="auth-title">Welcome to Our Platform</h1>
+        <div className="auth-page">
+            <div className="auth-card">
+                <img src={LogoLarge} alt="TeTe" className="auth-logo" />
 
-            <form className="auth-form" onSubmit={handleLogin}>
-                <label className="auth-label">
-                    E-mail
-                    <input
-                        className="auth-input"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder=""
-                    />
-                </label>
+                <h1 className="auth-title">Welcome to Our Platform</h1>
 
-                <label className="auth-label">
-                    Password
-                    <input
-                        className="auth-input"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder=""
-                    />
-                </label>
+                <form className="auth-form" onSubmit={handleLogin}>
+                    <label className="auth-label">
+                        E-mail
+                        <input
+                            className="auth-input"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </label>
 
-                <div className="auth-row">
-                    <span>Forgot your password?</span>
-                    <button
-                        type="button"
-                        className="auth-link"
-                        onClick={() => setMessage("Password reset is not implemented yet.")}
-                    >
-                        Password Reset
+                    <label className="auth-label">
+                        Password
+                        <input
+                            className="auth-input"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </label>
+
+                    <div className="auth-row">
+                        <span>Forgot your password?</span>
+                        <button
+                            type="button"
+                            className="auth-link"
+                            onClick={() => setMessage("Password reset is not implemented yet.")}
+                        >
+                            Password Reset
+                        </button>
+                    </div>
+
+                    <button className="auth-btn" disabled={disabled}>
+                        {loading ? "Signing In..." : "Sign In"}
                     </button>
-                </div>
 
-                <button className="auth-btn" disabled={disabled}>
-                    {loading ? "Signing In..." : "Sign In"}
-                </button>
+                    <div className="auth-footer">
+                        <span>No Account?</span>
+                        <button type="button" className="auth-link" onClick={onGoSignup}>
+                            Join Us
+                        </button>
+                    </div>
 
-                <div className="auth-footer">
-                    <span>No account?</span>
-                    <button type="button" className="auth-link" onClick={onGoSignup}>
-                        Join now
-                    </button>
-                </div>
-
-                {message && <p className="auth-message">{message}</p>}
-            </form>
+                    {message && <p className="auth-message">{message}</p>}
+                </form>
+            </div>
         </div>
     )
 }
