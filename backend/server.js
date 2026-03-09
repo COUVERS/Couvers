@@ -50,7 +50,7 @@ app.post("/auth/signup", async (req, res) => {
       return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
 
-    const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
+    const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
       return res.status(409).json({ message: "User already exists" });
     }
@@ -58,7 +58,7 @@ app.post("/auth/signup", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
-      email,
+      email: normalizedEmail,
       passwordHash,
     });
 
@@ -117,6 +117,7 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
+// authMiddleware
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization
 
@@ -134,6 +135,26 @@ function authMiddleware(req, res, next) {
     return res.status(401).json({ message: "Invalid token" })
   }
 }
+
+app.get("/auth/me", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-passwordHash");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      user: {
+        id: user._id,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.error("Auth me error:", err);
+    return res.status(500).json({ message: "Server error while fetching user" });
+  }
+});
 
 // Get all courses
 app.get("/api/courses", authMiddleware, async (req, res) => {
