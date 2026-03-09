@@ -8,7 +8,14 @@ import Header from "./Header"
 export default function App() {
   const [page, setPage] = useState("home")
   const [mode, setMode] = useState("login") // "login" | "signup"
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token")
+    setIsLoggedIn(false)
+    setMode("login")
+    setPage("home")
+  }
 
   if (!isLoggedIn) {
     return (
@@ -19,9 +26,7 @@ export default function App() {
             onLoginSuccess={() => setIsLoggedIn(true)}
           />
         ) : (
-          <SignupForm
-            onGoLogin={() => setMode("login")}
-          />
+          <SignupForm onGoLogin={() => setMode("login")}/>
         )}
       </div>
     )
@@ -33,6 +38,7 @@ export default function App() {
         page={page}
         setPage={setPage}
         forceCollapsed={page === "courses"}
+        onSignOut={handleSignOut}
       />
 
       <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>

@@ -5,12 +5,11 @@ require("dotenv").config();
 
 require("./db/connection");
 
+const jwt = require("jsonwebtoken")
+
 const Course = require("./models/course");
 const Lesson = require("./models/lesson");
 const Quiz = require("./models/quiz");
-// const express = require("express")
-// const cors = require("cors")
-// const db = require("./db/connection")
 
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
@@ -95,8 +94,18 @@ app.post("/auth/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
     return res.status(200).json({
       message: "Login successful",
+      token,
       user: {
         id: user._id,
         email: user.email,
@@ -108,8 +117,26 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
+function authMiddleware(req, res, next) {
+  const authHeader = req.headers.authorization
+
+  if (!authHeader) {
+    return res.status(401).json({ message: "No token provided" })
+  }
+
+  const token = authHeader.split(" ")[1]
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = decoded
+    next()
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" })
+  }
+}
+
 // Get all courses
-app.get("/api/courses", async (req, res) => {
+app.get("/api/courses", authMiddleware, async (req, res) => {
   try {
     const courses = await Course.find().sort({ createdAt: -1 });
     res.json(courses);
@@ -119,7 +146,7 @@ app.get("/api/courses", async (req, res) => {
 });
 
 // Get one course + lessons + quizzes
-app.get("/api/courses/:id/full", async (req, res) => {
+app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
 

@@ -19,10 +19,21 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                 body: JSON.stringify({ email, password }),
             })
 
-            const data = await res.json()
+            const text = await res.text()
+            let data 
+            try {
+                data = JSON.parse(text)
+            } catch {
+                throw new Error("Server did not return valid JSON")
+            }
+
             if (!res.ok) throw new Error(data.message || "Login failed")
 
             setMessage(`✅ ${data.message} (${data.user.email})`)
+
+            if (data.token) {
+            localStorage.setItem("token", data.token)
+            }
 
             if (onLoginSuccess) {
                 onLoginSuccess(data)

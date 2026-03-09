@@ -7,7 +7,6 @@ import LessonList from "./LessonList"
 import Header from "../Header"
 import Lecture from "./LecturePage"
 import QuizPage from "./QuizPage"
-// import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
     const [courses, setCourses] = useState([])
@@ -37,7 +36,12 @@ export default function CoursePage() {
         ; (async () => {
             try {
                 setError("")
-                const res = await fetch("http://127.0.0.1:5050/api/courses")
+                const token = localStorage.getItem("token")
+
+                const res = await fetch("http://127.0.0.1:5050/api/courses", {
+                headers: {Authorization: `Bearer ${token}`,
+                },
+            })
                 if (!res.ok) throw new Error(`HTTP ${res.status}`)
                 const data = await res.json()
                 setCourses(data)
@@ -59,9 +63,15 @@ export default function CoursePage() {
                     setIsLoading(true)
                     setError("")
 
-                    const res = await fetch(`/api/courses/${selectedCourseId}/full`)
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-                    const data = await res.json()
+                    const token = localStorage.getItem("token")
+
+                    const res = await fetch(`http://127.0.0.1:5050/api/courses/${selectedCourseId}/full`, {
+                    headers: {Authorization: `Bearer ${token}`,
+                    },
+                })
+                
+                if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                const data = await res.json()
 
                     setCourse(data.course)
                     setLessons(data.lessons)
