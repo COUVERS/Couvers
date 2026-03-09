@@ -26,8 +26,8 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
+  .connect(process.env.MONGO_URI, {dbName: "tete"})
+  .then(() => console.log("MongoDB connected to tete"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
 app.get("/", (req, res) => {
@@ -36,6 +36,76 @@ app.get("/", (req, res) => {
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, message: "API working" });
+});
+
+// Signup
+app.post("/auth/signup", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const newUser = await User.create({
+      email,
+      passwordHash,
+    });
+
+    return res.status(201).json({
+      message: "Signup successful",
+      user: {
+        id: newUser._id,
+        email: newUser.email,
+      },
+    });
+  } catch (err) {
+    console.error("Signup error:", err);
+    return res.status(500).json({ message: "Server error during signup" });
+  }
+});
+
+// Login
+app.post("/auth/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    return res.status(500).json({ message: "Server error during login" });
+  }
 });
 
 // Get all courses
