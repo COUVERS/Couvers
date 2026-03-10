@@ -6,7 +6,8 @@ import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
 import Header from "../Header"
 import Lecture from "./LecturePage"
-import QuizPage from "./QuizPage"
+import Quiz from "../components/features/Quiz"
+// import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
     const [courses, setCourses] = useState([])
@@ -25,34 +26,38 @@ export default function CoursePage() {
 
     const [quizzes, setQuizzes] = useState([])
     const quizItems =
-        quizzes.find(q => String(q.lessonId) === String(selectedLesson?._id))?.items || []
+  quizzes.find(q => String(q.lessonId) === String(selectedLesson?._id))?.items || []
 
-    // const handleTakeQuiz = () => {
-    //     setViewMode("quiz")
-    // }
+    const handleTakeQuiz = () => {
+  setViewMode("quiz")
+}
+
 
     // load courses list
     useEffect(() => {
-        ; (async () => {
-            try {
-                setError("")
-                const token = localStorage.getItem("token")
+    ; (async () => {
+        try {
+            setError("")
 
-                const res = await fetch("http://127.0.0.1:5050/api/courses", {
-                headers: {Authorization: `Bearer ${token}`,
+            const token = localStorage.getItem("token")
+
+            const res = await fetch("http://127.0.0.1:5050/api/courses", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
                 },
             })
-                if (!res.ok) throw new Error(`HTTP ${res.status}`)
-                const data = await res.json()
-                setCourses(data)
 
-                // first course
-                if (data.length > 0) setSelectedCourseId(data[0]._id)
-            } catch (e) {
-                setError(e.message)
-            }
-        })()
-    }, [])
+            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+            const data = await res.json()
+            setCourses(data)
+
+            if (data.length > 0) setSelectedCourseId(data[0]._id)
+
+        } catch (e) {
+            setError(e.message)
+        }
+    })()
+}, [])
 
     //load selected course + lessons
     useEffect(() => {
@@ -63,19 +68,22 @@ export default function CoursePage() {
                     setIsLoading(true)
                     setError("")
 
-                    const token = localStorage.getItem("token")
+                  const token = localStorage.getItem("token")
 
-                    const res = await fetch(`http://127.0.0.1:5050/api/courses/${selectedCourseId}/full`, {
-                    headers: {Authorization: `Bearer ${token}`,
-                    },
-                })
-                
-                if (!res.ok) throw new Error(`HTTP ${res.status}`)
-                const data = await res.json()
+const res = await fetch(
+    `http://127.0.0.1:5050/api/courses/${selectedCourseId}/full`,
+    {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+)
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                    const data = await res.json()
 
                     setCourse(data.course)
-                    setLessons(data.lessons)
-                    setQuizzes(data.quizzes)
+setLessons(data.lessons)
+setQuizzes(data.quizzes)
 
                     // initialize if back to course
                     setSelectedLesson(null)
@@ -105,14 +113,6 @@ export default function CoursePage() {
         setViewMode("lessonList")
     }
 
-    const handleTakeQuiz = () => {
-        setViewMode("quiz")
-    }
-
-    const handleBackToLecture = () => {
-        setViewMode("lecture")
-    }
-
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
 
@@ -136,13 +136,19 @@ export default function CoursePage() {
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
                 {course && (
-                    <Header
-                        title={course.title}
-                        description={course.description}
-                    />
-                )}
+  <Header
+    title={course.title}
+    description={course.description}
+  />
+)}
                 {viewMode === "lessonList" && (
                     <>
+                        {course && (
+                            <Box sx={{ mb: 3 }}>
+                                <h1 style={{ margin: 0 }}>{course.title}</h1>
+                                <p style={{ marginTop: 8 }}>{course.description}</p>
+                            </Box>
+                        )}
 
                         <LessonList
                             lessons={lessons}
@@ -151,37 +157,22 @@ export default function CoursePage() {
                     </>
                 )}
 
-                {/* {viewMode === "lecture" && selectedLesson && (
-                    <Lecture
-                        lessons={lessons}
-                        activeLessonId={selectedLesson._id}
-                        onExit={handleBackToLessonList}
-                        onTakeQuiz={handleTakeQuiz}
-                    />
-                )} */}
-                {viewMode === "lecture" && selectedLesson && (
-                    <Lecture
-                        lessons={lessons}
-                        activeLessonId={selectedLesson._id}
-                        onExit={handleBackToLessonList}
-                        onTakeQuiz={handleTakeQuiz}
-                    />
-                )}
+              {viewMode === "lecture" && selectedLesson && (
+  <Lecture
+    lessons={lessons}
+    activeLessonId={selectedLesson._id}
+    onExit={handleBackToLessonList}
+    onTakeQuiz={handleTakeQuiz}
+  />
+)}
 
-                {/* {viewMode === "quiz" && selectedLesson && (
-                    <QuizPage
-                        lesson={selectedLesson}
-                        quizItems={quizItems}
-                        onBack={handleBackToLecture}
-                    />
-                )} */}
-
-                {viewMode === "quiz" && selectedLesson && (
-                    <QuizPage
-                        quizItems={quizItems}
-                        onBack={handleBackToLecture}
-                    />
-                )}
+{viewMode === "quiz" && quizItems.length > 0 && (
+  <Quiz
+    question={quizItems[0]}
+    questionNumber={1}
+    totalQuestions={quizItems.length}
+  />
+)}
 
 
             </Box>
