@@ -25,39 +25,43 @@ export default function CoursePage() {
     const [isLoading, setIsLoading] = useState(false)
 
     const [quizzes, setQuizzes] = useState([])
-    const quizItems =
-  quizzes.find(q => String(q.lessonId) === String(selectedLesson?._id))?.items || []
 
+    const matchedQuizzes = quizzes.filter(
+        q => String(q.lessonId) === String(selectedLesson?._id)
+    )
     const handleTakeQuiz = () => {
-  setViewMode("quiz")
-}
+        setViewMode("quiz")
+    }
 
+    console.log("selectedLesson", selectedLesson)
+    console.log("quizzes", quizzes)
+    console.log("matchedQuizzes", matchedQuizzes)
 
     // load courses list
     useEffect(() => {
-    ; (async () => {
-        try {
-            setError("")
+        ; (async () => {
+            try {
+                setError("")
 
-            const token = localStorage.getItem("token")
+                const token = localStorage.getItem("token")
 
-            const res = await fetch("http://127.0.0.1:5050/api/courses", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+                const res = await fetch("http://127.0.0.1:5050/api/courses", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
 
-            if (!res.ok) throw new Error(`HTTP ${res.status}`)
-            const data = await res.json()
-            setCourses(data)
+                if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                const data = await res.json()
+                setCourses(data)
 
-            if (data.length > 0) setSelectedCourseId(data[0]._id)
+                if (data.length > 0) setSelectedCourseId(data[0]._id)
 
-        } catch (e) {
-            setError(e.message)
-        }
-    })()
-}, [])
+            } catch (e) {
+                setError(e.message)
+            }
+        })()
+    }, [])
 
     //load selected course + lessons
     useEffect(() => {
@@ -68,31 +72,32 @@ export default function CoursePage() {
                     setIsLoading(true)
                     setError("")
 
-                  const token = localStorage.getItem("token")
+                    const token = localStorage.getItem("token")
 
-const res = await fetch(
-    `http://127.0.0.1:5050/api/courses/${selectedCourseId}/full`,
-    {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    }
-)
+                    const res = await fetch(
+                        `http://127.0.0.1:5050/api/courses/${selectedCourseId}/full`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    )
                     if (!res.ok) throw new Error(`HTTP ${res.status}`)
                     const data = await res.json()
 
                     setCourse(data.course)
-setLessons(data.lessons)
-setQuizzes(data.quizzes)
+                    setLessons(data.lessons)
+                    setQuizzes(data.quizzes)
 
                     // initialize if back to course
-                    setSelectedLesson(null)
-                    setNavMode("course")
-                    setViewMode("lessonList")
+                    setCourse(data.course || null)
+                    setLessons(data.lessons || [])
+                    setQuizzes(data.quizzes || [])
                 } catch (e) {
                     setError(e.message)
                     setCourse(null)
                     setLessons([])
+                    setQuizzes([])
 
 
                 } finally {
@@ -136,11 +141,11 @@ setQuizzes(data.quizzes)
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
                 {course && (
-  <Header
-    title={course.title}
-    description={course.description}
-  />
-)}
+                    <Header
+                        title={course.title}
+                        description={course.description}
+                    />
+                )}
                 {viewMode === "lessonList" && (
                     <>
                         {course && (
@@ -157,23 +162,22 @@ setQuizzes(data.quizzes)
                     </>
                 )}
 
-              {viewMode === "lecture" && selectedLesson && (
-  <Lecture
-    lessons={lessons}
-    activeLessonId={selectedLesson._id}
-    onExit={handleBackToLessonList}
-    onTakeQuiz={handleTakeQuiz}
-  />
-)}
+                {viewMode === "lecture" && selectedLesson && (
+                    <Lecture
+                        lessons={lessons}
+                        activeLessonId={selectedLesson._id}
+                        onExit={handleBackToLessonList}
+                        onTakeQuiz={handleTakeQuiz}
+                    />
+                )}
 
-{viewMode === "quiz" && quizItems.length > 0 && (
-  <Quiz
-    question={quizItems[0]}
-    questionNumber={1}
-    totalQuestions={quizItems.length}
-  />
-)}
-
+                {viewMode === "quiz" && matchedQuizzes.length > 0 && (
+                    <Quiz
+                        question={matchedQuizzes[0]}
+                        questionNumber={1}
+                        totalQuestions={matchedQuizzes.length}
+                    />
+                )}
 
             </Box>
         </Box>

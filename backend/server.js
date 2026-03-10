@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URI, {dbName: "tete"})
+  .connect(process.env.MONGO_URI, { dbName: "tete" })
   .then(() => console.log("MongoDB connected to tete"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
@@ -177,7 +177,8 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
     if (!course) return res.status(404).json({ error: "Course not found" });
 
     const lessons = await Lesson.find({ courseId: id }).sort({ order: 1 });
-    const quizzes = await Quiz.find({ courseId: id });
+    const lessonIds = lessons.map((lesson) => lesson._id);
+    const quizzes = await Quiz.find({ lessonId: { $in: lessonIds } });
 
     res.json({ course, lessons, quizzes });
   } catch (err) {
