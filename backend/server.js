@@ -14,6 +14,8 @@ const Quiz = require("./models/quiz");
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
 
+const QuizAttempt = require("./models/QuizAttempt");
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -25,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URI, {dbName: "tete"})
+  .connect(process.env.MONGO_URI, { dbName: "tete" })
   .then(() => console.log("MongoDB connected to tete"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
@@ -182,6 +184,32 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
     res.json({ course, lessons, quizzes });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+//quiz attempt
+app.post("/api/quiz-attempts", authMiddleware, async (req, res) => {
+  try {
+    const { quizId, lessonId, score } = req.body;
+
+    if (!quizId || score === undefined) {
+      return res.status(400).json({ message: "quizId and score are required" });
+    }
+
+    const newAttempt = await QuizAttempt.create({
+      userId: req.user.userId,
+      quizId,
+      lessonId,
+      score,
+    });
+
+    return res.status(201).json({
+      message: "Quiz attempt saved",
+      attempt: newAttempt,
+    });
+  } catch (err) {
+    console.error("Quiz attempt error:", err);
+    return res.status(500).json({ message: "Server error while saving quiz attempt" });
   }
 });
 

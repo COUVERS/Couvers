@@ -4,6 +4,7 @@ import SignupForm from "./pages/SignupForm"
 import Navigation from "./components/layout/Navigation"
 import Course from "./pages/Course"
 import Header from "./Header"
+import QuizSubmit from "./components/features/QuizSubmit"
 
 export default function App() {
   const [page, setPage] = useState("home")
@@ -26,7 +27,7 @@ export default function App() {
             onLoginSuccess={() => setIsLoggedIn(true)}
           />
         ) : (
-          <SignupForm onGoLogin={() => setMode("login")}/>
+          <SignupForm onGoLogin={() => setMode("login")} />
         )}
       </div>
     )
@@ -51,6 +52,7 @@ export default function App() {
 
         {page === "home" && <h1>Home</h1>}
         {page === "courses" && <Course />}
+        <QuizSubmit />
       </main>
     </div>
   )
