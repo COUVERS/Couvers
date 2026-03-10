@@ -45,6 +45,8 @@ export default function LecturePage({
         [lessons, activeLessonId]
     )
 
+  
+
     // const [openLessonId, setOpenLessonId] = useState(
     //     activeLesson ? String(activeLesson._id) : null
     // )
