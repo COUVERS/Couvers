@@ -4,18 +4,12 @@ import { Box } from "@mui/material"
 import Button from "@mui/material/Button"
 import LectureContent from "../components/features/LectureContent"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-// import CustomButton from "../components/reusable-ui/CustomButton"
 
 const Page = styled(Box)(() => ({
     display: "flex",
     minHeight: "100vh",
     background: "var(--Color-Background-Default)",
 }))
-
-// const Right = styled(Box)(() => ({
-//     flex: 1,
-//     display: "flex",
-// }))
 
 const Main = styled(Box)(() => ({
     flex: 1,
@@ -36,7 +30,6 @@ const Footer = styled(Box)(() => ({
 export default function LecturePage({
     lessons = [],
     activeLessonId,
-    // onSelectLesson,
     onExit,
     onTakeQuiz,
 }) {
@@ -45,29 +38,8 @@ export default function LecturePage({
         [lessons, activeLessonId]
     )
 
-    // const [openLessonId, setOpenLessonId] = useState(
-    //     activeLesson ? String(activeLesson._id) : null
-    // )
-
-    // const handleSelectLesson = (id) => {
-    //     setOpenLessonId(String(id))
-    //     onSelectLesson?.(String(id))
-    // }
-
     return (
         <Page>
-            {/* <Right>
-                <ContentsSidebar
-                    lessons={lessons}
-                    activeLessonId={activeLesson ? String(activeLesson._id) : ""}
-                    openLessonId={openLessonId}
-                    onToggleLesson={(id) =>
-                        setOpenLessonId((prev) => (prev === String(id) ? null : String(id)))
-                    }
-                    onSelectLesson={handleSelectLesson}
-                    onSelectQuiz={(lessonId) => onTakeQuiz?.(String(lessonId))}
-                /> */}
-
             <Main>
                 <LectureContent lesson={activeLesson} />
 
@@ -90,7 +62,6 @@ export default function LecturePage({
                     </Button>
                 </Footer>
             </Main>
-            {/* </Right> */}
         </Page>
     )
 }

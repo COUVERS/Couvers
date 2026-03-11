@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
     Box,
     List,
@@ -9,7 +9,7 @@ import {
     IconButton
 } from '@mui/material'
 import SidebarBase from '../reusable-ui/SideBarBase'
-
+//Logo and Icons
 import LogoLarge from '../../assets/Logo_large_dark.png'
 import LogoSmall from '../../assets/Logo_small_dark.png'
 import HomeIcon from '../../assets/icons/HomeIcon'
@@ -19,7 +19,7 @@ import SignOutIcon from '../../assets/icons/SignOutIcon'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
-export default function Navigation({ page, setPage, forceCollapsed = false }) {
+export default function Navigation({ page, setPage, forceCollapsed = false, onSignOut }) {
     const [isExpanded, setIsExpanded] = useState(true)
     const toggleDrawer = () => setIsExpanded(!isExpanded)
 
@@ -123,6 +123,13 @@ export default function Navigation({ page, setPage, forceCollapsed = false }) {
                             {bottomItems.map((item) => (
                                 <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
+                                        onClick={() => {
+                                        if (item.pageKey === "signout") {
+                                            if (onSignOut) onSignOut()
+                                        } else {
+                                            setPage(item.pageKey)
+                                        }
+                                    }}
                                         sx={{
                                             minHeight: 48,
                                             flexDirection: isExpanded ? 'row' : 'column',
@@ -140,6 +147,7 @@ export default function Navigation({ page, setPage, forceCollapsed = false }) {
                                         >
                                             {item.icon}
                                         </ListItemIcon>
+
                                         <ListItemText
                                             primary={item.text}
                                             primaryTypographyProps={{
@@ -156,6 +164,7 @@ export default function Navigation({ page, setPage, forceCollapsed = false }) {
                         </List>
                     </Box>
                 </Box>
+
                 {/* Toggle Button */}
                 <Box
                     sx={{
