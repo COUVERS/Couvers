@@ -6,7 +6,9 @@ import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
 import Header from "../Header"
 import Lecture from "./LecturePage"
-import Quiz from "../components/features/Quiz"
+import QuizPage from "./QuizPage"
+// import { demoLessons } from "../library/demoLessons"
+
 
 export default function CoursePage() {
     const [courses, setCourses] = useState([])
@@ -171,12 +173,11 @@ export default function CoursePage() {
                 )}
 
                 {viewMode === "quiz" && matchedQuizzes.length > 0 && (
-                    <Quiz
-                        question={matchedQuizzes[0]}
-                        questionNumber={1}
-                        totalQuestions={matchedQuizzes.length}
-                    />
-                )}
+    <QuizPage
+        quizItems={matchedQuizzes}
+        onBack={() => setViewMode("lecture")}
+    />
+)}
 
             </Box>
         </Box>
