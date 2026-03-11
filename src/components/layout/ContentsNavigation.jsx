@@ -2,13 +2,13 @@ import { useState } from "react"
 import { styled } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import Links from "../reusable-ui/Links"
-import ContentsNavItem from "../reusable-ui/ContentsNavItem"
-// import demoLessons from "../../library/demoLessons"
-import SidebarBase from "../reusable-ui/SideBarBase"
 
-import IconButton from "@mui/material/IconButton"
+import ContentsNavItem from "../reusable-ui/ContentsNavItem"
+
+import SidebarBase from "../reusable-ui/SideBarBase"
 import ListItemButton from "@mui/material/ListItemButton"
+//Icons
+import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 

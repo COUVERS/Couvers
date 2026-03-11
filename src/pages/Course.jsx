@@ -9,6 +9,7 @@ import Lecture from "./LecturePage"
 import QuizPage from "./QuizPage"
 // import { demoLessons } from "../library/demoLessons"
 
+
 export default function CoursePage() {
     const [courses, setCourses] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(null)
