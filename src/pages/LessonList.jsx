@@ -9,7 +9,7 @@ export default function LessonList({ lessons = [], onOpenLesson }) {
                     key={lesson._id}
                     order={lesson.order}
                     title={lesson.title}
-                    description={lesson.lessonDescription}
+                    description={lesson.description}
                     badgeVariant="default"
                     onClick={() => onOpenLesson?.(lesson)}
                 />
