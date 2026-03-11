@@ -186,5 +186,5 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
