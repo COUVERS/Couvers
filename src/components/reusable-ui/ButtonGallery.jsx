@@ -1,7 +1,7 @@
 import { Container, Stack, Button } from '@mui/material';
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-const CustomButton = () => {
+const ButtonGallery = () => {
     return (
         <Container maxWidth="sm">
             <Stack spacing={2}>
@@ -24,5 +24,5 @@ const CustomButton = () => {
     )
 }
 
-export default CustomButton
+export default ButtonGallery
 
