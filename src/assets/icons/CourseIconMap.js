@@ -5,11 +5,11 @@ import AssessmentAndFeedback from "./AssessmentAndFeedback"
 import LessonPlanning from "./LessonPlanning"
 
 const courseIconMap = {
-    "Effective Communication": EffectiveCommunication,
-    "Fundamentals of Teaching": FundamentalOfTeaching,
-    "Empathy and Classroom Management": EmpathyAndClassroom,
-    "Assessment and Feedback": AssessmentAndFeedback,
-    "Lesson Planning": LessonPlanning,
+    effectiveCommunication: EffectiveCommunication,
+    fundamentalsOfTeaching: FundamentalOfTeaching,
+    empathy: EmpathyAndClassroom,
+    assessment: AssessmentAndFeedback,
+    lessonPlanning: LessonPlanning,
 }
 
 export default courseIconMap

@@ -1,4 +1,3 @@
-import React from "react"
 import { Button, Box, Typography } from "@mui/material"
 import { styled } from "@mui/material/styles"
 import courseIconMap from "../../assets/icons/CourseIconMap"
@@ -27,7 +26,9 @@ const LessonButton = styled(Button, {
     shouldForwardProp: (prop) => prop !== "buttonsize",
 })(({ buttonsize }) => ({
     ...sizeStyles[buttonsize],
-    borderRadius: 16,
+    height: "100px",
+    minHeight: "80px",
+    borderRadius: 12,
     padding: 0,
     overflow: "hidden",
     justifyContent: "flex-start",
@@ -37,12 +38,12 @@ const LessonButton = styled(Button, {
 }))
 
 const IconBox = styled(Box)(() => ({
-    width: 116,
+    width: 100,
     display: "flex",
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
-    background: "rgba(255,255,255,0.24)",
     flexShrink: 0,
+    overflow: "hidden",
 }))
 
 const Content = styled(Box)(() => ({
@@ -67,12 +68,13 @@ const ActionBox = styled(Box)(() => ({
 
 export default function LessonLinkButton({
     courseName,
+    iconKey,
     lessonTitle,
     action = "continue",
     size = "lecture",
     onClick,
 }) {
-    const icon = courseIconMap[courseName] ?? null
+    const Icon = courseIconMap[iconKey]
     const actionLabel = actionLabelMap[action] ?? actionLabelMap.continue
 
     return (
@@ -82,7 +84,7 @@ export default function LessonLinkButton({
             onClick={onClick}
         >
             <IconBox>
-                {icon}
+                {Icon && <Icon size={100} />}
             </IconBox>
 
             <Content>
