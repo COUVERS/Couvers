@@ -26,7 +26,7 @@ export default function App() {
             onLoginSuccess={() => setIsLoggedIn(true)}
           />
         ) : (
-          <SignupForm onGoLogin={() => setMode("login")}/>
+          <SignupForm onGoLogin={() => setMode("login")} />
         )}
       </div>
     )

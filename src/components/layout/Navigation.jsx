@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
     Box,
     List,
@@ -9,7 +9,7 @@ import {
     IconButton
 } from '@mui/material'
 import SidebarBase from '../reusable-ui/SideBarBase'
-
+//Logo and Icons
 import LogoLarge from '../../assets/Logo_large_dark.png'
 import LogoSmall from '../../assets/Logo_small_dark.png'
 import HomeIcon from '../../assets/icons/HomeIcon'
