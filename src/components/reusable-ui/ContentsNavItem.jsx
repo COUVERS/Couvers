@@ -1,8 +1,7 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-
 import Links from "../reusable-ui/Links"
-
+//Icons
 import VerifiedIcon from "../../assets/icons/VerifiedIcon"
 import LockedIcon from "../../assets/icons/LockedIcon"
 import CircleIcon from "../../assets/icons/CircleIcon"

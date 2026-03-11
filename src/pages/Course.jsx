@@ -7,7 +7,6 @@ import LessonList from "./LessonList"
 import Header from "../Header"
 import Lecture from "./LecturePage"
 import Quiz from "../components/features/Quiz"
-// import { demoLessons } from "../library/demoLessons"
 
 export default function CoursePage() {
     const [courses, setCourses] = useState([])
