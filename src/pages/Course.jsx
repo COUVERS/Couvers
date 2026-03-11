@@ -10,6 +10,9 @@ import QuizPage from "./QuizPage"
 // import { demoLessons } from "../library/demoLessons"
 
 
+import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
+import ContinueLearningCard from "../components/features/ContinueLearningCard"
+
 export default function CoursePage() {
     const [courses, setCourses] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(null)
@@ -18,6 +21,7 @@ export default function CoursePage() {
     const [lessons, setLessons] = useState([])
 
     const [selectedLesson, setSelectedLesson] = useState(null)
+    const [startedLesson, setStartedLesson] = useState(null)
 
     const [navMode, setNavMode] = useState("course") // "course" | "contents"
     const [viewMode, setViewMode] = useState("lessonList") // "lessonList" | "lecture"
@@ -64,6 +68,11 @@ export default function CoursePage() {
         })()
     }, [])
 
+    useEffect(() => {
+        setSelectedLesson(null)
+        setStartedLesson(null)
+    }, [selectedCourseId])
+
     //load selected course + lessons
     useEffect(() => {
         if (!selectedCourseId) return
@@ -86,10 +95,6 @@ export default function CoursePage() {
                     if (!res.ok) throw new Error(`HTTP ${res.status}`)
                     const data = await res.json()
 
-                    setCourse(data.course)
-                    setLessons(data.lessons)
-                    setQuizzes(data.quizzes)
-
                     // initialize if back to course
                     setCourse(data.course || null)
                     setLessons(data.lessons || [])
@@ -109,6 +114,7 @@ export default function CoursePage() {
 
     const handleOpenLesson = (lesson) => {
         setSelectedLesson(lesson)
+        setStartedLesson(lesson)
         setNavMode("contents")
         setViewMode("lecture")
     }
@@ -150,16 +156,23 @@ export default function CoursePage() {
                 {viewMode === "lessonList" && (
                     <>
                         {course && (
-                            <Box sx={{ mb: 3 }}>
-                                <h1 style={{ margin: 0 }}>{course.title}</h1>
-                                <p style={{ marginTop: 8 }}>{course.description}</p>
+                            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                                {startedLesson && (
+                                    <LessonLinkButton
+                                        courseName={course.title}
+                                        iconKey={course.icon}
+                                        lessonTitle={startedLesson.title}
+                                        action="continue"
+                                        onClick={() => handleOpenLesson(startedLesson)}
+                                    />
+                                )}
+
+                                <LessonList
+                                    lessons={lessons}
+                                    onOpenLesson={handleOpenLesson}
+                                />
                             </Box>
                         )}
-
-                        <LessonList
-                            lessons={lessons}
-                            onOpenLesson={handleOpenLesson}
-                        />
                     </>
                 )}
 

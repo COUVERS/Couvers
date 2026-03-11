@@ -4,6 +4,7 @@ import SignupForm from "./pages/SignupForm"
 import Navigation from "./components/layout/Navigation"
 import Course from "./pages/Course"
 import Header from "./Header"
+import ContinueLearningCard from "./components/features/ContinueLearningCard"
 
 export default function App() {
   const [page, setPage] = useState("home")
@@ -49,7 +50,15 @@ export default function App() {
           />
         )}
 
-        {page === "home" && <h1>Home</h1>}
+        {page === "home" && (
+          <>
+            <h1>Home</h1>
+
+            <ContinueLearningCard
+              onStart={() => setPage("courses")}
+            />
+          </>
+        )}
         {page === "courses" && <Course />}
       </main>
     </div>
