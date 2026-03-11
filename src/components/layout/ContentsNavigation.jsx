@@ -66,7 +66,7 @@ export default function ContentsNavigation({
                     {/* Lesson list */}
                     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
 
-                        {demoLessons.map((lesson) => (
+                        {lessons.map((lesson) => (
                             <ContentsNavItem
                                 key={lesson._id}
                                 lesson={lesson}
