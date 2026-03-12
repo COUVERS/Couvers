@@ -4,7 +4,6 @@ import SignupForm from "./pages/SignupForm"
 import Navigation from "./components/layout/Navigation"
 import Course from "./pages/Course"
 import Header from "./Header"
-import QuizSubmit from "./components/features/QuizSubmit"
 import Dashboard from "./pages/Dashboard"
 
 export default function App() {
@@ -74,7 +73,6 @@ export default function App() {
             continueLessonId={continueLessonId}
           />
         )}
-        <QuizSubmit />
       </main>
     </div>
   )

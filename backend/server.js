@@ -628,5 +628,64 @@ app.get("/api/dashboard/next-lesson", authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * API: Get Review Lesson
+ * GET /api/dashboard/review-lesson
+ *
+ * Returns one lesson recommended for review.
+ */
+
+app.get("/api/dashboard/review-lesson", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const attempts = await QuizAttempt.find({ userId })
+      .sort({ score: 1, submittedAt: 1 });
+
+    if (!attempts.length) {
+      return res.status(200).json({ reviewLesson: null });
+    }
+
+    const bestAttemptByLesson = new Map();
+
+    for (const attempt of attempts) {
+      const key = String(attempt.lessonId);
+
+      if (!bestAttemptByLesson.has(key)) {
+        bestAttemptByLesson.set(key, attempt);
+      }
+    }
+
+    const attemptsList = [...bestAttemptByLesson.values()];
+
+    const reviewAttempt = attemptsList.find((a) => a.score < 100);
+    const targetAttempt = reviewAttempt || attemptsList[attemptsList.length - 1];
+
+    const lesson = await Lesson.findById(targetAttempt.lessonId);
+    if (!lesson) {
+      return res.status(200).json({ reviewLesson: null });
+    }
+
+    const course = await Course.findById(lesson.courseId);
+    if (!course) {
+      return res.status(200).json({ reviewLesson: null });
+    }
+
+    return res.status(200).json({
+      reviewLesson: {
+        lessonId: lesson._id,
+        lessonTitle: lesson.title,
+        courseId: course._id,
+        courseName: course.title,
+        iconKey: course.icon || "empathy",
+        bestScore: targetAttempt.score,
+      },
+    });
+  } catch (err) {
+    console.error("Review lesson error:", err);
+    return res.status(500).json({ message: "Server error while fetching review lesson" });
+  }
+});
+
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
