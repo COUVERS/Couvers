@@ -1,80 +1,141 @@
 import { useState } from "react"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
 import Quiz from "../components/features/Quiz"
 import ResultPage from "./ResultPage"
 
-export default function QuizPage({ quizItems = [], onBack }) {
+export default function QuizPage({ lessonId, quizItems = [], onBack }) {
 
   const [currentIndex, setCurrentIndex] = useState(0)
-
   const [answers, setAnswers] = useState([])
-const [showResult, setShowResult] = useState(false)
+  const [showResult, setShowResult] = useState(false)
+  const [resultData, setResultData] = useState(null)
+  const [error, setError] = useState("")
+
   const currentQuestion = quizItems[currentIndex]
   const isLastQuestion = currentIndex === quizItems.length - 1
- const score = answers.filter(a => a.correct).length
 
- const handleSubmit = (selectedAnswer) => {
+  const handleSubmit = (selectedAnswer) => {
 
-  const correct = selectedAnswer === currentQuestion.answer
+    const quizId = currentQuestion?._id || currentQuestion?.id
 
-  setAnswers((prev) => [
-    ...prev,
-    {
-      question: currentQuestion.question,
-      userAnswer: selectedAnswer,
-      correctAnswer: currentQuestion.answer,
-      explanation: currentQuestion.review,
-      correct
+    // console.log("currentQuestion:", currentQuestion)
+    // console.log("quizId saved:", quizId)
+    // console.log("selectedAnswer:", selectedAnswer)
+    setAnswers((prev) => [
+      ...prev,
+      {
+        quizId: currentQuestion._id,
+        selectedAnswer,
+      },
+    ])
+
+    if (!isLastQuestion) {
+      setCurrentIndex((prev) => prev + 1)
     }
-  ])
+  }
+  // const handleSubmit = (selectedAnswer) => {
+  //   const correct = selectedAnswer === currentQuestion.answer
+  //   setAnswers((prev) => [
+  //     ...prev,
+  //     {
+  //       question: currentQuestion.question,
+  //       userAnswer: selectedAnswer,
+  //       correctAnswer: currentQuestion.answer,
+  //       explanation: currentQuestion.review,
+  //       correct
+  //     }
+  //   ])
+  //   if (!isLastQuestion) {
+  //     setCurrentIndex((prev) => prev + 1)
+  //   }
+  // }
 
-  if (!isLastQuestion) {
-    setCurrentIndex((prev) => prev + 1)
+  async function handleCheckResult() {
+    try {
+      setError("")
+
+      const token = localStorage.getItem("token")
+
+      const response = await fetch("http://localhost:5050/api/lessons/" + lessonId + "/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          answers,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || "Submit failed")
+      }
+
+      setResultData(data)
+      setShowResult(true)
+    } catch (err) {
+      console.error(err)
+      setError(err.message || "Failed to submit quiz")
+    }
   }
 
-}
-
-if (showResult) {
-  return (
-    <ResultPage
-      score={score}
-      total={quizItems.length}
-      answers={answers}
-      onRetry={() => {
-        setCurrentIndex(0)
-        setAnswers([])
-        setShowResult(false)
-      }}
-      onBack={onBack}
-    />
-  )
-}
+  if (showResult && resultData) {
+    return (
+      <ResultPage
+        score={resultData.correctCount}
+        total={resultData.totalQuestions}
+        answers={resultData.results.map((item) => ({
+          question: item.question,
+          userAnswer: item.selectedAnswer,
+          correctAnswer: item.correctAnswer,
+          explanation: item.review,
+          correct: item.isCorrect,
+        }))}
+        onRetry={() => {
+          setCurrentIndex(0)
+          setAnswers([])
+          setShowResult(false)
+          setResultData(null)
+          setError("")
+        }}
+        onBack={onBack}
+      />
+    )
+  }
 
   return (
     <Box sx={{ p: 4 }}>
-
       {!currentQuestion ? (
         <p>No quiz found for this lesson.</p>
       ) : (
         <>
-        <Quiz
-  key={currentIndex}
-  question={currentQuestion}
-  questionNumber={currentIndex + 1}
-  totalQuestions={quizItems.length}
-  onSubmit={handleSubmit}
-/>
+          <Quiz
+            key={currentIndex}
+            question={currentQuestion}
+            questionNumber={currentIndex + 1}
+            totalQuestions={quizItems.length}
+            onSubmit={handleSubmit}
+          />
 
           {isLastQuestion && (
             <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
               <Button
-  variant="contained"
-  onClick={() => setShowResult(true)}
->
-  Check the Result
-</Button>
+                variant="contained"
+                onClick={handleCheckResult}
+                disabled={answers.length < quizItems.length}
+              >
+                Check the Result
+              </Button>
             </Box>
+          )}
+          {error && (
+            <Typography sx={{ mt: 2, color: "var(--Color-Error-Main)" }}>
+              {error}
+            </Typography>
           )}
         </>
       )}

@@ -5,6 +5,11 @@ const LessonSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course"
   },
+  skillId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Skill",
+    required: true,
+  },
   order: Number,
   title: String,
   lessonDescription: String,

@@ -21,6 +21,7 @@ const Quiz = require("./models/quiz");
 const Skill = require("./models/skill");
 const QuizAttempt = require("./models/QuizAttempt");
 const SkillProgress = require("./models/SkillProgress");
+const LessonProgress = require("./models/LessonProgress");
 
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
@@ -350,6 +351,33 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
       submittedAt: new Date(),
     });
 
+    // Update or create LessonProgress
+    const existingLessonProgress = await LessonProgress.findOne({
+      userId,
+      lessonId: lesson._id,
+    });
+
+    let updatedLessonProgress;
+
+    if (!existingLessonProgress) {
+      updatedLessonProgress = await LessonProgress.create({
+        userId,
+        lessonId: lesson._id,
+        status: passed ? "completed" : "in_progress",
+        bestScore: score,
+      });
+    } else {
+      existingLessonProgress.bestScore = Math.max(existingLessonProgress.bestScore, score);
+
+      if (passed) {
+        existingLessonProgress.status = "completed";
+      } else if (existingLessonProgress.status !== "completed") {
+        existingLessonProgress.status = "in_progress";
+      }
+
+      updatedLessonProgress = await existingLessonProgress.save();
+    }
+
     // Find the best attempt for this lesson (highest score)
     const bestAttemptForLesson = await QuizAttempt.findOne({
       userId,
@@ -437,6 +465,11 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
       passed,
       bestScore: bestAttemptForLesson?.score ?? score,
       bestPassed: bestAttemptForLesson?.passed ?? passed,
+      lessonProgress: {
+        lessonId: updatedLessonProgress.lessonId,
+        status: updatedLessonProgress.status,
+        bestScore: updatedLessonProgress.bestScore,
+      },
       skillProgress: {
         skillId: updatedSkillProgress.skillId,
         passedLessons: updatedSkillProgress.passedLessons,
@@ -481,6 +514,56 @@ app.get("/api/dashboard/skills", authMiddleware, async (req, res) => {
   } catch (err) {
     console.error("Dashboard skills error:", err);
     return res.status(500).json({ message: "Server error while fetching dashboard skills" });
+  }
+});
+
+/**
+ * API: Get Dashboard Course Progress
+ * GET /api/dashboard/courses
+ *
+ * Returns course progress data for the authenticated user.
+ * Course progress is based on completed lessons only.
+ */
+app.get("/api/dashboard/courses", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const courses = await Course.find().sort({ createdAt: -1 });
+    const courseProgressList = [];
+
+    for (const course of courses) {
+      const lessons = await Lesson.find({ courseId: course._id }).select("_id");
+
+      const lessonIds = lessons.map((lesson) => lesson._id);
+      const totalLessons = lessonIds.length;
+
+      const completedLessons = await LessonProgress.countDocuments({
+        userId,
+        lessonId: { $in: lessonIds },
+        status: "completed",
+      });
+
+      const progress =
+        totalLessons === 0
+          ? 0
+          : Math.round((completedLessons / totalLessons) * 100);
+
+      courseProgressList.push({
+        courseId: course._id,
+        title: course.title,
+        progress,
+        completedLessons,
+        totalLessons,
+      });
+    }
+
+    return res.status(200).json({
+      userId,
+      courses: courseProgressList,
+    });
+  } catch (err) {
+    console.error("Dashboard courses error:", err);
+    return res.status(500).json({ message: "Server error while fetching dashboard courses" });
   }
 });
 

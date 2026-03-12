@@ -7,19 +7,33 @@ const QuizSchema = new mongoose.Schema({
   },
   lessonId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Lesson"
+    ref: "Lesson",
+    required: true,
   },
-  items: [
-    {
-      order: Number,
-      skill: String,
-      scenario: String,
-      question: String,
-      choices: [String],
-      correctIndex: Number,
-      review: String
-    }
-  ]
+  scenario: {
+    type: String,
+    required: true,
+  },
+  questionType: {
+    type: String,
+    default: "multiple-choice",
+  },
+  question: {
+    type: String,
+    required: true,
+  },
+  option: {
+    type: [String],
+    default: [],
+  },
+  answer: {
+    type: String,
+    required: true,
+  },
+  review: {
+    type: String,
+    default: "",
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Quiz", QuizSchema);
