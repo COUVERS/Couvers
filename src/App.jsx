@@ -13,6 +13,8 @@ export default function App() {
   const [page, setPage] = useState("home")
   const [mode, setMode] = useState("login") // "login" | "signup"
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
+  const [authUser, setAuthUser] = useState(null)
+  const [accountView, setAccountView] = useState("settings")
 
   const handleSignOut = () => {
     localStorage.removeItem("token")
@@ -94,6 +96,14 @@ export default function App() {
 
         {page === "home" && <h1>Home</h1>}
         {page === "courses" && <Course />}
+
+        {page === "account" && accountView === "settings" && (
+          <AccountSettings onChangePassword={() => setAccountView("changePassword")} />
+        )}
+
+        {page === "account" && accountView === "changePassword" && (
+          <ChangePassword onCancel={() => setAccountView("settings")} />
+        )}
       </main>
     </div>
   )
