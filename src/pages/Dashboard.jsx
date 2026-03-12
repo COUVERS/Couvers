@@ -1,6 +1,7 @@
 import { Box } from "@mui/material"
 import ContinueLearningCard from "../components/features/ContinueLearningCard"
 import CourseCompletionProgress from "../components/features/CourseCompletionBar"
+import SkillDevelopmentRadarChart from "../components/reusable-ui/SkillDevelopmentRadarChart";
 
 export default function Dashboard({ onStartCourse }) {
     return (
@@ -15,6 +16,7 @@ export default function Dashboard({ onStartCourse }) {
             <ContinueLearningCard onStart={onStartCourse} />
 
             <CourseCompletionProgress />
+            <SkillDevelopmentRadarChart />
         </Box>
     )
 }
