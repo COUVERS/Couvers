@@ -1,5 +1,5 @@
 import '../../styles/global.css'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import SidebarBase from '../reusable-ui/SideBarBase'
 import {
@@ -10,6 +10,7 @@ import {
     Tooltip,
     IconButton
 } from '@mui/material'
+//Icons
 import FundamentalOfTeaching from "../../assets/icons/FundamentalOfTeaching"
 import EffectiveCommunication from "../../assets/icons/EffectiveCommunication"
 import EmpathyAndClassroom from "../../assets/icons/EmpathyAndClassroom"

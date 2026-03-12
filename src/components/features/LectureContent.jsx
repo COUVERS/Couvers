@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, Fragment } from "react"
 import { styled } from "@mui/material/styles"
 import {
     Box,
@@ -9,35 +9,24 @@ import {
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
-// const HeaderCard = styled(Box)(() => ({
-//     backgroundColor: "var(--Color-Background-Paper)",
-//     borderRadius: "16px",
-//     padding: "32px",
-//     boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
-//     border: "1px solid var(--Color-Divider)",
-// }))
-
-const Title = styled(Typography)(() => ({
-    fontSize: "var(--FontSize-Display-Medium)",
-    fontWeight: 600,
-    letterSpacing: "var(--LetterSpace-DisplayMedium)",
-    color: "var(--Color-Primary-Main)",
-    marginBottom: "12px",
-}))
-
-const Desc = styled(Typography)(() => ({
-    fontSize: "var(--FontSize-Body1)",
-    lineHeight: "var(--LineHeight-Body1)",
-    color: "var(--Color-Text-Secondary)",
-}))
-
 const StyledAccordion = styled(Accordion)(() => ({
-    backgroundColor: "var(--Color-Background-Paper)",
-    borderRadius: "16px",
-    border: "1px solid var(--Color-Divider)",
+    backgroundColor: "transparent",
     boxShadow: "none",
-    marginTop: "16px",
-    "&:before": { display: "none" },
+    border: "none",
+    marginTop: "24px",
+
+    "&:before": {
+        display: "none",
+    },
+}))
+
+const StyledSummary = styled(AccordionSummary)(() => ({
+    padding: 0,
+    minHeight: "auto",
+
+    "& .MuiAccordionSummary-content": {
+        margin: 0,
+    },
 }))
 
 const SectionHeading = styled(Typography)(() => ({
@@ -51,6 +40,7 @@ const Paragraph = styled(Typography)(() => ({
     lineHeight: "var(--LineHeight-Body1)",
     color: "var(--Color-Text-Primary)",
     marginTop: "10px",
+    whiteSpace: "pre-line"
 }))
 
 export default function LectureContent({ lesson }) {
@@ -59,38 +49,60 @@ export default function LectureContent({ lesson }) {
     if (!lesson) return null
 
     const toggle = (key) => {
-    setExpanded((prev) => {
-        const next = new Set(prev)
-        if (next.has(key)) next.delete(key)
-        else next.add(key)
-        return next
-    })
+        setExpanded((prev) => {
+            const next = new Set(prev)
+            if (next.has(key)) next.delete(key)
+            else next.add(key)
+            return next
+        })
     }
 
     return (
-    <>
-        {/* <HeaderCard>
-        <Title>{lesson.title}</Title>
-        <Desc>{lesson.lessonDescription}</Desc>
-        </HeaderCard> */}
+        <Box>
+            {(lesson.sections || []).map((sec, idx) => {
+                const key = `${idx}-${sec.heading}`
+                const isOpen = expanded.has(key)
 
-        {(lesson.sections || []).map((sec, idx) => {
-        const key = `${idx}-${sec.heading}`
-        const isOpen = expanded.has(key)
+                const lines = (Array.isArray(sec.content) ? sec.content.join("\n") : sec.content || "")
+                    .split("\n")
+                    .filter((line) => line.trim())
 
-        return (
-            <StyledAccordion key={key} expanded={isOpen} onChange={() => toggle(key)}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <SectionHeading>{sec.heading}</SectionHeading>
-            </AccordionSummary>
-            <AccordionDetails>
-                {(sec.content || []).map((line, i) => (
-                <Paragraph key={i}>{line}</Paragraph>
-                ))}
-            </AccordionDetails>
-            </StyledAccordion>
-        )
-        })}
-    </>
+                return (
+                    <StyledAccordion
+                        key={key}
+                        expanded={isOpen}
+                        onChange={() => toggle(key)}
+                    >
+                        <StyledSummary expandIcon={<ExpandMoreIcon />}>
+                            <SectionHeading>{sec.heading}</SectionHeading>
+                        </StyledSummary>
+
+                        <AccordionDetails>
+                            {lines.map((line, i) => (
+                                <Fragment key={i}>
+                                    <Paragraph>{line}</Paragraph>
+
+                                    {idx === 1 && i === 2 && lesson.imgUrl && (
+                                        <Box
+                                            component="img"
+                                            src={lesson.imgUrl}
+                                            alt={lesson.title}
+                                            sx={{
+                                                width: "100%",
+                                                maxWidth: 720,
+                                                mt: 2,
+                                                mb: 2,
+                                                display: "block",
+                                                objectFit: "cover"
+                                            }}
+                                        />
+                                    )}
+                                </Fragment>
+                            ))}
+                        </AccordionDetails>
+                    </StyledAccordion>
+                )
+            })}
+        </Box>
     )
 }
