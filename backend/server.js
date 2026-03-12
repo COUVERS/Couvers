@@ -251,6 +251,7 @@ app.get("/api/courses", authMiddleware, async (req, res) => {
 app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.user.userId;
 
     const course = await Course.findById(id);
     if (!course) return res.status(404).json({ error: "Course not found" });
@@ -259,7 +260,37 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
     const lessonIds = lessons.map((lesson) => lesson._id);
     const quizzes = await Quiz.find({ lessonId: { $in: lessonIds } });
 
-    res.json({ course, lessons, quizzes });
+    const progressList = await LessonProgress.find({
+      userId,
+      lessonId: { $in: lessonIds },
+    });
+
+    const progressMap = new Map(
+      progressList.map((item) => [String(item.lessonId), item])
+    );
+
+    const lessonsWithStatus = lessons.map((lesson, index) => {
+      const progress = progressMap.get(String(lesson._id));
+
+      let status = progress?.status || "not_started";
+
+      if (!progress && index > 0) {
+        const previousLesson = lessons[index - 1];
+        const previousProgress = progressMap.get(String(previousLesson._id));
+
+        if (!previousProgress || previousProgress.status !== "completed") {
+          status = "locked";
+        }
+      }
+
+      return {
+        ...lesson.toObject(),
+        status,
+        bestScore: progress?.bestScore || 0,
+      };
+    });
+
+    res.json({ course, lessons: lessonsWithStatus, quizzes });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -564,6 +595,126 @@ app.get("/api/dashboard/courses", authMiddleware, async (req, res) => {
   } catch (err) {
     console.error("Dashboard courses error:", err);
     return res.status(500).json({ message: "Server error while fetching dashboard courses" });
+  }
+});
+
+/**
+ * API: Get Next Lesson for Continue Learning
+ * GET /api/dashboard/next-lesson
+ *
+ * Returns the first lesson that is not yet completed
+ * for the authenticated user.
+ */
+app.get("/api/dashboard/next-lesson", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const courses = await Course.find().sort({ createdAt: 1 });
+
+    for (const course of courses) {
+      const lessons = await Lesson.find({ courseId: course._id }).sort({ order: 1 });
+
+      if (!lessons.length) continue;
+
+      const lessonIds = lessons.map((lesson) => lesson._id);
+
+      const progressList = await LessonProgress.find({
+        userId,
+        lessonId: { $in: lessonIds },
+      });
+
+      const progressMap = new Map(
+        progressList.map((item) => [String(item.lessonId), item.status])
+      );
+
+      const nextLesson = lessons.find((lesson) => {
+        const status = progressMap.get(String(lesson._id));
+        return status !== "completed";
+      });
+
+      if (nextLesson) {
+        return res.status(200).json({
+          userId,
+          courseId: course._id,
+          courseName: course.title,
+          lessonId: nextLesson._id,
+          lessonTitle: nextLesson.title,
+          iconKey: course.icon || "empathy",
+        });
+      }
+    }
+
+    return res.status(200).json({
+      userId,
+      courseId: null,
+      courseName: "",
+      lessonId: null,
+      lessonTitle: "",
+      iconKey: "empathy",
+      message: "No next lesson found",
+    });
+  } catch (err) {
+    console.error("Dashboard next lesson error:", err);
+    return res.status(500).json({ message: "Server error while fetching next lesson" });
+  }
+});
+
+/**
+ * API: Get Review Lesson
+ * GET /api/dashboard/review-lesson
+ *
+ * Returns one lesson recommended for review.
+ */
+
+app.get("/api/dashboard/review-lesson", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const attempts = await QuizAttempt.find({ userId })
+      .sort({ score: 1, submittedAt: 1 });
+
+    if (!attempts.length) {
+      return res.status(200).json({ reviewLesson: null });
+    }
+
+    const bestAttemptByLesson = new Map();
+
+    for (const attempt of attempts) {
+      const key = String(attempt.lessonId);
+
+      if (!bestAttemptByLesson.has(key)) {
+        bestAttemptByLesson.set(key, attempt);
+      }
+    }
+
+    const attemptsList = [...bestAttemptByLesson.values()];
+
+    const reviewAttempt = attemptsList.find((a) => a.score < 100);
+    const targetAttempt = reviewAttempt || attemptsList[attemptsList.length - 1];
+
+    const lesson = await Lesson.findById(targetAttempt.lessonId);
+    if (!lesson) {
+      return res.status(200).json({ reviewLesson: null });
+    }
+
+    const course = await Course.findById(lesson.courseId);
+    if (!course) {
+      return res.status(200).json({ reviewLesson: null });
+    }
+
+    return res.status(200).json({
+      reviewLesson: {
+        lessonId: lesson._id,
+        lessonTitle: lesson.title,
+        courseId: course._id,
+        courseName: course.title,
+        iconKey: course.icon || "empathy",
+        bestScore: targetAttempt.score,
+      },
+    });
+  } catch (err) {
+    console.error("Review lesson error:", err);
+    return res.status(500).json({ message: "Server error while fetching review lesson" });
   }
 });
 

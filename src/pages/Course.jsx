@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Box from "@mui/material/Box"
-
+import Typography from "@mui/material/Typography"
 import CourseNavigation from "../components/layout/CourseNavigation"
 import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
@@ -13,7 +13,7 @@ import QuizPage from "./QuizPage"
 import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
 import ContinueLearningCard from "../components/features/ContinueLearningCard"
 
-export default function CoursePage() {
+export default function CoursePage({ continueCourseId, continueLessonId }) {
     const [courses, setCourses] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(null)
 
@@ -31,12 +31,15 @@ export default function CoursePage() {
 
     const [quizzes, setQuizzes] = useState([])
 
+    const [nextLessonData, setNextLessonData] = useState(null)
+
     const matchedQuizzes = quizzes.filter(
         q => String(q.lessonId) === String(selectedLesson?._id)
     )
     const handleTakeQuiz = () => {
         setViewMode("quiz")
     }
+
 
     // console.log("selectedLesson", selectedLesson)
     // console.log("quizzes", quizzes)
@@ -71,6 +74,35 @@ export default function CoursePage() {
     useEffect(() => {
         setSelectedLesson(null)
         setStartedLesson(null)
+    }, [selectedCourseId])
+
+    useEffect(() => {
+        if (!selectedCourseId) return
+
+            ; (async () => {
+                try {
+                    const token = localStorage.getItem("token")
+
+                    const res = await fetch("http://127.0.0.1:5050/api/dashboard/next-lesson", {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
+
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+                    const data = await res.json()
+
+                    if (String(data.courseId) === String(selectedCourseId)) {
+                        setNextLessonData(data)
+                    } else {
+                        setNextLessonData(null)
+                    }
+                } catch (e) {
+                    console.error("load next lesson error:", e)
+                    setNextLessonData(null)
+                }
+            })()
     }, [selectedCourseId])
 
     //load selected course + lessons
@@ -111,6 +143,23 @@ export default function CoursePage() {
                 }
             })()
     }, [selectedCourseId])
+
+    useEffect(() => {
+        if (!continueCourseId) return
+        setSelectedCourseId(continueCourseId)
+    }, [continueCourseId])
+
+    useEffect(() => {
+        if (!continueLessonId || lessons.length === 0) return
+
+        const lesson = lessons.find(
+            (l) => String(l._id) === String(continueLessonId)
+        )
+
+        if (lesson) {
+            handleOpenLesson(lesson)
+        }
+    }, [continueLessonId, lessons])
 
     const handleOpenLesson = (lesson) => {
         setSelectedLesson(lesson)
@@ -157,20 +206,49 @@ export default function CoursePage() {
                     <>
                         {course && (
                             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                                {startedLesson && (
-                                    <LessonLinkButton
-                                        courseName={course.title}
-                                        iconKey={course.icon}
-                                        lessonTitle={startedLesson.title}
-                                        action="continue"
-                                        onClick={() => handleOpenLesson(startedLesson)}
-                                    />
+                                {nextLessonData?.lessonId && (
+                                    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                                        <Typography
+                                            sx={{
+                                                fontSize: "32px",
+                                                fontWeight: 600,
+                                                letterSpacing: "-0.2px",
+                                            }}
+                                        >
+                                            Next Lesson
+                                        </Typography>
+
+                                        <LessonLinkButton
+                                            courseName={nextLessonData.courseName}
+                                            iconKey={nextLessonData.iconKey}
+                                            lessonTitle={nextLessonData.lessonTitle}
+                                            action="continue"
+                                            onClick={() => {
+                                                const lesson = lessons.find(
+                                                    (l) => String(l._id) === String(nextLessonData.lessonId)
+                                                )
+                                                if (lesson) handleOpenLesson(lesson)
+                                            }}
+                                        />
+                                    </Box>
                                 )}
 
-                                <LessonList
-                                    lessons={lessons}
-                                    onOpenLesson={handleOpenLesson}
-                                />
+                                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                                    <Typography
+                                        sx={{
+                                            fontSize: "32px",
+                                            fontWeight: 600,
+                                            letterSpacing: "-0.2px",
+                                        }}
+                                    >
+                                        Lesson List
+                                    </Typography>
+
+                                    <LessonList
+                                        lessons={lessons}
+                                        onOpenLesson={handleOpenLesson}
+                                    />
+                                </Box>
                             </Box>
                         )}
                     </>

@@ -1,9 +1,9 @@
-import { Box, Typography, Button } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 
-export default function ContinueLearningCard({
-    title = "Continue Learning",
-    description = "Ready to learn a new skill?",
-    onStart,
+export default function ReviewCourseCard({
+    title = "Review Course",
+    emptyTitle = "All Catch up",
+    emptyDescription = "You have no courses needing review right now.",
     children,
 }) {
     return (
@@ -33,31 +33,29 @@ export default function ContinueLearningCard({
                 <Box
                     sx={{
                         display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        gap: "24px",
+                        flexDirection: "column",
+                        gap: "12px",
                     }}
                 >
                     <Typography
                         sx={{
                             fontSize: "16px",
-                            lineHeight: "24px",
-                            mt: 1,
+                            fontWeight: 700,
+                            lineHeight: 1.4,
                         }}
                     >
-                        {description}
+                        {emptyTitle}
                     </Typography>
 
-                    <Button
-                        variant="contained"
-                        onClick={onStart}
+                    <Typography
                         sx={{
-                            width: 126,
-                            height: 44,
+                            fontSize: "16px",
+                            lineHeight: "24px",
+                            color: "var(--Color-Text-Secondary)",
                         }}
                     >
-                        Get Started
-                    </Button>
+                        {emptyDescription}
+                    </Typography>
                 </Box>
             )}
         </Box>

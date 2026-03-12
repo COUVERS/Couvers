@@ -12,10 +12,8 @@ function getStatusIcon(status) {
     switch (status) {
         case "locked":
             return <LockedIcon />
-
-        case "complete":
+        case "completed":
             return <VerifiedIcon />
-
         default:
             return <CircleIcon />
     }
