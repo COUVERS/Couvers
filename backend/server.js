@@ -287,6 +287,7 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
         ...lesson.toObject(),
         status,
         bestScore: progress?.bestScore || 0,
+        completedAt: progress?.status === "completed" ? progress.updatedAt : null,
       };
     });
 

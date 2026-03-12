@@ -2,20 +2,20 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Links from "../reusable-ui/Links"
 //Icons
-import VerifiedIcon from "../../assets/icons/VerifiedIcon"
-import LockedIcon from "../../assets/icons/LockedIcon"
-import CircleIcon from "../../assets/icons/CircleIcon"
+import VerifiedIcon from "@mui/icons-material/Verified"
+import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined"
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import LectureIcon from "../../assets/icons/LectureIcon"
 import QuizIcon from "../../assets/icons/QuizIcon"
 
 function getStatusIcon(status) {
     switch (status) {
         case "locked":
-            return <LockedIcon />
+            return <LockOutlinedIcon fontSize="small" />
         case "completed":
-            return <VerifiedIcon />
+            return <VerifiedIcon fontSize="small" />
         default:
-            return <CircleIcon />
+            return <CircleOutlinedIcon fontSize="small" />
     }
 }
 
@@ -28,6 +28,7 @@ export default function ContentsNavItem({
     const isSelected = activeType === "lecture" || activeType === "quiz"
     const isLectureActive = activeType === "lecture"
     const isQuizActive = activeType === "quiz"
+    const isLocked = lesson.status === "locked"
 
     const selectedTextColor = "var(--Color-Text-Primary, #0F172A)"
     const activeLinkColor = "var(--Color-Primary-Dark, #4F46E5)"
@@ -46,7 +47,7 @@ export default function ContentsNavItem({
             }}
         >
             {/* Left status icon */}
-            <Box sx={{ mt: "2px", display: "flex", alignItems: "flex-start" }}>
+            <Box sx={{ mt: "2px", display: "flex", alignItems: "flex-center" }}>
                 {getStatusIcon(lesson.status)}
             </Box>
 
@@ -67,11 +68,8 @@ export default function ContentsNavItem({
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <LectureIcon />
                     <Links
-                        onClick={() => onLectureClick?.(lesson)}
-                        sx={{
-                            color: isSelected
-                                ? (isLectureActive ? activeLinkColor : selectedTextColor)
-                                : defaultTextColor,
+                        onClick={() => {
+                            if (!isLocked) onLectureClick?.(lesson)
                         }}
                     >
                         Lecture
@@ -82,11 +80,8 @@ export default function ContentsNavItem({
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <QuizIcon />
                     <Links
-                        onClick={() => onQuizClick?.(lesson)}
-                        sx={{
-                            color: isSelected
-                                ? (isQuizActive ? activeLinkColor : selectedTextColor)
-                                : defaultTextColor,
+                        onClick={() => {
+                            if (!isLocked) onQuizClick?.(lesson)
                         }}
                     >
                         Quiz
