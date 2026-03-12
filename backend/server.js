@@ -21,17 +21,14 @@ const Quiz = require("./models/quiz");
 const Skill = require("./models/skill");
 const QuizAttempt = require("./models/QuizAttempt");
 const SkillProgress = require("./models/SkillProgress");
+const LessonProgress = require("./models/LessonProgress");
 
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
 
-<<<<<<< HEAD
-const QuizAttempt = require("./models/QuizAttempt");
-=======
 // =====================================================
 // EXPRESS APP CONFIGURATION
 // =====================================================
->>>>>>> develop
 
 const app = express();
 app.use(cors());
@@ -268,35 +265,6 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-//quiz attempt
-app.post("/api/quiz-attempts", authMiddleware, async (req, res) => {
-  try {
-    const { quizId, lessonId, score } = req.body;
-
-    if (!quizId || score === undefined) {
-      return res.status(400).json({ message: "quizId and score are required" });
-    }
-
-    const newAttempt = await QuizAttempt.create({
-      userId: req.user.userId,
-      quizId,
-      lessonId,
-      score,
-    });
-
-    return res.status(201).json({
-      message: "Quiz attempt saved",
-      attempt: newAttempt,
-    });
-  } catch (err) {
-    console.error("Quiz attempt error:", err);
-    return res.status(500).json({ message: "Server error while saving quiz attempt" });
-  }
-});
-
-const PORT = process.env.PORT || 5000;
-=======
 // =====================================================
 // QUIZ SUBMISSION ROUTES
 // =====================================================
@@ -382,6 +350,33 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
       answers: resultAnswers,
       submittedAt: new Date(),
     });
+
+    // Update or create LessonProgress
+    const existingLessonProgress = await LessonProgress.findOne({
+      userId,
+      lessonId: lesson._id,
+    });
+
+    let updatedLessonProgress;
+
+    if (!existingLessonProgress) {
+      updatedLessonProgress = await LessonProgress.create({
+        userId,
+        lessonId: lesson._id,
+        status: passed ? "completed" : "in_progress",
+        bestScore: score,
+      });
+    } else {
+      existingLessonProgress.bestScore = Math.max(existingLessonProgress.bestScore, score);
+
+      if (passed) {
+        existingLessonProgress.status = "completed";
+      } else if (existingLessonProgress.status !== "completed") {
+        existingLessonProgress.status = "in_progress";
+      }
+
+      updatedLessonProgress = await existingLessonProgress.save();
+    }
 
     // Find the best attempt for this lesson (highest score)
     const bestAttemptForLesson = await QuizAttempt.findOne({
@@ -470,6 +465,11 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
       passed,
       bestScore: bestAttemptForLesson?.score ?? score,
       bestPassed: bestAttemptForLesson?.passed ?? passed,
+      lessonProgress: {
+        lessonId: updatedLessonProgress.lessonId,
+        status: updatedLessonProgress.status,
+        bestScore: updatedLessonProgress.bestScore,
+      },
       skillProgress: {
         skillId: updatedSkillProgress.skillId,
         passedLessons: updatedSkillProgress.passedLessons,
@@ -517,6 +517,55 @@ app.get("/api/dashboard/skills", authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * API: Get Dashboard Course Progress
+ * GET /api/dashboard/courses
+ *
+ * Returns course progress data for the authenticated user.
+ * Course progress is based on completed lessons only.
+ */
+app.get("/api/dashboard/courses", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const courses = await Course.find().sort({ createdAt: -1 });
+    const courseProgressList = [];
+
+    for (const course of courses) {
+      const lessons = await Lesson.find({ courseId: course._id }).select("_id");
+
+      const lessonIds = lessons.map((lesson) => lesson._id);
+      const totalLessons = lessonIds.length;
+
+      const completedLessons = await LessonProgress.countDocuments({
+        userId,
+        lessonId: { $in: lessonIds },
+        status: "completed",
+      });
+
+      const progress =
+        totalLessons === 0
+          ? 0
+          : Math.round((completedLessons / totalLessons) * 100);
+
+      courseProgressList.push({
+        courseId: course._id,
+        title: course.title,
+        progress,
+        completedLessons,
+        totalLessons,
+      });
+    }
+
+    return res.status(200).json({
+      userId,
+      courses: courseProgressList,
+    });
+  } catch (err) {
+    console.error("Dashboard courses error:", err);
+    return res.status(500).json({ message: "Server error while fetching dashboard courses" });
+  }
+});
+
 const PORT = process.env.PORT || 5050;
->>>>>>> develop
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

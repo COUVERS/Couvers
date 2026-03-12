@@ -3,31 +3,41 @@ import { Box, Typography } from "@mui/material";
 import ProgressBar from "../reusable-ui/ProgressBar";
 
 export default function CourseCompletionProgress() {
-
-    const [items, setItems] = useState([])
-    const [error, setError] = useState("")
+    const [items, setItems] = useState([]);
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        async function loadCourses() {
+        async function loadCourseProgress() {
             try {
                 setError("");
-                const res = await fetch("/api/courses")
-                if (!res.ok) throw new Error(`Failed (${res.status})`)
-                const courses = await res.json()
+
+                const token = localStorage.getItem("token");
+
+                const res = await fetch("/api/dashboard/courses", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) throw new Error(`Failed (${res.status})`);
+
+                const data = await res.json();
 
                 setItems(
-                    courses.map((c) => ({
-                        id: c._id,
-                        title: c.title,
-                        value: 0,
+                    data.courses.map((course) => ({
+                        id: course.courseId,
+                        title: course.title,
+                        value: course.progress,
                     }))
-                )
+                );
             } catch (e) {
-                setError(e.message || "Failed to load courses");
+                console.error("loadCourseProgress error:", e);
+                setError(e.message || "Failed to load course progress");
             }
         }
-        loadCourses()
-    }, [])
+
+        loadCourseProgress();
+    }, []);
 
     return (
         <Box
@@ -44,12 +54,21 @@ export default function CourseCompletionProgress() {
                 Course Completion Progress
             </Typography>
 
-            {error && <Typography sx={{ color: "var(--Color-Error-Main)" }}>{error}</Typography>}
+            {error && (
+                <Typography sx={{ color: "var(--Color-Error-Main)" }}>
+                    {error}
+                </Typography>
+            )}
+
             <Box sx={{ display: "flex", flexDirection: "column", gap: "32px", width: "100%" }}>
                 {items.map((item) => (
-                    <ProgressBar key={item.id} title={item.title} value={item.value} />
+                    <ProgressBar
+                        key={item.id}
+                        title={item.title}
+                        value={item.value}
+                    />
                 ))}
             </Box>
         </Box>
-    )
+    );
 }
