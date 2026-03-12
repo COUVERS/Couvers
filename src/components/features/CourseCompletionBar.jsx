@@ -13,7 +13,7 @@ export default function CourseCompletionProgress() {
 
                 const token = localStorage.getItem("token");
 
-                const res = await fetch("/api/dashboard/courses", {
+                const res = await fetch("http://localhost:5050/api/dashboard/courses", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -62,11 +62,7 @@ export default function CourseCompletionProgress() {
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "32px", width: "100%" }}>
                 {items.map((item) => (
-                    <ProgressBar
-                        key={item.id}
-                        title={item.title}
-                        value={item.value}
-                    />
+                    <ProgressBar key={item.id} title={item.title} value={item.value} />
                 ))}
             </Box>
         </Box>

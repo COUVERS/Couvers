@@ -38,9 +38,9 @@ export default function CoursePage() {
         setViewMode("quiz")
     }
 
-    console.log("selectedLesson", selectedLesson)
-    console.log("quizzes", quizzes)
-    console.log("matchedQuizzes", matchedQuizzes)
+    // console.log("selectedLesson", selectedLesson)
+    // console.log("quizzes", quizzes)
+    // console.log("matchedQuizzes", matchedQuizzes)
 
     // load courses list
     useEffect(() => {
@@ -186,11 +186,12 @@ export default function CoursePage() {
                 )}
 
                 {viewMode === "quiz" && matchedQuizzes.length > 0 && (
-    <QuizPage
-        quizItems={matchedQuizzes}
-        onBack={() => setViewMode("lecture")}
-    />
-)}
+                    <QuizPage
+                        lessonId={selectedLesson?._id}
+                        quizItems={matchedQuizzes}
+                        onBack={() => setViewMode("lecture")}
+                    />
+                )}
 
             </Box>
         </Box>
