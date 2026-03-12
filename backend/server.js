@@ -251,6 +251,7 @@ app.get("/api/courses", authMiddleware, async (req, res) => {
 app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.user.userId;
 
     const course = await Course.findById(id);
     if (!course) return res.status(404).json({ error: "Course not found" });
@@ -259,7 +260,37 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
     const lessonIds = lessons.map((lesson) => lesson._id);
     const quizzes = await Quiz.find({ lessonId: { $in: lessonIds } });
 
-    res.json({ course, lessons, quizzes });
+    const progressList = await LessonProgress.find({
+      userId,
+      lessonId: { $in: lessonIds },
+    });
+
+    const progressMap = new Map(
+      progressList.map((item) => [String(item.lessonId), item])
+    );
+
+    const lessonsWithStatus = lessons.map((lesson, index) => {
+      const progress = progressMap.get(String(lesson._id));
+
+      let status = progress?.status || "not_started";
+
+      if (!progress && index > 0) {
+        const previousLesson = lessons[index - 1];
+        const previousProgress = progressMap.get(String(previousLesson._id));
+
+        if (!previousProgress || previousProgress.status !== "completed") {
+          status = "locked";
+        }
+      }
+
+      return {
+        ...lesson.toObject(),
+        status,
+        bestScore: progress?.bestScore || 0,
+      };
+    });
+
+    res.json({ course, lessons: lessonsWithStatus, quizzes });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
