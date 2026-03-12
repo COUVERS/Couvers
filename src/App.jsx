@@ -1,24 +1,50 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
 import Navigation from "./components/layout/Navigation"
 import Course from "./pages/Course"
 import Header from "./Header"
+import AccountSettings from "./components/features/AccountSettings"
+import ChangePassword from "./components/features/ChangePassword"
+
 import Dashboard from "./pages/Dashboard"
 
 export default function App() {
   const [page, setPage] = useState("home")
   const [mode, setMode] = useState("login") // "login" | "signup"
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
-  const [continueCourseId, setContinueCourseId] = useState(null)
-  const [continueLessonId, setContinueLessonId] = useState(null)
 
   const handleSignOut = () => {
     localStorage.removeItem("token")
     setIsLoggedIn(false)
+    setAuthUser(null)
     setMode("login")
     setPage("home")
+    setAccountView("settings")
   }
+
+    useEffect(() => {
+  const token = localStorage.getItem("token")
+  if (!token) return
+
+  fetch("http://localhost:5050/auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.user) {
+        setAuthUser(data.user)
+        setIsLoggedIn(true)
+      }
+    })
+    .catch(() => {
+      localStorage.removeItem("token")
+      setIsLoggedIn(false)
+      setAuthUser(null)
+    })
+}, [])
 
   if (!isLoggedIn) {
     return (
@@ -26,7 +52,10 @@ export default function App() {
         {mode === "login" ? (
           <LoginForm
             onGoSignup={() => setMode("signup")}
-            onLoginSuccess={() => setIsLoggedIn(true)}
+            onLoginSuccess={(data) => {
+            setIsLoggedIn(true)
+            setAuthUser(data.user)
+            }}
           />
         ) : (
           <SignupForm onGoLogin={() => setMode("login")} />
@@ -47,32 +76,24 @@ export default function App() {
       <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
         {page !== "courses" && (
           <Header
-            title="This is the Header"
-            description="This is the description"
-          />
-        )}
+            title={page === "account"
+              ? accountView === "changePassword"
+                ? "Change Password"
+                : "Account Settings"
+              : "This is the Header"
+            }
+            description={
+              page === "account"
+                ? accountView === "changePassword"
+                  ? "For your security, we recommend changing your password periodically."
+                  : "Manage your personal information, security preferences, and account details here."
+                : "This is the description"
+            }
+      />
+    )}
 
-        {page === "home" && (
-          <Dashboard
-            onStartCourse={(nextLesson) => {
-              if (nextLesson) {
-                setContinueCourseId(nextLesson.courseId)
-                setContinueLessonId(nextLesson.lessonId)
-              } else {
-                setContinueCourseId(null)
-                setContinueLessonId(null)
-              }
-              setPage("courses")
-            }}
-          />
-        )}
-
-        {page === "courses" && (
-          <Course
-            continueCourseId={continueCourseId}
-            continueLessonId={continueLessonId}
-          />
-        )}
+        {page === "home" && <h1>Home</h1>}
+        {page === "courses" && <Course />}
       </main>
     </div>
   )
