@@ -19,7 +19,7 @@ export default function Dashboard({ onStartCourse }) {
 
                 const token = localStorage.getItem("token")
 
-                const res = await fetch("http://localhost:5050/api/dashboard/next-lesson", {
+                const res = await fetch("https://covers-backend.onrender.com/api/dashboard/next-lesson", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -43,7 +43,7 @@ export default function Dashboard({ onStartCourse }) {
             try {
                 const token = localStorage.getItem("token")
 
-                const res = await fetch("http://localhost:5050/api/dashboard/review-lesson", {
+                const res = await fetch("https://covers-backend.onrender.com/api/dashboard/review-lesson", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

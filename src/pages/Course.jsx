@@ -53,14 +53,17 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
 
                 const token = localStorage.getItem("token")
 
-                const res = await fetch("http://127.0.0.1:5050/api/courses", {
+                const res = await fetch("https://covers-backend.onrender.com/api/courses", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 })
 
+                console.log("/api/courses status:", res.status)
+
                 if (!res.ok) throw new Error(`HTTP ${res.status}`)
                 const data = await res.json()
+                console.log("/api/courses data:", data)
                 setCourses(data)
 
                 if (data.length > 0) setSelectedCourseId(data[0]._id)
@@ -83,7 +86,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                 try {
                     const token = localStorage.getItem("token")
 
-                    const res = await fetch("http://127.0.0.1:5050/api/dashboard/next-lesson", {
+                    const res = await fetch("https://covers-backend.onrender.com/api/dashboard/next-lesson", {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -117,7 +120,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                     const token = localStorage.getItem("token")
 
                     const res = await fetch(
-                        `http://127.0.0.1:5050/api/courses/${selectedCourseId}/full`,
+                        `https://covers-backend.onrender.com/api/courses/${selectedCourseId}/full`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,

@@ -58,7 +58,7 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
 
       const token = localStorage.getItem("token")
 
-      const response = await fetch("http://localhost:5050/api/lessons/" + lessonId + "/submit", {
+      const response = await fetch("https://covers-backend.onrender.com/api/lessons/" + lessonId + "/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
