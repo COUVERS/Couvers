@@ -12,7 +12,7 @@ export default function QuizSubmit() {
         try {
             const token = localStorage.getItem("token")
 
-            const response = await fetch("http://localhost:5050/api/quiz-attempts", {
+            const response = await fetch("https://covers-backend.onrender.com/api/quiz-attempts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -13,7 +13,7 @@ export default function CourseCompletionProgress() {
 
                 const token = localStorage.getItem("token");
 
-                const res = await fetch("http://localhost:5050/api/dashboard/courses", {
+                const res = await fetch("https://covers-backend.onrender.com/api/dashboard/courses", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

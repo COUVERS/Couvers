@@ -19,7 +19,7 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
         setLoading(true)
 
         try {
-            const res = await fetch("http://localhost:5050/auth/login", {
+            const res = await fetch("https://covers-backend.onrender.com/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -89,18 +89,18 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                                 placeholder=""
                             />
 
-                        <button
-                            type="button"
-                            className="auth-eye-btn"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            aria-label={showPassword ? "Hide password" : "Show password"}
+                            <button
+                                type="button"
+                                className="auth-eye-btn"
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
                             >
-                            {showPassword ? (
-                                <VisibilityOff size={20} color="#2E2A5F" />
-                            ) : (
-                                <Visibility size={20} color="#2E2A5F" />
-                            )}
-                        </button>
+                                {showPassword ? (
+                                    <VisibilityOff size={20} color="#2E2A5F" />
+                                ) : (
+                                    <Visibility size={20} color="#2E2A5F" />
+                                )}
+                            </button>
                         </div>
 
                         {hasError && (
