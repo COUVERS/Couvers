@@ -15,6 +15,8 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
   const [accountView, setAccountView] = useState("settings")
+  const [continueCourseId, setContinueCourseId] = useState(null)
+  const [continueLessonId, setContinueLessonId] = useState(null)
 
   const handleSignOut = () => {
     localStorage.removeItem("token")
@@ -25,28 +27,28 @@ export default function App() {
     setAccountView("settings")
   }
 
-    useEffect(() => {
-  const token = localStorage.getItem("token")
-  if (!token) return
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token) return
 
-  fetch("http://localhost:5050/auth/me", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.user) {
-        setAuthUser(data.user)
-        setIsLoggedIn(true)
+    fetch("http://localhost:5050/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
     })
-    .catch(() => {
-      localStorage.removeItem("token")
-      setIsLoggedIn(false)
-      setAuthUser(null)
-    })
-}, [])
+      .then(res => res.json())
+      .then(data => {
+        if (data.user) {
+          setAuthUser(data.user)
+          setIsLoggedIn(true)
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("token")
+        setIsLoggedIn(false)
+        setAuthUser(null)
+      })
+  }, [])
 
   if (!isLoggedIn) {
     return (
@@ -55,8 +57,8 @@ export default function App() {
           <LoginForm
             onGoSignup={() => setMode("signup")}
             onLoginSuccess={(data) => {
-            setIsLoggedIn(true)
-            setAuthUser(data.user)
+              setIsLoggedIn(true)
+              setAuthUser(data.user)
             }}
           />
         ) : (
@@ -91,11 +93,29 @@ export default function App() {
                   : "Manage your personal information, security preferences, and account details here."
                 : "This is the description"
             }
-      />
-    )}
+          />
+        )}
 
-        {page === "home" && <h1>Home</h1>}
-        {page === "courses" && <Course />}
+        {page === "home" && (
+          <Dashboard
+            onStartCourse={(nextLesson) => {
+              if (nextLesson) {
+                setContinueCourseId(nextLesson.courseId)
+                setContinueLessonId(nextLesson.lessonId)
+              } else {
+                setContinueCourseId(null)
+                setContinueLessonId(null)
+              }
+              setPage("courses")
+            }}
+          />
+        )}
+        {page === "courses" && (
+          <Course
+            continueCourseId={continueCourseId}
+            continueLessonId={continueLessonId}
+          />
+        )}
 
         {page === "account" && accountView === "settings" && (
           <AccountSettings onChangePassword={() => setAccountView("changePassword")} />
