@@ -31,7 +31,7 @@ export default function App() {
     const token = localStorage.getItem("token")
     if (!token) return
 
-    fetch("http://localhost:5050/auth/me", {
+    fetch("https://covers-backend.onrender.com/auth/me", {
       headers: {
         Authorization: `Bearer ${token}`
       }
