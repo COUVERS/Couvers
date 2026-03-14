@@ -6,8 +6,8 @@ import Course from "./pages/Course"
 import Header from "./Header"
 import AccountSettings from "./components/features/AccountSettings"
 import ChangePassword from "./components/features/ChangePassword"
-
 import Dashboard from "./pages/Dashboard"
+import { API_BASE_URL } from "./config"
 
 export default function App() {
   const [page, setPage] = useState("home")
@@ -31,7 +31,7 @@ export default function App() {
     const token = localStorage.getItem("token")
     if (!token) return
 
-    fetch("https://covers-backend.onrender.com/auth/me", {
+    fetch(`${API_BASE_URL}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

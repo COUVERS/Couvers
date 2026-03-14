@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import ProgressBar from "../reusable-ui/ProgressBar";
+import { API_BASE_URL } from "../../config"
 
 export default function CourseCompletionProgress() {
     const [items, setItems] = useState([]);
@@ -13,7 +14,7 @@ export default function CourseCompletionProgress() {
 
                 const token = localStorage.getItem("token");
 
-                const res = await fetch("https://covers-backend.onrender.com/api/dashboard/courses", {
+                const res = await fetch(`${API_BASE_URL}/api/dashboard/courses`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
