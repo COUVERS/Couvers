@@ -3,6 +3,7 @@ import "../auth.css"
 import LogoLarge from "../assets/Logo_large_dark.png"
 import Visibility from "../assets/icons/Visibility"
 import VisibilityOff from "../assets/icons/VisibilityOff"
+import { API_BASE_URL } from "../config"
 
 export default function SignupForm({ onGoLogin }) {
     const [email, setEmail] = useState("")
@@ -19,7 +20,7 @@ export default function SignupForm({ onGoLogin }) {
         setLoading(true)
 
         try {
-            const res = await fetch("https://covers-backend.onrender.com/auth/signup", {
+            const res = await fetch(`${API_BASE_URL}/auth/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),

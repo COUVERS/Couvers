@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { API_BASE_URL } from "../../config"
 
 export default function QuizSubmit() {
     const [quizId, setQuizId] = useState("")
@@ -12,7 +13,7 @@ export default function QuizSubmit() {
         try {
             const token = localStorage.getItem("token")
 
-            const response = await fetch("https://covers-backend.onrender.com/api/quiz-attempts", {
+            const response = await fetch(`${API_BASE_URL}/api/quiz-attempts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

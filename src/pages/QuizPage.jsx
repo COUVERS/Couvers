@@ -4,6 +4,7 @@ import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import Quiz from "../components/features/Quiz"
 import ResultPage from "./ResultPage"
+import { API_BASE_URL } from "../config"
 
 export default function QuizPage({ lessonId, quizItems = [], onBack }) {
 
@@ -58,7 +59,7 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
 
       const token = localStorage.getItem("token")
 
-      const response = await fetch("https://covers-backend.onrender.com/api/lessons/" + lessonId + "/submit", {
+      const response = await fetch(`${API_BASE_URL}/api/lessons/${lessonId}/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

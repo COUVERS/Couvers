@@ -7,6 +7,7 @@ import LessonList from "./LessonList"
 import Header from "../Header"
 import Lecture from "./LecturePage"
 import QuizPage from "./QuizPage"
+import { API_BASE_URL } from "../config"
 // import { demoLessons } from "../library/demoLessons"
 
 
@@ -53,7 +54,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
 
                 const token = localStorage.getItem("token")
 
-                const res = await fetch("https://covers-backend.onrender.com/api/courses", {
+                const res = await fetch(`${API_BASE_URL}/api/courses`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -86,7 +87,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                 try {
                     const token = localStorage.getItem("token")
 
-                    const res = await fetch("https://covers-backend.onrender.com/api/dashboard/next-lesson", {
+                    const res = await fetch(`${API_BASE_URL}/api/dashboard/next-lesson`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -120,7 +121,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                     const token = localStorage.getItem("token")
 
                     const res = await fetch(
-                        `https://covers-backend.onrender.com/api/courses/${selectedCourseId}/full`,
+                        `${API_BASE_URL}/api/courses/${selectedCourseId}/full`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,

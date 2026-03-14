@@ -6,6 +6,7 @@ import SkillDevelopmentRadarChart from "../components/reusable-ui/SkillDevelopme
 import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
 import ReviewCourseCard from "../components/features/ReviewCourseCard"
 import ReviewCourseLinkButton from "../components/reusable-ui/ReviewCourseLinkButton"
+import { API_BASE_URL } from "../config"
 
 export default function Dashboard({ onStartCourse }) {
     const [nextLesson, setNextLesson] = useState(null)
@@ -19,7 +20,7 @@ export default function Dashboard({ onStartCourse }) {
 
                 const token = localStorage.getItem("token")
 
-                const res = await fetch("https://covers-backend.onrender.com/api/dashboard/next-lesson", {
+                const res = await fetch(`${API_BASE_URL}/api/dashboard/next-lesson`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -43,7 +44,7 @@ export default function Dashboard({ onStartCourse }) {
             try {
                 const token = localStorage.getItem("token")
 
-                const res = await fetch("https://covers-backend.onrender.com/api/dashboard/review-lesson", {
+                const res = await fetch(`${API_BASE_URL}/api/dashboard/review-lesson`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
