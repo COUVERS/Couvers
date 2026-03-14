@@ -77,7 +77,7 @@ app.get("/api/health", (req, res) => {
  */
 app.post("/auth/signup", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
     const normalizedEmail = email?.toLowerCase().trim();
 
     if (!normalizedEmail || !password) {
@@ -97,6 +97,7 @@ app.post("/auth/signup", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
+      username,
       email: normalizedEmail,
       passwordHash,
     });
@@ -157,6 +158,7 @@ app.post("/auth/login", async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
+        username: user.username,
       },
     });
   } catch (err) {
@@ -211,6 +213,7 @@ app.get("/auth/me", authMiddleware, async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
+        username: user.username,
       },
     });
   } catch (err) {

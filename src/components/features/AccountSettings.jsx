@@ -3,8 +3,8 @@ import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 
 export default function AccountSettings({
-    name = "Alex Morgan",
-    email = "alexm@codyacademy.edu",
+    name = "",
+    email = "",
     onChangePassword,
 }) {
     return (

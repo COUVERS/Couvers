@@ -118,7 +118,11 @@ export default function App() {
         )}
 
         {page === "account" && accountView === "settings" && (
-          <AccountSettings onChangePassword={() => setAccountView("changePassword")} />
+          <AccountSettings 
+            name={authUser?.username}
+            email={authUser?.email}
+            onChangePassword={() => setAccountView("changePassword")}
+          />
         )}
 
         {page === "account" && accountView === "changePassword" && (

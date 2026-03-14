@@ -8,7 +8,7 @@ export default function Account({ authUser }) {
             
         <ContentsNavigation title="Account" />
         <AccountSettings
-            name={authUser?.email?.split("@")[0]}
+            name={authUser?.username}
             email={authUser?.email}
             onChangePassword={() => console.log("change password")}
         />
