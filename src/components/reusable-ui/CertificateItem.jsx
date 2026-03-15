@@ -1,12 +1,22 @@
 import { Box, Typography } from "@mui/material"
+import DownloadIcon from "@mui/icons-material/Download"
 import CertificateCourseIcon from "../../assets/icons/CertificateCourseIcon"
-import DownloadIcon from '@mui/icons-material/Download';
+import { getCertificateDownloadUrlByKey } from "../../services/certificates"
 
 export default function CertificateItem({
     title,
     iconKey,
-    fileUrl,
 }) {
+    const handleDownload = async () => {
+        try {
+            const url = await getCertificateDownloadUrlByKey(iconKey)
+            window.open(url, "_blank")
+        } catch (err) {
+            console.error("certificate download error:", err)
+            alert("Failed to download certificate")
+        }
+    }
+
     return (
         <Box
             sx={{
@@ -33,10 +43,9 @@ export default function CertificateItem({
             </Typography>
 
             <Box
-                component={fileUrl ? "a" : "button"}
-                href={fileUrl || undefined}
-                type={fileUrl ? undefined : "button"}
-                download={fileUrl ? true : undefined}
+                component="button"
+                type="button"
+                onClick={handleDownload}
                 sx={{
                     display: "flex",
                     alignItems: "center",
@@ -46,10 +55,10 @@ export default function CertificateItem({
                     background: "none",
                     border: "none",
                     padding: 0,
-                    cursor: fileUrl ? "pointer" : "default",
+                    cursor: "pointer",
                 }}
             >
-                <DownloadIcon />
+                <DownloadIcon fontSize="small" />
                 <Typography
                     sx={{
                         color: "var(--Color-Primary-Main)",

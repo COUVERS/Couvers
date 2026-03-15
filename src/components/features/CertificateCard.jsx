@@ -24,9 +24,12 @@ export default function CertificateCard({ onTakeCourse }) {
 
                 const data = await res.json()
 
-                setCertificates(data.certificates || [])
-                setTotalCourses(data.totalCourses || 0)
+                const sortedCertificates = [...(data.certificates || [])].sort(
+                    (a, b) => new Date(b.issuedAt) - new Date(a.issuedAt)
+                )
 
+                setCertificates(sortedCertificates)
+                setTotalCourses(data.totalCourses || 0)
             } catch (e) {
                 console.error("loadCertificates error:", e)
                 setError(e.message || "Failed to load certificates")
@@ -46,7 +49,6 @@ export default function CertificateCard({ onTakeCourse }) {
 
     return (
         <Box>
-
             <Typography variant="h5">
                 Certifications
             </Typography>
@@ -57,7 +59,6 @@ export default function CertificateCard({ onTakeCourse }) {
                 </Typography>
             )}
 
-            {/* NONE */}
             {viewState === "none" && (
                 <Box>
                     <Typography>
@@ -70,14 +71,13 @@ export default function CertificateCard({ onTakeCourse }) {
                 </Box>
             )}
 
-            {/* SEVERAL / ALL */}
             {viewState !== "none" && (
                 <Box
                     sx={{
                         display: "flex",
                         gap: 3,
                         overflowX: "auto",
-                        mt: 2
+                        mt: 2,
                     }}
                 >
                     {certificates.map((item) => (
@@ -85,12 +85,10 @@ export default function CertificateCard({ onTakeCourse }) {
                             key={item.certificateId}
                             title={item.title}
                             iconKey={item.iconKey}
-                            fileUrl={item.fileUrl}
                         />
                     ))}
                 </Box>
             )}
-
         </Box>
     )
 }

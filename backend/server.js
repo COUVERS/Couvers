@@ -502,7 +502,7 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
           courseId: lesson.courseId,
           $setOnInsert: {
             issuedAt: new Date(),
-            fileUrl: "",
+            // fileUrl: "",
           },
         },
         {
@@ -553,7 +553,7 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
         ? {
           certificateId: certificate._id,
           issuedAt: certificate.issuedAt,
-          fileUrl: certificate.fileUrl,
+          // fileUrl: certificate.fileUrl,
         }
         : null,
       results,
@@ -781,7 +781,7 @@ app.get("/api/dashboard/certificates", authMiddleware, async (req, res) => {
       title: item.courseId?.title || "Untitled Course",
       iconKey: item.courseId?.icon || "empathy",
       issuedAt: item.issuedAt,
-      fileUrl: item.fileUrl || "",
+      // fileUrl: item.fileUrl || "",
     }));
 
     const totalCourses = await Course.countDocuments();

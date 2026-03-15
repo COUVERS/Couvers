@@ -16,10 +16,10 @@ const certificateSchema = new mongoose.Schema(
             type: Date,
             default: Date.now,
         },
-        fileUrl: {
-            type: String,
-            default: "",
-        },
+        // fileUrl: {
+        //     type: String,
+        //     default: "",
+        // },
     },
     { timestamps: true }
 );
