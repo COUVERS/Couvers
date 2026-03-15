@@ -6,6 +6,7 @@ import SkillDevelopmentRadarChart from "../components/reusable-ui/SkillDevelopme
 import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
 import ReviewCourseCard from "../components/features/ReviewCourseCard"
 import ReviewCourseLinkButton from "../components/reusable-ui/ReviewCourseLinkButton"
+import CertificateCard from "../components/features/CertificateCard"
 import { API_BASE_URL } from "../config"
 
 export default function Dashboard({ onStartCourse }) {
@@ -108,6 +109,7 @@ export default function Dashboard({ onStartCourse }) {
 
             <CourseCompletionProgress />
             <SkillDevelopmentRadarChart />
+            <CertificateCard onTakeCourse={() => setPage("courses")} />
         </Box>
     )
 }

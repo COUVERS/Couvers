@@ -22,6 +22,7 @@ const Skill = require("./models/skill");
 const QuizAttempt = require("./models/QuizAttempt");
 const SkillProgress = require("./models/SkillProgress");
 const LessonProgress = require("./models/LessonProgress");
+const Certificate = require("./models/Certificate");
 
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
@@ -474,6 +475,43 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
       }
     );
 
+    // Check if entire course is completed
+    const courseLessons = await Lesson.find({ courseId: lesson.courseId }).select("_id");
+    const courseLessonIds = courseLessons.map((item) => item._id);
+
+    const completedLessonsInCourse = await LessonProgress.countDocuments({
+      userId,
+      lessonId: { $in: courseLessonIds },
+      status: "completed",
+    });
+
+    const totalCourseLessons = courseLessonIds.length;
+    const isCourseCompleted =
+      totalCourseLessons > 0 && completedLessonsInCourse === totalCourseLessons;
+
+    let certificate = null;
+
+    if (isCourseCompleted) {
+      certificate = await Certificate.findOneAndUpdate(
+        {
+          userId,
+          courseId: lesson.courseId,
+        },
+        {
+          userId,
+          courseId: lesson.courseId,
+          $setOnInsert: {
+            issuedAt: new Date(),
+            // fileUrl: "",
+          },
+        },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    }
+
     // Prepare quiz results for the response
     const results = quizzes.map((quiz) => {
       const matched = resultAnswers.find(
@@ -511,6 +549,13 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
         totalLessons: updatedSkillProgress.totalLessons,
         skillScore: updatedSkillProgress.skillScore,
       },
+      certificate: certificate
+        ? {
+          certificateId: certificate._id,
+          issuedAt: certificate.issuedAt,
+          // fileUrl: certificate.fileUrl,
+        }
+        : null,
       results,
     });
 
@@ -719,6 +764,36 @@ app.get("/api/dashboard/review-lesson", authMiddleware, async (req, res) => {
   } catch (err) {
     console.error("Review lesson error:", err);
     return res.status(500).json({ message: "Server error while fetching review lesson" });
+  }
+});
+
+app.get("/api/dashboard/certificates", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const certificates = await Certificate.find({ userId })
+      .populate("courseId")
+      .sort({ issuedAt: -1 });
+
+    const items = certificates.map((item) => ({
+      certificateId: item._id,
+      courseId: item.courseId?._id,
+      title: item.courseId?.title || "Untitled Course",
+      iconKey: item.courseId?.icon || "empathy",
+      issuedAt: item.issuedAt,
+      // fileUrl: item.fileUrl || "",
+    }));
+
+    const totalCourses = await Course.countDocuments();
+
+    return res.status(200).json({
+      userId,
+      totalCourses,
+      certificates: items,
+    });
+  } catch (err) {
+    console.error("Dashboard certificates error:", err);
+    return res.status(500).json({ message: "Server error while fetching certificates" });
   }
 });
 
