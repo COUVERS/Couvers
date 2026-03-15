@@ -48,7 +48,18 @@ export default function CertificateCard({ onTakeCourse }) {
     }
 
     return (
-        <Box>
+        <Box
+            sx={{
+                display: "flex",
+                padding: "40px 32px",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "24px",
+                alignSelf: "stretch",
+                borderRadius: "var(--md, 8px)",
+                background: "var(--Color-Background-Paper, #FFF)",
+            }}
+        >
             <Typography variant="h5">
                 Certifications
             </Typography>
@@ -60,7 +71,15 @@ export default function CertificateCard({ onTakeCourse }) {
             )}
 
             {viewState === "none" && (
-                <Box>
+                <Box
+                    sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: "24px",
+                    }}
+                >
                     <Typography>
                         Prove your skills. Get certified.
                     </Typography>
@@ -75,9 +94,10 @@ export default function CertificateCard({ onTakeCourse }) {
                 <Box
                     sx={{
                         display: "flex",
-                        gap: 3,
+                        alignItems: "flex-start",
+                        gap: "24px",
                         overflowX: "auto",
-                        mt: 2,
+                        width: "100%",
                     }}
                 >
                     {certificates.map((item) => (

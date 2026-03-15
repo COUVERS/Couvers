@@ -21,10 +21,9 @@ export default function CertificateItem({
         <Box
             sx={{
                 display: "flex",
-                width: "120px",
                 flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "12px",
+                alignItems: "center",
+                gap: "8px",
                 flexShrink: 0,
             }}
         >
@@ -32,7 +31,7 @@ export default function CertificateItem({
 
             <Typography
                 sx={{
-                    alignSelf: "stretch",
+                    textAlign: "center",
                     color: "var(--Color-Text-Dark)",
                     fontSize: "var(--FontSize-Body-M)",
                     fontWeight: 600,
@@ -49,6 +48,7 @@ export default function CertificateItem({
                 sx={{
                     display: "flex",
                     alignItems: "center",
+                    justifyContent: "center",
                     gap: "6px",
                     color: "var(--Color-Primary-Main)",
                     textDecoration: "none",
