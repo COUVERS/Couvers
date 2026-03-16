@@ -25,6 +25,25 @@ export default function App() {
     setMode("login")
     setPage("home")
     setAccountView("settings")
+    setContinueCourseId(null)
+    setContinueLessonId(null)
+  }
+
+  const openCoursesOverview = () => {
+    setContinueCourseId(null)
+    setContinueLessonId(null)
+    setPage("courses")
+  }
+
+  const openContinueLesson = (nextLesson) => {
+    if (nextLesson) {
+      setContinueCourseId(nextLesson.courseId)
+      setContinueLessonId(nextLesson.lessonId)
+    } else {
+      setContinueCourseId(null)
+      setContinueLessonId(null)
+    }
+    setPage("courses")
   }
 
   useEffect(() => {
@@ -72,7 +91,14 @@ export default function App() {
     <div style={{ display: "flex", minHeight: "100vh" }}>
       <Navigation
         page={page}
-        setPage={setPage}
+        setPage={(nextPage) => {
+          if (nextPage === "courses") {
+            openCoursesOverview()
+            return
+          }
+
+          setPage(nextPage)
+        }}
         forceCollapsed={page === "courses"}
         onSignOut={handleSignOut}
       />
@@ -97,18 +123,19 @@ export default function App() {
         )}
 
         {page === "home" && (
-          <Dashboard
-            onStartCourse={(nextLesson) => {
-              if (nextLesson) {
-                setContinueCourseId(nextLesson.courseId)
-                setContinueLessonId(nextLesson.lessonId)
-              } else {
-                setContinueCourseId(null)
-                setContinueLessonId(null)
-              }
-              setPage("courses")
-            }}
-          />
+          <Dashboard onStartCourse={openContinueLesson} />
+          // <Dashboard
+          //   onStartCourse={(nextLesson) => {
+          //     if (nextLesson) {
+          //       setContinueCourseId(nextLesson.courseId)
+          //       setContinueLessonId(nextLesson.lessonId)
+          //     } else {
+          //       setContinueCourseId(null)
+          //       setContinueLessonId(null)
+          //     }
+          //     setPage("courses")
+          //   }}
+          // />
         )}
         {page === "courses" && (
           <Course

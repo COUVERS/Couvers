@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import CourseNavigation from "../components/layout/CourseNavigation"
@@ -33,6 +33,8 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
     const [quizzes, setQuizzes] = useState([])
 
     const [nextLessonData, setNextLessonData] = useState(null)
+
+    const hasAppliedContinue = useRef(false)
 
     const matchedQuizzes = quizzes.filter(
         q => String(q.lessonId) === String(selectedLesson?._id)
@@ -149,12 +151,12 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
     }, [selectedCourseId])
 
     useEffect(() => {
-        if (!continueCourseId) return
+        if (!continueCourseId || hasAppliedContinue.current) return
         setSelectedCourseId(continueCourseId)
     }, [continueCourseId])
 
     useEffect(() => {
-        if (!continueLessonId || lessons.length === 0) return
+        if (!continueLessonId || lessons.length === 0 || hasAppliedContinue.current) return
 
         const lesson = lessons.find(
             (l) => String(l._id) === String(continueLessonId)
@@ -162,6 +164,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
 
         if (lesson) {
             handleOpenLesson(lesson)
+            hasAppliedContinue.current = true
         }
     }, [continueLessonId, lessons])
 
