@@ -19,7 +19,7 @@ export default function ReviewCourseCard({
         >
             <Typography
                 sx={{
-                    fontSize: "32px",
+                    fontSize: "var(--FontSize-Headings-h2)",
                     fontWeight: 600,
                     letterSpacing: "-0.2px",
                 }}

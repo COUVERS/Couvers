@@ -69,7 +69,7 @@ export default function App() {
   }
 
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
       <Navigation
         page={page}
         setPage={setPage}
@@ -118,7 +118,7 @@ export default function App() {
         )}
 
         {page === "account" && accountView === "settings" && (
-          <AccountSettings 
+          <AccountSettings
             name={authUser?.username}
             email={authUser?.email}
             onChangePassword={() => setAccountView("changePassword")}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Box } from "@mui/material"
 import ContinueLearningCard from "../components/features/ContinueLearningCard"
-import CourseCompletionProgress from "../components/features/CourseCompletionBar"
+import CourseCompletionCard from "../components/features/CourseCompletionCard"
 import SkillDevelopmentRadarChart from "../components/reusable-ui/SkillDevelopmentRadarChart"
 import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
 import ReviewCourseCard from "../components/features/ReviewCourseCard"
@@ -66,50 +66,59 @@ export default function Dashboard({ onStartCourse }) {
     return (
         <Box
             sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
                 gap: 3,
-                p: 3,
+                alignItems: "stretch",
             }}
         >
-            <ContinueLearningCard onStart={() => onStartCourse(null)}>
-                {nextLesson?.lessonId ? (
-                    <LessonLinkButton
-                        courseName={nextLesson.courseName}
-                        lessonTitle={nextLesson.lessonTitle}
-                        iconKey={nextLesson.iconKey}
-                        action="continue"
-                        onClick={() =>
-                            onStartCourse({
-                                courseId: nextLesson.courseId,
-                                lessonId: nextLesson.lessonId,
-                            })
-                        }
-                    />
-                ) : null}
-            </ContinueLearningCard>
-
-            <ReviewCourseCard>
-                {reviewLesson?.lessonId && (
-                    <ReviewCourseLinkButton
-                        courseName={reviewLesson.courseName}
-                        reviewTitle={reviewLesson.lessonTitle}
-                        iconKey={reviewLesson.iconKey}
-                        onClick={() =>
-                            onStartCourse({
-                                courseId: reviewLesson.courseId,
-                                lessonId: reviewLesson.lessonId,
-                            })
-                        }
-                    />
-                )}
-            </ReviewCourseCard>
+            <Box sx={{ gridColumn: { xs: "auto", md: "1 / -1" } }}>
+                <ContinueLearningCard onStart={() => onStartCourse(null)}>
+                    {nextLesson?.lessonId ? (
+                        <LessonLinkButton
+                            courseName={nextLesson.courseName}
+                            lessonTitle={nextLesson.lessonTitle}
+                            iconKey={nextLesson.iconKey}
+                            action="continue"
+                            onClick={() =>
+                                onStartCourse({
+                                    courseId: nextLesson.courseId,
+                                    lessonId: nextLesson.lessonId,
+                                })
+                            }
+                        />
+                    ) : null}
+                </ContinueLearningCard>
+            </Box>
+            <Box>
+                <SkillDevelopmentRadarChart />
+            </Box>
+            <Box>
+                <CourseCompletionCard />
+            </Box>
+            <Box>
+                <CertificateCard onTakeCourse={() => setPage("courses")} />
+            </Box>
+            <Box>
+                <ReviewCourseCard>
+                    {reviewLesson?.lessonId && (
+                        <ReviewCourseLinkButton
+                            courseName={reviewLesson.courseName}
+                            reviewTitle={reviewLesson.lessonTitle}
+                            iconKey={reviewLesson.iconKey}
+                            onClick={() =>
+                                onStartCourse({
+                                    courseId: reviewLesson.courseId,
+                                    lessonId: reviewLesson.lessonId,
+                                })
+                            }
+                        />
+                    )}
+                </ReviewCourseCard>
+            </Box>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
-            <CourseCompletionProgress />
-            <SkillDevelopmentRadarChart />
-            <CertificateCard onTakeCourse={() => setPage("courses")} />
         </Box>
     )
 }

@@ -17,7 +17,6 @@ const ReviewButton = styled(Button, {
     shouldForwardProp: (prop) => prop !== "buttonsize",
 })(({ buttonsize }) => ({
     ...sizeStyles[buttonsize],
-    height: "100px",
     minHeight: "80px",
     borderRadius: 12,
     padding: 0,
@@ -29,7 +28,7 @@ const ReviewButton = styled(Button, {
 }))
 
 const IconBox = styled(Box)(() => ({
-    width: 100,
+    width: 80,
     display: "flex",
     alignItems: "stretch",
     justifyContent: "center",
@@ -73,15 +72,16 @@ export default function ReviewCourseLinkButton({
             onClick={onClick}
         >
             <IconBox>
-                {Icon && <Icon size={100} />}
+                {Icon && <Icon size={80} />}
             </IconBox>
 
             <Content>
                 <Typography
                     sx={{
-                        fontSize: 16,
-                        fontWeight: 700,
-                        lineHeight: 1.3,
+                        fontSize: "var(--FontSize-Body1)",
+                        fontWeight: 600,
+                        lineHeight: "var(--LineHeight-Body1)",
+                        letterSpacing: "var(--LetterSpace-Body1)",
                         color: "inherit",
                     }}
                 >

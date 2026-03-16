@@ -19,7 +19,7 @@ export default function ContinueLearningCard({
         >
             <Typography
                 sx={{
-                    fontSize: "32px",
+                    fontSize: "var(--FontSize-Headings-h2)",
                     fontWeight: 600,
                     letterSpacing: "-0.2px",
                 }}
@@ -27,39 +27,41 @@ export default function ContinueLearningCard({
                 {title}
             </Typography>
 
-            {children ? (
-                children
-            ) : (
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        gap: "24px",
-                    }}
-                >
-                    <Typography
+            {
+                children ? (
+                    children
+                ) : (
+                    <Box
                         sx={{
-                            fontSize: "16px",
-                            lineHeight: "24px",
-                            mt: 1,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-start",
+                            gap: "24px",
                         }}
                     >
-                        {description}
-                    </Typography>
+                        <Typography
+                            sx={{
+                                fontSize: "16px",
+                                lineHeight: "24px",
+                                mt: 1,
+                            }}
+                        >
+                            {description}
+                        </Typography>
 
-                    <Button
-                        variant="contained"
-                        onClick={onStart}
-                        sx={{
-                            width: 126,
-                            height: 44,
-                        }}
-                    >
-                        Get Started
-                    </Button>
-                </Box>
-            )}
-        </Box>
+                        <Button
+                            variant="contained"
+                            onClick={onStart}
+                            sx={{
+                                width: 126,
+                                height: 44,
+                            }}
+                        >
+                            Get Started
+                        </Button>
+                    </Box>
+                )
+            }
+        </Box >
     )
 }
