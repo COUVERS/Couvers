@@ -90,10 +90,11 @@ export default function LessonLinkButton({
             <Content>
                 <Typography
                     sx={{
-                        fontSize: 16,
-                        fontWeight: 700,
-                        lineHeight: 1.3,
-                        color: "inherit",
+                        fontSize: "var(--FontSize-Body1)",
+                        fontWeight: 600,
+                        lineHeight: "var(--LineHeight-Body1)",
+                        letterSpacing: "var(--LetterSpace-Body1)",
+                        color: "var(--Color-Primary-Contrast)",
                     }}
                 >
                     {courseName}
@@ -124,6 +125,6 @@ export default function LessonLinkButton({
                     {actionLabel}
                 </Typography>
             </ActionBox>
-        </LessonButton>
+        </LessonButton >
     )
 }

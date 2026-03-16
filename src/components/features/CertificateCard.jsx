@@ -60,7 +60,13 @@ export default function CertificateCard({ onTakeCourse }) {
                 background: "var(--Color-Background-Paper, #FFF)",
             }}
         >
-            <Typography variant="h5">
+            <Typography
+                sx={{
+                    fontSize: "var(--FontSize-Headings-h2)",
+                    fontWeight: 600,
+                    letterSpacing: "-0.2px",
+                }}
+            >
                 Certifications
             </Typography>
 

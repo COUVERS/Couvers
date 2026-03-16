@@ -51,7 +51,13 @@ export default function CourseCompletionProgress() {
                 gap: "32px",
             }}
         >
-            <Typography sx={{ fontSize: "var(--FontSize-Headings-h2)", fontWeight: 600 }}>
+            <Typography
+                sx={{
+                    fontSize: "var(--FontSize-Headings-h2)",
+                    fontWeight: 600,
+                    letterSpacing: "-0.2px",
+                }}
+            >
                 Course Completion Progress
             </Typography>
 
