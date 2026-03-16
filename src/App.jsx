@@ -125,7 +125,7 @@ export default function App() {
         {page === "home" && (
           <Dashboard onStartCourse={openContinueLesson} />
         )}
-        
+
         {page === "courses" && (
           <Course
             continueCourseId={continueCourseId}

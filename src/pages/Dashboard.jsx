@@ -73,28 +73,28 @@ export default function Dashboard({ onStartCourse }) {
     }, [])
 
     useEffect(() => {
-    async function loadSkillMetrics() {
-        try {
-            const token = localStorage.getItem("token")
+        async function loadSkillMetrics() {
+            try {
+                const token = localStorage.getItem("token")
 
-            const res = await fetch(`${API_BASE_URL}/api/dashboard/skills`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-            },
-        })
+                const res = await fetch(`${API_BASE_URL}/api/dashboard/skills`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
 
-            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
-            const data = await res.json()
+                const data = await res.json()
 
-            const scoreMap = new Map(
-            (data.radarChart || []).map((item) => [item.skill, item.score])
-            )
+                const scoreMap = new Map(
+                    (data.radarChart || []).map((item) => [item.skill, item.score])
+                )
 
-            const mappedMetrics = SKILL_LABELS.map((label) => ({
-                label,
-                value: scoreMap.get(label) || 0,
-            }))
+                const mappedMetrics = SKILL_LABELS.map((label) => ({
+                    label,
+                    value: scoreMap.get(label) || 0,
+                }))
 
                 setSkillMetrics(mappedMetrics)
             } catch (e) {
@@ -133,7 +133,7 @@ export default function Dashboard({ onStartCourse }) {
                 </ContinueLearningCard>
             </Box>
             <Box>
-            <SkillDevelopmentRadarChart metrics={skillMetrics} />
+                <SkillDevelopmentRadarChart metrics={skillMetrics} />
             </Box>
             <Box>
                 <CourseCompletionCard />
