@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Box } from "@mui/material"
 import ContinueLearningCard from "../components/features/ContinueLearningCard"
-import CourseCompletionProgress from "../components/features/CourseCompletionBar"
+import CourseCompletionCard from "../components/features/CourseCompletionCard"
 import SkillDevelopmentRadarChart from "../components/reusable-ui/SkillDevelopmentRadarChart"
 import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
 import ReviewCourseCard from "../components/features/ReviewCourseCard"
@@ -94,7 +94,7 @@ export default function Dashboard({ onStartCourse }) {
                 <SkillDevelopmentRadarChart />
             </Box>
             <Box>
-                <CourseCompletionProgress />
+                <CourseCompletionCard />
             </Box>
             <Box>
                 <CertificateCard onTakeCourse={() => setPage("courses")} />

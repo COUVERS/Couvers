@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import ProgressBar from "../reusable-ui/ProgressBar";
 import { API_BASE_URL } from "../../config"
 
-export default function CourseCompletionProgress() {
+export default function CourseCompletionCard() {
     const [items, setItems] = useState([]);
     const [error, setError] = useState("");
 
