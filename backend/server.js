@@ -301,6 +301,37 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * API: Mark lesson as started
+ * POST /api/lessons/:lessonId/start
+ */
+app.post("/api/lessons/:lessonId/start", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId
+    const { lessonId } = req.params
+
+    const progress = await LessonProgress.findOneAndUpdate(
+      { userId, lessonId },
+      {
+        $set: { status: "in_progress" },
+        $setOnInsert: { bestScore: 0 },
+      },
+      {
+        new: true,
+        upsert: true,
+      }
+    )
+
+    return res.status(200).json({
+      message: "Lesson marked as in progress",
+      lessonProgress: progress,
+    })
+  } catch (err) {
+    console.error("Start lesson error:", err)
+    return res.status(500).json({ message: "Server error while starting lesson" })
+  }
+})
+
 // =====================================================
 // QUIZ SUBMISSION ROUTES
 // =====================================================
@@ -656,40 +687,83 @@ app.get("/api/dashboard/courses", authMiddleware, async (req, res) => {
  */
 app.get("/api/dashboard/next-lesson", authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.user.userId
 
-    const courses = await Course.find().sort({ createdAt: 1 });
+    const courses = await Course.find().sort({ createdAt: 1 })
+
+    let hasStartedAnyLesson = false
 
     for (const course of courses) {
-      const lessons = await Lesson.find({ courseId: course._id }).sort({ order: 1 });
+      const lessons = await Lesson.find({ courseId: course._id }).sort({ order: 1 })
 
-      if (!lessons.length) continue;
+      if (!lessons.length) continue
 
-      const lessonIds = lessons.map((lesson) => lesson._id);
+      const lessonIds = lessons.map((lesson) => lesson._id)
 
       const progressList = await LessonProgress.find({
         userId,
         lessonId: { $in: lessonIds },
-      });
+      })
 
       const progressMap = new Map(
         progressList.map((item) => [String(item.lessonId), item.status])
-      );
+      )
 
-      const nextLesson = lessons.find((lesson) => {
-        const status = progressMap.get(String(lesson._id));
-        return status !== "completed";
-      });
+      // once start lesson = true
+      if (progressList.length > 0) {
+        hasStartedAnyLesson = true
+      }
 
-      if (nextLesson) {
-        return res.status(200).json({
+      // return not completed lesson in the started course 
+      if (progressList.length > 0) {
+        const nextLesson = lessons.find((lesson) => {
+          const status = progressMap.get(String(lesson._id))
+          return status !== "completed"
+        })
+
+        if (nextLesson) {
+          return res.status(200).json({
+            userId,
+            courseId: course._id,
+            courseName: course.title,
+            lessonId: nextLesson._id,
+            lessonTitle: nextLesson.title,
+            iconKey: course.icon || "empathy",
+            hasStartedLesson: true,
+          })
+        }
+      }
+    }
+
+    // 1 new user → no continue
+    // 2 complete course → next course lesson
+    if (hasStartedAnyLesson) {
+      for (const course of courses) {
+        const lessons = await Lesson.find({ courseId: course._id }).sort({ order: 1 })
+
+        if (!lessons.length) continue
+
+        const lessonIds = lessons.map((lesson) => lesson._id)
+
+        const progressList = await LessonProgress.find({
           userId,
-          courseId: course._id,
-          courseName: course.title,
-          lessonId: nextLesson._id,
-          lessonTitle: nextLesson.title,
-          iconKey: course.icon || "empathy",
-        });
+          lessonId: { $in: lessonIds },
+        })
+
+        // non started course
+        if (progressList.length === 0) {
+          const firstLesson = lessons[0]
+
+          return res.status(200).json({
+            userId,
+            courseId: course._id,
+            courseName: course.title,
+            lessonId: firstLesson._id,
+            lessonTitle: firstLesson.title,
+            iconKey: course.icon || "empathy",
+            hasStartedLesson: true,
+          })
+        }
       }
     }
 
@@ -700,13 +774,14 @@ app.get("/api/dashboard/next-lesson", authMiddleware, async (req, res) => {
       lessonId: null,
       lessonTitle: "",
       iconKey: "empathy",
+      hasStartedLesson: false,
       message: "No next lesson found",
-    });
+    })
   } catch (err) {
-    console.error("Dashboard next lesson error:", err);
-    return res.status(500).json({ message: "Server error while fetching next lesson" });
+    console.error("Dashboard next lesson error:", err)
+    return res.status(500).json({ message: "Server error while fetching next lesson" })
   }
-});
+})
 
 /**
  * API: Get Review Lesson
@@ -717,38 +792,38 @@ app.get("/api/dashboard/next-lesson", authMiddleware, async (req, res) => {
 
 app.get("/api/dashboard/review-lesson", authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.user.userId
 
     const attempts = await QuizAttempt.find({ userId })
-      .sort({ score: 1, submittedAt: 1 });
+      .sort({ score: 1, submittedAt: 1 })
 
     if (!attempts.length) {
-      return res.status(200).json({ reviewLesson: null });
+      return res.status(200).json({ reviewLesson: null })
     }
 
-    const bestAttemptByLesson = new Map();
+    const bestAttemptByLesson = new Map()
 
     for (const attempt of attempts) {
-      const key = String(attempt.lessonId);
+      const key = String(attempt.lessonId)
 
       if (!bestAttemptByLesson.has(key)) {
-        bestAttemptByLesson.set(key, attempt);
+        bestAttemptByLesson.set(key, attempt)
       }
     }
 
-    const attemptsList = [...bestAttemptByLesson.values()];
+    const attemptsList = [...bestAttemptByLesson.values()]
 
-    const reviewAttempt = attemptsList.find((a) => a.score < 100);
-    const targetAttempt = reviewAttempt || attemptsList[attemptsList.length - 1];
+    const reviewAttempt = attemptsList.find((a) => a.score < 100)
+    const targetAttempt = reviewAttempt || attemptsList[attemptsList.length - 1]
 
-    const lesson = await Lesson.findById(targetAttempt.lessonId);
+    const lesson = await Lesson.findById(targetAttempt.lessonId)
     if (!lesson) {
-      return res.status(200).json({ reviewLesson: null });
+      return res.status(200).json({ reviewLesson: null })
     }
 
-    const course = await Course.findById(lesson.courseId);
+    const course = await Course.findById(lesson.courseId)
     if (!course) {
-      return res.status(200).json({ reviewLesson: null });
+      return res.status(200).json({ reviewLesson: null })
     }
 
     return res.status(200).json({
@@ -760,20 +835,20 @@ app.get("/api/dashboard/review-lesson", authMiddleware, async (req, res) => {
         iconKey: course.icon || "empathy",
         bestScore: targetAttempt.score,
       },
-    });
+    })
   } catch (err) {
     console.error("Review lesson error:", err);
     return res.status(500).json({ message: "Server error while fetching review lesson" });
   }
-});
+})
 
 app.get("/api/dashboard/certificates", authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.user.userId
 
     const certificates = await Certificate.find({ userId })
       .populate("courseId")
-      .sort({ issuedAt: -1 });
+      .sort({ issuedAt: -1 })
 
     const items = certificates.map((item) => ({
       certificateId: item._id,
@@ -782,7 +857,7 @@ app.get("/api/dashboard/certificates", authMiddleware, async (req, res) => {
       iconKey: item.courseId?.icon || "empathy",
       issuedAt: item.issuedAt,
       // fileUrl: item.fileUrl || "",
-    }));
+    }))
 
     const totalCourses = await Course.countDocuments();
 
@@ -790,12 +865,12 @@ app.get("/api/dashboard/certificates", authMiddleware, async (req, res) => {
       userId,
       totalCourses,
       certificates: items,
-    });
+    })
   } catch (err) {
-    console.error("Dashboard certificates error:", err);
-    return res.status(500).json({ message: "Server error while fetching certificates" });
+    console.error("Dashboard certificates error:", err)
+    return res.status(500).json({ message: "Server error while fetching certificates" })
   }
-});
+})
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

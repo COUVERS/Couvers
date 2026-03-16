@@ -116,7 +116,7 @@ export default function Dashboard({ onStartCourse }) {
         >
             <Box sx={{ gridColumn: { xs: "auto", md: "1 / -1" } }}>
                 <ContinueLearningCard onStart={() => onStartCourse(null)}>
-                    {nextLesson?.lessonId ? (
+                    {nextLesson?.lessonId && nextLesson?.hasStartedLesson ? (
                         <LessonLinkButton
                             courseName={nextLesson.courseName}
                             lessonTitle={nextLesson.lessonTitle}

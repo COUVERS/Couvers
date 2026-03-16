@@ -8,11 +8,8 @@ import Header from "../Header"
 import Lecture from "./LecturePage"
 import QuizPage from "./QuizPage"
 import { API_BASE_URL } from "../config"
-// import { demoLessons } from "../library/demoLessons"
-
 
 import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
-import ContinueLearningCard from "../components/features/ContinueLearningCard"
 
 export default function CoursePage({ continueCourseId, continueLessonId }) {
     const [courses, setCourses] = useState([])
@@ -173,11 +170,24 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
         }
     }, [continueLessonId, lessons])
 
-    const handleOpenLesson = (lesson) => {
-        setSelectedLesson(lesson)
-        setStartedLesson(lesson)
-        setNavMode("contents")
-        setViewMode("lecture")
+    const handleOpenLesson = async (lesson) => {
+        try {
+            const token = localStorage.getItem("token")
+
+            await fetch(`${API_BASE_URL}/api/lessons/${lesson._id}/start`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            setSelectedLesson(lesson)
+            setStartedLesson(lesson)
+            setNavMode("contents")
+            setViewMode("lecture")
+        } catch (err) {
+            console.error("Failed to mark lesson as started:", err)
+        }
     }
 
     const handleBackToLessonList = () => {
@@ -218,7 +228,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                     <>
                         {course && (
                             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                                {nextLessonData?.lessonId && (
+                                {nextLessonData?.lessonId && nextLessonData?.hasStartedLesson && (
                                     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                                         <Typography
                                             sx={{
