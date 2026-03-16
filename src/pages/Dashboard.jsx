@@ -9,10 +9,19 @@ import ReviewCourseLinkButton from "../components/reusable-ui/ReviewCourseLinkBu
 import CertificateCard from "../components/features/CertificateCard"
 import { API_BASE_URL } from "../config"
 
+const SKILL_LABELS = [
+    "Lesson Structure",
+    "Explanation Clarity",
+    "Assessment",
+    "Pacing",
+    "Student Engagement",
+]
+
 export default function Dashboard({ onStartCourse }) {
     const [nextLesson, setNextLesson] = useState(null)
     const [error, setError] = useState("")
     const [reviewLesson, setReviewLesson] = useState(null)
+    const [skillMetrics, setSkillMetrics] = useState([])
 
     useEffect(() => {
         async function loadNextLesson() {
@@ -63,6 +72,39 @@ export default function Dashboard({ onStartCourse }) {
         loadReviewLesson()
     }, [])
 
+    useEffect(() => {
+    async function loadSkillMetrics() {
+        try {
+            const token = localStorage.getItem("token")
+
+            const res = await fetch(`${API_BASE_URL}/api/dashboard/skills`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+            },
+        })
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+            const data = await res.json()
+
+            const scoreMap = new Map(
+            (data.radarChart || []).map((item) => [item.skill, item.score])
+            )
+
+            const mappedMetrics = SKILL_LABELS.map((label) => ({
+                label,
+                value: scoreMap.get(label) || 0,
+            }))
+
+                setSkillMetrics(mappedMetrics)
+            } catch (e) {
+                console.error("loadSkillMetrics error:", e)
+            }
+        }
+
+        loadSkillMetrics()
+    }, [])
+
     return (
         <Box
             sx={{
@@ -108,7 +150,7 @@ export default function Dashboard({ onStartCourse }) {
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <CourseCompletionProgress />
-            <SkillDevelopmentRadarChart />
+            <SkillDevelopmentRadarChart metrics={skillMetrics} />
             <CertificateCard onTakeCourse={() => setPage("courses")} />
         </Box>
     )
