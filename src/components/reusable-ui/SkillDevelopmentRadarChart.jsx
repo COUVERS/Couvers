@@ -43,15 +43,15 @@ export default function SkillDevelopmentRadarChart({ metrics }) {
     { label: "Student Engagement", value: 52 },
   ]
 
-  const data = metrics || defaultMetrics
+  const data = metrics && metrics.length > 0 ? metrics : defaultMetrics
 
- const labelPositions = [
-  { top: -40, left: "50%", transform: "translateX(-50%)" },
-  { top: "35%", right: -80 },
-  { bottom: -40, right: 30 },
-  { bottom: -40, left: 30 },
-  { top: "35%", left: -80 },
-]
+  const labelPositions = [
+    { top: -40, left: "50%", transform: "translateX(-50%)" },
+    { top: "35%", right: -80 },
+    { bottom: -40, right: 30 },
+    { bottom: -40, left: 30 },
+    { top: "35%", left: -80 },  
+  ]
 
   return (
     <Box
@@ -93,7 +93,7 @@ export default function SkillDevelopmentRadarChart({ metrics }) {
     position: "relative",
     width: SIZE,
     height: SIZE,
-    ml: "120px",   // mueve el radar hacia la derecha
+    ml: "120px",
     mt: 6
   }}
 >
