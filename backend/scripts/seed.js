@@ -7,7 +7,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const DB_NAME = process.env.DB_NAME || "tete";
 
 if (!MONGO_URI) {
-  console.error("Missing MONGO_URI env");
+  console.error("Missing MONGO_URI env!");
   process.exit(1);
 }
 
