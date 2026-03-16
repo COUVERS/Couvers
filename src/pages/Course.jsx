@@ -43,7 +43,6 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
         setViewMode("quiz")
     }
 
-
     // console.log("selectedLesson", selectedLesson)
     // console.log("quizzes", quizzes)
     // console.log("matchedQuizzes", matchedQuizzes)
@@ -69,7 +68,13 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                 console.log("/api/courses data:", data)
                 setCourses(data)
 
-                if (data.length > 0) setSelectedCourseId(data[0]._id)
+                if (data.length > 0) {
+                    if (continueCourseId) {
+                        setSelectedCourseId(continueCourseId)
+                    } else {
+                        setSelectedCourseId(data[0]._id)
+                    }
+                }
 
             } catch (e) {
                 setError(e.message)

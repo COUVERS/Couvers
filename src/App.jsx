@@ -124,19 +124,8 @@ export default function App() {
 
         {page === "home" && (
           <Dashboard onStartCourse={openContinueLesson} />
-          // <Dashboard
-          //   onStartCourse={(nextLesson) => {
-          //     if (nextLesson) {
-          //       setContinueCourseId(nextLesson.courseId)
-          //       setContinueLessonId(nextLesson.lessonId)
-          //     } else {
-          //       setContinueCourseId(null)
-          //       setContinueLessonId(null)
-          //     }
-          //     setPage("courses")
-          //   }}
-          // />
         )}
+        
         {page === "courses" && (
           <Course
             continueCourseId={continueCourseId}
