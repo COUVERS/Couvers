@@ -133,7 +133,7 @@ export default function Dashboard({ onStartCourse }) {
                 </ContinueLearningCard>
             </Box>
             <Box>
-                <SkillDevelopmentRadarChart />
+            <SkillDevelopmentRadarChart metrics={skillMetrics} />
             </Box>
             <Box>
                 <CourseCompletionCard />
@@ -161,9 +161,6 @@ export default function Dashboard({ onStartCourse }) {
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
-            <CourseCompletionCard />
-            <SkillDevelopmentRadarChart metrics={skillMetrics} />
-            <CertificateCard onTakeCourse={() => setPage("courses")} />
         </Box>
     )
 }
