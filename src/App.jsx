@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
 import Navigation from "./components/layout/Navigation"
@@ -10,29 +11,38 @@ import Dashboard from "./pages/Dashboard"
 import { API_BASE_URL } from "./config"
 
 export default function App() {
-  const [page, setPage] = useState("home")
-  const [mode, setMode] = useState("login") // "login" | "signup"
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
-  const [accountView, setAccountView] = useState("settings")
   const [continueCourseId, setContinueCourseId] = useState(null)
   const [continueLessonId, setContinueLessonId] = useState(null)
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const page = location.pathname.startsWith("/courses")
+    ? "courses"
+    : location.pathname.startsWith("/account")
+      ? "account"
+      : "home"
+
+  const accountView =
+    location.pathname === "/account/change-password"
+      ? "changePassword"
+      : "settings"
 
   const handleSignOut = () => {
     localStorage.removeItem("token")
     setIsLoggedIn(false)
     setAuthUser(null)
-    setMode("login")
-    setPage("home")
-    setAccountView("settings")
     setContinueCourseId(null)
     setContinueLessonId(null)
+    navigate("/login")
   }
 
   const openCoursesOverview = () => {
     setContinueCourseId(null)
     setContinueLessonId(null)
-    setPage("courses")
+    navigate("/courses")
   }
 
   const openContinueLesson = (nextLesson) => {
@@ -43,7 +53,7 @@ export default function App() {
       setContinueCourseId(null)
       setContinueLessonId(null)
     }
-    setPage("courses")
+    navigate("/courses")
   }
 
   useEffect(() => {
@@ -52,37 +62,56 @@ export default function App() {
 
     fetch(`${API_BASE_URL}/auth/me`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.user) {
           setAuthUser(data.user)
           setIsLoggedIn(true)
+        } else {
+          localStorage.removeItem("token")
+          setIsLoggedIn(false)
+          setAuthUser(null)
+          navigate("/login")
         }
       })
       .catch(() => {
         localStorage.removeItem("token")
         setIsLoggedIn(false)
         setAuthUser(null)
+        navigate("/login")
       })
-  }, [])
+  }, [navigate])
 
   if (!isLoggedIn) {
     return (
       <div style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}>
-        {mode === "login" ? (
-          <LoginForm
-            onGoSignup={() => setMode("signup")}
-            onLoginSuccess={(data) => {
-              setIsLoggedIn(true)
-              setAuthUser(data.user)
-            }}
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <LoginForm
+                onGoSignup={() => navigate("/signup")}
+                onLoginSuccess={(data) => {
+                  setIsLoggedIn(true)
+                  setAuthUser(data.user)
+                  navigate("/")
+                }}
+              />
+            }
           />
-        ) : (
-          <SignupForm onGoLogin={() => setMode("login")} />
-        )}
+          <Route
+            path="/signup"
+            element={
+              <SignupForm
+                onGoLogin={() => navigate("/login")}
+              />
+            }
+          />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
       </div>
     )
   }
@@ -97,7 +126,14 @@ export default function App() {
             return
           }
 
-          setPage(nextPage)
+          if (nextPage === "home") {
+            navigate("/")
+            return
+          }
+
+          if (nextPage === "account") {
+            navigate("/account")
+          }
         }}
         forceCollapsed={page === "courses"}
         onSignOut={handleSignOut}
@@ -106,11 +142,12 @@ export default function App() {
       <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
         {page !== "courses" && (
           <Header
-            title={page === "account"
-              ? accountView === "changePassword"
-                ? "Change Password"
-                : "Account Settings"
-              : "This is the Header"
+            title={
+              page === "account"
+                ? accountView === "changePassword"
+                  ? "Change Password"
+                  : "Account Settings"
+                : "This is the Header"
             }
             description={
               page === "account"
@@ -122,28 +159,38 @@ export default function App() {
           />
         )}
 
-        {page === "home" && (
-          <Dashboard onStartCourse={openContinueLesson} />
-        )}
-
-        {page === "courses" && (
-          <Course
-            continueCourseId={continueCourseId}
-            continueLessonId={continueLessonId}
+        <Routes>
+          <Route
+            path="/"
+            element={<Dashboard onStartCourse={openContinueLesson} />}
           />
-        )}
-
-        {page === "account" && accountView === "settings" && (
-          <AccountSettings
-            name={authUser?.username}
-            email={authUser?.email}
-            onChangePassword={() => setAccountView("changePassword")}
+          <Route
+            path="/courses"
+            element={
+              <Course
+                continueCourseId={continueCourseId}
+                continueLessonId={continueLessonId}
+              />
+            }
           />
-        )}
-
-        {page === "account" && accountView === "changePassword" && (
-          <ChangePassword onCancel={() => setAccountView("settings")} />
-        )}
+          <Route
+            path="/account"
+            element={
+              <AccountSettings
+                name={authUser?.username}
+                email={authUser?.email}
+                onChangePassword={() => navigate("/account/change-password")}
+              />
+            }
+          />
+          <Route
+            path="/account/change-password"
+            element={
+              <ChangePassword onCancel={() => navigate("/account")} />
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
     </div>
   )
