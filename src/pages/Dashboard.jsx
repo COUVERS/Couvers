@@ -66,50 +66,59 @@ export default function Dashboard({ onStartCourse }) {
     return (
         <Box
             sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
                 gap: 3,
-                p: 3,
+                alignItems: "stretch",
             }}
         >
-            <ContinueLearningCard onStart={() => onStartCourse(null)}>
-                {nextLesson?.lessonId ? (
-                    <LessonLinkButton
-                        courseName={nextLesson.courseName}
-                        lessonTitle={nextLesson.lessonTitle}
-                        iconKey={nextLesson.iconKey}
-                        action="continue"
-                        onClick={() =>
-                            onStartCourse({
-                                courseId: nextLesson.courseId,
-                                lessonId: nextLesson.lessonId,
-                            })
-                        }
-                    />
-                ) : null}
-            </ContinueLearningCard>
-
-            <ReviewCourseCard>
-                {reviewLesson?.lessonId && (
-                    <ReviewCourseLinkButton
-                        courseName={reviewLesson.courseName}
-                        reviewTitle={reviewLesson.lessonTitle}
-                        iconKey={reviewLesson.iconKey}
-                        onClick={() =>
-                            onStartCourse({
-                                courseId: reviewLesson.courseId,
-                                lessonId: reviewLesson.lessonId,
-                            })
-                        }
-                    />
-                )}
-            </ReviewCourseCard>
+            <Box sx={{ gridColumn: { xs: "auto", md: "1 / -1" } }}>
+                <ContinueLearningCard onStart={() => onStartCourse(null)}>
+                    {nextLesson?.lessonId ? (
+                        <LessonLinkButton
+                            courseName={nextLesson.courseName}
+                            lessonTitle={nextLesson.lessonTitle}
+                            iconKey={nextLesson.iconKey}
+                            action="continue"
+                            onClick={() =>
+                                onStartCourse({
+                                    courseId: nextLesson.courseId,
+                                    lessonId: nextLesson.lessonId,
+                                })
+                            }
+                        />
+                    ) : null}
+                </ContinueLearningCard>
+            </Box>
+            <Box>
+                <SkillDevelopmentRadarChart />
+            </Box>
+            <Box>
+                <CourseCompletionProgress />
+            </Box>
+            <Box>
+                <CertificateCard onTakeCourse={() => setPage("courses")} />
+            </Box>
+            <Box>
+                <ReviewCourseCard>
+                    {reviewLesson?.lessonId && (
+                        <ReviewCourseLinkButton
+                            courseName={reviewLesson.courseName}
+                            reviewTitle={reviewLesson.lessonTitle}
+                            iconKey={reviewLesson.iconKey}
+                            onClick={() =>
+                                onStartCourse({
+                                    courseId: reviewLesson.courseId,
+                                    lessonId: reviewLesson.lessonId,
+                                })
+                            }
+                        />
+                    )}
+                </ReviewCourseCard>
+            </Box>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
-            <CourseCompletionProgress />
-            <SkillDevelopmentRadarChart />
-            <CertificateCard onTakeCourse={() => setPage("courses")} />
         </Box>
     )
 }
