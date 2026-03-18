@@ -33,7 +33,8 @@ const CategoryIcon = styled(Box, { shouldForwardProp: (p) => p !== 'active' })((
     justifyContent: 'center',
     flexShrink: 0,
     backgroundColor: active ? '#E0E0F8' : 'rgba(255, 255, 255, 0.1)',
-    color: active ? '#2D2D5A' : '#fff',
+    // color: active ? '#2D2D5A' : '#fff',
+    color: active ? 'var(--Color-Secondary)' : '#fff',
 }))
 
 const iconMap = {
@@ -46,7 +47,7 @@ const iconMap = {
 
 export default function CourseNavigation({ courses = [], selectedCourseId, onSelectCourse }) {
     const [open, setOpen] = useState(true)
-    const [activeId, setActiveId] = useState(1)
+    // const [activeId, setActiveId] = useState(1)
 
     return (
         <CourseDrawer open={open}>
@@ -85,49 +86,54 @@ export default function CourseNavigation({ courses = [], selectedCourseId, onSel
 
                 }}
             >
-                {courses.map((course) => (
-                    <Tooltip
-                        key={course._id}
-                        title={!open ? course.title : ""}
-                        placement="right"
-                        arrow
-                    >
-                        <ListItemButton
-                            onClick={() => {
-                                onSelectCourse?.(course._id)
-                            }}
-                            sx={{
-                                borderRadius: '8px',
-                                p: '8px',
-                                backgroundColor: activeId === course._id ? '#FFF' : 'transparent',
-                                color: activeId === course._id ? '#2D2D5A' : '#FFF',
-                                justifyContent: open ? 'flex-start' : 'center',
-                                transition: '0.2s',
-                                '&:hover': {
-                                    backgroundColor: activeId === course._id ? '#FFF' : 'rgba(255,255,255,0.08)'
-                                }
-                            }}
-                        >
-                            <CategoryIcon active={selectedCourseId === course._id}>
-                                {iconMap[course.title]}
-                            </CategoryIcon>
+                {courses.map((course) => {
+                    const isSelected = selectedCourseId === course._id
 
-                            {open && (
-                                <Typography
-                                    sx={{
-                                        ml: 2,
-                                        fontSize: '16px',
-                                        fontStyle: 'normal',
-                                        fontWeight: 500,
-                                        lineHeight: 'normal',
-                                    }}
-                                >
-                                    {course.title}
-                                </Typography>
-                            )}
-                        </ListItemButton>
-                    </Tooltip>
-                ))}
+                    return (
+                        <Tooltip
+                            key={course._id}
+                            title={!open ? course.title : ""}
+                            placement="right"
+                            arrow
+                        >
+                            <ListItemButton
+                                onClick={() => {
+                                    onSelectCourse?.(course._id)
+                                }}
+                                sx={{
+                                    borderRadius: '8px',
+                                    p: '8px',
+                                    backgroundColor: isSelected ? '#FFF' : 'transparent',
+                                    color: isSelected ? 'var(--Color-Secondary-Dark)' : '#FFF',
+                                    justifyContent: open ? 'flex-start' : 'center',
+                                    transition: '0.2s',
+                                    '&:hover': {
+                                        backgroundColor: isSelected ? '#FFF' : 'rgba(255,255,255,0.08)'
+                                    }
+                                }}
+                            >
+                                <CategoryIcon active={isSelected}>
+                                    {iconMap[course.title]}
+                                </CategoryIcon>
+
+                                {open && (
+                                    <Typography
+                                        sx={{
+                                            ml: 2,
+                                            fontSize: '16px',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            lineHeight: 'normal',
+                                            color: isSelected ? 'var(--Color-Secondary-Dark)' : '#FFF',
+                                        }}
+                                    >
+                                        {course.title}
+                                    </Typography>
+                                )}
+                            </ListItemButton>
+                        </Tooltip>
+                    )
+                })}
             </Stack>
 
             <Box sx={{ p: 2 }}>
