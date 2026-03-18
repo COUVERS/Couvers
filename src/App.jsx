@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
+import ForgotPassword from "./pages/ForgotPassword"
+import PasswordResetSent from "./pages/PasswordResetSent"
+import ResetPassword from "./pages/ResetPassword"
 import Navigation from "./components/layout/Navigation"
 import Course from "./pages/Course"
 import Header from "./Header"
@@ -104,13 +107,12 @@ export default function App() {
           />
           <Route
             path="/signup"
-            element={
-              <SignupForm
-                onGoLogin={() => navigate("/login")}
-              />
-            }
+            element={<SignupForm onGoLogin={() => navigate("/login")} />}
           />
-          <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password/sent" element={<PasswordResetSent />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     )

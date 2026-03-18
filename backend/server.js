@@ -10,6 +10,7 @@ require("dotenv").config();
 require("./db/connection");
 
 const jwt = require("jsonwebtoken")
+const crypto = require("crypto")
 
 // =====================================================
 // DATABASE MODELS
@@ -85,6 +86,17 @@ app.post("/auth/signup", async (req, res) => {
       return res.status(400).json({ message: "Email and password are required" });
     }
 
+   const allowedDomains = ["@codyacademy.edu", "@tete.edu"];
+    const isAllowedDomain = allowedDomains.some((domain) =>
+      normalizedEmail.endsWith(domain)
+    );
+
+    if (!isAllowedDomain) {
+      return res.status(400).json({
+        message: "This email domain is not registered for a corporate account.",
+      });
+    }
+
     if (password.length < 6) {
       return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
@@ -94,7 +106,6 @@ app.post("/auth/signup", async (req, res) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    // Hash password before saving
     const passwordHash = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
@@ -222,6 +233,95 @@ app.get("/auth/me", authMiddleware, async (req, res) => {
     return res.status(500).json({ message: "Server error while fetching user" });
   }
 });
+
+/**
+ * API: Forgot Password
+ * POST /auth/forgot-password
+ *
+ * Generates a reset token for the user and stores it in the database.
+ * For now, the reset link is logged in the server console.
+ */
+app.post("/auth/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body
+    const normalizedEmail = email?.toLowerCase().trim()
+
+    if (!normalizedEmail) {
+      return res.status(400).json({ message: "Email is required" })
+    }
+
+    const user = await User.findOne({ email: normalizedEmail })
+
+    // For security, do not reveal whether the email exists
+    if (!user) {
+      return res.status(200).json({
+        message: "If an account with that email exists, a reset link has been generated.",
+      })
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex")
+    const resetPasswordExpires = new Date(Date.now() + 1000 * 60 * 30) // 30 minutes
+
+    user.resetPasswordToken = resetToken
+    user.resetPasswordExpires = resetPasswordExpires
+    await user.save()
+
+    const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`
+
+    console.log("PASSWORD RESET LINK:", resetLink)
+
+    return res.status(200).json({
+      message: "If an account with that email exists, a reset link has been generated.",
+    })
+  } catch (err) {
+    console.error("Forgot password error:", err)
+    return res.status(500).json({ message: "Server error during forgot password request" })
+  }
+})
+
+/**
+ * API: Reset Password
+ * POST /auth/reset-password
+ *
+ * Resets the user's password using a valid reset token.
+ */
+app.post("/auth/reset-password", async (req, res) => {
+  try {
+    const { token, newPassword } = req.body
+
+    if (!token || !newPassword) {
+      return res.status(400).json({ message: "Token and new password are required" })
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" })
+    }
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: new Date() },
+    })
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired reset token" })
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10)
+
+    user.passwordHash = passwordHash
+    user.resetPasswordToken = null
+    user.resetPasswordExpires = null
+
+    await user.save()
+
+    return res.status(200).json({
+      message: "Password has been reset successfully",
+    })
+  } catch (err) {
+    console.error("Reset password error:", err)
+    return res.status(500).json({ message: "Server error during password reset" })
+  }
+})
 
 // =====================================================
 // COURSE ROUTES

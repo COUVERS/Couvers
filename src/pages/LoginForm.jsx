@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import "../auth.css"
 import LogoLarge from "../assets/Logo_large_dark.png"
 import Visibility from "../assets/icons/Visibility"
@@ -9,15 +10,37 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState("")
+    const [emailError, setEmailError] = useState("")
+    const [passwordError, setPasswordError] = useState("")
+    const [loginError, setLoginError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
 
-    const hasError = message.startsWith("❌")
+    const validate = () => {
+        let valid = true
+        setEmailError("")
+        setPasswordError("")
+        setLoginError("")
+
+        if (!email.trim()) {
+            setEmailError("Email is required.")
+            valid = false
+        }
+
+        if (!password.trim()) {
+            setPasswordError("Password is required.")
+            valid = false
+        }
+
+        return valid
+    }
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        setMessage("")
+
+        if (!validate()) return
+
         setLoading(true)
+        setLoginError("")
 
         try {
             const res = await fetch(`${API_BASE_URL}/auth/login`, {
@@ -35,25 +58,25 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                 throw new Error("Server did not return valid JSON")
             }
 
-            if (!res.ok) throw new Error(data.message || "Invalid email or password.")
+            if (!res.ok) {
+                throw new Error(data.message || "Invalid email or password.")
+            }
 
             if (data.token) {
                 localStorage.setItem("token", data.token)
             }
 
-            setMessage(`✅ ${data.message} (${data.user.email})`)
-
             if (onLoginSuccess) {
                 onLoginSuccess(data)
             }
         } catch (err) {
-            setMessage(`❌ ${err.message}`)
+            setLoginError("Invalid email or password.")
         } finally {
             setLoading(false)
         }
     }
 
-    const disabled = loading || !email.trim() || !password
+    const disabled = loading || !email.trim() || !password.trim()
 
     return (
         <div className="auth-page">
@@ -64,29 +87,40 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
 
                 <form className="auth-form" onSubmit={handleLogin}>
                     <div className="auth-field-group">
-                        <label className={`auth-label ${hasError ? "auth-label-error" : ""}`}>
+                        <label className={`auth-label ${emailError || loginError ? "auth-label-error" : ""}`}>
                             E-mail
                         </label>
                         <input
-                            className={`auth-input ${hasError ? "auth-input-error" : ""}`}
+                            className={`auth-input ${emailError || loginError ? "auth-input-error" : ""}`}
                             type="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                                if (emailError) setEmailError("")
+                                if (loginError) setLoginError("")
+                            }}
                             placeholder=""
                         />
+                        {emailError && (
+                            <p className="auth-error-text">{emailError}</p>
+                        )}
                     </div>
 
                     <div className="auth-field-group">
-                        <label className={`auth-label ${hasError ? "auth-label-error" : ""}`}>
+                        <label className={`auth-label ${passwordError || loginError ? "auth-label-error" : ""}`}>
                             Password
                         </label>
 
-                        <div className={`auth-password-wrap ${hasError ? "auth-input-error" : ""}`}>
+                        <div className={`auth-password-wrap ${passwordError || loginError ? "auth-input-error" : ""}`}>
                             <input
                                 className="auth-input auth-password-input"
                                 type={showPassword ? "text" : "password"}
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                    if (passwordError) setPasswordError("")
+                                    if (loginError) setLoginError("")
+                                }}
                                 placeholder=""
                             />
 
@@ -104,22 +138,20 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                             </button>
                         </div>
 
-                        {hasError && (
-                            <p className="auth-error-text">
-                                {message.replace("❌ ", "")}
-                            </p>
+                        {passwordError && (
+                            <p className="auth-error-text">{passwordError}</p>
+                        )}
+
+                        {!passwordError && loginError && (
+                            <p className="auth-error-text">{loginError}</p>
                         )}
                     </div>
 
                     <div className="auth-row">
                         <span>Forgot your password?</span>
-                        <button
-                            type="button"
-                            className="auth-link"
-                            onClick={() => setMessage("Password reset is not implemented yet.")}
-                        >
+                        <Link to="/forgot-password" className="auth-link">
                             Password Reset
-                        </button>
+                        </Link>
                     </div>
 
                     <button className="auth-btn" disabled={disabled}>
@@ -132,10 +164,6 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                             Join Us
                         </button>
                     </div>
-
-                    {!hasError && message && (
-                        <p className="auth-message">{message}</p>
-                    )}
                 </form>
             </div>
         </div>

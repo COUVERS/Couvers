@@ -37,14 +37,12 @@
 .auth-title {
   color: var(--Color-Text-Primary, #0F172A);
   text-align: center;
-
   font-family: var(--font-family, "IBM Plex Sans");
   font-size: var(--FontSize-Display-Medium, 56px);
   font-style: normal;
   font-weight: 600;
   line-height: var(--LineHeight-Display-Medium, 60px);
   letter-spacing: var(--LetterSpace-DisplayMedium, -0.56px);
-
   margin: 0;
 }
 
@@ -197,6 +195,45 @@
   word-break: break-word;
 }
 
+/* 추가: 설명 텍스트 */
+.auth-description {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--FontSize-Headings-h4);
+  line-height: 1.5;
+  color: var(--Color-Text-Primary);
+  text-align: center;
+  word-break: break-word;
+}
+
+/* 추가: signup 하단 안내문 */
+.auth-note {
+  margin: 16px 0 0;
+  font-family: var(--font-family);
+  font-size: var(--FontSize-Headings-h4);
+  line-height: 1.5;
+  color: var(--Color-Text-Primary);
+  text-align: center;
+  word-break: break-word;
+}
+
+/* 추가: 버튼을 Link로 감쌀 때 */
+.auth-btn-link {
+  width: 100%;
+  text-decoration: none;
+}
+
+/* 추가: reset sent 페이지 문장 */
+.auth-inline-message {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--FontSize-Headings-h4);
+  line-height: 1.5;
+  color: var(--Color-Text-Primary);
+  text-align: center;
+  word-break: break-word;
+}
+
 @media (max-width: 768px) {
   .auth-card {
     width: 100%;
@@ -222,6 +259,12 @@
   }
 
   .auth-footer .auth-link {
+    font-size: var(--FontSize-Body1);
+  }
+
+  .auth-description,
+  .auth-note,
+  .auth-inline-message {
     font-size: var(--FontSize-Body1);
   }
 }
@@ -252,7 +295,10 @@
   .auth-row,
   .auth-link,
   .auth-message,
-  .auth-error-text {
+  .auth-error-text,
+  .auth-description,
+  .auth-note,
+  .auth-inline-message {
     font-size: var(--FontSize-Body2);
   }
 
