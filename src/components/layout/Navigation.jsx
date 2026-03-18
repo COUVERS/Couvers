@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Box,
     List,
@@ -21,8 +21,15 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 export default function Navigation({ page, setPage, forceCollapsed = false, onSignOut }) {
     const [isExpanded, setIsExpanded] = useState(true)
-    const toggleDrawer = () => setIsExpanded(!isExpanded)
+    useEffect(() => {
+        if (forceCollapsed) {
+            setIsExpanded(false)
+        }
+    }, [forceCollapsed])
 
+    const toggleDrawer = () => {
+        setIsExpanded((prev) => !prev)
+    }
     const navItems = [
         { text: "Home", icon: <HomeIcon />, pageKey: "home" },
         { text: "Course", icon: <CourseIcon />, pageKey: "courses" },
@@ -124,12 +131,12 @@ export default function Navigation({ page, setPage, forceCollapsed = false, onSi
                                 <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         onClick={() => {
-                                        if (item.pageKey === "signout") {
-                                            if (onSignOut) onSignOut()
-                                        } else {
-                                            setPage(item.pageKey)
-                                        }
-                                    }}
+                                            if (item.pageKey === "signout") {
+                                                if (onSignOut) onSignOut()
+                                            } else {
+                                                setPage(item.pageKey)
+                                            }
+                                        }}
                                         sx={{
                                             minHeight: 48,
                                             flexDirection: isExpanded ? 'row' : 'column',
@@ -142,7 +149,7 @@ export default function Navigation({ page, setPage, forceCollapsed = false, onSi
                                                 minWidth: 0,
                                                 mr: isExpanded ? 2 : 0,
                                                 justifyContent: 'center',
-                                        
+
                                             }}
                                         >
                                             {item.icon}
