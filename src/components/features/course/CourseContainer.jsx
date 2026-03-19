@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Box from "@mui/material/Box"
 import CourseSidebar from "./CourseSidebar"
 import CourseMainContent from "./CourseMainContent"
@@ -10,6 +11,8 @@ export default function CourseContainer({
     courseResetSignal,
     routeCourseId,
 }) {
+    const navigate = useNavigate()
+
     const [courses, setCourses] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(null)
 
@@ -77,7 +80,10 @@ export default function CourseContainer({
 
     useEffect(() => {
         if (!routeCourseId) return
-        goToCourseById(routeCourseId)
+
+        setSelectedCourseId(routeCourseId)
+        setSelectedLesson(null)
+        setViewMode("lessonList")
     }, [routeCourseId])
 
     useEffect(() => {
@@ -194,9 +200,7 @@ export default function CourseContainer({
     }
 
     const goToCourseById = (courseId) => {
-        setSelectedCourseId(courseId)
-        setSelectedLesson(null)
-        setViewMode("lessonList")
+        navigate(`/courses/${courseId}`)
     }
 
 
