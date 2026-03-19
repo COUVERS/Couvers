@@ -33,7 +33,7 @@ export default function CourseContainer({
         (q) => String(q.lessonId) === String(selectedLesson?._id)
     )
 
-    const handleTakeQuiz = () => {
+    const goToLessonQuiz = () => {
         setViewMode("quiz")
     }
 
@@ -63,7 +63,7 @@ export default function CourseContainer({
                     if (continueCourseId) {
                         setSelectedCourseId(continueCourseId)
                     } else {
-                        setSelectedCourseId(data[0]._id)
+                        goToCourseById(data[0]._id)
                     }
                 }
             } catch (e) {
@@ -144,7 +144,7 @@ export default function CourseContainer({
 
     useEffect(() => {
         if (!continueCourseId || hasAppliedContinue.current) return
-        setSelectedCourseId(continueCourseId)
+        goToCourseById(continueCourseId)
     }, [continueCourseId])
 
     useEffect(() => {
@@ -155,12 +155,12 @@ export default function CourseContainer({
         )
 
         if (lesson) {
-            handleOpenLesson(lesson)
+            goToLessonLecture(lesson)
             hasAppliedContinue.current = true
         }
     }, [continueLessonId, lessons])
 
-    const handleOpenLesson = async (lesson) => {
+    const goToLessonLecture = async (lesson) => {
         try {
             const token = localStorage.getItem("token")
 
@@ -179,10 +179,17 @@ export default function CourseContainer({
         }
     }
 
-    const handleBackToLessonList = () => {
+    const goToCourseOverview = () => {
         setSelectedLesson(null)
         setViewMode("lessonList")
     }
+
+    const goToCourseById = (courseId) => {
+        setSelectedCourseId(courseId)
+        setSelectedLesson(null)
+        setViewMode("lessonList")
+    }
+
 
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
@@ -192,9 +199,9 @@ export default function CourseContainer({
                 selectedCourseId={selectedCourseId}
                 lessons={lessons}
                 selectedLesson={selectedLesson}
-                onSelectCourse={setSelectedCourseId}
-                onSelectLesson={handleOpenLesson}
-                onBack={handleBackToLessonList}
+                onSelectCourse={goToCourseById}
+                onSelectLesson={goToLessonLecture}
+                onBack={goToCourseOverview}
             />
 
             <CourseMainContent
@@ -206,9 +213,9 @@ export default function CourseContainer({
                 selectedLesson={selectedLesson}
                 nextLessonData={nextLessonData}
                 matchedQuizzes={matchedQuizzes}
-                onOpenLesson={handleOpenLesson}
-                onTakeQuiz={handleTakeQuiz}
-                onBackToLessonList={handleBackToLessonList}
+                onOpenLesson={goToLessonLecture}
+                onTakeQuiz={goToLessonQuiz}
+                onBackToLessonList={goToCourseOverview}
                 onBackToLecture={() => setViewMode("lecture")}
             />
         </Box>
