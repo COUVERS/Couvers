@@ -1,17 +1,16 @@
 import { useEffect, useRef, useState } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import CourseNavigation from "../components/layout/CourseNavigation"
-import ContentsNavigation from "../components/layout/ContentsNavigation"
-import LessonList from "./LessonList"
-import Header from "../Header"
-import Lecture from "./LecturePage"
-import QuizPage from "./QuizPage"
-import { API_BASE_URL } from "../config"
+import CourseNavigation from "../../layout/CourseNavigation"
+import ContentsNavigation from "../../layout/ContentsNavigation"
+import LessonList from "../../../pages/LessonList"
+import Header from "../../../Header"
+import Lecture from "../../../pages/LecturePage"
+import QuizPage from "../../../pages/QuizPage"
+import { API_BASE_URL } from "../../../config"
+import LessonLinkButton from "../../reusable-ui/LessonLinkButton"
 
-import LessonLinkButton from "../components/reusable-ui/LessonLinkButton"
-
-export default function CoursePage({ continueCourseId, continueLessonId }) {
+export default function CourseContainer({ continueCourseId, continueLessonId }) {
     const [courses, setCourses] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(null)
 
@@ -21,30 +20,25 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
     const [selectedLesson, setSelectedLesson] = useState(null)
     const [startedLesson, setStartedLesson] = useState(null)
 
-    const [navMode, setNavMode] = useState("course") // "course" | "contents"
-    const [viewMode, setViewMode] = useState("lessonList") // "lessonList" | "lecture"
+    const [navMode, setNavMode] = useState("course")
+    const [viewMode, setViewMode] = useState("lessonList")
 
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     const [quizzes, setQuizzes] = useState([])
-
     const [nextLessonData, setNextLessonData] = useState(null)
 
     const hasAppliedContinue = useRef(false)
 
     const matchedQuizzes = quizzes.filter(
-        q => String(q.lessonId) === String(selectedLesson?._id)
+        (q) => String(q.lessonId) === String(selectedLesson?._id)
     )
+
     const handleTakeQuiz = () => {
         setViewMode("quiz")
     }
 
-    // console.log("selectedLesson", selectedLesson)
-    // console.log("quizzes", quizzes)
-    // console.log("matchedQuizzes", matchedQuizzes)
-
-    // load courses list
     useEffect(() => {
         ; (async () => {
             try {
@@ -58,11 +52,8 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                     },
                 })
 
-                console.log("/api/courses status:", res.status)
-
                 if (!res.ok) throw new Error(`HTTP ${res.status}`)
                 const data = await res.json()
-                console.log("/api/courses data:", data)
                 setCourses(data)
 
                 if (data.length > 0) {
@@ -72,7 +63,6 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                         setSelectedCourseId(data[0]._id)
                     }
                 }
-
             } catch (e) {
                 setError(e.message)
             }
@@ -113,7 +103,6 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
             })()
     }, [selectedCourseId])
 
-    //load selected course + lessons
     useEffect(() => {
         if (!selectedCourseId) return
 
@@ -132,10 +121,10 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                             },
                         }
                     )
+
                     if (!res.ok) throw new Error(`HTTP ${res.status}`)
                     const data = await res.json()
 
-                    // initialize if back to course
                     setCourse(data.course || null)
                     setLessons(data.lessons || [])
                     setQuizzes(data.quizzes || [])
@@ -144,8 +133,6 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                     setCourse(null)
                     setLessons([])
                     setQuizzes([])
-
-
                 } finally {
                     setIsLoading(false)
                 }
@@ -198,7 +185,6 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
 
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
-
             {navMode === "course" ? (
                 <CourseNavigation
                     courses={courses}
@@ -224,6 +210,7 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                         description={course.description}
                     />
                 )}
+
                 {viewMode === "lessonList" && (
                     <>
                         {course && (
@@ -292,7 +279,6 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                         onBack={() => setViewMode("lecture")}
                     />
                 )}
-
             </Box>
         </Box>
     )

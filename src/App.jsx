@@ -6,7 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword"
 import PasswordResetSent from "./pages/PasswordResetSent"
 import ResetPassword from "./pages/ResetPassword"
 import Navigation from "./components/layout/Navigation"
-import Course from "./pages/Course"
+import CoursePage from "./pages/CoursePage"
 import Header from "./Header"
 import AccountSettings from "./components/features/AccountSettings"
 import ChangePassword from "./components/features/ChangePassword"
@@ -109,10 +109,10 @@ export default function App() {
             path="/signup"
             element={<SignupForm onGoLogin={() => navigate("/login")} />}
           />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/forgot-password/sent" element={<PasswordResetSent />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/forgot-password/sent" element={<PasswordResetSent />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     )
@@ -169,7 +169,7 @@ export default function App() {
           <Route
             path="/courses"
             element={
-              <Course
+              <CoursePage
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
               />
