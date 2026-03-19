@@ -8,6 +8,7 @@ export default function CourseContainer({
     continueCourseId,
     continueLessonId,
     courseResetSignal,
+    routeCourseId,
 }) {
     const [courses, setCourses] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(null)
@@ -60,8 +61,10 @@ export default function CourseContainer({
                 setCourses(data)
 
                 if (data.length > 0) {
-                    if (continueCourseId) {
-                        setSelectedCourseId(continueCourseId)
+                    if (routeCourseId) {
+                        goToCourseById(routeCourseId)
+                    } else if (continueCourseId) {
+                        goToCourseById(continueCourseId)
                     } else {
                         goToCourseById(data[0]._id)
                     }
@@ -71,6 +74,11 @@ export default function CourseContainer({
             }
         })()
     }, [])
+
+    useEffect(() => {
+        if (!routeCourseId) return
+        goToCourseById(routeCourseId)
+    }, [routeCourseId])
 
     useEffect(() => {
         setSelectedLesson(null)
@@ -143,9 +151,10 @@ export default function CourseContainer({
     }, [selectedCourseId])
 
     useEffect(() => {
+        if (routeCourseId) return
         if (!continueCourseId || hasAppliedContinue.current) return
         goToCourseById(continueCourseId)
-    }, [continueCourseId])
+    }, [continueCourseId, routeCourseId])
 
     useEffect(() => {
         if (!continueLessonId || lessons.length === 0 || hasAppliedContinue.current) return
