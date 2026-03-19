@@ -233,7 +233,6 @@ export default function CourseContainer({
         navigate(`/courses/${courseId}`)
     }
 
-
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
             <CourseSidebar

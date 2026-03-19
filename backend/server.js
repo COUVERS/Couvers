@@ -336,7 +336,7 @@ app.post("/auth/reset-password", async (req, res) => {
  */
 app.get("/api/courses", authMiddleware, async (req, res) => {
   try {
-    const courses = await Course.find().sort({ createdAt: -1 });
+    const courses = await Course.find().sort({ order: 1, createdAt: 1 });
     res.json(courses);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -360,7 +360,7 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
     const course = await Course.findById(id);
     if (!course) return res.status(404).json({ error: "Course not found" });
 
-    const lessons = await Lesson.find({ courseId: id }).sort({ order: 1 });
+    const lessons = await Lesson.find({courseId: new mongoose.Types.ObjectId(id),}).sort({ order: 1, createdAt: 1 });
     const lessonIds = lessons.map((lesson) => lesson._id);
     const quizzes = await Quiz.find({ lessonId: { $in: lessonIds } });
 
@@ -739,7 +739,7 @@ app.get("/api/dashboard/courses", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const courses = await Course.find().sort({ createdAt: -1 });
+    const courses = await Course.find().sort({ order: 1, createdAt: 1 });
     const courseProgressList = [];
 
     for (const course of courses) {
@@ -789,7 +789,7 @@ app.get("/api/dashboard/next-lesson", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId
 
-    const courses = await Course.find().sort({ createdAt: 1 })
+    const courses = await Course.find().sort({ order: 1, createdAt: 1 })
 
     let hasStartedAnyLesson = false
 

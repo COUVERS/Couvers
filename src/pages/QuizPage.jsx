@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography"
 import Quiz from "../components/features/Quiz"
 // import ResultPage from "./ResultPage"
 import { API_BASE_URL } from "../config"
+import DialogConfirm from "../components/reusable-ui/DialogConfirm"
+
 
 export default function QuizPage({ courseId, lessonId, quizItems = [], onBack }) {
 
@@ -15,17 +17,15 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack })
   // const [showResult, setShowResult] = useState(false)
   // const [resultData, setResultData] = useState(null)
   const [error, setError] = useState("")
+  const [openDialog, setOpenDialog] = useState(false)
 
   const currentQuestion = quizItems[currentIndex]
   const isLastQuestion = currentIndex === quizItems.length - 1
 
   const handleSubmit = (selectedAnswer) => {
 
-    const quizId = currentQuestion?._id || currentQuestion?.id
+    // const quizId = currentQuestion?._id || currentQuestion?.id
 
-    // console.log("currentQuestion:", currentQuestion)
-    // console.log("quizId saved:", quizId)
-    // console.log("selectedAnswer:", selectedAnswer)
     setAnswers((prev) => [
       ...prev,
       {
@@ -59,6 +59,10 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack })
     try {
       setError("")
 
+      if (!courseId) {
+        throw new Error("Course ID is missing.")
+      }
+
       const token = localStorage.getItem("token")
 
       const response = await fetch(`${API_BASE_URL}/api/lessons/${lessonId}/submit`, {
@@ -73,8 +77,9 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack })
       })
 
       const data = await response.json()
-
       console.log("submit result data:", data)
+
+      // console.log("submit result data:", data)
 
       if (!response.ok) {
         throw new Error(data.message || "Submit failed")
@@ -91,74 +96,79 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack })
     }
   }
 
-  if (!courseId) {
-    setError("Course ID is missing.")
-    return
-  }
+    // if (showResult && resultData) {
+    //   return (
+    //     <ResultPage
+    //       score={resultData.correctCount}
+    //       total={resultData.totalQuestions}
+    //       answers={resultData.results.map((item) => ({
+    //         question: item.question,
+    //         userAnswer: item.selectedAnswer,
+    //         correctAnswer: item.correctAnswer,
+    //         explanation: item.review,
+    //         correct: item.isCorrect,
+    //       }))}
+    //       skillProgress={resultData.skillProgress}
+    //       onRetry={() => {
+    //         setCurrentIndex(0)
+    //         setAnswers([])
+    //         setShowResult(false)
+    //         setResultData(null)
+    //         setError("")
+    //       }}
+    //       onBack={onBack}
+    //     />
+    //   )
+    // }
 
-  // if (showResult && resultData) {
-  //   return (
-  //     <ResultPage
-  //       score={resultData.correctCount}
-  //       total={resultData.totalQuestions}
-  //       answers={resultData.results.map((item) => ({
-  //         question: item.question,
-  //         userAnswer: item.selectedAnswer,
-  //         correctAnswer: item.correctAnswer,
-  //         explanation: item.review,
-  //         correct: item.isCorrect,
-  //       }))}
-  //       onRetry={() => {
-  //         setCurrentIndex(0)
-  //         setAnswers([])
-  //         setShowResult(false)
-  //         setResultData(null)
-  //         setError("")
-  //       }}
-  //       onBack={onBack}
-  //     />
-  //   )
-  // }
+    return (
+      <Box sx={{ p: 4 }}>
 
-  return (
-    <Box sx={{ p: 4 }}>
-      {!currentQuestion ? (
-        <p>No quiz found for this lesson.</p>
-      ) : (
-        <>
-          <Quiz
-            key={currentIndex}
-            question={currentQuestion}
-            questionNumber={currentIndex + 1}
-            totalQuestions={quizItems.length}
-            onSubmit={handleSubmit}
-          />
+        {!currentQuestion ? (
+          <p>No quiz found for this lesson.</p>
+        ) : (
+          <>
+            <Quiz
+              key={currentIndex}
+              question={currentQuestion}
+              questionNumber={currentIndex + 1}
+              totalQuestions={quizItems.length}
+              onSubmit={handleSubmit}
+            />
 
-          {isLastQuestion && (
-            <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
-              <Button
-                variant="contained"
-                onClick={handleCheckResult}
-                disabled={answers.length < quizItems.length}
-              >
-                Check the Result
-              </Button>
-            </Box>
-          )}
-          {error && (
-            <Typography sx={{ mt: 2, color: "var(--Color-Error-Main)" }}>
-              {error}
-            </Typography>
-          )}
-        </>
-      )}
+            {isLastQuestion && (
+              <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  variant="contained"
+                  onClick={handleCheckResult}
+                  disabled={answers.length < quizItems.length}
+                >
+                  Check the Result
+                </Button>
+              </Box>
+            )}
+            
+            {error && (
+              <Typography sx={{ mt: 2, color: "var(--Color-Error-Main)" }}>
+                {error}
+              </Typography>
+            )}
+          </>
+        )}
 
-      <Box sx={{ mt: 3 }}>
-        <Button variant="text" onClick={onBack}>
-          Back to Lecture
-        </Button>
+        <Box sx={{ mt: 3 }}>
+          <Button variant="text" onClick={() => setOpenDialog(true)}>
+            Back to Lecture
+          </Button>
+        </Box>
+        <DialogConfirm
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          onConfirm={() => {
+            setOpenDialog(false)
+            onBack()
+          }}
+        />
       </Box>
-
-    </Box>
-  )
-}
+    )
+  }

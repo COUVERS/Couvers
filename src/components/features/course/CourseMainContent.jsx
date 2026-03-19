@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import Box from "@mui/material/Box"
 import CourseOverview from "./CourseOverview"
-import Header from "../../../Header"
+import PageHeader from "../../reusable-ui/PageHeader"
 import Lecture from "../../../pages/LecturePage"
 import QuizPage from "../../../pages/QuizPage"
 import ResultPage from "../../../pages/ResultPage"
@@ -36,13 +36,15 @@ export default function CourseMainContent({
     const resultScore = resultData?.correctCount ?? 0
     const resultTotal = resultData?.totalQuestions ?? 0
 
+    const resultSkillProgress = resultData?.skillProgress ?? null
+
     return (
         <Box sx={{ flex: 1, p: 4 }}>
             {isLoading && <p>Loading...</p>}
             {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
             {course && (
-                <Header
+                <PageHeader
                     title={course.title}
                     description={course.description}
                 />
@@ -80,12 +82,12 @@ export default function CourseMainContent({
                     score={resultScore}
                     total={resultTotal}
                     answers={resultAnswers}
+                    skillProgress={resultSkillProgress}
                     onRetry={() => {
-                        if (!selectedLesson?._id) return
-                        navigate(`/courses/${course?._id}/lessons/${selectedLesson._id}/quiz`)
+                        if (!selectedLesson?._id || !course?._id) return
+                        navigate(`/courses/${course._id}/lessons/${selectedLesson._id}/quiz`)
                     }}
                     onBack={() => {
-                        if (!course?._id) return
                         navigate("/")
                     }}
                 />
