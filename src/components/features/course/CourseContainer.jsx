@@ -14,8 +14,8 @@ export default function CourseContainer({ continueCourseId, continueLessonId }) 
     const [selectedLesson, setSelectedLesson] = useState(null)
     const [startedLesson, setStartedLesson] = useState(null)
 
-    const [navMode, setNavMode] = useState("course")
     const [viewMode, setViewMode] = useState("lessonList")
+    const navMode = viewMode === "lessonList" ? "course" : "contents"
 
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -164,7 +164,6 @@ export default function CourseContainer({ continueCourseId, continueLessonId }) 
 
             setSelectedLesson(lesson)
             setStartedLesson(lesson)
-            setNavMode("contents")
             setViewMode("lecture")
         } catch (err) {
             console.error("Failed to mark lesson as started:", err)
@@ -173,7 +172,6 @@ export default function CourseContainer({ continueCourseId, continueLessonId }) 
 
     const handleBackToLessonList = () => {
         setSelectedLesson(null)
-        setNavMode("course")
         setViewMode("lessonList")
     }
 
