@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
+import CourseSidebar from "./CourseSidebar"
 import CourseNavigation from "../../layout/CourseNavigation"
 import ContentsNavigation from "../../layout/ContentsNavigation"
 import LessonList from "../../../pages/LessonList"
@@ -185,20 +186,16 @@ export default function CourseContainer({ continueCourseId, continueLessonId }) 
 
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
-            {navMode === "course" ? (
-                <CourseNavigation
-                    courses={courses}
-                    selectedCourseId={selectedCourseId}
-                    onSelectCourse={setSelectedCourseId}
-                />
-            ) : (
-                <ContentsNavigation
-                    lessons={lessons}
-                    selectedLesson={selectedLesson}
-                    onSelectLesson={handleOpenLesson}
-                    onBack={handleBackToLessonList}
-                />
-            )}
+            <CourseSidebar
+                navMode={navMode}
+                courses={courses}
+                selectedCourseId={selectedCourseId}
+                lessons={lessons}
+                selectedLesson={selectedLesson}
+                onSelectCourse={setSelectedCourseId}
+                onSelectLesson={handleOpenLesson}
+                onBack={handleBackToLessonList}
+            />
 
             <Box sx={{ flex: 1, p: 4 }}>
                 {isLoading && <p>Loading...</p>}
