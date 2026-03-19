@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import { styled } from '@mui/material/styles'
+import { useEffect, useState } from 'react'
 import {
     Box,
-    Drawer as MuiDrawer,
     List,
     ListItem,
     ListItemButton,
@@ -10,41 +8,28 @@ import {
     ListItemText,
     IconButton
 } from '@mui/material'
-import LogoLarge from '../assets/Logo_large_dark.png'
-import LogoSmall from '../assets/Logo_small_dark.png'
-import HomeIcon from '../assets/icons/HomeIcon'
-import CourseIcon from '../assets/icons/CourseIcon'
-import ProfileIcon from '../assets/icons/ProfileIcon'
-import SignOutIcon from '../assets/icons/SignOutIcon'
+import SidebarBase from '../reusable-ui/SideBarBase'
+//Logo and Icons
+import LogoLarge from '../../assets/Logo_large_dark.png'
+import LogoSmall from '../../assets/Logo_small_dark.png'
+import HomeIcon from '../../assets/icons/HomeIcon'
+import CourseIcon from '../../assets/icons/CourseIcon'
+import ProfileIcon from '../../assets/icons/ProfileIcon'
+import SignOutIcon from '../../assets/icons/SignOutIcon'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
-
-//Convert Figma values into constants
-const drawerWidth = 240
-const shrunkWidth = 88
-
-// Customize Drawer style
-const Drawer = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
-    width: open ? drawerWidth : shrunkWidth,
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    // overflowX: 'hidden',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'var(--color-surface)',
-    boxShadow: '0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 8px 10px -5px rgba(0, 0, 0, 0.20)',
-    padding: '40px 0',
-    boxSizing: 'border-box',
-}))
-
-export default function Navigation({ page, setPage }) {
+export default function Navigation({ page, setPage, forceCollapsed = false, onSignOut }) {
     const [isExpanded, setIsExpanded] = useState(true)
-    const toggleDrawer = () => setIsExpanded(!isExpanded)
+    useEffect(() => {
+        if (forceCollapsed) {
+            setIsExpanded(false)
+        }
+    }, [forceCollapsed])
 
+    const toggleDrawer = () => {
+        setIsExpanded((prev) => !prev)
+    }
     const navItems = [
         { text: "Home", icon: <HomeIcon />, pageKey: "home" },
         { text: "Course", icon: <CourseIcon />, pageKey: "courses" },
@@ -56,7 +41,7 @@ export default function Navigation({ page, setPage }) {
 
     return (
         <>
-            <Drawer open={isExpanded}>
+            <SidebarBase open={isExpanded}>
 
                 {/* Logo Area */}
                 <Box sx={{
@@ -97,22 +82,33 @@ export default function Navigation({ page, setPage }) {
                         {navItems.map((item) => (
                             <ListItem key={item.text} disablePadding sx={{ display: 'block', mb: 1 }}>
                                 <ListItemButton
+                                    selected={page === item.pageKey}
                                     onClick={() => setPage(item.pageKey)}
                                     sx={{
                                         minHeight: 48,
                                         flexDirection: isExpanded ? 'row' : 'column',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        px: 1
-                                    }}>
-                                    {!isExpanded && (
-                                        <ListItemIcon sx={{
-                                            minWidth: 0, mb: 0.5,
+                                        '&.Mui-selected': {
+                                            backgroundColor: '#fff',
+                                            color: '#1F2430',
+                                        },
+                                        '&.Mui-selected:hover': {
+                                            backgroundColor: '#fff',
+                                        },
+                                    }}
+
+                                >
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: isExpanded ? 2 : 0,
                                             justifyContent: 'center',
-                                        }}>
-                                            {item.icon}
-                                        </ListItemIcon>
-                                    )}
+                                        }}
+                                    >
+                                        {item.icon}
+                                    </ListItemIcon>
+
                                     <ListItemText
                                         primary={item.text}
                                         primaryTypographyProps={{
@@ -134,21 +130,31 @@ export default function Navigation({ page, setPage }) {
                             {bottomItems.map((item) => (
                                 <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
+                                        onClick={() => {
+                                            if (item.pageKey === "signout") {
+                                                if (onSignOut) onSignOut()
+                                            } else {
+                                                setPage(item.pageKey)
+                                            }
+                                        }}
                                         sx={{
                                             minHeight: 48,
                                             flexDirection: isExpanded ? 'row' : 'column',
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            px: 1
-                                        }}>
-                                        {!isExpanded && (
-                                            <ListItemIcon sx={{
-                                                minWidth: 0, mb: 0.5,
+                                        }}
+                                    >
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: isExpanded ? 2 : 0,
                                                 justifyContent: 'center',
-                                            }}>
-                                                {item.icon}
-                                            </ListItemIcon>
-                                        )}
+
+                                            }}
+                                        >
+                                            {item.icon}
+                                        </ListItemIcon>
+
                                         <ListItemText
                                             primary={item.text}
                                             primaryTypographyProps={{
@@ -165,6 +171,7 @@ export default function Navigation({ page, setPage }) {
                         </List>
                     </Box>
                 </Box>
+
                 {/* Toggle Button */}
                 <Box
                     sx={{
@@ -177,7 +184,7 @@ export default function Navigation({ page, setPage }) {
                     </IconButton>
                 </Box>
 
-            </Drawer>
+            </SidebarBase>
         </>
     )
 }

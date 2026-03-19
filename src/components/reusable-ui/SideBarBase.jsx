@@ -20,6 +20,9 @@ export const SidebarBase = styled(Box, {
     boxShadow: '0 6px 30px 5px rgba(0, 0, 0, 0.12)',
     padding: '40px 0',
     boxSizing: 'border-box',
+    position: 'sticky',
+    top: 0,
+    alignSelf: 'flex-start',
 }))
 
 export default SidebarBase
