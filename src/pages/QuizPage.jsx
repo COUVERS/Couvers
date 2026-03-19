@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography"
 import Quiz from "../components/features/Quiz"
 import ResultPage from "./ResultPage"
 import { API_BASE_URL } from "../config"
+import DialogConfirm from "../components/reusable-ui/DialogConfirm"
 
 export default function QuizPage({ lessonId, quizItems = [], onBack }) {
 
@@ -13,6 +14,7 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
   const [showResult, setShowResult] = useState(false)
   const [resultData, setResultData] = useState(null)
   const [error, setError] = useState("")
+  const [openDialog, setOpenDialog] = useState(false)
 
   const currentQuestion = quizItems[currentIndex]
   const isLastQuestion = currentIndex === quizItems.length - 1
@@ -144,11 +146,18 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
       )}
 
       <Box sx={{ mt: 3 }}>
-        <Button variant="text" onClick={onBack}>
-          Back to Lecture
-        </Button>
+      <Button variant="text" onClick={() => setOpenDialog(true)}>
+  Back to Lecture
+</Button>
       </Box>
-
+<DialogConfirm
+  open={openDialog}
+  onClose={() => setOpenDialog(false)}
+  onConfirm={() => {
+    setOpenDialog(false)
+    onBack()
+  }}
+/>
     </Box>
   )
 }

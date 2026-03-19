@@ -10,11 +10,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import SkillAccuracyBar from "../components/reusable-ui/SkillAccuracyBar"
 
 export default function ResultPage({ score, total, answers, skillProgress, onRetry, onBack }) {
+
   const percentage = (score / total) * 100
   const passed = percentage >= 80
 
   const currentSkillScore = skillProgress?.skillScore ?? 0
-const previousSkillScore = Math.max(0, currentSkillScore - score)
+  const previousSkillScore = Math.max(0, currentSkillScore - score)
 
   return (
     <Box sx={{ p: 4 }}>
@@ -39,11 +40,11 @@ const previousSkillScore = Math.max(0, currentSkillScore - score)
       </Box>
 
       <SkillAccuracyBar
-  title="Skill Accuracy"
-  label="Pace"
-  previous={previousSkillScore}
-  current={currentSkillScore}
-/>
+        title="Skill Accuracy"
+        label="Pace"
+        previous={previousSkillScore}
+        current={currentSkillScore}
+      />
 
       <Typography
         sx={{
