@@ -191,10 +191,21 @@ export default function CourseContainer({
 
         if (routeViewMode === "quiz") {
             setViewMode("quiz")
+        } else if (routeViewMode === "result") {
+            setViewMode("result")
         } else {
             setViewMode("lecture")
         }
     }, [routeLessonId, routeViewMode, lessons])
+
+    useEffect(() => {
+        if (!routeCourseId) return
+
+        if (!routeLessonId) {
+            setSelectedLesson(null)
+            setViewMode("lessonList")
+        }
+    }, [routeCourseId, routeLessonId])
 
     const goToLessonLecture = async (lesson) => {
         try {

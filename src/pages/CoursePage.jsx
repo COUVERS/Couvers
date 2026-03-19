@@ -9,11 +9,13 @@ export default function CoursePage({
     const { courseId, lessonId } = useParams()
     const location = useLocation()
 
-    const routeViewMode = location.pathname.endsWith("/quiz")
-        ? "quiz"
-        : location.pathname.endsWith("/lecture")
-            ? "lecture"
-            : "lessonList"
+    const routeViewMode = location.pathname.endsWith("/result")
+        ? "result"
+        : location.pathname.endsWith("/quiz")
+            ? "quiz"
+            : location.pathname.endsWith("/lecture")
+                ? "lecture"
+                : "lessonList"
 
     return (
         <CourseContainer

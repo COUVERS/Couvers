@@ -1,17 +1,19 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import Quiz from "../components/features/Quiz"
-import ResultPage from "./ResultPage"
+// import ResultPage from "./ResultPage"
 import { API_BASE_URL } from "../config"
 
-export default function QuizPage({ lessonId, quizItems = [], onBack }) {
+export default function QuizPage({ courseId, lessonId, quizItems = [], onBack }) {
 
+  const navigate = useNavigate()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState([])
-  const [showResult, setShowResult] = useState(false)
-  const [resultData, setResultData] = useState(null)
+  // const [showResult, setShowResult] = useState(false)
+  // const [resultData, setResultData] = useState(null)
   const [error, setError] = useState("")
 
   const currentQuestion = quizItems[currentIndex]
@@ -72,41 +74,51 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
 
       const data = await response.json()
 
+      console.log("submit result data:", data)
+
       if (!response.ok) {
         throw new Error(data.message || "Submit failed")
       }
 
-      setResultData(data)
-      setShowResult(true)
+      // setResultData(data)
+      // setShowResult(true)
+      navigate(`/courses/${courseId}/lessons/${lessonId}/result`, {
+        state: { resultData: data },
+      })
     } catch (err) {
       console.error(err)
       setError(err.message || "Failed to submit quiz")
     }
   }
 
-  if (showResult && resultData) {
-    return (
-      <ResultPage
-        score={resultData.correctCount}
-        total={resultData.totalQuestions}
-        answers={resultData.results.map((item) => ({
-          question: item.question,
-          userAnswer: item.selectedAnswer,
-          correctAnswer: item.correctAnswer,
-          explanation: item.review,
-          correct: item.isCorrect,
-        }))}
-        onRetry={() => {
-          setCurrentIndex(0)
-          setAnswers([])
-          setShowResult(false)
-          setResultData(null)
-          setError("")
-        }}
-        onBack={onBack}
-      />
-    )
+  if (!courseId) {
+    setError("Course ID is missing.")
+    return
   }
+
+  // if (showResult && resultData) {
+  //   return (
+  //     <ResultPage
+  //       score={resultData.correctCount}
+  //       total={resultData.totalQuestions}
+  //       answers={resultData.results.map((item) => ({
+  //         question: item.question,
+  //         userAnswer: item.selectedAnswer,
+  //         correctAnswer: item.correctAnswer,
+  //         explanation: item.review,
+  //         correct: item.isCorrect,
+  //       }))}
+  //       onRetry={() => {
+  //         setCurrentIndex(0)
+  //         setAnswers([])
+  //         setShowResult(false)
+  //         setResultData(null)
+  //         setError("")
+  //       }}
+  //       onBack={onBack}
+  //     />
+  //   )
+  // }
 
   return (
     <Box sx={{ p: 4 }}>
