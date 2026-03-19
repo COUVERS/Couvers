@@ -14,7 +14,6 @@ const StyledAccordion = styled(Accordion)(() => ({
     boxShadow: "none",
     border: "none",
     marginTop: "24px",
-
     "&:before": {
         display: "none",
     },
@@ -23,7 +22,6 @@ const StyledAccordion = styled(Accordion)(() => ({
 const StyledSummary = styled(AccordionSummary)(() => ({
     padding: 0,
     minHeight: "auto",
-
     "& .MuiAccordionSummary-content": {
         margin: 0,
     },
@@ -40,7 +38,7 @@ const Paragraph = styled(Typography)(() => ({
     lineHeight: "var(--LineHeight-Body1)",
     color: "var(--Color-Text-Primary)",
     marginTop: "10px",
-    whiteSpace: "pre-line"
+    whiteSpace: "pre-line",
 }))
 
 export default function LectureContent({ lesson }) {
@@ -57,9 +55,19 @@ export default function LectureContent({ lesson }) {
         })
     }
 
+    const sections =
+        lesson.sections && lesson.sections.length > 0
+            ? lesson.sections
+            : [
+                    {
+                        heading: lesson.title || "Lesson Content",
+                        content: lesson.content || "",
+                    },
+                ]
+
     return (
         <Box>
-            {(lesson.sections || []).map((sec, idx) => {
+            {sections.map((sec, idx) => {
                 const key = `${idx}-${sec.heading}`
                 const isOpen = expanded.has(key)
 
@@ -93,7 +101,7 @@ export default function LectureContent({ lesson }) {
                                                 mt: 2,
                                                 mb: 2,
                                                 display: "block",
-                                                objectFit: "cover"
+                                                objectFit: "cover",
                                             }}
                                         />
                                     )}

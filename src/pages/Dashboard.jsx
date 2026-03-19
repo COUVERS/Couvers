@@ -17,7 +17,7 @@ const SKILL_LABELS = [
     "Student Engagement",
 ]
 
-export default function Dashboard({ onStartCourse }) {
+export default function Dashboard({ onStartCourse, setPage }) {
     const [nextLesson, setNextLesson] = useState(null)
     const [error, setError] = useState("")
     const [reviewLesson, setReviewLesson] = useState(null)
