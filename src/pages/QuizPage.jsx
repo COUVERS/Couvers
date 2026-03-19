@@ -7,6 +7,7 @@ import ResultPage from "./ResultPage"
 import { API_BASE_URL } from "../config"
 import DialogConfirm from "../components/reusable-ui/DialogConfirm"
 
+
 export default function QuizPage({ lessonId, quizItems = [], onBack }) {
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -113,7 +114,8 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
   }
 
   return (
-    <Box sx={{ p: 4 }}>
+  <Box sx={{ p: 4 }}>
+    
       {!currentQuestion ? (
         <p>No quiz found for this lesson.</p>
       ) : (

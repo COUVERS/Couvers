@@ -12,6 +12,7 @@ import AccountSettings from "./components/features/AccountSettings"
 import ChangePassword from "./components/features/ChangePassword"
 import Dashboard from "./pages/Dashboard"
 import { API_BASE_URL } from "./config"
+import DashboardHeader from "./components/reusable-ui/DashboardHeader"
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
@@ -142,24 +143,30 @@ export default function App() {
       />
 
       <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
-        {page !== "courses" && (
-          <Header
-            title={
-              page === "account"
-                ? accountView === "changePassword"
-                  ? "Change Password"
-                  : "Account Settings"
-                : "This is the Header"
-            }
-            description={
-              page === "account"
-                ? accountView === "changePassword"
-                  ? "For your security, we recommend changing your password periodically."
-                  : "Manage your personal information, security preferences, and account details here."
-                : "This is the description"
-            }
-          />
-        )}
+        {page === "home" ? (
+  <DashboardHeader
+    title="Hello Alex"
+    description="Welcome back! Let’s continue building your soft skills."
+  />
+) : (
+  <Header
+    title={
+      page === "account"
+        ? accountView === "changePassword"
+          ? "Change Password"
+          : "Account Settings"
+        : "This is the Header"
+    }
+    description={
+      page === "account"
+        ? accountView === "changePassword"
+          ? "For your security, we recommend changing your password periodically."
+          : "Manage your personal information, security preferences, and account details here."
+        : "This is the description"
+    }
+  />
+)}
+
 
         <Routes>
           <Route
@@ -194,6 +201,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+
     </div>
   )
 }

@@ -14,10 +14,8 @@ import {
 ========================= */
 
 const Container = styled(Box)(() => ({
-  backgroundColor: "var(--color-surface)",
-  borderRadius: "16px",
-  padding: "48px",
-  maxWidth: "900px"
+  padding: "0 48px 48px 48px",
+  width: "100%"
 }))
 
 const SectionTitle = styled(Typography)(() => ({
