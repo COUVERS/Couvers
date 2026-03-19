@@ -71,6 +71,7 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
       })
 
       const data = await response.json()
+      console.log("submit result data:", data)
 
       if (!response.ok) {
         throw new Error(data.message || "Submit failed")
@@ -96,6 +97,7 @@ export default function QuizPage({ lessonId, quizItems = [], onBack }) {
           explanation: item.review,
           correct: item.isCorrect,
         }))}
+        skillProgress={resultData.skillProgress}
         onRetry={() => {
           setCurrentIndex(0)
           setAnswers([])
