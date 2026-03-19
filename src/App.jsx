@@ -6,8 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword"
 import PasswordResetSent from "./pages/PasswordResetSent"
 import ResetPassword from "./pages/ResetPassword"
 import Navigation from "./components/layout/Navigation"
-import Course from "./pages/Course"
-import Header from "./Header"
+import CoursePage from "./pages/CoursePage"
 import AccountSettings from "./components/features/AccountSettings"
 import ChangePassword from "./components/features/ChangePassword"
 import Dashboard from "./pages/Dashboard"
@@ -19,6 +18,7 @@ export default function App() {
   const [authUser, setAuthUser] = useState(null)
   const [continueCourseId, setContinueCourseId] = useState(null)
   const [continueLessonId, setContinueLessonId] = useState(null)
+  const [courseResetSignal, setCourseResetSignal] = useState(0)
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -46,6 +46,7 @@ export default function App() {
   const openCoursesOverview = () => {
     setContinueCourseId(null)
     setContinueLessonId(null)
+    setCourseResetSignal((prev) => prev + 1)
     navigate("/courses")
   }
 
@@ -110,10 +111,10 @@ export default function App() {
             path="/signup"
             element={<SignupForm onGoLogin={() => navigate("/login")} />}
           />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/forgot-password/sent" element={<PasswordResetSent />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/forgot-password/sent" element={<PasswordResetSent />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     )
@@ -143,30 +144,12 @@ export default function App() {
       />
 
       <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
-        {page === "home" ? (
-  <DashboardHeader
-    title="Hello Alex"
-    description="Welcome back! Let’s continue building your soft skills."
-  />
-) : (
-  <Header
-    title={
-      page === "account"
-        ? accountView === "changePassword"
-          ? "Change Password"
-          : "Account Settings"
-        : "This is the Header"
-    }
-    description={
-      page === "account"
-        ? accountView === "changePassword"
-          ? "For your security, we recommend changing your password periodically."
-          : "Manage your personal information, security preferences, and account details here."
-        : "This is the description"
-    }
-  />
-)}
-
+        {page === "home" && (
+          <DashboardHeader
+            title="Hello Alex"
+            description="Welcome back! Let’s continue building your soft skills."
+          />
+        )}
 
         <Routes>
           <Route
@@ -176,9 +159,50 @@ export default function App() {
           <Route
             path="/courses"
             element={
-              <Course
+              <CoursePage
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
+                courseResetSignal={courseResetSignal}
+              />
+            }
+          />
+          <Route
+            path="/courses/:courseId"
+            element={
+              <CoursePage
+                continueCourseId={continueCourseId}
+                continueLessonId={continueLessonId}
+                courseResetSignal={courseResetSignal}
+              />
+            }
+          />
+          <Route
+            path="/courses/:courseId/lessons/:lessonId/lecture"
+            element={
+              <CoursePage
+                continueCourseId={continueCourseId}
+                continueLessonId={continueLessonId}
+                courseResetSignal={courseResetSignal}
+              />
+            }
+          />
+          <Route
+            path="/courses/:courseId/lessons/:lessonId/quiz"
+            element={
+              <CoursePage
+                continueCourseId={continueCourseId}
+                continueLessonId={continueLessonId}
+                courseResetSignal={courseResetSignal}
+              />
+            }
+          />
+          <Route
+            path="/courses/:courseId/lessons/:lessonId/result"
+            element={
+              <CoursePage
+                continueCourseId={continueCourseId}
+                continueLessonId={continueLessonId}
+                courseResetSignal={courseResetSignal}
               />
             }
           />

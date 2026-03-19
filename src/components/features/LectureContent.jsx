@@ -59,11 +59,11 @@ export default function LectureContent({ lesson }) {
         lesson.sections && lesson.sections.length > 0
             ? lesson.sections
             : [
-                    {
-                        heading: lesson.title || "Lesson Content",
-                        content: lesson.content || "",
-                    },
-                ]
+                {
+                    heading: lesson.title || "Lesson Content",
+                    content: lesson.content || "",
+                },
+            ]
 
     return (
         <Box>

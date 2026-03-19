@@ -120,14 +120,14 @@ export default function Quiz({
 
   const handleSubmit = () => {
 
-  if (!showResult) {
-    setShowResult(true)
-    return
+    if (!showResult) {
+      setShowResult(true)
+      return
+    }
+
+    if (onSubmit) onSubmit(selected)
+
   }
-
-  if (onSubmit) onSubmit(selected)
-
-}
 
   return (
     <Container>
@@ -166,11 +166,11 @@ export default function Quiz({
 
           {(question.option || []).map((option, index) => {
 
-  const isSelected = selected === option
-const isCorrect = option === question.answer
+            const isSelected = selected === option
+            const isCorrect = option === question.answer
 
-  const correct = showResult && isCorrect
-  const incorrect = showResult && isSelected && !isCorrect
+            const correct = showResult && isCorrect
+            const incorrect = showResult && isSelected && !isCorrect
 
             return (
 
@@ -237,14 +237,14 @@ const isCorrect = option === question.answer
       )}
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "48px" }}>
-       <SubmitButton
-  variant="contained"
-  disabled={!selected && !showResult}
-  onClick={handleSubmit}
-  sx={{ minWidth: 180 }}
->
-  {showResult ? "Next Question" : "Send Answer"}
-</SubmitButton>
+        <SubmitButton
+          variant="contained"
+          disabled={!selected && !showResult}
+          onClick={handleSubmit}
+          sx={{ minWidth: 180 }}
+        >
+          {showResult ? "Next Question" : "Send Answer"}
+        </SubmitButton>
       </Box>
 
     </Container>
