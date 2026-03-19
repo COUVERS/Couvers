@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography"
 import CourseNavigation from "../components/layout/CourseNavigation"
 import ContentsNavigation from "../components/layout/ContentsNavigation"
 import LessonList from "./LessonList"
-import Header from "../Header"
+import PageHeader from "../components/reusable-ui/PageHeader"
 import Lecture from "./LecturePage"
 import QuizPage from "./QuizPage"
 import { API_BASE_URL } from "../config"
@@ -214,16 +214,16 @@ export default function CoursePage({ continueCourseId, continueLessonId }) {
                 />
             )}
 
-            <Box sx={{ flex: 1, p: 4 }}>
+            <Box sx={{ flex: 1, pt: 0, px: 0, pb: 4 }}>
                 {isLoading && <p>Loading...</p>}
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
                 {course && (
-                    <Header
-                        title={course.title}
-                        description={course.description}
-                    />
-                )}
+    <PageHeader
+        title={course.title}
+        description={course.description}
+    />
+)}
                 {viewMode === "lessonList" && (
                     <>
                         {course && (
