@@ -199,6 +199,16 @@ export default function App() {
             }
           />
           <Route
+            path="/courses/:courseId/lessons/:lessonId/quiz"
+            element={
+              <CoursePage
+                continueCourseId={continueCourseId}
+                continueLessonId={continueLessonId}
+                courseResetSignal={courseResetSignal}
+              />
+            }
+          />
+          <Route
             path="/account"
             element={
               <AccountSettings

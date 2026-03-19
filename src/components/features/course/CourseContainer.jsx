@@ -11,6 +11,7 @@ export default function CourseContainer({
     courseResetSignal,
     routeCourseId,
     routeLessonId,
+    routeViewMode,
 }) {
     const navigate = useNavigate()
 
@@ -39,7 +40,8 @@ export default function CourseContainer({
     )
 
     const goToLessonQuiz = () => {
-        setViewMode("quiz")
+        if (!selectedCourseId || !selectedLesson?._id) return
+        navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/quiz`)
     }
 
     useEffect(() => {
@@ -186,8 +188,13 @@ export default function CourseContainer({
         if (!lesson) return
 
         setSelectedLesson(lesson)
-        setViewMode("lecture")
-    }, [routeLessonId, lessons])
+
+        if (routeViewMode === "quiz") {
+            setViewMode("quiz")
+        } else {
+            setViewMode("lecture")
+        }
+    }, [routeLessonId, routeViewMode, lessons])
 
     const goToLessonLecture = async (lesson) => {
         try {
@@ -241,8 +248,10 @@ export default function CourseContainer({
                 onOpenLesson={goToLessonLecture}
                 onTakeQuiz={goToLessonQuiz}
                 onBackToLessonList={goToCourseOverview}
-                onBackToLecture={() => setViewMode("lecture")}
-            />
+                onBackToLecture={() => {
+                    if (!selectedCourseId || !selectedLesson?._id) return
+                    navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/lecture`)
+                }} />
         </Box>
     )
 }

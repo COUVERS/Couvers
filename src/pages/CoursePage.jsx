@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import CourseContainer from "../components/features/course/CourseContainer"
 
 export default function CoursePage({
@@ -7,6 +7,13 @@ export default function CoursePage({
     courseResetSignal,
 }) {
     const { courseId, lessonId } = useParams()
+    const location = useLocation()
+
+    const routeViewMode = location.pathname.endsWith("/quiz")
+        ? "quiz"
+        : location.pathname.endsWith("/lecture")
+            ? "lecture"
+            : "lessonList"
 
     return (
         <CourseContainer
@@ -15,6 +22,7 @@ export default function CoursePage({
             courseResetSignal={courseResetSignal}
             routeCourseId={courseId || null}
             routeLessonId={lessonId || null}
+            routeViewMode={routeViewMode}
         />
     )
 }
