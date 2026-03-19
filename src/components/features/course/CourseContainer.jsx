@@ -10,6 +10,7 @@ export default function CourseContainer({
     continueLessonId,
     courseResetSignal,
     routeCourseId,
+    routeLessonId,
 }) {
     const navigate = useNavigate()
 
@@ -175,6 +176,19 @@ export default function CourseContainer({
         }
     }, [continueLessonId, lessons])
 
+    useEffect(() => {
+        if (!routeLessonId || lessons.length === 0) return
+
+        const lesson = lessons.find(
+            (l) => String(l._id) === String(routeLessonId)
+        )
+
+        if (!lesson) return
+
+        setSelectedLesson(lesson)
+        setViewMode("lecture")
+    }, [routeLessonId, lessons])
+
     const goToLessonLecture = async (lesson) => {
         try {
             const token = localStorage.getItem("token")
@@ -186,17 +200,15 @@ export default function CourseContainer({
                 },
             })
 
-            setSelectedLesson(lesson)
-            setStartedLesson(lesson)
-            setViewMode("lecture")
+            navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/lecture`)
         } catch (err) {
             console.error("Failed to mark lesson as started:", err)
         }
     }
 
     const goToCourseOverview = () => {
-        setSelectedLesson(null)
-        setViewMode("lessonList")
+        if (!selectedCourseId) return
+        navigate(`/courses/${selectedCourseId}`)
     }
 
     const goToCourseById = (courseId) => {

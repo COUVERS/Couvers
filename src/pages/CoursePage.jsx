@@ -6,7 +6,7 @@ export default function CoursePage({
     continueLessonId,
     courseResetSignal,
 }) {
-    const { courseId } = useParams()
+    const { courseId, lessonId } = useParams()
 
     return (
         <CourseContainer
@@ -14,6 +14,7 @@ export default function CoursePage({
             continueLessonId={continueLessonId}
             courseResetSignal={courseResetSignal}
             routeCourseId={courseId || null}
+            routeLessonId={lessonId || null}
         />
     )
 }
