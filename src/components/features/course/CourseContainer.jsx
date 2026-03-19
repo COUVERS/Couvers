@@ -4,7 +4,11 @@ import CourseSidebar from "./CourseSidebar"
 import CourseMainContent from "./CourseMainContent"
 import { API_BASE_URL } from "../../../config"
 
-export default function CourseContainer({ continueCourseId, continueLessonId }) {
+export default function CourseContainer({
+    continueCourseId,
+    continueLessonId,
+    courseResetSignal,
+}) {
     const [courses, setCourses] = useState([])
     const [selectedCourseId, setSelectedCourseId] = useState(null)
 
@@ -32,6 +36,11 @@ export default function CourseContainer({ continueCourseId, continueLessonId }) 
     const handleTakeQuiz = () => {
         setViewMode("quiz")
     }
+
+    useEffect(() => {
+        setSelectedLesson(null)
+        setViewMode("lessonList")
+    }, [courseResetSignal])
 
     useEffect(() => {
         ; (async () => {

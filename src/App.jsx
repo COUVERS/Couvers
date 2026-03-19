@@ -18,6 +18,7 @@ export default function App() {
   const [authUser, setAuthUser] = useState(null)
   const [continueCourseId, setContinueCourseId] = useState(null)
   const [continueLessonId, setContinueLessonId] = useState(null)
+  const [courseResetSignal, setCourseResetSignal] = useState(0)
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -45,6 +46,7 @@ export default function App() {
   const openCoursesOverview = () => {
     setContinueCourseId(null)
     setContinueLessonId(null)
+    setCourseResetSignal((prev) => prev + 1)
     navigate("/courses")
   }
 
@@ -172,6 +174,7 @@ export default function App() {
               <CoursePage
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
+                courseResetSignal={courseResetSignal}
               />
             }
           />
