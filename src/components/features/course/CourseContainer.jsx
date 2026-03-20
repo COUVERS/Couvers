@@ -25,7 +25,12 @@ export default function CourseContainer({
     const [startedLesson, setStartedLesson] = useState(null)
 
     const [viewMode, setViewMode] = useState("lessonList")
-    const navMode = viewMode === "lessonList" ? "course" : "contents"
+    const navMode =
+    viewMode === "lessonList"
+        ? "course"
+        : viewMode === "lecture"
+            ? "contents"
+            : "hidden"
 
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)

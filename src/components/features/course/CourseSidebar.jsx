@@ -11,6 +11,10 @@ export default function CourseSidebar({
     onSelectLesson,
     onBack,
 }) {
+    if (navMode === "hidden") {
+        return null
+    }
+
     if (navMode === "course") {
         return (
             <CourseNavigation
