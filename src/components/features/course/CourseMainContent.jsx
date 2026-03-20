@@ -47,8 +47,8 @@ export default function CourseMainContent({
         : course?.title || ""
 
     const headerDescription = isLessonView
-    ? selectedLesson?.lessonDescription || course?.description || ""
-    : course?.description || ""
+        ? selectedLesson?.lessonDescription || selectedLesson?.description || course?.description || ""
+        : course?.description || ""
 
     return (
         <Box sx={{ flex: 1, pt: 0, px: 0, pb: 4 }}>
@@ -62,48 +62,50 @@ export default function CourseMainContent({
                 />
             )}
 
-            {viewMode === "lessonList" && (
-                <CourseOverview
-                    course={course}
-                    lessons={lessons}
-                    nextLessonData={nextLessonData}
-                    onOpenLesson={onOpenLesson}
-                />
-            )}
+            <Box sx={{ px: 4 }}>
+                {viewMode === "lessonList" && (
+                    <CourseOverview
+                        course={course}
+                        lessons={lessons}
+                        nextLessonData={nextLessonData}
+                        onOpenLesson={onOpenLesson}
+                    />
+                )}
 
-            {viewMode === "lecture" && selectedLesson && (
-                <Lecture
-                    lessons={lessons}
-                    activeLessonId={selectedLesson._id}
-                    onExit={onBackToLessonList}
-                    onTakeQuiz={onTakeQuiz}
-                />
-            )}
+                {viewMode === "lecture" && selectedLesson && (
+                    <Lecture
+                        lessons={lessons}
+                        activeLessonId={selectedLesson._id}
+                        onExit={onBackToLessonList}
+                        onTakeQuiz={onTakeQuiz}
+                    />
+                )}
 
-            {viewMode === "quiz" && matchedQuizzes.length > 0 && (
-                <QuizPage
-                    courseId={course?._id}
-                    lessonId={selectedLesson?._id}
-                    quizItems={matchedQuizzes}
-                    onBack={onBackToLecture}
-                />
-            )}
+                {viewMode === "quiz" && matchedQuizzes.length > 0 && (
+                    <QuizPage
+                        courseId={course?._id}
+                        lessonId={selectedLesson?._id}
+                        quizItems={matchedQuizzes}
+                        onBack={onBackToLecture}
+                    />
+                )}
 
-            {viewMode === "result" && (
-                <ResultPage
-                    score={resultScore}
-                    total={resultTotal}
-                    answers={resultAnswers}
-                    skillProgress={resultSkillProgress}
-                    onRetry={() => {
-                        if (!selectedLesson?._id || !course?._id) return
-                        navigate(`/courses/${course._id}/lessons/${selectedLesson._id}/quiz`)
-                    }}
-                    onBack={() => {
-                        navigate("/")
-                    }}
-                />
-            )}
+                {viewMode === "result" && (
+                    <ResultPage
+                        score={resultScore}
+                        total={resultTotal}
+                        answers={resultAnswers}
+                        skillProgress={resultSkillProgress}
+                        onRetry={() => {
+                            if (!selectedLesson?._id || !course?._id) return
+                            navigate(`/courses/${course._id}/lessons/${selectedLesson._id}/quiz`)
+                        }}
+                        onBack={() => {
+                            navigate("/")
+                        }}
+                    />
+                )}
+            </Box>
         </Box>
     )
 }
