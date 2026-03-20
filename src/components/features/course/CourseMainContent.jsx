@@ -39,7 +39,7 @@ export default function CourseMainContent({
     const resultSkillProgress = resultData?.skillProgress ?? null
 
     return (
-        <Box sx={{ flex: 1, p: 4 }}>
+        <Box sx={{ flex: 1, pt: 0, px: 0, pb: 4 }}>
             {isLoading && <p>Loading...</p>}
             {error && <p style={{ color: "red" }}>Error: {error}</p>}
 

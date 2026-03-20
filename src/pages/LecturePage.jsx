@@ -18,7 +18,6 @@ const Main = styled(Box)(() => ({
     flexDirection: "column",
     gap: "32px",
 }))
-
 const Footer = styled(Box)(() => ({
     marginTop: "auto",
     display: "flex",

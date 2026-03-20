@@ -35,13 +35,14 @@ export default function App() {
       : "settings"
 
   const handleSignOut = () => {
-    localStorage.removeItem("token")
-    setIsLoggedIn(false)
-    setAuthUser(null)
-    setContinueCourseId(null)
-    setContinueLessonId(null)
-    navigate("/login")
-  }
+  localStorage.removeItem("token")
+  setIsLoggedIn(false)
+  setAuthUser(null)
+  setDashboardHeader(null)
+  setContinueCourseId(null)
+  setContinueLessonId(null)
+  navigate("/login")
+}
 
   const openCoursesOverview = () => {
     setContinueCourseId(null)
@@ -50,6 +51,7 @@ export default function App() {
     navigate("/courses")
   }
 
+  const [dashboardHeader, setDashboardHeader] = useState(null)
   const openContinueLesson = (nextLesson) => {
     if (nextLesson) {
       setContinueCourseId(nextLesson.courseId)
@@ -72,22 +74,25 @@ export default function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.user) {
-          setAuthUser(data.user)
-          setIsLoggedIn(true)
-        } else {
-          localStorage.removeItem("token")
-          setIsLoggedIn(false)
-          setAuthUser(null)
-          navigate("/login")
-        }
-      })
+  if (data.user) {
+    setAuthUser(data.user)
+    setDashboardHeader(data.dashboardHeader || null)
+    setIsLoggedIn(true)
+  } else {
+    localStorage.removeItem("token")
+    setIsLoggedIn(false)
+    setAuthUser(null)
+    setDashboardHeader(null)
+    navigate("/login")
+  }
+})
       .catch(() => {
-        localStorage.removeItem("token")
-        setIsLoggedIn(false)
-        setAuthUser(null)
-        navigate("/login")
-      })
+  localStorage.removeItem("token")
+  setIsLoggedIn(false)
+  setAuthUser(null)
+  setDashboardHeader(null)
+  navigate("/login")
+})
   }, [navigate])
 
   if (!isLoggedIn) {
@@ -145,10 +150,10 @@ export default function App() {
 
       <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
         {page === "home" && (
-          <DashboardHeader
-            title="Hello Alex"
-            description="Welcome back! Let’s continue building your soft skills."
-          />
+         <DashboardHeader
+  title={dashboardHeader?.title || (authUser ? `Hello ${authUser.username}` : "Hello")}
+  description={dashboardHeader?.description || ""}
+/>
         )}
 
         <Routes>
