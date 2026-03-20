@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const LessonSchema = new mongoose.Schema({
   courseId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Course"
+    ref: "Course",
   },
   skillId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -16,10 +16,20 @@ const LessonSchema = new mongoose.Schema({
   sections: [
     {
       heading: String,
-      content: [String]
-    }
+      blocks: [
+        {
+          type: {
+            type: String,
+            enum: ["text", "image"],
+          },
+          text: String,
+          imgUrl: String,
+          imgAlt: String,
+        },
+      ],
+    },
   ],
-  keyTakeaways: [String]
+  keyTakeaways: [String],
 }, { timestamps: true });
 
 module.exports = mongoose.model("Lesson", LessonSchema);
