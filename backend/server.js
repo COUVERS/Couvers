@@ -221,11 +221,27 @@ app.get("/auth/me", authMiddleware, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const currentHour = new Date().getHours();
+
+    let greetingText = "Welcome back! Let’s continue building your soft skills.";
+
+    if (currentHour < 12) {
+      greetingText = "Good Morning! Let's keep learning today as well.";
+    } else if (currentHour < 18) {
+      greetingText = "Good Afternoon! Let's keep learning today as well.";
+    } else {
+      greetingText = "Good Evening! Let's keep learning today as well.";
+    }
+
     return res.status(200).json({
       user: {
         id: user._id,
         email: user.email,
         username: user.username,
+      },
+      dashboardHeader: {
+        title: `Hello ${user.username}`,
+        description: greetingText,
       },
     });
   } catch (err) {
