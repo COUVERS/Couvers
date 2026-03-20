@@ -15,7 +15,9 @@ import {
 
 const Container = styled(Box)(() => ({
   padding: "0 48px 48px 48px",
-  width: "100%"
+  width: "100%",
+  boxSizing: "border-box",
+  overflowX: "hidden",
 }))
 
 const SectionTitle = styled(Typography)(() => ({
@@ -43,7 +45,8 @@ const AnswersContainer = styled(Box)(() => ({
   padding: "16px 56px 32px 56px",
   flexDirection: "column",
   gap: "24px",
-  width: "100%"
+  width: "100%",
+  boxSizing: "border-box",
 }))
 
 /* =========================

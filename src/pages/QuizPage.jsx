@@ -122,7 +122,7 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack })
     // }
 
     return (
-      <Box sx={{ p: 4 }}>
+      <Box sx={{ pt: 0, px: 0, pb: 4 }}>
 
         {!currentQuestion ? (
           <p>No quiz found for this lesson.</p>
