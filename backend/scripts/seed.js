@@ -104,6 +104,7 @@ async function run() {
     description:
       "Ability to maintain learner attention, participation, and involvement during instruction.",
     order: 1,
+
   },
   {
     _id: explanationClaritySkillId,
@@ -136,33 +137,37 @@ async function run() {
     ]);
 
 await courses.insertMany([
+    {
+    _id: fundamentalsTeachingCourseId,
+    title: "Fundamentals of Teaching",
+    description:
+      "Fundamentals of Teaching introduces the core principles that support effective instruction in modern classrooms. This course focuses on how instructors design learning experiences, deliver content strategically, and respond to student needs in real time. Rather than focusing only on content delivery, this course emphasizes decision-making during instruction, including how to manage cognitive load, support diverse learners, and maintain engagement while ensuring learning outcomes are achieved.",
+    order: 1,
+    icon: "fundamentalsOfTeaching",
+  },
+    {
+    _id: effectiveCommunicationCourseId,
+    title: "Effective Communication",
+    description:
+      "Effective communication is a foundational teaching skill. It helps instructors explain ideas clearly, listen actively, provide meaningful feedback, encourage interaction, and use verbal and nonverbal communication to support student understanding and engagement. When communication is clear and purposeful, students are more likely to participate, understand expectations, and feel confident in their learning.",
+    order: 2,
+    icon: "effectiveCommunication",
+    },
   {
     _id: empathyCourseId,
     title: "Empathy and Classroom Management",
     description:
       "Empathy and classroom management course for new instructors (industry specialists).",
-    order: 1,
+    order: 3,
+    icon: "empathy",
   },
   {
     _id: planningCourseId,
     title: "Lesson Planning",
     description:
       "Lesson planning is a critical skill for effective teaching. A well-designed lesson provides structure, clarity, and purpose for both instructors and learners. Rather than improvising instruction, teachers who plan carefully can create learning experiences that are organized, engaging, and aligned with clear objectives.",
-    order: 2,
-  },
-  {
-    _id: effectiveCommunicationCourseId,
-    title: "Effective Communication",
-    description:
-      "Effective communication is a foundational teaching skill. It helps instructors explain ideas clearly, listen actively, provide meaningful feedback, encourage interaction, and use verbal and nonverbal communication to support student understanding and engagement. When communication is clear and purposeful, students are more likely to participate, understand expectations, and feel confident in their learning.",
-    order: 3,
-    },
-  {
-    _id: fundamentalsTeachingCourseId,
-    title: "Fundamentals of Teaching",
-    description:
-      "Fundamentals of Teaching introduces the core principles that support effective instruction in modern classrooms. This course focuses on how instructors design learning experiences, deliver content strategically, and respond to student needs in real time. Rather than focusing only on content delivery, this course emphasizes decision-making during instruction, including how to manage cognitive load, support diverse learners, and maintain engagement while ensuring learning outcomes are achieved.",
     order: 4,
+    icon: "lessonPlanning",
   },
   {
     _id: assessmentFeedbackCourseId,
@@ -170,50 +175,106 @@ await courses.insertMany([
     description:
       "Assessment and feedback are central to effective teaching. While assessment measures student understanding, feedback guides improvement and supports continued learning. In professional teaching contexts, assessment is not only about grading. It helps instructors identify student strengths and weaknesses, adjust instruction strategies, encourage reflection and self-improvement, and support long-term learning outcomes. When assessment and feedback are used together, they create a continuous learning cycle where students can evaluate their progress and improve their performance.",
     order: 5,
+    icon: "assessment",
   },
 ]);
 
-   await lessons.insertMany([
+  await lessons.insertMany([
   // =========================
   // Empathy and Classroom Management
   // =========================
-  {
-    _id: empathyLesson1Id,
-    courseId: empathyCourseId,
-    skillId: studentEngagementSkillId,
-    order: 1,
-    title: "Empathy as an Instructional Skill",
-    lessonDescription:
-      "This lesson introduces empathy as an instructional skill that supports effective classroom management and student engagement.",
-    sections: [
-      {
-        heading: "Lesson Description",
-        content: [
-          "This lesson introduces empathy as an instructional skill that supports effective classroom management, especially for instructors who know their subject but feel unsure about handling classroom dynamics.",
-          "In an instructional context, empathy means understanding learners' experiences and responding intentionally to support learning.",
-        ],
-      },
-      {
-        heading: "What Empathy Is and Is Not",
-        content: [
-          "Empathy is not being overly lenient, removing expectations, or avoiding difficult situations.",
-          "Instead, empathy helps instructors recognize confusion, frustration, or anxiety, stay calm and professional, and choose responses that keep learning moving forward.",
-        ],
-      },
-      {
-        heading: "Why It Matters",
-        content: [
-          "When learners feel understood, they are more likely to stay engaged, cooperative, and open to instruction.",
-          "Empathy supports both learning and classroom management by reducing defensiveness and improving trust.",
-        ],
-      },
-    ],
-    keyTakeaways: [
-      "Empathy supports classroom management and engagement.",
-      "Empathy means responding intentionally to learner needs.",
-      "Students participate more when they feel understood.",
-    ],
-  },
+{
+  _id: empathyLesson1Id,
+  courseId: empathyCourseId,
+  skillId: studentEngagementSkillId,
+  order: 1,
+  title: "Empathy as an Instructional Skill",
+  lessonDescription:
+    "This lesson introduces empathy as an instructional skill that supports effective classroom management, especially for instructors who know their subject but feel unsure about handling classroom dynamics.",
+  sections: [
+    {
+      heading: "What Empathy Means in Teaching",
+      blocks: [
+        {
+          type: "text",
+          text: "In an instructional context, empathy means understanding learners’ experiences and responding intentionally to support learning.",
+        },
+        {
+          type: "text",
+          text: "Empathy in teaching is not:\n• being overly lenient\n• removing expectations\n• avoiding difficult situations",
+        },
+        {
+          type: "text",
+          text: "Instead, empathy helps instructors respond professionally and thoughtfully, even when challenges arise.",
+        },
+        {
+          type: "text",
+          text: "Empathy is:\n• recognizing confusion, frustration, or anxiety\n• staying calm and professional\n• choosing responses that keep learning moving forward",
+        },
+        {
+          type: "text",
+          text: "When learners feel understood, they are more likely to stay engaged, cooperative, and open to instruction.",
+        },
+      ],
+    },
+    {
+      heading: "Why Empathy Matters for Classroom Management",
+      blocks: [
+        {
+          type: "text",
+          text: "Classroom management is not about control, it’s about creating conditions where learning can happen.",
+        },
+        {
+          type: "text",
+          text: "When empathy is missing, small issues can quickly turn into tension or resistance. When empathy is present, instructors can address challenges early and calmly.",
+        },
+        {
+          type: "text",
+          text: "In real classrooms, instructors often see mixed reactions at the same time.",
+        },
+        {
+          type: "image",
+          imgUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+          imgAlt: "Students collaborating in a classroom",
+        },
+        {
+          type: "text",
+          text: "Empathy helps instructors:\n• reduce tension and defensiveness\n• build trust with learners\n• address issues before they escalate",
+        },
+        {
+          type: "text",
+          text: "For example:\n• A quiet learner may be overwhelmed, not uninterested\n• A challenging comment may reflect frustration, not disrespect",
+        },
+        {
+          type: "text",
+          text: "Effective instructors pause, observe, and respond with intention rather than reacting emotionally in the moment.",
+        },
+      ],
+    },
+    {
+      heading: "Empathy Is a Skill You Can Practice",
+      blocks: [
+        {
+          type: "text",
+          text: "Empathy is not something you either have or don’t have—it’s a skill that improves with practice.",
+        },
+        {
+          type: "text",
+          text: "Instructors can develop empathy by:\n• paying close attention to learner behavior and reactions\n• reflecting briefly before responding\n• balancing understanding with clear expectations",
+        },
+        {
+          type: "text",
+          text: "Empathy does not weaken authority. Strong classroom management combines empathy and structure, not one without the other.",
+        },
+      ],
+    },
+  ],
+  keyTakeaways: [
+    "Empathy is a practical instructional skill, not just a personality trait.",
+    "Understanding learner behavior supports classroom management.",
+    "Empathy and clear expectations work best together.",
+  ],
+},
   {
     _id: empathyLesson2Id,
     courseId: empathyCourseId,
@@ -221,35 +282,87 @@ await courses.insertMany([
     order: 2,
     title: "Understanding Learner Behavior",
     lessonDescription:
-      "This lesson helps instructors recognize common learner behaviors and interpret them more accurately.",
-    sections: [
-      {
-        heading: "Lesson Description",
-        content: [
-          "This lesson helps instructors recognize common learner behaviors and understand what may be happening beneath the surface.",
-          "Learner behavior is often a signal, not a personal challenge.",
-        ],
-      },
-      {
-        heading: "Common Misinterpretations",
-        content: [
-          "Silence, lack of participation, visible frustration, and challenging comments do not automatically mean learners are disrespectful or uninterested.",
-          "When instructors assume the worst, communication and learning may become more difficult.",
-        ],
-      },
-      {
-        heading: "A More Productive Perspective",
-        content: [
-          "Understanding underlying needs helps instructors respond more clearly and professionally.",
-          "Recognizing behavior as information allows instructors to respond with calm, clarity, and purpose.",
-        ],
-      },
-    ],
-    keyTakeaways: [
-      "Learner behavior often signals confusion, uncertainty, or frustration.",
-      "Avoid assuming behavior is personal.",
-      "Better interpretation leads to better responses.",
-    ],
+      "This lesson helps instructors recognize common learner behaviors and understand what may be happening beneath the surface. It focuses on reading confusion, disengagement, and resistance without making quick assumptions.",
+      sections: [
+    {
+      heading: "What Learner Behavior Really Means",
+      blocks: [
+        {
+          type: "text",
+          text: "Learner behavior is often misinterpreted, especially by new instructors. In teaching, behavior is usually a signal, not a personal response to the instructor.",
+        },
+        {
+          type: "text",
+          text: "Common behaviors include:\n• silence\n• lack of participation\n• visible frustration\n• challenging comments",
+        },
+        {
+          type: "image",
+          imgUrl: "https://images.unsplash.com/photo-1588072432836-e10032774350",
+          imgAlt: "Students in a classroom showing different engagement levels",
+        },
+        {
+          type: "text",
+          text: "These behaviors do not automatically mean learners are uninterested or disrespectful. Understanding learner behavior helps instructors respond more accurately and professionally.",
+        },
+      ],
+    },
+    {
+      heading: "Quiet and Disengaged Learners",
+      blocks: [
+        {
+          type: "text",
+          text: "Quiet behavior is one of the most commonly misunderstood signals in the classroom.",
+        },
+        {
+          type: "text",
+          text: "A quiet learner may be:\n• processing new information\n• unsure if they understand\n• anxious about speaking\n• overwhelmed by the pace",
+        },
+        {
+          type: "text",
+          text: "Silence does not always indicate a lack of interest. Effective instructors avoid assuming intent and instead observe patterns over time before responding.",
+        },
+      ],
+    },
+    {
+      heading: "Frustrated and Challenging Reactions",
+      blocks: [
+        {
+          type: "text",
+          text: "Frustration often appears as:\n• sharp comments\n• visible irritation\n• resistance to instructions",
+        },
+        {
+          type: "text",
+          text: "These reactions are frequently linked to:\n• confusion\n• feeling left behind\n• unclear expectations",
+        },
+        {
+          type: "text",
+          text: "Rather than reacting defensively, instructors who understand learner behavior pause and ask: “What might be causing this response?” This shift helps prevent unnecessary conflict.",
+        },
+      ],
+    },
+    {
+      heading: "Surface Behavior vs. Underlying Needs",
+      blocks: [
+        {
+          type: "text",
+          text: "What instructors see is surface behavior. What learners experience internally may be very different.",
+        },
+        {
+          type: "text",
+          text: "For example:\n• disengagement may signal confusion\n• resistance may signal frustration\n• silence may signal uncertainty",
+        },
+        {
+          type: "text",
+          text: "Understanding this difference allows instructors to respond with clarity, not emotion. Strong classroom management starts with accurate interpretation.",
+        },
+      ],
+    },
+  ],
+  keyTakeaways: [
+    "Learner behavior is often a signal, not a personal challenge.",
+    "Quiet or disengaged behavior does not always mean disinterest.",
+    "Understanding underlying needs supports better instructional responses.",
+  ],
   },
   {
     _id: empathyLesson3Id,
@@ -258,35 +371,75 @@ await courses.insertMany([
     order: 3,
     title: "Managing Your Reactions as an Instructor",
     lessonDescription:
-      "This lesson focuses on recognizing emotional triggers and responding professionally under pressure.",
+      "“Responding instead of reacting.”\n This lesson helps instructors recognize emotional triggers in the classroom and respond professionally rather than react impulsively. It focuses on maintaining composure, authority, and clarity during challenging moments.",
     sections: [
-      {
-        heading: "Lesson Description",
-        content: [
-          "This lesson helps instructors recognize emotional triggers in the classroom and respond professionally rather than react impulsively.",
-          "Instructors may feel frustration, defensiveness, embarrassment, or pressure to regain control.",
-        ],
-      },
-      {
-        heading: "Why Reaction Management Matters",
-        content: [
-          "Strong emotional reactions can escalate tension and disrupt learning.",
-          "Professional composure helps preserve authority and keeps the lesson moving forward.",
-        ],
-      },
-      {
-        heading: "A Practical Response Strategy",
-        content: [
-          "A useful approach is to notice your reaction, pause briefly, and respond with clarity and purpose.",
-          "Good pacing includes allowing time for thinking, reducing pressure, and maintaining professional composure during challenging moments.",
-        ],
-      },
-    ],
-    keyTakeaways: [
-      "Pause before reacting.",
-      "Professional composure supports effective pacing.",
-      "Calm responses reduce tension and support learning.",
-    ],
+    {
+      heading: "Why Instructor Reactions Matter",
+      blocks: [
+        {
+          type: "text",
+          text: "Learners do not only respond to content—they respond to the instructor’s tone, posture, and emotional control.",
+        },
+        {
+          type: "text",
+          text: "In classroom settings, instructors may experience:\n• frustration\n• defensiveness\n• embarrassment\n• pressure to “regain control”",
+        },
+        {
+          type: "image",
+          imgUrl: "https://images.unsplash.com/photo-1584697964403-6f5d2d3c4f6b",
+          imgAlt: "Teacher calmly managing a classroom discussion",
+        },
+        {
+          type: "text",
+          text: "Reacting emotionally can escalate situations. Responding intentionally supports professionalism and stability.",
+        },
+      ],
+    },
+    {
+      heading: "Common Emotional Triggers",
+      blocks: [
+        {
+          type: "text",
+          text: "New instructors often feel triggered when:\n• learners challenge instructions\n• silence follows a question\n• participation is low\n• a learner appears disengaged",
+        },
+        {
+          type: "text",
+          text: "These moments are normal. Professional instructors recognize the trigger internally but choose a measured response externally.",
+        },
+      ],
+    },
+    {
+      heading: "Pause, Process, Respond",
+      blocks: [
+        {
+          type: "text",
+          text: "A simple framework:\n• Notice your reaction\n• Pause briefly\n• Respond with clarity and purpose",
+        },
+        {
+          type: "text",
+          text: "This prevents defensive language and preserves authority. Strong classroom management depends on emotional regulation.",
+        },
+      ],
+    },
+    {
+      heading: "Professional Presence",
+      blocks: [
+        {
+          type: "text",
+          text: "Professional presence includes:\n• steady tone\n• controlled pacing\n• neutral body language\n• clear expectations",
+        },
+        {
+          type: "text",
+          text: "When instructors remain calm, learners are more likely to stabilize as well.",
+        },
+      ],
+    },
+  ],
+  keyTakeaways: [
+    "Emotional triggers are normal in teaching.",
+    "Pausing prevents escalation.",
+    "Professional presence strengthens classroom management.",
+  ],
   },
   {
     _id: empathyLesson4Id,
@@ -295,35 +448,83 @@ await courses.insertMany([
     order: 4,
     title: "Empathy-Based Communication in the Classroom",
     lessonDescription:
-      "This lesson focuses on using language, tone, and structure to communicate empathy while maintaining authority.",
+      "“What to say - and how to say it.” /n This lesson focuses on using language, tone, and structure to communicate empathy while maintaining authority. It explores how instructors can respond clearly and professionally in everyday classroom interactions.",
     sections: [
-      {
-        heading: "Lesson Description",
-        content: [
-          "This lesson focuses on using language, tone, and structure to communicate empathy while maintaining authority.",
-          "Words influence classroom tone and can either reduce or increase defensiveness.",
-        ],
-      },
-      {
-        heading: "What Empathy-Based Communication Looks Like",
-        content: [
-          "Empathy-based communication includes neutral language, clear expectations, calm tone, and concise explanations.",
-          "It helps instructors remain respectful without losing structure or authority.",
-        ],
-      },
-      {
-        heading: "Why It Matters",
-        content: [
-          "Small changes in wording can reduce defensiveness and help maintain lesson structure.",
-          "A calm and structured communication style keeps the classroom focused on learning.",
-        ],
-      },
-    ],
-    keyTakeaways: [
-      "Language and tone shape classroom climate.",
-      "Empathy and authority can work together.",
-      "Clear, calm wording supports lesson structure.",
-    ],
+    {
+      heading: "Language Shapes Classroom Climate",
+      blocks: [
+        {
+          type: "text",
+          text: "Words influence classroom tone.",
+        },
+        {
+          type: "text",
+          text: "Empathy-based communication includes:\n• neutral language\n• clear expectations\n• calm tone\n• concise explanations",
+        },
+        {
+          type: "image",
+          imgUrl: "https://images.unsplash.com/photo-1513258496099-48168024aec0",
+          imgAlt: "Teacher speaking with students in a calm classroom setting",
+        },
+        {
+          type: "text",
+          text: "Communication should reduce defensiveness, not increase it.",
+        },
+      ],
+    },
+    {
+      heading: "Tone and Framing",
+      blocks: [
+        {
+          type: "text",
+          text: "Instead of:\n“You’re not paying attention.”",
+        },
+        {
+          type: "text",
+          text: "Try:\n“Let’s refocus on the main idea.”",
+        },
+        {
+          type: "text",
+          text: "Language shifts can prevent conflict.",
+        },
+      ],
+    },
+    {
+      heading: "Clarity Without Over-Explaining",
+      blocks: [
+        {
+          type: "text",
+          text: "Empathy does not mean long explanations.",
+        },
+        {
+          type: "text",
+          text: "It means:\n• clear instructions\n• simple phrasing\n• respectful redirection",
+        },
+        {
+          type: "text",
+          text: "Authority remains intact.",
+        },
+      ],
+    },
+    {
+      heading: "Balancing Support and Expectations",
+      blocks: [
+        {
+          type: "text",
+          text: "Empathy-based communication:\n• acknowledges concerns\n• reinforces standards\n• keeps learning moving forward",
+        },
+        {
+          type: "text",
+          text: "This balance builds trust.",
+        },
+      ],
+    },
+  ],
+  keyTakeaways: [
+    "Tone matters as much as content.",
+    "Neutral phrasing reduces defensiveness.",
+    "Clear communication supports classroom management.",
+  ],
   },
   {
     _id: empathyLesson5Id,
@@ -332,35 +533,93 @@ await courses.insertMany([
     order: 5,
     title: "Responding to Challenging Classroom Situations",
     lessonDescription:
-      "This lesson focuses on how instructors can respond professionally to difficult classroom interactions.",
+      "”Applying empathy and structure in real moments.” /n This lesson focuses on how instructors can respond professionally to challenging classroom situations. It emphasizes maintaining authority, clarity, and empathy during difficult interactions.",
     sections: [
-      {
-        heading: "Lesson Description",
-        content: [
-          "This lesson focuses on how instructors can respond professionally to challenging classroom situations.",
-          "It emphasizes maintaining authority, clarity, and empathy during difficult interactions.",
-        ],
-      },
-      {
-        heading: "Effective Response Strategies",
-        content: [
-          "Effective responses include acknowledging concerns, reinforcing expectations, redirecting learners toward the task, and checking understanding when needed.",
-          "These strategies help reduce escalation and restore a productive learning environment.",
-        ],
-      },
-      {
-        heading: "Why Follow-Up Matters",
-        content: [
-          "After a difficult moment, instructors should confirm that learners remain focused and understand what to do next.",
-          "Quick checks for understanding help restore instructional momentum.",
-        ],
-      },
-    ],
-    keyTakeaways: [
-      "Respond with clarity, empathy, and authority.",
-      "Use redirection and follow-up to restore focus.",
-      "Assessment helps confirm recovery after disruption.",
-    ],
+    {
+      heading: "Challenging Situations Are Normal",
+      blocks: [
+        {
+          type: "text",
+          text: "In every classroom, instructors may encounter:\n• disruptive comments\n• repeated disengagement\n• resistance to activities\n• emotional reactions",
+        },
+        {
+          type: "image",
+          imgUrl: "https://images.unsplash.com/photo-1509062522246-3755977927d7",
+          imgAlt: "Teacher managing a classroom discussion with students",
+        },
+        {
+          type: "text",
+          text: "Challenging moments do not mean failure. They are part of instructional practice. Effective instructors prepare to respond calmly rather than react emotionally.",
+        },
+      ],
+    },
+    {
+      heading: "Stay Calm and Maintain Authority",
+      blocks: [
+        {
+          type: "text",
+          text: "When a challenging moment occurs:\n• Keep your tone steady\n• Avoid public embarrassment\n• Focus on the learning objective",
+        },
+        {
+          type: "text",
+          text: "Authority does not require aggression. It requires clarity and consistency.",
+        },
+      ],
+    },
+    {
+      heading: "Address the Behavior, Not the Person",
+      blocks: [
+        {
+          type: "text",
+          text: "Instead of labeling the learner, focus on the behavior.",
+        },
+        {
+          type: "text",
+          text: "For example:\nInstead of:\n“You are being disrespectful.”\nTry:\n“Let’s keep our comments focused on the task.”",
+        },
+        {
+          type: "text",
+          text: "This maintains professionalism and reduces defensiveness.",
+        },
+      ],
+    },
+    {
+      heading: "Redirect and Refocus",
+      blocks: [
+        {
+          type: "text",
+          text: "A practical framework:\n• Acknowledge briefly\n• Reinforce expectations\n• Redirect to learning",
+        },
+        {
+          type: "text",
+          text: "Example:\n“I understand there’s some frustration. Let’s return to the main objective.”",
+        },
+        {
+          type: "text",
+          text: "Redirection prevents escalation.",
+        },
+      ],
+    },
+    {
+      heading: "Preventing Escalation",
+      blocks: [
+        {
+          type: "text",
+          text: "Escalation often happens when:\n• instructors respond emotionally\n• expectations are unclear\n• frustration is ignored",
+        },
+        {
+          type: "text",
+          text: "Professional responses combine empathy with structure. Strong classroom management is demonstrated most clearly in difficult moments.",
+        },
+      ],
+    },
+  ],
+  keyTakeaways: [
+    "Challenging situations are normal in teaching.",
+    "Calm authority prevents escalation.",
+    "Address behavior, not personality.",
+    "Redirect learning with clarity.",
+  ],
   },
 
   // =========================

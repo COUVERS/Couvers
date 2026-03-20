@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react"
+import { useState } from "react"
 import { styled } from "@mui/material/styles"
 import {
     Box,
@@ -61,7 +61,12 @@ export default function LectureContent({ lesson }) {
             : [
                 {
                     heading: lesson.title || "Lesson Content",
-                    content: lesson.content || "",
+                    blocks: [
+                        {
+                            type: "text",
+                            text: lesson.content || "",
+                        },
+                    ],
                 },
             ]
 
@@ -70,10 +75,6 @@ export default function LectureContent({ lesson }) {
             {sections.map((sec, idx) => {
                 const key = `${idx}-${sec.heading}`
                 const isOpen = expanded.has(key)
-
-                const lines = (Array.isArray(sec.content) ? sec.content.join("\n") : sec.content || "")
-                    .split("\n")
-                    .filter((line) => line.trim())
 
                 return (
                     <StyledAccordion
@@ -86,15 +87,22 @@ export default function LectureContent({ lesson }) {
                         </StyledSummary>
 
                         <AccordionDetails>
-                            {lines.map((line, i) => (
-                                <Fragment key={i}>
-                                    <Paragraph>{line}</Paragraph>
+                            {(sec.blocks || []).map((block, i) => {
+                                if (block.type === "text") {
+                                    return (
+                                        <Paragraph key={i}>
+                                            {block.text}
+                                        </Paragraph>
+                                    )
+                                }
 
-                                    {idx === 1 && i === 2 && lesson.imgUrl && (
+                                if (block.type === "image") {
+                                    return (
                                         <Box
+                                            key={i}
                                             component="img"
-                                            src={lesson.imgUrl}
-                                            alt={lesson.title}
+                                            src={block.imgUrl}
+                                            alt={block.imgAlt || sec.heading || lesson.title}
                                             sx={{
                                                 width: "100%",
                                                 maxWidth: 720,
@@ -102,11 +110,14 @@ export default function LectureContent({ lesson }) {
                                                 mb: 2,
                                                 display: "block",
                                                 objectFit: "cover",
+                                                borderRadius: "12px",
                                             }}
                                         />
-                                    )}
-                                </Fragment>
-                            ))}
+                                    )
+                                }
+
+                                return null
+                            })}
                         </AccordionDetails>
                     </StyledAccordion>
                 )
