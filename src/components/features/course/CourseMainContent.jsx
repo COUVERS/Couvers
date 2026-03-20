@@ -35,18 +35,30 @@ export default function CourseMainContent({
 
     const resultScore = resultData?.correctCount ?? 0
     const resultTotal = resultData?.totalQuestions ?? 0
-
     const resultSkillProgress = resultData?.skillProgress ?? null
+
+    const isLessonView =
+        viewMode === "lecture" ||
+        viewMode === "quiz" ||
+        viewMode === "result"
+
+    const headerTitle = isLessonView
+        ? selectedLesson?.title || course?.title || ""
+        : course?.title || ""
+
+    const headerDescription = isLessonView
+    ? selectedLesson?.lessonDescription || course?.description || ""
+    : course?.description || ""
 
     return (
         <Box sx={{ flex: 1, pt: 0, px: 0, pb: 4 }}>
             {isLoading && <p>Loading...</p>}
             {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
-            {course && (
+            {(headerTitle || headerDescription) && (
                 <PageHeader
-                    title={course.title}
-                    description={course.description}
+                    title={headerTitle}
+                    description={headerDescription}
                 />
             )}
 
