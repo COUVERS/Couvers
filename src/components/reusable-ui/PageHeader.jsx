@@ -5,9 +5,9 @@ export default function PageHeader({ title, description }) {
     <Box
       sx={{
         backgroundColor: "var(--color-surface)",
-        px: 6,
-        py: 4,
-        mb: 4,
+        px: 5,
+        py: 3,
+        mb: 2,
         boxShadow: "0 3px 0 rgba(0,0,0,0.18)"
       }}
     >
@@ -16,13 +16,13 @@ export default function PageHeader({ title, description }) {
         sx={{
           m: 0,
           fontSize: {
-            xs: "36px",
-            md: "56px"
+            xs: "34px",
+            md: "44px"
           },
           fontWeight: 600,
           color: "var(--color-primary)",
-          lineHeight: 1.1,
-          mb: 2
+          lineHeight: 1.05,
+          mb: 1.5
         }}
       >
         {title}
@@ -32,8 +32,8 @@ export default function PageHeader({ title, description }) {
         component="p"
         sx={{
           m: 0,
-          fontSize: "16px",
-          lineHeight: "28px",
+          fontSize: "15px",
+          lineHeight: "24px",
           color: "var(--Color-Text-Primary)",
           maxWidth: "1100px"
         }}

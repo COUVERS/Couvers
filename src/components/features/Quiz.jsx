@@ -21,15 +21,17 @@ const Container = styled(Box)(() => ({
 const SectionTitle = styled(Typography)(() => ({
   fontSize: "var(--FontSize-Headings-h2)",
   fontWeight: 600,
-  marginBottom: "16px"
+  marginBottom: "8px",
+  lineHeight: 1.1,
 }))
 
 const QuestionTitle = styled(Typography)(() => ({
   fontSize: "var(--FontSize-Headings-h3)",
   fontWeight: 600,
   padding: "0 56px",
-  marginTop: "32px",
-  marginBottom: "24px"
+  marginTop: "20px",
+  marginBottom: "16px",
+  lineHeight: 1.1,
 }))
 
 const BodyText = styled(Typography)(() => ({
@@ -40,9 +42,9 @@ const BodyText = styled(Typography)(() => ({
 
 const AnswersContainer = styled(Box)(() => ({
   display: "flex",
-  padding: "16px 56px 32px 56px",
+  padding: "12px 56px 24px 56px",
   flexDirection: "column",
-  gap: "24px",
+  gap: "16px",
   width: "100%",
   boxSizing: "border-box",
 }))
@@ -76,8 +78,8 @@ const OptionWrapper = styled(Box, {
 
   return {
     border,
-    borderRadius: "12px",
-    padding: "18px 20px",
+    borderRadius: "10px",
+    padding: "14px 18px",
     width: "100%",
     backgroundColor: background,
     color,
@@ -98,9 +100,9 @@ const SubmitButton = styled(Button)(() => ({
 
 const ScenarioWrapper = styled(Box)(() => ({
   display: "flex",
-  padding: "32px 56px",
+  padding: "8px 56px 20px 56px",
   flexDirection: "column",
-  gap: "24px",
+  gap: "12px",
   boxSizing: "border-box",
 }))
 
