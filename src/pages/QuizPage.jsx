@@ -96,79 +96,76 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack })
     }
   }
 
-    // if (showResult && resultData) {
-    //   return (
-    //     <ResultPage
-    //       score={resultData.correctCount}
-    //       total={resultData.totalQuestions}
-    //       answers={resultData.results.map((item) => ({
-    //         question: item.question,
-    //         userAnswer: item.selectedAnswer,
-    //         correctAnswer: item.correctAnswer,
-    //         explanation: item.review,
-    //         correct: item.isCorrect,
-    //       }))}
-    //       skillProgress={resultData.skillProgress}
-    //       onRetry={() => {
-    //         setCurrentIndex(0)
-    //         setAnswers([])
-    //         setShowResult(false)
-    //         setResultData(null)
-    //         setError("")
-    //       }}
-    //       onBack={onBack}
-    //     />
-    //   )
-    // }
+  // if (showResult && resultData) {
+  //   return (
+  //     <ResultPage
+  //       score={resultData.correctCount}
+  //       total={resultData.totalQuestions}
+  //       answers={resultData.results.map((item) => ({
+  //         question: item.question,
+  //         userAnswer: item.selectedAnswer,
+  //         correctAnswer: item.correctAnswer,
+  //         explanation: item.review,
+  //         correct: item.isCorrect,
+  //       }))}
+  //       skillProgress={resultData.skillProgress}
+  //       onRetry={() => {
+  //         setCurrentIndex(0)
+  //         setAnswers([])
+  //         setShowResult(false)
+  //         setResultData(null)
+  //         setError("")
+  //       }}
+  //       onBack={onBack}
+  //     />
+  //   )
+  // }
 
-    return (
-      <Box sx={{ pt: 0, px: 0, pb: 4 }}>
+  return (
+    <Box sx={{ pt: 0, px: 0, pb: 4 }}>
 
-        {!currentQuestion ? (
-          <p>No quiz found for this lesson.</p>
-        ) : (
-          <>
-            <Quiz
-              key={currentIndex}
-              question={currentQuestion}
-              questionNumber={currentIndex + 1}
-              totalQuestions={quizItems.length}
-              onSubmit={handleSubmit}
-            />
+      {!currentQuestion ? (
+        <p>No quiz found for this lesson.</p>
+      ) : (
+        <>
+          <Quiz
+            key={currentIndex}
+            question={currentQuestion}
+            questionNumber={currentIndex + 1}
+            totalQuestions={quizItems.length}
+            onSubmit={handleSubmit}
+            isLastQuestion={isLastQuestion}
+            onBack={() => setOpenDialog(true)}
+          />
 
-            {isLastQuestion && (
-              <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                  variant="contained"
-                  onClick={handleCheckResult}
-                  disabled={answers.length < quizItems.length}
-                >
-                  Check the Result
-                </Button>
-              </Box>
-            )}
-            
-            {error && (
-              <Typography sx={{ mt: 2, color: "var(--Color-Error-Main)" }}>
-                {error}
-              </Typography>
-            )}
-          </>
-        )}
+          {isLastQuestion && answers.length === quizItems.length && (
+            <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
+              <Button
+                variant="contained"
+                onClick={handleCheckResult}
+              >
+                Check the Result
+              </Button>
+            </Box>
+          )}
 
-        <Box sx={{ mt: 3 }}>
-          <Button variant="text" onClick={() => setOpenDialog(true)}>
-            Back to Lecture
-          </Button>
-        </Box>
-        <DialogConfirm
-          open={openDialog}
-          onClose={() => setOpenDialog(false)}
-          onConfirm={() => {
-            setOpenDialog(false)
-            onBack()
-          }}
-        />
-      </Box>
-    )
-  }
+          {error && (
+            <Typography sx={{ mt: 2, color: "var(--Color-Error-Main)" }}>
+              {error}
+            </Typography>
+          )}
+        </>
+      )}
+
+
+      <DialogConfirm
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        onConfirm={() => {
+          setOpenDialog(false)
+          onBack()
+        }}
+      />
+    </Box>
+  )
+}
