@@ -5,7 +5,6 @@ import {
   Typography,
   Radio,
   RadioGroup,
-  FormControlLabel,
   Button
 } from "@mui/material"
 
@@ -17,7 +16,6 @@ const Container = styled(Box)(() => ({
   padding: "0 48px 48px 48px",
   width: "100%",
   boxSizing: "border-box",
-  overflowX: "hidden",
 }))
 
 const SectionTitle = styled(Typography)(() => ({
@@ -59,7 +57,6 @@ const OptionWrapper = styled(Box, {
     prop !== "correct" &&
     prop !== "incorrect"
 })(({ selected, correct, incorrect }) => {
-
   let border = "2px solid var(--color-outline)"
   let background = "transparent"
   let color = "inherit"
@@ -87,7 +84,8 @@ const OptionWrapper = styled(Box, {
     display: "flex",
     alignItems: "center",
     gap: "16px",
-    transition: "all 0.2s ease"
+    transition: "all 0.2s ease",
+    boxSizing: "border-box",
   }
 })
 
@@ -102,7 +100,8 @@ const ScenarioWrapper = styled(Box)(() => ({
   display: "flex",
   padding: "32px 56px",
   flexDirection: "column",
-  gap: "24px"
+  gap: "24px",
+  boxSizing: "border-box",
 }))
 
 /* =========================
@@ -113,30 +112,34 @@ export default function Quiz({
   question,
   questionNumber,
   totalQuestions,
-  onSubmit
+  onSubmit,
+  isLastQuestion,
+  onBack
 }) {
-
   const [selected, setSelected] = useState("")
   const [showResult, setShowResult] = useState(false)
 
   if (!question) return null
 
   const handleSubmit = () => {
-
     if (!showResult) {
       setShowResult(true)
+
+      if (isLastQuestion && onSubmit) {
+        onSubmit(selected)
+      }
+
       return
     }
 
     if (onSubmit) onSubmit(selected)
-
   }
+
+  const shouldHideActionButton = showResult && isLastQuestion
 
   return (
     <Container>
-
       <ScenarioWrapper>
-
         <SectionTitle>Scenario</SectionTitle>
         <BodyText>{question.scenario}</BodyText>
 
@@ -147,13 +150,11 @@ export default function Quiz({
         <Typography sx={{ fontSize: "var(--FontSize-Body1)" }}>
           {question.question}
         </Typography>
-
       </ScenarioWrapper>
 
       <QuestionTitle>Select Your Answer</QuestionTitle>
 
       <AnswersContainer>
-
         <RadioGroup
           value={selected}
           onChange={(e) => {
@@ -166,9 +167,7 @@ export default function Quiz({
             gap: "24px"
           }}
         >
-
-          {(question.option || []).map((option, index) => {
-
+          {(question.option || []).map((option) => {
             const isSelected = selected === option
             const isCorrect = option === question.answer
 
@@ -176,16 +175,18 @@ export default function Quiz({
             const incorrect = showResult && isSelected && !isCorrect
 
             return (
-
               <OptionWrapper
                 key={option}
                 selected={isSelected}
                 correct={correct}
                 incorrect={incorrect}
+                onClick={() => {
+                  if (!showResult) setSelected(option)
+                }}
+                sx={{
+                  cursor: showResult ? "default" : "pointer"
+                }}
               >
-
-                {/* ICON LEFT */}
-
                 {showResult && correct && (
                   <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
                     ✓
@@ -197,8 +198,6 @@ export default function Quiz({
                     ✕
                   </Typography>
                 )}
-
-                {/* RADIO ONLY BEFORE RESULT */}
 
                 {!showResult && (
                   <Radio
@@ -213,8 +212,6 @@ export default function Quiz({
                   />
                 )}
 
-                {/* TEXT */}
-
                 <Typography
                   sx={{
                     fontSize: "var(--FontSize-Body1)",
@@ -223,14 +220,10 @@ export default function Quiz({
                 >
                   {option}
                 </Typography>
-
               </OptionWrapper>
-
             )
           })}
-
         </RadioGroup>
-
       </AnswersContainer>
 
       {showResult && (
@@ -239,17 +232,35 @@ export default function Quiz({
         </Typography>
       )}
 
-      <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "48px" }}>
-        <SubmitButton
-          variant="contained"
-          disabled={!selected && !showResult}
-          onClick={handleSubmit}
-          sx={{ minWidth: 180 }}
+      {!shouldHideActionButton && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "48px",
+            px: "56px",
+            boxSizing: "border-box",
+          }}
         >
-          {showResult ? "Next Question" : "Send Answer"}
-        </SubmitButton>
-      </Box>
+          <Button
+            variant="outlined"
+            onClick={onBack}
+            sx={{ minWidth: 180 }}
+          >
+            Return to Lecture
+          </Button>
 
+          <SubmitButton
+            variant="contained"
+            disabled={!selected}
+            onClick={handleSubmit}
+            sx={{ minWidth: 180 }}
+          >
+            {showResult ? "Next Question" : "Submit Answer"}
+          </SubmitButton>
+        </Box>
+      )}
     </Container>
   )
 }
