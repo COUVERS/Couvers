@@ -87,26 +87,26 @@ export default function ChangePassword({ onCancel }) {
         setSubmitting(true)
 
         try {
-    const token = localStorage.getItem("token")
-    const res = await fetch("http://localhost:5050/auth/change-password", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            currentPassword,
-            newPassword,
-        }),
-    })
-        const data = await res.json()
-        if (!res.ok) {
-        if (data.message === "Current password is incorrect") {
-            setCurrentPasswordError("The current password you entered is incorrect.")
-            return
+            const token = localStorage.getItem("token")
+            const res = await fetch("http://localhost:5050/auth/change-password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    currentPassword,
+                    newPassword,
+                }),
+            })
+            const data = await res.json()
+            if (!res.ok) {
+            if (data.message === "Current password is incorrect") {
+                setCurrentPasswordError("The current password you entered is incorrect.")
+                return
+            }
+            throw new Error(data.message || "Failed to update password.")
         }
-        throw new Error(data.message || "Failed to update password.")
-    }
 
         await new Promise((resolve) => setTimeout(resolve, 800))
 
