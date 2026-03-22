@@ -86,7 +86,7 @@ app.post("/auth/signup", async (req, res) => {
       return res.status(400).json({ message: "Email and password are required" });
     }
 
-   const allowedDomains = ["@codyacademy.edu", "@tete.edu"];
+    const allowedDomains = ["@codyacademy.edu", "@tete.edu"];
     const isAllowedDomain = allowedDomains.some((domain) =>
       normalizedEmail.endsWith(domain)
     );
@@ -376,7 +376,7 @@ app.get("/api/courses/:id/full", authMiddleware, async (req, res) => {
     const course = await Course.findById(id);
     if (!course) return res.status(404).json({ error: "Course not found" });
 
-    const lessons = await Lesson.find({courseId: new mongoose.Types.ObjectId(id),}).sort({ order: 1, createdAt: 1 });
+    const lessons = await Lesson.find({ courseId: new mongoose.Types.ObjectId(id), }).sort({ order: 1, createdAt: 1 });
     const lessonIds = lessons.map((lesson) => lesson._id);
     const quizzes = await Quiz.find({ lessonId: { $in: lessonIds } });
 

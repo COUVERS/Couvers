@@ -109,8 +109,8 @@ export default function CertificateCard({ onTakeCourse }) {
                     {certificates.map((item) => (
                         <CertificateItem
                             key={item.certificateId}
-                            title={item.title}
-                            iconKey={item.iconKey}
+                            title={item.title || item.courseTitle || item.course?.title || "Untitled Course"}
+                            iconKey={item.iconKey || item.courseIconKey || item.course?.iconKey}
                         />
                     ))}
                 </Box>
