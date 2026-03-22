@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
 import { useTheme } from "@mui/material/styles"
+import Box from "@mui/material/Box"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
@@ -133,35 +134,57 @@ export default function App() {
   }
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <Navigation
-        page={page}
-        setPage={(nextPage) => {
-          if (nextPage === "courses") {
-            openCoursesOverview()
-            return
-          }
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        width: "100%",
+        overflowX: "hidden",
+      }}
+    >
+      {!isMobile && (
+        <Box
+          sx={{
+            flexShrink: 0,
+          }}
+        >
+          <Navigation
+            page={page}
+            setPage={(nextPage) => {
+              if (nextPage === "courses") {
+                openCoursesOverview()
+                return
+              }
 
-          if (nextPage === "home") {
-            navigate("/")
-            return
-          }
+              if (nextPage === "home") {
+                navigate("/")
+                return
+              }
 
-          if (nextPage === "account") {
-            navigate("/account")
-          }
-        }}
-        forceCollapsed={page === "courses" || isMedium}
-        onSignOut={handleSignOut}
-      />
-
-      <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
-        {page === "home" && (
-          <DashboardHeader
-            title={dashboardHeader?.title || (authUser ? `Hello ${authUser.username}` : "Hello")}
-            description={dashboardHeader?.description || ""}
+              if (nextPage === "account") {
+                navigate("/account")
+              }
+            }}
+            forceCollapsed={page === "courses" || isMedium}
+            onSignOut={handleSignOut}
           />
-        )}
+        </Box>
+      )}
+
+
+      <Box
+        component="main"
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          p: page === "courses" ? 0 : 2,
+        }}
+      >        {page === "home" && (
+        <DashboardHeader
+          title={dashboardHeader?.title || (authUser ? `Hello ${authUser.username}` : "Hello")}
+          description={dashboardHeader?.description || ""}
+        />
+      )}
 
         <Routes>
           <Route
@@ -236,8 +259,7 @@ export default function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </main>
-
-    </div>
+      </Box>
+    </Box>
   )
 }
