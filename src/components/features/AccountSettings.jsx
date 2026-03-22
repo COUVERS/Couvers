@@ -134,104 +134,108 @@ export default function AccountSettings({
             </Box>
 
              {/* Security */}
-            <Box
-                sx={{
-                    display: "flex",
-                    flex: "1 1 420px",
-                    minWidth: "280px",
-                    maxWidth: "594px",
-                    height: "360px",
-                    padding: "40px 32px",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    gap: 2,
-                    border: "1px solid #2E2A5F",
-                    backgroundColor: "#FFF",
-                    boxSizing: "border-box",
-                }}
+        <Box
+        sx={{
+            display: "flex",
+            flex: "1 1 420px",
+            minWidth: "280px",
+            maxWidth: "594px",
+            padding: "40px",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: "32px",
+            alignSelf: "stretch",
+            border: "1px solid var(--Brand-Indigo-900, #2E2A5F)",
+            backgroundColor: "var(--Color-Background-Paper, #FFF)",
+            boxSizing: "border-box",
+        }}
+        >
+        <Typography
+            sx={{
+            alignSelf: "stretch",
+            color: "#0F172A",
+            fontFamily: "IBM Plex Sans",
+            fontSize: "32px",
+            fontStyle: "normal",
+            fontWeight: 600,
+            lineHeight: "normal",
+            letterSpacing: "-0.2px",
+            m: 0,
+            }}
+        >
+            Security
+        </Typography>
+
+        <Box
+            sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: "20px",
+            alignSelf: "stretch",
+            }}
+        >
+            <Typography
+            sx={{
+                alignSelf: "stretch",
+                color: "#0F172A",
+                fontFamily: "IBM Plex Sans",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: 600,
+                lineHeight: "normal",
+                m: 0,
+            }}
             >
-                <Typography
-                    sx={{
-                        alignSelf: "stretch",
-                        color: "#0F172A",
-                        fontFamily: "IBM Plex Sans",
-                        fontSize: "32px",
-                        fontStyle: "normal",
-                        fontWeight: 600,
-                        lineHeight: "normal",
-                        letterSpacing: "-0.2px",
-                    }}
-                >
-                    Security
-                </Typography>
+            Change Password
+            </Typography>
 
-                <Typography
-                    sx={{
-                        alignSelf: "stretch",
-                        color: "#0F172A",
-                        fontFamily: "IBM Plex Sans",
-                        fontSize: "20px",
-                        fontStyle: "normal",
-                        fontWeight: 600,
-                        lineHeight: "normal",
-                    }}
-                    >
-                    Change Password
-                </Typography>
+            <Typography
+            sx={{
+                alignSelf: "stretch",
+                color: "var(--Color-Text-Primary, #0F172A)",
+                fontFamily: "IBM Plex Sans",
+                fontSize: "16px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "24px",
+                letterSpacing: "0",
+                m: 0,
+            }}
+            >
+            For your security, we recommend changing your password periodically.
+            </Typography>
 
-                <Typography
-                    sx={{
-                        alignSelf: "stretch",
-                        color: "var(--Color-Text-Primary, #0F172A)",
-                        fontFamily: "IBM Plex Sans",
-                        fontSize: "var(--FontSize-Body1, 16px)",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                        lineHeight: "24px",
-                        letterSpacing: "var(--LetterSpace-Body1, 0)",
-                    }}
-                >
-                    For your security, we recommend changing your password
-                    periodically.
-                </Typography>
-
-                <Button
-                    variant="contained"
-                    onClick={onChangePassword}
-                    sx={{
-                        display: "flex",
-                        width: "240px",
-                        height: "48px",
-                        padding: "12px 40px",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: "4px",
-                        background: "#6B63FF",
-                        boxShadow:
-                            "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
-                        textTransform: "none",
-                        mt: "8px",
-                        "&:hover": {
-                            backgroundColor: "#5E57F5",
-                        },
-                    }}
-                >
-                    <Typography
-                        sx={{
-                            color: "#FFF",
-                            fontFamily: "IBM Plex Sans",
-                            fontSize: "15px",
-                            fontStyle: "normal",
-                            fontWeight: 500,
-                            lineHeight: "normal",
-                            letterSpacing: "0.2px",
-                        }}
-                    >
-                        Change Password
-                    </Typography>
-                </Button>
-            </Box>
+            <Button
+            variant="contained"
+            onClick={onChangePassword}
+            sx={{
+                display: "flex",
+                width: "190px",
+                height: "48px",
+                padding: "12px 24px",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "4px",
+                background: "#6B63FF",
+                boxShadow:
+                "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                textTransform: "none",
+                fontFamily: "IBM Plex Sans",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "normal",
+                letterSpacing: "0.2px",
+                "&:hover": {
+                backgroundColor: "#5E57F5",
+                },
+            }}
+            >
+            Change Password
+            </Button>
         </Box>
+        </Box>
+            </Box>
     )
 }

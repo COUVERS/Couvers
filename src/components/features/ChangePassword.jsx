@@ -352,6 +352,7 @@ export default function ChangePassword({ onCancel }) {
                             alignItems: "center",
                             gap: "16px",
                             alignSelf: "stretch",
+                            justifyContent: "space-between",
                         }}
                     >
                         <Button
