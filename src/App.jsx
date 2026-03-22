@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
 import ForgotPassword from "./pages/ForgotPassword"
+import ForgotPasswordSent from "./pages/ForgotPasswordSent"
 import PasswordResetSent from "./pages/PasswordResetSent"
 import ResetPassword from "./pages/ResetPassword"
 import SignOutDialog from "./components/features/auth/SignOutDialog"
@@ -132,6 +133,7 @@ const handleConfirmSignOut = () => {
             element={<SignupForm onGoLogin={() => navigate("/login")} />}
           />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/forgot-password/sent" element={<ForgotPasswordSent />} />
           <Route path="/forgot-password/sent" element={<PasswordResetSent />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
