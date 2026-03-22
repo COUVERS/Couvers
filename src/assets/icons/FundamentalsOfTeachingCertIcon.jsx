@@ -1,4 +1,4 @@
-const FundamentalsOfTeachingCertIcon = ({ size = 48, color = "#2E2A5F" }) => (
+const FundamentalsOfTeachingCertIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="86" height="89" viewBox="0 0 86 89" fill="none">
         <path d="M74.1882 15.6536H0V89H74.1882V15.6536Z" fill="#A3B2FB" />
         <path d="M35.7031 39.4353H38.4546L37.0795 35.4876L35.7031 39.4353Z" fill="#2E2A5F" />

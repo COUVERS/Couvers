@@ -1,4 +1,4 @@
-const EmpathyAndClassroomCertIcon = ({ size = 48, color = "#2E2A5F" }) => (
+const EmpathyAndClassroomCertIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width="85"
