@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
+import { useTheme } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
 import ForgotPassword from "./pages/ForgotPassword"
@@ -14,6 +16,11 @@ import { API_BASE_URL } from "./config"
 import DashboardHeader from "./components/reusable-ui/DashboardHeader"
 
 export default function App() {
+  const theme = useTheme()
+  const isMobile = useMediaQuery("(max-width:899px)")
+  const isMedium = useMediaQuery("(min-width:900px) and (max-width:1095px)")
+  const isDesktop = useMediaQuery("(min-width:1096px)")
+
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
   const [continueCourseId, setContinueCourseId] = useState(null)
