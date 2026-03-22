@@ -151,7 +151,7 @@ export default function App() {
             navigate("/account")
           }
         }}
-        forceCollapsed={page === "courses"}
+        forceCollapsed={page === "courses" || isMedium}
         onSignOut={handleSignOut}
       />
 
