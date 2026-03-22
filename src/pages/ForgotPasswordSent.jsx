@@ -48,7 +48,7 @@ export default function ForgotPasswordSent() {
         <Typography
             sx={{
                 alignSelf: "stretch",
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary, #0F172A)",
                 textAlign: "center",
                 fontFamily: "IBM Plex Sans",
                 fontSize: "56px",
@@ -63,7 +63,7 @@ export default function ForgotPasswordSent() {
         <Typography
             sx={{
                 alignSelf: "stretch",
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary, #0F172A)",
                 textAlign: "center",
                 fontFamily: "IBM Plex Sans",
                 fontSize: "16px",
