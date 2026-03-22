@@ -11,198 +11,226 @@ export default function AccountSettings({
         <Box
             sx={{
                 display: "flex",
-                padding: "0 56px",
+                width: "100%",
+                minWidth: 0,
+                padding: { xs: "0 16px", md: "0 56px" },
                 alignItems: "flex-start",
                 gap: "40px",
+                flexWrap: "wrap",
+                boxSizing: "border-box",
             }}
         >
             {/* Profile Details */}
             <Box
                 sx={{
                     display: "flex",
-                    width: "408px",
+                    flex: "1 1 360px",
+                    minWidth: "280px",
+                    maxWidth: "408px",
                     height: "360px",
                     padding: "40px 32px",
                     flexDirection: "column",
                     alignItems: "flex-start",
-                    gap: "32px",
-                    border: "1px solid #6C6C6C",
+                    gap: 4,
+                    border: "1px solid #2E2A5F",
                     backgroundColor: "#FFF",
+                    boxSizing: "border-box",
                 }}
-            >
+                >
+                {/* Title */}
                 <Typography
                     sx={{
-                        fontFamily: "IBM Plex Sans",
-                        fontSize: "24px",
-                        fontWeight: 700,
-                        lineHeight: "normal",
-                        color: "#000",
+                    color: "#0F172A",
+                    fontFamily: "IBM Plex Sans",
+                    fontSize: "32px",
+                    fontWeight: 600,
+                    letterSpacing: "-0.2px",
                     }}
                 >
                     Profile Details
                 </Typography>
 
+                {/* Info Section */}
                 <Box
                     sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                        gap: "24px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: 3, // 24px
+                    width: "100%",
                     }}
                 >
-                    <Box>
-                        <Typography
-                            sx={{
-                                fontFamily: "IBM Plex Sans",
-                                fontSize: "18px",
-                                fontWeight: 700,
-                                lineHeight: "normal",
-                                color: "#000",
-                                mb: "12px",
-                            }}
-                        >
-                            Name:
-                        </Typography>
-
-                        <Typography
-                            sx={{
-                                fontFamily: "IBM Plex Sans",
-                                fontSize: "18px",
-                                fontWeight: 400,
-                                lineHeight: "normal",
-                                color: "var(--Color-Text-Primary)",
-                            }}
-                        >
-                            {name}
-                        </Typography>
-                    </Box>
-
-                    <Box>
-                        <Typography
-                            sx={{
-                                fontFamily: "IBM Plex Sans",
-                                fontSize: "18px",
-                                fontWeight: 700,
-                                lineHeight: "normal",
-                                color: "#000",
-                                mb: "12px",
-                            }}
-                        >
-                            Email:
-                        </Typography>
-
-                        <Typography
-                            sx={{
-                                fontFamily: "IBM Plex Sans",
-                                fontSize: "18px",
-                                fontWeight: 400,
-                                lineHeight: "normal",
-                                color: "var(--Color-Text-Primary)",
-                            }}
-                        >
-                            {email}
-                        </Typography>
-                    </Box>
-                </Box>
-
-                <Typography
-                    sx={{
+                    {/* Name */}
+                    <Box sx={{ width: "100%" }}>
+                    <Typography
+                        sx={{
+                        alignSelf: "stretch",
+                        color: "#0F172A",
                         fontFamily: "IBM Plex Sans",
-                        fontSize: "14px",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                        mb: "8px",
+                        }}
+                    >
+                        Name:
+                    </Typography>
+
+                    <Typography
+                        sx={{
+                        alignSelf: "stretch",
+                        color: "#0F172A",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: "16px",
                         fontWeight: 400,
-                        lineHeight: "20px",
-                        color: "#7A7A7A",
-                        maxWidth: "240px",
-                    }}
-                >
-                    Please contact an administrator to update your profile
-                    information.
-                </Typography>
+                        lineHeight: "24px",
+                        }}
+                    >
+                        {name}
+                    </Typography>
+                    </Box>
+
+                    {/* Email */}
+                    <Box sx={{ width: "100%" }}>
+                    <Typography
+                        sx={{
+                        alignSelf: "stretch",
+                        color: "#0F172A",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                        mb: "8px",
+                        }}
+                    >
+                        Email:
+                    </Typography>
+
+                    <Typography
+                        sx={{
+                        alignSelf: "stretch",
+                        color: "#0F172A",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: "16px",
+                        fontWeight: 400,
+                        lineHeight: "24px",
+                        }}
+                    >
+                        {email}
+                    </Typography>
+                </Box>
             </Box>
 
-            {/* Security */}
+            {/* Footer text */}
+            <Typography
+                sx={{
+                alignSelf: "stretch",
+                color: "#64748B",
+                fontFamily: "IBM Plex Sans",
+                fontSize: "12px",
+                fontWeight: 500,
+                }}
+            >
+                Please contact an administrator to update your profile information.
+            </Typography>
+            </Box>
+
+             {/* Security */}
             <Box
                 sx={{
                     display: "flex",
-                    width: "594px",
+                    flex: "1 1 420px",
+                    minWidth: "280px",
+                    maxWidth: "594px",
                     height: "360px",
                     padding: "40px 32px",
                     flexDirection: "column",
                     alignItems: "flex-start",
-                    gap: "10px",
-                    border: "1px solid #6C6C6C",
+                    gap: 2,
+                    border: "1px solid #2E2A5F",
                     backgroundColor: "#FFF",
+                    boxSizing: "border-box",
                 }}
             >
                 <Typography
                     sx={{
+                        alignSelf: "stretch",
+                        color: "#0F172A",
                         fontFamily: "IBM Plex Sans",
-                        fontSize: "24px",
-                        fontWeight: 700,
+                        fontSize: "32px",
+                        fontStyle: "normal",
+                        fontWeight: 600,
                         lineHeight: "normal",
-                        color: "#000",
+                        letterSpacing: "-0.2px",
                     }}
                 >
                     Security
                 </Typography>
 
-                <Box
+                <Typography
+                    sx={{
+                        alignSelf: "stretch",
+                        color: "#0F172A",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: "20px",
+                        fontStyle: "normal",
+                        fontWeight: 600,
+                        lineHeight: "normal",
+                    }}
+                    >
+                    Change Password
+                </Typography>
+
+                <Typography
+                    sx={{
+                        alignSelf: "stretch",
+                        color: "var(--Color-Text-Primary, #0F172A)",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: "var(--FontSize-Body1, 16px)",
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        lineHeight: "24px",
+                        letterSpacing: "var(--LetterSpace-Body1, 0)",
+                    }}
+                >
+                    For your security, we recommend changing your password
+                    periodically.
+                </Typography>
+
+                <Button
+                    variant="contained"
+                    onClick={onChangePassword}
                     sx={{
                         display: "flex",
+                        width: "240px",
+                        height: "48px",
+                        padding: "12px 40px",
                         flexDirection: "column",
-                        alignItems: "flex-start",
-                        gap: "20px",
-                        mt: "20px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: "4px",
+                        background: "#6B63FF",
+                        boxShadow:
+                            "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                        textTransform: "none",
+                        mt: "8px",
+                        "&:hover": {
+                            backgroundColor: "#5E57F5",
+                        },
                     }}
                 >
                     <Typography
                         sx={{
+                            color: "#FFF",
                             fontFamily: "IBM Plex Sans",
-                            fontSize: "18px",
-                            fontWeight: 700,
-                            lineHeight: "normal",
-                            color: "#000",
-                        }}
-                    >
-                        Change Password
-                    </Typography>
-
-                    <Typography
-                        sx={{
-                            fontFamily: "IBM Plex Sans",
-                            fontSize: "18px",
-                            fontWeight: 400,
-                            lineHeight: "28px",
-                            color: "var(--Color-Text-Primary)",
-                            maxWidth: "420px",
-                        }}
-                    >
-                        For your security, we recommend changing your password
-                        periodically.
-                    </Typography>
-
-                    <Button
-                        variant="contained"
-                        onClick={onChangePassword}
-                        sx={{
-                            mt: "8px",
-                            width: "228px",
-                            height: "48px",
-                            borderRadius: "4px",
-                            backgroundColor: "#6366F1",
-                            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.12)",
-                            textTransform: "none",
-                            fontFamily: "IBM Plex Sans",
-                            fontSize: "18px",
+                            fontSize: "15px",
+                            fontStyle: "normal",
                             fontWeight: 500,
-                            "&:hover": {
-                                backgroundColor: "#5658E6",
-                            },
+                            lineHeight: "normal",
+                            letterSpacing: "0.2px",
                         }}
                     >
                         Change Password
-                    </Button>
-                </Box>
+                    </Typography>
+                </Button>
             </Box>
         </Box>
     )

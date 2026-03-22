@@ -5,6 +5,7 @@ import SignupForm from "./pages/SignupForm"
 import ForgotPassword from "./pages/ForgotPassword"
 import PasswordResetSent from "./pages/PasswordResetSent"
 import ResetPassword from "./pages/ResetPassword"
+import SignOutDialog from "./components/features/auth/SignOutDialog"
 import Navigation from "./components/layout/Navigation"
 import CoursePage from "./pages/CoursePage"
 import AccountSettings from "./components/features/AccountSettings"
@@ -16,6 +17,7 @@ import DashboardHeader from "./components/reusable-ui/DashboardHeader"
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
+  const [signOutOpen, setSignOutOpen] = useState(false)
   const [continueCourseId, setContinueCourseId] = useState(null)
   const [continueLessonId, setContinueLessonId] = useState(null)
   const [courseResetSignal, setCourseResetSignal] = useState(0)
@@ -34,15 +36,28 @@ export default function App() {
       ? "changePassword"
       : "settings"
 
-  const handleSignOut = () => {
-    localStorage.removeItem("token")
-    setIsLoggedIn(false)
-    setAuthUser(null)
-    setDashboardHeader(null)
-    setContinueCourseId(null)
-    setContinueLessonId(null)
-    navigate("/login")
-  }
+  const handleOpenSignOutDialog = () => {
+  setSignOutOpen(true)
+}
+
+const handleCloseSignOutDialog = () => {
+  setSignOutOpen(false)
+}
+
+const handleConfirmSignOut = () => {
+  setSignOutOpen(false)
+
+  localStorage.removeItem("token")
+  localStorage.removeItem("user")
+
+  setIsLoggedIn(false)
+  setAuthUser(null)
+  setDashboardHeader(null)
+  setContinueCourseId(null)
+  setContinueLessonId(null)
+
+  navigate("/login")
+}
 
   const openCoursesOverview = () => {
     setContinueCourseId(null)
@@ -145,7 +160,7 @@ export default function App() {
           }
         }}
         forceCollapsed={page === "courses"}
-        onSignOut={handleSignOut}
+        onSignOut={handleOpenSignOutDialog}
       />
 
       <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
@@ -230,6 +245,12 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+
+      <SignOutDialog
+        open={signOutOpen}
+        onClose={handleCloseSignOutDialog}
+        onConfirm={handleConfirmSignOut}
+      />
 
     </div>
   )

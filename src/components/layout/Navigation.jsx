@@ -22,10 +22,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 export default function Navigation({ page, setPage, forceCollapsed = false, onSignOut }) {
     const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
-        if (forceCollapsed) {
-            setIsExpanded(false)
-        }
-    }, [forceCollapsed])
+        setIsExpanded(!forceCollapsed)
+}, [forceCollapsed])
 
     const toggleDrawer = () => {
         setIsExpanded((prev) => !prev)
