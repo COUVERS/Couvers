@@ -339,6 +339,66 @@ app.post("/auth/reset-password", async (req, res) => {
   }
 })
 
+/**
+ * API: Change Password
+ * POST /auth/change-password
+ *
+ * Changes the authenticated user's password.
+ */
+app.post("/auth/change-password", authMiddleware, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        message: "Current password and new password are required",
+      })
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        message: "Password must be at least 6 characters",
+      })
+    }
+
+    const user = await User.findById(req.user.userId)
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" })
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.passwordHash)
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Current password is incorrect",
+      })
+    }
+
+    const isSamePassword = await bcrypt.compare(newPassword, user.passwordHash)
+
+    if (isSamePassword) {
+      return res.status(400).json({
+        message: "You cannot reuse your current password",
+      })
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10)
+    user.passwordHash = passwordHash
+
+    await user.save()
+
+    return res.status(200).json({
+      message: "Password updated successfully",
+    })
+  } catch (err) {
+    console.error("Change password error:", err)
+    return res.status(500).json({
+      message: "Server error during password change",
+    })
+  }
+})
+
 // =====================================================
 // COURSE ROUTES
 // =====================================================
