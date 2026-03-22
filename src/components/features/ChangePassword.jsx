@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
@@ -34,12 +34,12 @@ export default function ChangePassword({ onCancel }) {
 
     const isFormValid = useMemo(() => {
         return (
-        currentPassword.trim() &&
-        newPassword.trim() &&
-        confirmPassword.trim() &&
-        !currentPasswordError &&
-        !newPasswordError &&
-        !confirmPasswordError
+            currentPassword.trim() &&
+            newPassword.trim() &&
+            confirmPassword.trim() &&
+            !currentPasswordError &&
+            !newPasswordError &&
+            !confirmPasswordError
         )
     }, [
         currentPassword,
@@ -54,31 +54,31 @@ export default function ChangePassword({ onCancel }) {
         let valid = true
         resetErrors()
 
-    if (!currentPassword.trim()) {
-        setCurrentPasswordError("Current password is required.")
-        valid = false
+        if (!currentPassword.trim()) {
+            setCurrentPasswordError("Current password is required.")
+            valid = false
         }
 
-    if (!newPassword.trim()) {
-        setNewPasswordError("New password is required.")
-        valid = false
-    } else if (newPassword === currentPassword) {
-        setNewPasswordError("You cannot reuse your current password.")
-        valid = false
-    } else if (newPassword.length < 6) {
-        setNewPasswordError("Password must be at least 6 characters.")
-        valid = false
-    }
+        if (!newPassword.trim()) {
+            setNewPasswordError("New password is required.")
+            valid = false
+        } else if (newPassword === currentPassword) {
+            setNewPasswordError("You cannot reuse your current password.")
+            valid = false
+        } else if (newPassword.length < 6) {
+            setNewPasswordError("Password must be at least 6 characters.")
+            valid = false
+        }
 
-    if (!confirmPassword.trim()) {
-        setConfirmPasswordError("Please confirm your new password.")
-        valid = false
-    } else if (confirmPassword !== newPassword) {
-        setConfirmPasswordError("Passwords do not match.")
-        valid = false
-    }
+        if (!confirmPassword.trim()) {
+            setConfirmPasswordError("Please confirm your new password.")
+            valid = false
+        } else if (confirmPassword !== newPassword) {
+            setConfirmPasswordError("Passwords do not match.")
+            valid = false
+        }
 
-    return valid
+        return valid
     }
 
     const handleSubmit = async () => {
@@ -88,6 +88,7 @@ export default function ChangePassword({ onCancel }) {
 
         try {
             const token = localStorage.getItem("token")
+
             const res = await fetch("http://localhost:5050/auth/change-password", {
                 method: "POST",
                 headers: {
@@ -99,16 +100,22 @@ export default function ChangePassword({ onCancel }) {
                     newPassword,
                 }),
             })
-            const data = await res.json()
-            if (!res.ok) {
-            if (data.message === "Current password is incorrect") {
-                setCurrentPasswordError("The current password you entered is incorrect.")
-                return
-            }
-            throw new Error(data.message || "Failed to update password.")
-        }
 
-        await new Promise((resolve) => setTimeout(resolve, 800))
+            const data = await res.json()
+
+            if (!res.ok) {
+                if (data.message === "Current password is incorrect") {
+                    setCurrentPasswordError("The current password you entered is incorrect.")
+                    return
+                }
+
+                if (data.message === "You cannot reuse your current password") {
+                    setNewPasswordError("You cannot reuse your current password.")
+                    return
+                }
+
+                throw new Error(data.message || "Failed to update password.")
+            }
 
             setCurrentPassword("")
             setNewPassword("")
@@ -117,25 +124,20 @@ export default function ChangePassword({ onCancel }) {
             setSnackbarOpen(true)
         } catch (error) {
             setCurrentPasswordError(
-            error.message || "The current password you entered is incorrect."
+                error.message || "The current password you entered is incorrect."
             )
         } finally {
             setSubmitting(false)
         }
     }
 
-    const sharedTextFieldSx = {
-        width: "100%", "& .MuiInputLabel-root": {
-            fontFamily: "IBM Plex Sans",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "#74829C",
-        },
+    const inputSx = {
+        width: "100%",
         "& .MuiInputBase-root": {
             fontFamily: "IBM Plex Sans",
             fontSize: "16px",
-            fontWeight: 500,
-            color: "#1F2430",
+            fontWeight: 400,
+            color: "#0F172A",
         },
         "& .MuiInput-underline:before": {
             borderBottom: "2px solid #C7D2FE",
@@ -146,231 +148,297 @@ export default function ChangePassword({ onCancel }) {
         "& .MuiInput-underline:after": {
             borderBottom: "2px solid #6366F1",
         },
-        "& .MuiFormHelperText-root": {
-            marginLeft: 0,
-            fontFamily: "IBM Plex Sans",
-            fontSize: "12px",
-            lineHeight: "16px",
+        "& .MuiInput-underline.Mui-error:after": {
+            borderBottomColor: "#EF4444",
         },
     }
 
+    const fieldLabelSx = {
+        color: "#64748B",
+        fontFamily: "IBM Plex Sans",
+        fontSize: "12px",
+        fontStyle: "normal",
+        fontWeight: 500,
+        lineHeight: "normal",
+    }
+
+    const errorTextSx = {
+        display: "flex",
+        pt: "3px",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        alignSelf: "stretch",
+        color: "#EF4444",
+        fontFamily: "IBM Plex Sans",
+        fontSize: "12px",
+        fontStyle: "normal",
+        fontWeight: 400,
+        lineHeight: "normal",
+        letterSpacing: "0.1px",
+    }
+
+    const fieldWrapperSx = {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: "6px",
+        alignSelf: "stretch",
+        width: "100%",
+    }
+
     return (
-    <>
-        <Box
-            sx={{
-            display: "flex",
-            justifyContent: "center",
-            paddingTop: "120px",
-            }}
-        >
-        <Box
-            sx={{
-                display: "flex",
-                width: "387px",
-                padding: "40px 32px",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "48px",
-                borderRadius: "8px",
-                background: "#FFF",
-                boxShadow:
-                    "0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 3px 5px -1px rgba(0, 0, 0, 0.20)",
-            }}
-        >
+        <>
             <Box
                 sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                gap: "28px",
-            }}
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "120px",
+                }}
             >
-            <TextField
-                variant="standard"
-                fullWidth 
-                type={showCurrent ? "text" : "password"}
-                label="Current Password"
-                value={currentPassword}
-                onChange={(e) => {
-                setCurrentPassword(e.target.value)
-                if (currentPasswordError) setCurrentPasswordError("")
-                }}
-                error={!!currentPasswordError}
-                helperText={currentPasswordError}
-                sx={{
-                ...sharedTextFieldSx,
-                "& .MuiInputLabel-root.Mui-error": { color: "#EF4444" },
-                "& .MuiInput-underline.Mui-error:after": {
-                    borderBottomColor: "#EF4444",
-                },
-                "& .MuiFormHelperText-root.Mui-error": { color: "#EF4444" },
-                }}
-                InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                    <IconButton onClick={() => setShowCurrent((prev) => !prev)} edge="end">
-                        {showCurrent ? (
-                        <VisibilityOff size={20} color="#7A7A7A" />
-                        ) : (
-                        <Visibility size={20} color="#7A7A7A" />
-                        )}
-                    </IconButton>
-                    </InputAdornment>
-                ),
-                }}
-            />
+                <Box
+                    sx={{
+                        display: "flex",
+                        width: "387px",
+                        padding: "40px 32px",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "48px",
+                        borderRadius: "8px",
+                        background: "#FFF",
+                        boxShadow:
+                            "0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 3px 5px -1px rgba(0, 0, 0, 0.20)",
+                        boxSizing: "border-box",
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            gap: "24px",
+                            alignSelf: "stretch",
+                        }}
+                    >
+                        {/* Current Password */}
+                        <Box sx={fieldWrapperSx}>
+                            <Typography sx={fieldLabelSx}>
+                                Current Password
+                            </Typography>
 
-            <TextField
-                variant="standard"
-                fullWidth
-                type={showNew ? "text" : "password"}
-                label="New Password"
-                value={newPassword}
-                onChange={(e) => {
-                setNewPassword(e.target.value)
-                if (newPasswordError) setNewPasswordError("")
-                }}
-                error={!!newPasswordError}
-                helperText={newPasswordError}
-                sx={{
-                ...sharedTextFieldSx,
-                "& .MuiInputLabel-root.Mui-error": { color: "#EF4444" },
-                "& .MuiInput-underline.Mui-error:after": {
-                    borderBottomColor: "#EF4444",
-                },
-                "& .MuiFormHelperText-root.Mui-error": { color: "#EF4444" },
-                }}
-                InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                    <IconButton onClick={() => setShowNew((prev) => !prev)} edge="end">
-                        {showNew ? (
-                        <VisibilityOff size={20} color="#7A7A7A" />
-                        ) : (
-                        <Visibility size={20} color="#7A7A7A" />
-                        )}
-                    </IconButton>
-                    </InputAdornment>
-                ),
-                }}
-            />
+                            <TextField
+                                variant="standard"
+                                fullWidth
+                                type={showCurrent ? "text" : "password"}
+                                value={currentPassword}
+                                onChange={(e) => {
+                                    setCurrentPassword(e.target.value)
+                                    if (currentPasswordError) setCurrentPasswordError("")
+                                }}
+                                error={!!currentPasswordError}
+                                sx={inputSx}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowCurrent((prev) => !prev)}
+                                                edge="end"
+                                            >
+                                                {showCurrent ? (
+                                                    <VisibilityOff size={20} color="#7A7A7A" />
+                                                ) : (
+                                                    <Visibility size={20} color="#7A7A7A" />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
 
-            <TextField
-                variant="standard"
-                fullWidth
-                type={showConfirm ? "text" : "password"}
-                label="Confirm New Password"
-                value={confirmPassword}
-                onChange={(e) => {
-                setConfirmPassword(e.target.value)
-                if (confirmPasswordError) setConfirmPasswordError("")
-                }}
-                error={!!confirmPasswordError}
-                helperText={confirmPasswordError}
-                sx={{
-                ...sharedTextFieldSx,
-                "& .MuiInputLabel-root.Mui-error": { color: "#EF4444" },
-                "& .MuiInput-underline.Mui-error:after": {
-                    borderBottomColor: "#EF4444",
-                },
-                "& .MuiFormHelperText-root.Mui-error": { color: "#EF4444" },
-                }}
-                InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                    <IconButton onClick={() => setShowConfirm((prev) => !prev)} edge="end">
-                        {showConfirm ? (
-                        <VisibilityOff size={20} color="#7A7A7A" />
-                        ) : (
-                        <Visibility size={20} color="#7A7A7A" />
-                        )}
-                    </IconButton>
-                    </InputAdornment>
-                ),
-                }}
-            />
+                            {currentPasswordError && (
+                                <Box sx={errorTextSx}>
+                                    {currentPasswordError}
+                                </Box>
+                            )}
+                        </Box>
+
+                        {/* New Password */}
+                        <Box sx={fieldWrapperSx}>
+                            <Typography sx={fieldLabelSx}>
+                                New Password
+                            </Typography>
+
+                            <TextField
+                                variant="standard"
+                                fullWidth
+                                type={showNew ? "text" : "password"}
+                                value={newPassword}
+                                onChange={(e) => {
+                                    setNewPassword(e.target.value)
+                                    if (newPasswordError) setNewPasswordError("")
+                                }}
+                                error={!!newPasswordError}
+                                sx={inputSx}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowNew((prev) => !prev)}
+                                                edge="end"
+                                            >
+                                                {showNew ? (
+                                                    <VisibilityOff size={20} color="#7A7A7A" />
+                                                ) : (
+                                                    <Visibility size={20} color="#7A7A7A" />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+
+                            {newPasswordError && (
+                                <Box sx={errorTextSx}>
+                                    {newPasswordError}
+                                </Box>
+                            )}
+                        </Box>
+
+                        {/* Confirm New Password */}
+                        <Box sx={fieldWrapperSx}>
+                            <Typography sx={fieldLabelSx}>
+                                Confirm New Password
+                            </Typography>
+
+                            <TextField
+                                variant="standard"
+                                fullWidth
+                                type={showConfirm ? "text" : "password"}
+                                value={confirmPassword}
+                                onChange={(e) => {
+                                    setConfirmPassword(e.target.value)
+                                    if (confirmPasswordError) setConfirmPasswordError("")
+                                }}
+                                error={!!confirmPasswordError}
+                                sx={inputSx}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowConfirm((prev) => !prev)}
+                                                edge="end"
+                                            >
+                                                {showConfirm ? (
+                                                    <VisibilityOff size={20} color="#7A7A7A" />
+                                                ) : (
+                                                    <Visibility size={20} color="#7A7A7A" />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+
+                            {confirmPasswordError && (
+                                <Box sx={errorTextSx}>
+                                    {confirmPasswordError}
+                                </Box>
+                            )}
+                        </Box>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "16px",
+                            alignSelf: "stretch",
+                        }}
+                    >
+                        <Button
+                            onClick={onCancel}
+                            sx={{
+                                display: "flex",
+                                height: "48px",
+                                padding: "8px 11px",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flex: "1 0 0",
+                                borderRadius: "4px",
+                                textTransform: "none",
+                                color: "#6B63FF",
+                                fontFamily: "IBM Plex Sans",
+                                fontSize: "15px",
+                                fontStyle: "normal",
+                                fontWeight: 500,
+                                lineHeight: "normal",
+                                letterSpacing: "0.2px",
+                            }}
+                        >
+                            Cancel
+                        </Button>
+
+                        <Button
+                            variant="contained"
+                            disabled={!isFormValid || submitting}
+                            onClick={handleSubmit}
+                            sx={{
+                                display: "flex",
+                                height: "48px",
+                                padding: "8px 11px",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flex: "1 0 0",
+                                borderRadius: "4px",
+                                textTransform: "none",
+                                fontFamily: "IBM Plex Sans",
+                                fontSize: "15px",
+                                fontStyle: "normal",
+                                fontWeight: 500,
+                                lineHeight: "normal",
+                                letterSpacing: "0.2px",
+                                backgroundColor: "#6366F1",
+                                boxShadow:
+                                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                                color: "#FFF",
+                                "&.Mui-disabled": {
+                                    backgroundColor: "#E2E8F0",
+                                    color: "#94A3B8",
+                                    boxShadow: "none",
+                                },
+                                "&:hover": {
+                                    backgroundColor: "#5658E6",
+                                },
+                            }}
+                        >
+                            Change Password
+                        </Button>
+                    </Box>
+                </Box>
             </Box>
 
-            <Box
-                sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                gap: "16px",
-                mt: "4px",
-                }}
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
             >
-            <Button
-                onClick={onCancel}
-                sx={{
-                minWidth: "auto",
-                height: "48px",
-                px: "12px",
-                textTransform: "none",
-                fontFamily: "IBM Plex Sans",
-                fontSize: "18px",
-                fontWeight: 500,
-                lineHeight: "24px",
-                color: "#6366F1",
-                borderRadius: "4px",
-                }}
-            >
-                Cancel
-            </Button>
-
-            <Button
-                variant="contained"
-                disabled={!isFormValid || submitting}
-                onClick={handleSubmit}
-                sx={{
-                width: "176px",
-                height: "48px",
-                px: "32px",
-                py: 0,
-                borderRadius: "4px",
-                textTransform: "none",
-                fontFamily: "IBM Plex Sans",
-                fontSize: "18px",
-                fontWeight: 500,
-                backgroundColor: "#6366F1",
-                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.12)",
-                "&.Mui-disabled": {
-                    backgroundColor: "#E2E8F0",
-                    color: "#94A3B8",
-                },
-                "&:hover": {
-                    backgroundColor: "#5658E6",
-                },
-                }}
-            >
-                Change Password
-            </Button>
-            </Box>
-        </Box>
-        </Box>
-
-        <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        >
-        <Alert
-            onClose={() => setSnackbarOpen(false)}
-            severity="success"
-            variant="filled"
-            sx={{
-            minWidth: "360px",
-            fontFamily: "IBM Plex Sans",
-            fontSize: "16px",
-            fontWeight: 500,
-            alignItems: "center",
-            }}
-        >
-            Password updated successfully
-        </Alert>
-        </Snackbar>
-    </>
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity="success"
+                    variant="filled"
+                    sx={{
+                        minWidth: "360px",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: "16px",
+                        fontWeight: 500,
+                        alignItems: "center",
+                    }}
+                >
+                    Password updated successfully
+                </Alert>
+            </Snackbar>
+        </>
     )
 }
