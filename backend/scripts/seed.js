@@ -3832,7 +3832,6 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which instructional component is most critically missing in this lesson design?",
         option: [
-          "Insufficient assessment strategies to evaluate learning at the end of the lesson",
           "Structured reflection or closure that consolidates learning and reinforces key concepts",
           "Additional content delivery to ensure full coverage of the topic",
           "Summative assessment to evaluate final understanding",
