@@ -123,6 +123,7 @@ export default function AccountSettings({
             <Typography
                 sx={{
                 alignSelf: "stretch",
+                width: "100%",
                 color: "#64748B",
                 fontFamily: "IBM Plex Sans",
                 fontSize: "12px",

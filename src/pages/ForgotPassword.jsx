@@ -252,11 +252,6 @@ export default function ForgotPassword() {
                 letterSpacing: "0.2px",
                 whiteSpace: "nowrap",
 
-                fontFamily: "IBM Plex Sans",
-                fontSize: "15px",
-                fontWeight: 500,
-                letterSpacing: "0.2px",
-
                 backgroundColor: "#6B63FF",
                 color: "#FFF",
                 boxShadow:
