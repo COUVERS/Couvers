@@ -1,5 +1,5 @@
 import '../../styles/global.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import SidebarBase from '../reusable-ui/SideBarBase'
 import {
@@ -32,9 +32,19 @@ const CategoryIcon = styled(Box, { shouldForwardProp: (p) => p !== 'active' })((
     color: active ? 'var(--Color-Secondary)' : '#fff',
 }))
 
-export default function CourseNavigation({ courses = [], selectedCourseId, onSelectCourse }) {
+export default function CourseNavigation({
+    courses = [],
+    selectedCourseId,
+    onSelectCourse,
+    forceCollapsed = false,
+}) {
     const [open, setOpen] = useState(true)
-    // const [activeId, setActiveId] = useState(1)
+
+    useEffect(() => {
+        if (forceCollapsed) {
+            setOpen(false)
+        }
+    }, [forceCollapsed])
 
     return (
         <CourseDrawer open={open}>

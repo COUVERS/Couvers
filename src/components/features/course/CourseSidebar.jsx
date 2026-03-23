@@ -10,6 +10,7 @@ export default function CourseSidebar({
     onSelectCourse,
     onSelectLesson,
     onBack,
+    forceCollapsed = false,
 }) {
 
 
@@ -19,6 +20,7 @@ export default function CourseSidebar({
                 courses={courses}
                 selectedCourseId={selectedCourseId}
                 onSelectCourse={onSelectCourse}
+                forceCollapsed={forceCollapsed}
             />
         )
     }
@@ -29,6 +31,7 @@ export default function CourseSidebar({
             selectedLesson={selectedLesson}
             onSelectLesson={onSelectLesson}
             onBack={onBack}
+            forceCollapsed={forceCollapsed}
         />
     )
 }

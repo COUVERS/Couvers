@@ -12,6 +12,7 @@ export default function CourseContainer({
     routeCourseId,
     routeLessonId,
     routeViewMode,
+    forceCollapsed = false,
 }) {
     const navigate = useNavigate()
 
@@ -25,8 +26,8 @@ export default function CourseContainer({
     const [startedLesson, setStartedLesson] = useState(null)
 
     const [viewMode, setViewMode] = useState("lessonList")
-     const navMode =
-    viewMode === "lessonList" ? "course" :  "contents"
+    const navMode =
+        viewMode === "lessonList" ? "course" : "contents"
 
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -245,6 +246,7 @@ export default function CourseContainer({
                 onSelectCourse={goToCourseById}
                 onSelectLesson={goToLessonLecture}
                 onBack={goToCourseOverview}
+                forceCollapsed={forceCollapsed}
             />
 
             <CourseMainContent

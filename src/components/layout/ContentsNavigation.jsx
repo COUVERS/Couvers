@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { styled } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -25,8 +25,16 @@ export default function ContentsNavigation({
     selectedLesson,
     onSelectLesson,
     onBack,
+    forceCollapsed = false,
 }) {
     const [open, setOpen] = useState(true)
+
+    useEffect(() => {
+        if (forceCollapsed) {
+            setOpen(false)
+        }
+    }, [forceCollapsed])
+    
     const [selectedContentType, setSelectedContentType] = useState("lecture")
     return (
         <ContentsDrawer open={open}
