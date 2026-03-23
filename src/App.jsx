@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
-import MenuIcon from "@mui/icons-material/Menu"
+import MenuIcon from "./assets/icons/MenuIcon"
 import LogoLarge from "./assets/Logo_large_dark.png"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
@@ -190,7 +190,7 @@ export default function App() {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              gap: "24px",
               px: 3,
               pt: 7,
               pb: 2,
@@ -200,7 +200,14 @@ export default function App() {
               zIndex: 1200,
             }}
           >
-            <IconButton onClick={() => setMobileNavOpen(true)}>
+            <IconButton
+              onClick={() => setMobileNavOpen(true)}
+              sx={{
+                p: 0,
+                width: 40,
+                height: 40,
+              }}
+            >
               <MenuIcon />
             </IconButton>
 
