@@ -333,7 +333,6 @@ const handleConfirmSignOut = () => {
                 setPage={(nextPage) => {
                   setMobileNavOpen(false)
 
-<<<<<<< HEAD
                   if (nextPage === "courses") {
                     openCoursesOverview()
                     return
@@ -361,9 +360,5 @@ const handleConfirmSignOut = () => {
       />
       </Box>
     </Box>
-=======
-     
-
->>>>>>> develop
   )
 }
