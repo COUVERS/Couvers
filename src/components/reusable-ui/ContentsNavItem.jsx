@@ -38,7 +38,7 @@ export default function ContentsNavItem({
 
     const selectedTextColor = "var(--Color-Text-Primary, #0F172A)"
     const activeLinkColor = "var(--Color-Primary-Dark, #4F46E5)"
-    const defaultTextColor = "#FFFFFF"
+    const defaultTextColor = "var(--Color-Secondary-Contrast)"
 
     return (
         <Box
@@ -47,7 +47,7 @@ export default function ContentsNavItem({
                 gap: 2,
                 borderRadius: 2,
                 p: isSelected ? 2 : 0,
-                backgroundColor: isSelected ? "#FFFFFF" : "transparent",
+                backgroundColor: isSelected ? "var(--Color-Secondary-Contrast)" : "transparent",
                 color: isSelected ? selectedTextColor : defaultTextColor,
                 transition: "0.2s",
             }}
@@ -55,7 +55,7 @@ export default function ContentsNavItem({
             {/* Left status icon */}
             <Box sx={{ mt: "2px", display: "flex", alignItems: "flex-center" }}>
                 {getStatusIcon(lesson.status, {
-                    color: isSelected ? "#FFFFFF" : undefined,
+                    color: isSelected ? "var(--Color-Secondary-Contrast)" : undefined,
                 })}
             </Box>
 

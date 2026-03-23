@@ -17,7 +17,7 @@ const collapsedWidth = 40
 const ContentsDrawer = styled(SidebarBase)(({ open }) => ({
     width: open ? expandedWidth : collapsedWidth,
     backgroundColor: "var(--Brand-Indigo-900)",
-    color: "#fff",
+    color: "var(--Color-Secondary-Contrast)",
     overflowX: open ? "hidden" : "visible",
 }))
 
@@ -55,7 +55,7 @@ export default function ContentsNavigation({
                 <IconButton
                     onClick={() => setOpen(!open)}
                     sx={{
-                        color: "#fff",
+                        color: "var(--Color-Secondary-Contrast)",
                         p: 0,
                         width: 48,
                         height: 48,
@@ -78,14 +78,14 @@ export default function ContentsNavigation({
                                 alignItems: "center",
                                 justifyContent: "center",
                                 backgroundColor: "var(--Color-Secondary-Main)",
-                                color: "#fff",
+                                color: "var(--Color-Secondary-Contrast)",
                                 "& svg": {
                                     width: "36px",
                                     height: "36px",
                                     display: "block",
                                 },
                                 "& path": {
-                                    fill: "#fff",
+                                    fill: "var(--Color-Secondary-Contrast)",
                                 },
                             }}
                         >
@@ -99,8 +99,8 @@ export default function ContentsNavigation({
                 <>
                     <Typography
                         sx={{
-                            fontSize: 20,
-                            fontWeight: 600,
+                            fontSize: 28,
+                            fontWeight: 500,
                             mb: 4
                         }}
                     >
