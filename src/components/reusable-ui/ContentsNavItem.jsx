@@ -30,10 +30,14 @@ export default function ContentsNavItem({
     const isLectureActive = activeType === "lecture"
     const isQuizActive = activeType === "quiz"
     const isLocked = lesson.status === "locked"
+    const isLectureLocked = lesson.status === "locked"
+    const isQuizLocked = lesson.status === "not_started" || lesson.status === "locked"
+    const isQuizPending = lesson.status === "in_progress"
+    const isQuizCompleted = lesson.status === "completed"
 
-    const showPendingQuizState =
-        lesson.status === "in_progress" ||
-        lesson.status === "not_started"
+    // const showPendingQuizState =
+    //     lesson.status === "in_progress" ||
+    //     lesson.status === "not_started"
 
     const selectedTextColor = "var(--Color-Text-Primary)"
     const activeLinkColor = "var(--Color-Primary-Dark)"
@@ -73,7 +77,7 @@ export default function ContentsNavItem({
 
                 {/* Lecture */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    {showPendingQuizState ? (
+                    {lesson.status === "in_progress" ? (
                         <CheckIcon sx={{ fontSize: 24 }} />
                     ) : (
                         <ArticleOutlinedIcon sx={{ fontSize: 24 }} />
@@ -101,26 +105,28 @@ export default function ContentsNavItem({
 
                 {/* Quiz */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    {showPendingQuizState ? (
+                    {isQuizLocked ? (
+                        <LockOutlinedIcon sx={{ fontSize: 24 }} />
+                    ) : isQuizPending ? (
                         <WarningAmberRoundedIcon sx={{ fontSize: 24 }} />
                     ) : (
                         <QuizOutlinedIcon sx={{ fontSize: 24 }} />
                     )}
                     <Links
                         onClick={() => {
-                            if (!isLocked) onQuizClick?.(lesson)
+                            if (!isQuizLocked) onQuizClick?.(lesson)
                         }}
                         sx={{
                             fontWeight: 400,
                             fontSize: "var(--FontSize-Body1)",
 
-                            textDecoration: isLocked ? "none" : "underline",
+                            textDecoration: isQuizLocked ? "none" : "underline",
+                            cursor: isQuizLocked ? "default" : "pointer",
 
                             color: isSelected
                                 ? (isQuizActive ? activeLinkColor : selectedTextColor)
                                 : defaultTextColor,
 
-                            cursor: isLocked ? "default" : "pointer",
                         }}
                     >
                         Quiz
