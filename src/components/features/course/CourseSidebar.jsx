@@ -8,7 +8,8 @@ export default function CourseSidebar({
     lessons,
     selectedLesson,
     onSelectCourse,
-    onSelectLesson,
+    onSelectLecture,
+    onSelectQuiz,
     onBack,
     forceCollapsed = false,
 }) {
@@ -29,7 +30,8 @@ export default function CourseSidebar({
         <ContentsNavigation
             lessons={lessons}
             selectedLesson={selectedLesson}
-            onSelectLesson={onSelectLesson}
+            onSelectLecture={onSelectLecture}
+            onSelectQuiz={onSelectQuiz}
             onBack={onBack}
             forceCollapsed={forceCollapsed}
         />

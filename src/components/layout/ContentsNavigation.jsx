@@ -24,7 +24,8 @@ const ContentsDrawer = styled(SidebarBase)(({ open }) => ({
 export default function ContentsNavigation({
     lessons = [],
     selectedLesson,
-    onSelectLesson,
+    onSelectLecture,
+    onSelectQuiz,
     onBack,
     forceCollapsed = false,
 }) {
@@ -120,11 +121,11 @@ export default function ContentsNavigation({
                                         : null
                                 }
                                 onLectureClick={(clickedLesson) => {
-                                    onSelectLesson?.(clickedLesson)
+                                    onSelectLecture?.(clickedLesson)
                                     setSelectedContentType("lecture")
                                 }}
                                 onQuizClick={(clickedLesson) => {
-                                    onSelectLesson?.(clickedLesson)
+                                    onSelectQuiz?.(clickedLesson)
                                     setSelectedContentType("quiz")
                                 }}
                             />

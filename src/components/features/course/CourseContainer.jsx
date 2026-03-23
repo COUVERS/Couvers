@@ -244,7 +244,11 @@ export default function CourseContainer({
                 lessons={lessons}
                 selectedLesson={selectedLesson}
                 onSelectCourse={goToCourseById}
-                onSelectLesson={goToLessonLecture}
+                onSelectLecture={goToLessonLecture}
+                onSelectQuiz={(lesson) => {
+                    if (!selectedCourseId || !lesson?._id) return
+                    navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
+                }}
                 onBack={goToCourseOverview}
                 forceCollapsed={forceCollapsed}
             />
