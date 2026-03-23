@@ -777,22 +777,72 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
  * GET /api/dashboard/skills
  *
  * Returns radar chart data for the authenticated user.
- * Each skill score is based on passed lessons:
- * passedLessons * 20
+ * Each lesson score is calculated from the user's best quiz attempt:
+ * - 5/5 correct = 20
+ * - 4/5 correct = 16
+ * - 0~3 correct = 0
+ *
+ * Each skill score is the sum of lesson scores across courses.
  */
 app.get("/api/dashboard/skills", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const progressList = await SkillProgress.find({ userId }).populate("skillId");
+    const [skills, attempts] = await Promise.all([
+      Skill.find({}),
+      QuizAttempt.find({ userId }).sort({ submittedAt: -1 }),
+    ]);
 
-    const radarChart = progressList.map((item) => ({
-      skillId: item.skillId?._id,
-      skill: item.skillId?.name || "Unknown Skill",
-      score: item.skillScore,
-      passedLessons: item.passedLessons,
-      totalLessons: item.totalLessons,
-    }));
+    const bestAttemptByLesson = new Map();
+
+    for (const attempt of attempts) {
+      const lessonId = attempt.lessonId?.toString();
+      if (!lessonId) continue;
+
+      const currentBest = bestAttemptByLesson.get(lessonId);
+      const lessonScore = attempt.passed ? attempt.correctCount * 4 : 0;
+
+      if (!currentBest) {
+        bestAttemptByLesson.set(lessonId, {
+          attempt,
+          lessonScore,
+        });
+        continue;
+      }
+
+      if (lessonScore > currentBest.lessonScore) {
+        bestAttemptByLesson.set(lessonId, {
+          attempt,
+          lessonScore,
+        });
+      }
+    }
+
+    const skillMap = new Map();
+
+    for (const skill of skills) {
+      skillMap.set(skill._id.toString(), {
+        skillId: skill._id,
+        skill: skill.name,
+        score: 0,
+        passedLessons: 0,
+        totalLessons: 5,
+      });
+    }
+
+    for (const { attempt, lessonScore } of bestAttemptByLesson.values()) {
+      const skillId = attempt.skillId?.toString();
+      if (!skillId || !skillMap.has(skillId)) continue;
+
+      const current = skillMap.get(skillId);
+      current.score += lessonScore;
+
+      if (attempt.passed) {
+        current.passedLessons += 1;
+      }
+    }
+
+    const radarChart = Array.from(skillMap.values());
 
     return res.status(200).json({
       userId,
@@ -800,7 +850,9 @@ app.get("/api/dashboard/skills", authMiddleware, async (req, res) => {
     });
   } catch (err) {
     console.error("Dashboard skills error:", err);
-    return res.status(500).json({ message: "Server error while fetching dashboard skills" });
+    return res.status(500).json({
+      message: "Server error while fetching dashboard skills",
+    });
   }
 });
 
