@@ -1391,7 +1391,7 @@ await courses.insertMany([
   {
     _id: fundamentalsTeachingLesson1Id,
     courseId: fundamentalsTeachingCourseId,
-    skillId: lessonStructureSkillId,
+    skillId: explanationClaritySkillId,
     order: 1,
     title: "Understanding Learning Objectives and Outcomes",
     lessonDescription:
@@ -3605,9 +3605,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which explanation best describes the cognitive benefit of this instructional strategy?",
         option: [
+          "It minimizes the need for student engagement during practice",
           "It reduces cognitive load by providing a model that supports understanding before application",
           "It increases task difficulty by exposing students to complete procedures",
-          "It minimizes the need for student engagement during practice",
           "It replaces the need for independent problem-solving",
         ],
         answer: "It reduces cognitive load by providing a model that supports understanding before application",
@@ -3639,10 +3639,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which underlying instructional issue most accurately explains this outcome?",
         option: [
-          "Poor pacing that increases cognitive load beyond students' processing capacity",
           "Excessive clarity that reduces the need for active thinking",
           "Too many clearly defined objectives that overwhelm students",
           "Overly structured instruction that limits flexibility",
+          "Poor pacing that increases cognitive load beyond students' processing capacity",
         ],
         answer: "Poor pacing that increases cognitive load beyond students' processing capacity",
         review:
@@ -3658,8 +3658,8 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which instructional response most effectively addresses this situation while maintaining both engagement and learning progression?",
         option: [
-          "Provide tiered tasks with varying levels of difficulty to match different readiness levels",
           "Assign the same task to all students to ensure fairness and consistency",
+          "Provide tiered tasks with varying levels of difficulty to match different readiness levels",
           "Reduce the overall lesson difficulty so all students can complete the task",
           "Allow advanced students to wait while others finish to maintain pacing",
         ],
@@ -3692,10 +3692,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which change would most effectively improve differentiation while maintaining instructional effectiveness?",
         option: [
-          "Incorporate varied instructional methods such as discussion, practice, and visual supports",
           "Extend lecture time to ensure all content is fully explained",
           "Reduce interaction to maintain focus on content delivery",
           "Provide more detailed verbal explanations within the lecture format",
+          "Incorporate varied instructional methods such as discussion, practice, and visual supports",
         ],
         answer: "Incorporate varied instructional methods such as discussion, practice, and visual supports",
         review:
@@ -3726,9 +3726,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which underlying instructional practice most likely contributed to this outcome?",
         option: [
-          "Differentiated instruction that adapts content, process, or support based on learner needs",
           "Reduced interaction to maintain focus on content delivery",
           "Faster pacing to ensure lesson efficiency",
+          "Differentiated instruction that adapts content, process, or support based on learner needs",
           "A uniform approach to tasks to maintain consistency",
         ],
         answer: "Differentiated instruction that adapts content, process, or support based on learner needs",
@@ -3762,10 +3762,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the primary instructional purpose of this strategy beyond simple recall?",
         option: [
-          "To check understanding by requiring students to process and restate the concept",
           "To evaluate student performance for grading purposes",
           "To maintain pacing by encouraging quick responses",
           "To reinforce memorization of key terminology",
+          "To check understanding by requiring students to process and restate the concept",
         ],
         answer: "To check understanding by requiring students to process and restate the concept",
         review:
@@ -3779,9 +3779,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which response best supports learning while maintaining instructional flow?",
         option: [
-          "Clarify the concept and provide an additional example or scaffolded support",
           "Move on to maintain pacing and revisit the concept later",
           "End the activity to prevent further confusion",
+          "Clarify the concept and provide an additional example or scaffolded support",
           "Allow students to continue without intervention to encourage independence",
         ],
         answer: "Clarify the concept and provide an additional example or scaffolded support",
@@ -3796,8 +3796,8 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the most effective instructional response in this situation?",
         option: [
-          "Adjust the activity or instructional approach to better align with student needs",
           "Continue as planned to maintain consistency in lesson delivery",
+          "Adjust the activity or instructional approach to better align with student needs",
           "Reduce interaction to regain control of the class",
           "End the discussion to move to the next part of the lesson",
         ],
@@ -3832,8 +3832,8 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which instructional component is most critically missing in this lesson design?",
         option: [
-          "Structured reflection or closure that consolidates learning and reinforces key concepts",
           "Additional content delivery to ensure full coverage of the topic",
+          "Structured reflection or closure that consolidates learning and reinforces key concepts",
           "Summative assessment to evaluate final understanding",
           "Extended practice activities to increase repetition",
         ],
@@ -3849,10 +3849,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the primary learning benefit of this activity?",
         option: [
-          "It promotes metacognitive reflection and helps students connect new knowledge to prior learning",
           "It serves as a summative assessment of overall performance",
           "It reduces cognitive load by limiting new information",
           "It replaces the need for further instruction",
+          "It promotes metacognitive reflection and helps students connect new knowledge to prior learning",
         ],
         answer: "It promotes metacognitive reflection and helps students connect new knowledge to prior learning",
         review:
@@ -3883,8 +3883,8 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the most significant instructional benefit of this practice?",
         option: [
-          "It reinforces key concepts and helps students organize and retain information",
           "It reduces the need for formative assessment during the lesson",
+          "It reinforces key concepts and helps students organize and retain information",
           "It replaces the need for student reflection activities",
           "It ensures that all students achieve the same level of understanding",
         ],
@@ -3900,9 +3900,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which learning process is most directly supported by this strategy?",
         option: [
-          "Metacognitive regulation, where students plan and monitor their own learning",
           "Summative evaluation of final performance outcomes",
           "Reduction of cognitive load through simplified expectations",
+          "Metacognitive regulation, where students plan and monitor their own learning",
           "Passive reception of feedback without active engagement",
         ],
         answer: "Metacognitive regulation, where students plan and monitor their own learning",
