@@ -5,23 +5,25 @@ import Links from "../reusable-ui/Links"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import LectureIcon from "../../assets/icons/LectureIcon"
-import QuizIcon from "../../assets/icons/QuizIcon"
+import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined"
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined"
+import CheckIcon from "@mui/icons-material/Check"
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded"
 
-function getStatusIcon(status) {
+function getStatusIcon(status, sx = {}) {
     switch (status) {
         case "locked":
-            return <LockOutlinedIcon fontSize="small" />
+            return <LockOutlinedIcon fontSize="small" sx={sx} />
         case "completed":
-            return <VerifiedIcon fontSize="small" />
+            return <VerifiedIcon fontSize="small" sx={sx} />
         default:
-            return <CircleOutlinedIcon fontSize="small" />
+            return <CircleOutlinedIcon fontSize="small" sx={sx} />
     }
 }
 
 export default function ContentsNavItem({
     lesson,
-    activeType, // "lecture" | "quiz" | null
+    activeType,
     onLectureClick,
     onQuizClick,
 }) {
@@ -29,6 +31,10 @@ export default function ContentsNavItem({
     const isLectureActive = activeType === "lecture"
     const isQuizActive = activeType === "quiz"
     const isLocked = lesson.status === "locked"
+
+    const showPendingQuizState =
+        lesson.status === "in_progress" ||
+        lesson.status === "not_started"
 
     const selectedTextColor = "var(--Color-Text-Primary, #0F172A)"
     const activeLinkColor = "var(--Color-Primary-Dark, #4F46E5)"
@@ -48,7 +54,9 @@ export default function ContentsNavItem({
         >
             {/* Left status icon */}
             <Box sx={{ mt: "2px", display: "flex", alignItems: "flex-center" }}>
-                {getStatusIcon(lesson.status)}
+                {getStatusIcon(lesson.status, {
+                    color: isSelected ? "#FFFFFF" : undefined,
+                })}
             </Box>
 
             {/* Right content */}
@@ -66,10 +74,19 @@ export default function ContentsNavItem({
 
                 {/* Lecture */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <LectureIcon />
+                    {showPendingQuizState ? (
+                        <CheckIcon fontSize="small" />
+                    ) : (
+                        <ArticleOutlinedIcon fontSize="small" />
+                    )}
                     <Links
                         onClick={() => {
                             if (!isLocked) onLectureClick?.(lesson)
+                        }}
+                        sx={{
+                            color: isSelected
+                                ? (isLectureActive ? activeLinkColor : selectedTextColor)
+                                : defaultTextColor,
                         }}
                     >
                         Lecture
@@ -78,10 +95,19 @@ export default function ContentsNavItem({
 
                 {/* Quiz */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <QuizIcon />
+                    {showPendingQuizState ? (
+                        <WarningAmberRoundedIcon fontSize="small" />
+                    ) : (
+                        <QuizOutlinedIcon fontSize="small" />
+                    )}
                     <Links
                         onClick={() => {
                             if (!isLocked) onQuizClick?.(lesson)
+                        }}
+                        sx={{
+                            color: isSelected
+                                ? (isQuizActive ? activeLinkColor : selectedTextColor)
+                                : defaultTextColor,
                         }}
                     >
                         Quiz
