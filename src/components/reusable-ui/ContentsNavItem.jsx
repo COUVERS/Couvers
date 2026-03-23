@@ -2,8 +2,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Links from "../reusable-ui/Links"
 //Icons
-import VerifiedIcon from "@mui/icons-material/Verified"
-import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined"
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined'; import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined"
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined"
@@ -15,7 +14,7 @@ function getStatusIcon(status, sx = {}) {
         case "locked":
             return <LockOutlinedIcon sx={{ fontSize: 24, ...sx }} />
         case "completed":
-            return <VerifiedIcon sx={{ fontSize: 24, ...sx }} />
+            return <VerifiedOutlinedIcon sx={{ fontSize: 24, ...sx }} />
         default:
             return <CircleOutlinedIcon sx={{ fontSize: 24, ...sx }} />
     }
@@ -36,8 +35,8 @@ export default function ContentsNavItem({
         lesson.status === "in_progress" ||
         lesson.status === "not_started"
 
-    const selectedTextColor = "var(--Color-Text-Primary, #0F172A)"
-    const activeLinkColor = "var(--Color-Primary-Dark, #4F46E5)"
+    const selectedTextColor = "var(--Color-Text-Primary)"
+    const activeLinkColor = "var(--Color-Primary-Dark)"
     const defaultTextColor = "var(--Color-Secondary-Contrast)"
 
     return (
@@ -84,9 +83,16 @@ export default function ContentsNavItem({
                             if (!isLocked) onLectureClick?.(lesson)
                         }}
                         sx={{
+                            fontWeight: 400,
+                            fontSize: "var(--FontSize-Body1)",
+
+                            textDecoration: isLocked ? "none" : "underline",
+
                             color: isSelected
                                 ? (isLectureActive ? activeLinkColor : selectedTextColor)
                                 : defaultTextColor,
+
+                            cursor: isLocked ? "default" : "pointer",
                         }}
                     >
                         Lecture
@@ -105,9 +111,16 @@ export default function ContentsNavItem({
                             if (!isLocked) onQuizClick?.(lesson)
                         }}
                         sx={{
+                            fontWeight: 400,
+                            fontSize: "var(--FontSize-Body1)",
+
+                            textDecoration: isLocked ? "none" : "underline",
+
                             color: isSelected
                                 ? (isQuizActive ? activeLinkColor : selectedTextColor)
                                 : defaultTextColor,
+
+                            cursor: isLocked ? "default" : "pointer",
                         }}
                     >
                         Quiz
