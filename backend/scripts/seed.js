@@ -386,7 +386,7 @@ await courses.insertMany([
         },
         {
           type: "image",
-          imgUrl: "https://images.unsplash.com/photo-1584697964403-6f5d2d3c4f6b",
+          imgUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
           imgAlt: "Teacher calmly managing a classroom discussion",
         },
         {
@@ -1315,7 +1315,7 @@ await courses.insertMany([
   {
     _id: effectiveCommunicationLesson5Id,
     courseId: effectiveCommunicationCourseId,
-    skillId: explanationClaritySkillId,
+    skillId: pacingSkillId,
     order: 5,
     title: "Using Nonverbal Communication Effectively",
     lessonDescription:
@@ -2075,7 +2075,7 @@ await courses.insertMany([
         },
         {
           type: "image",
-          imgUrl: "https://images.unsplash.com/photo-1584697964403-6f5d2d3c4f6b?auto=format&fit=crop&w=1200&q=80",
+          imgUrl: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc",
           imgAlt: "Teacher reviewing student performance and adjusting instruction",
         },
         {
@@ -2212,31 +2212,31 @@ await courses.insertMany([
           "Respond firmly to reassert authority and keep students on task.",
           "Acknowledge the concern, then clarify the purpose of the activity and restate the learning objective.",
           "Pause the activity entirely to address the concern in detail before continuing.",
-          ],
-          answer:
-            "Acknowledge the concern, then clarify the purpose of the activity and restate the learning objective.",
-          review:
-            "Effective instructors balance empathy with structure. Acknowledging the concern shows respect, while restating the objective maintains focus. Ignoring or reacting defensively can reduce engagement, and over-extending the discussion may disrupt lesson flow.",
-        },
-        {
-          _id: new ObjectId(),
-          lessonId: empathyLesson1Id,
-          scenario:
-            "After completing an activity, several learners appear uncertain and hesitant, but no one asks questions.",
-          questionType: "multiple-choice",
-          question:
-            "Which action BEST supports effective assessment while remaining responsive to learners?",
-          option: [
-            "Assume understanding since no questions were asked and continue the lesson.",
-            "Move on quickly to stay on schedule.",
-            "Ask a brief checking-for-understanding question to confirm learning before proceeding.",
-            "Assign follow-up work to address any confusion independently.",
-          ],
-          answer:
-            "Ask a brief checking-for-understanding question to confirm learning before proceeding.",
-          review:
-            "Empathy involves recognizing that silence does not always indicate understanding. Checking for understanding allows instructors to assess learning in real time and adjust instruction if needed.",
-        },
+        ],
+        answer:
+          "Acknowledge the concern, then clarify the purpose of the activity and restate the learning objective.",
+        review:
+          "Effective instructors balance empathy with structure. Acknowledging the concern shows respect, while restating the objective maintains focus. Ignoring or reacting defensively can reduce engagement, and over-extending the discussion may disrupt lesson flow.",
+      },
+      {
+        _id: new ObjectId(),
+        lessonId: empathyLesson1Id,
+        scenario:
+          "After completing an activity, several learners appear uncertain and hesitant, but no one asks questions.",
+        questionType: "multiple-choice",
+        question:
+          "Which action BEST supports effective assessment while remaining responsive to learners?",
+        option: [
+          "Assume understanding since no questions were asked and continue the lesson.",
+          "Move on quickly to stay on schedule.",
+          "Ask a brief checking-for-understanding question to confirm learning before proceeding.",
+          "Assign follow-up work to address any confusion independently.",
+        ],
+        answer:
+          "Ask a brief checking-for-understanding question to confirm learning before proceeding.",
+        review:
+          "Empathy involves recognizing that silence does not always indicate understanding. Checking for understanding allows instructors to assess learning in real time and adjust instruction if needed.",
+      },
 
       // Empathy - Lesson 2
       {
@@ -4040,10 +4040,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which adjustment would most effectively improve students' ability to interpret and apply feedback?",
         option: [
-          "Provide annotated examples or models of strong responses aligned with criteria",
           "Reduce the amount of feedback to focus only on key points",
           "Avoid explaining errors in detail to maintain efficiency",
           "Emphasize final grades to increase student motivation",
+          "Provide annotated examples or models of strong responses aligned with criteria",
         ],
         answer: "Provide annotated examples or models of strong responses aligned with criteria",
         review:
@@ -4074,9 +4074,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which feedback approach most effectively supports conceptual understanding and future performance?",
         option: [
-          "Provide explanations for both correct and incorrect answers, highlighting reasoning and misconceptions",
           "Only show the final score to emphasize overall performance",
           "Remove written feedback to reduce cognitive load",
+          "Provide explanations for both correct and incorrect answers, highlighting reasoning and misconceptions",
           "Repeat the same questions to reinforce memorization",
         ],
         answer: "Provide explanations for both correct and incorrect answers, highlighting reasoning and misconceptions",
@@ -4093,9 +4093,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the most significant risk of this delay in terms of learning effectiveness?",
         option: [
-          "Students may no longer remember their reasoning, reducing the usefulness of the feedback",
           "Students may become overly focused on grades rather than learning",
           "Students may rely too heavily on instructor feedback instead of self-assessment",
+          "Students may no longer remember their reasoning, reducing the usefulness of the feedback",
           "Students may lose interest in the subject due to lack of challenge",
         ],
         answer: "Students may no longer remember their reasoning, reducing the usefulness of the feedback",
@@ -4110,10 +4110,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which feature of this feedback most directly supports learning?",
         option: [
-          "Its immediacy allows misconceptions to be corrected before they are reinforced",
           "It provides a final evaluation of student understanding",
           "It reduces the need for future assessment",
           "It ensures that all students receive identical explanations",
+          "Its immediacy allows misconceptions to be corrected before they are reinforced",
         ],
         answer: "Its immediacy allows misconceptions to be corrected before they are reinforced",
         review:
@@ -4127,10 +4127,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the primary instructional advantage of this approach?",
         option: [
-          "It supports real-time adjustment of thinking while students are actively engaged",
-          "It replaces the need for more formal assessment later",
           "It ensures that all errors are fully corrected immediately",
+          "It supports real-time adjustment of thinking while students are actively engaged",
           "It reduces the need for student participation in discussion",
+          "It replaces the need for more formal assessment later",
         ],
         answer: "It supports real-time adjustment of thinking while students are actively engaged",
         review:
@@ -4144,10 +4144,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which benefit most directly justifies this delay despite reduced immediacy?",
         option: [
-          "It allows for more detailed, thoughtful, and higher-quality feedback",
           "It increases student motivation by building anticipation",
           "It reduces the need for revision by clarifying expectations later",
           "It ensures students rely less on instructor support",
+          "It allows for more detailed, thoughtful, and higher-quality feedback",
         ],
         answer: "It allows for more detailed, thoughtful, and higher-quality feedback",
         review:
@@ -4161,10 +4161,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which approach most effectively balances these competing goals?",
         option: [
-          "Combine immediate feedback during learning with delayed, detailed feedback for complex tasks",
-          "Provide all feedback only at the end of the course to ensure completeness",
-          "Focus exclusively on immediate feedback to maximize engagement",
           "Limit feedback to final grades to simplify assessment",
+          "Combine immediate feedback during learning with delayed, detailed feedback for complex tasks",
+          "Focus exclusively on immediate feedback to maximize engagement",
+          "Provide all feedback only at the end of the course to ensure completeness",
         ],
         answer: "Combine immediate feedback during learning with delayed, detailed feedback for complex tasks",
         review:
@@ -4180,8 +4180,8 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which instructional adjustment would most effectively reduce confusion while supporting student performance?",
         option: [
-          "Provide a detailed rubric in advance and explicitly review how each criterion applies to the task",
           "Grade the assignment first and explain criteria after students receive their results",
+          "Provide a detailed rubric in advance and explicitly review how each criterion applies to the task",
           "Limit explanation of criteria so students focus on completing the task",
           "Allow students to infer expectations independently to promote critical thinking",
         ],
@@ -4214,10 +4214,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the most significant benefit of aligning feedback with rubric criteria?",
         option: [
-          "It ensures consistency between expectations, assessment, and feedback, improving clarity and fairness",
           "It reduces the need for detailed feedback by relying on predefined criteria",
           "It simplifies grading by limiting evaluation to a fixed checklist",
           "It minimizes student questions by standardizing responses",
+          "It ensures consistency between expectations, assessment, and feedback, improving clarity and fairness",
         ],
         answer: "It ensures consistency between expectations, assessment, and feedback, improving clarity and fairness",
         review:
@@ -4231,8 +4231,8 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which aspect of effective feedback design is most critically missing?",
         option: [
-          "Explanation that makes performance interpretable and actionable for improvement",
           "Clear learning objectives to guide the task",
+          "Explanation that makes performance interpretable and actionable for improvement",
           "Opportunities for classroom discussion",
           "Additional assessment tasks to reinforce learning",
         ],
@@ -4267,9 +4267,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which instructional response most effectively uses assessment data to support learning?",
         option: [
-          "Adjust instruction to reteach or clarify the concept using a different approach",
           "Continue with the original lesson plan to maintain pacing and coverage",
           "Record the grades and address misunderstandings only in future assessments",
+          "Adjust instruction to reteach or clarify the concept using a different approach",
           "Increase the difficulty of future tests to encourage deeper study",
         ],
         answer: "Adjust instruction to reteach or clarify the concept using a different approach",
@@ -4301,10 +4301,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the primary limitation of this type of assessment in supporting ongoing learning?",
         option: [
-          "It occurs after instruction is complete, limiting opportunities to adjust learning during the process",
           "It provides too much detailed information for students to interpret",
           "It reduces student motivation by focusing on final performance",
           "It requires alignment with learning objectives to be effective",
+          "It occurs after instruction is complete, limiting opportunities to adjust learning during the process",
         ],
         answer: "It occurs after instruction is complete, limiting opportunities to adjust learning during the process",
         review:
@@ -4318,8 +4318,8 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which learning principle is most directly supported by this practice?",
         option: [
-          "Transfer of learning through applying prior feedback to new tasks",
           "Reduction of cognitive load by minimizing new information",
+          "Transfer of learning through applying prior feedback to new tasks",
           "Summative evaluation of past performance",
           "Independent learning without instructional guidance",
         ],
