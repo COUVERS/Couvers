@@ -388,7 +388,7 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                     fontWeight: 400,
                     lineHeight: "var(--LineHeight-Body1)",
                     letterSpacing: "var(--LetterSpace-Body1)",
-                    textDecorationColor: "var(--Color-Primary-_States-Outlined)",
+                    textDecorationColor: "rgba(59, 130, 246, 0.4)",
                     textUnderlineOffset: "3px",
                 }}
             >
@@ -470,7 +470,7 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                     fontWeight: 400,
                     lineHeight: "var(--LineHeight-Body1)",
                     letterSpacing: "var(--LetterSpace-Body1)",
-                    textDecorationColor: "var(--Color-Primary-_States-Outlined)",
+                    textDecorationColor: "rgba(59, 130, 246, 0.4)",
                     textUnderlineOffset: "3px",
                 }}
             >
