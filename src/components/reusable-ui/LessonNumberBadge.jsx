@@ -21,7 +21,7 @@ const Badge = styled(Box, {
 
     ...(badgevariant === "completed" && {
         background: theme.palette.primary.main,
-        color: "#fff",
+        color: "var(--Color-Secondary-Contrast)",
         border: "none",
     }),
 

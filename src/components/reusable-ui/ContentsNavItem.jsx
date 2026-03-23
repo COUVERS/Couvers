@@ -2,26 +2,27 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Links from "../reusable-ui/Links"
 //Icons
-import VerifiedIcon from "@mui/icons-material/Verified"
-import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined"
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined'; import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import LectureIcon from "../../assets/icons/LectureIcon"
-import QuizIcon from "../../assets/icons/QuizIcon"
+import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined"
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined"
+import CheckIcon from "@mui/icons-material/Check"
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded"
 
-function getStatusIcon(status) {
+function getStatusIcon(status, sx = {}) {
     switch (status) {
         case "locked":
-            return <LockOutlinedIcon fontSize="small" />
+            return <LockOutlinedIcon sx={{ fontSize: 24, ...sx }} />
         case "completed":
-            return <VerifiedIcon fontSize="small" />
+            return <VerifiedOutlinedIcon sx={{ fontSize: 24, ...sx }} />
         default:
-            return <CircleOutlinedIcon fontSize="small" />
+            return <CircleOutlinedIcon sx={{ fontSize: 24, ...sx }} />
     }
 }
 
 export default function ContentsNavItem({
     lesson,
-    activeType, // "lecture" | "quiz" | null
+    activeType,
     onLectureClick,
     onQuizClick,
 }) {
@@ -29,10 +30,18 @@ export default function ContentsNavItem({
     const isLectureActive = activeType === "lecture"
     const isQuizActive = activeType === "quiz"
     const isLocked = lesson.status === "locked"
+    const isLectureLocked = lesson.status === "locked"
+    const isQuizLocked = lesson.status === "not_started" || lesson.status === "locked"
+    const isQuizPending = lesson.status === "in_progress"
+    const isQuizCompleted = lesson.status === "completed"
 
-    const selectedTextColor = "var(--Color-Text-Primary, #0F172A)"
-    const activeLinkColor = "var(--Color-Primary-Dark, #4F46E5)"
-    const defaultTextColor = "#FFFFFF"
+    // const showPendingQuizState =
+    //     lesson.status === "in_progress" ||
+    //     lesson.status === "not_started"
+
+    const selectedTextColor = "var(--Color-Text-Primary)"
+    const activeLinkColor = "var(--Color-Primary-Dark)"
+    const defaultTextColor = "var(--Color-Secondary-Contrast)"
 
     return (
         <Box
@@ -41,14 +50,16 @@ export default function ContentsNavItem({
                 gap: 2,
                 borderRadius: 2,
                 p: isSelected ? 2 : 0,
-                backgroundColor: isSelected ? "#FFFFFF" : "transparent",
+                backgroundColor: isSelected ? "var(--Color-Secondary-Contrast)" : "transparent",
                 color: isSelected ? selectedTextColor : defaultTextColor,
                 transition: "0.2s",
             }}
         >
             {/* Left status icon */}
             <Box sx={{ mt: "2px", display: "flex", alignItems: "flex-center" }}>
-                {getStatusIcon(lesson.status)}
+                {getStatusIcon(lesson.status, {
+                    color: isSelected ? "var(--Color-Secondary-Contrast)" : undefined,
+                })}
             </Box>
 
             {/* Right content */}
@@ -66,10 +77,26 @@ export default function ContentsNavItem({
 
                 {/* Lecture */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <LectureIcon />
+                    {lesson.status === "in_progress" ? (
+                        <CheckIcon sx={{ fontSize: 24 }} />
+                    ) : (
+                        <ArticleOutlinedIcon sx={{ fontSize: 24 }} />
+                    )}
                     <Links
                         onClick={() => {
                             if (!isLocked) onLectureClick?.(lesson)
+                        }}
+                        sx={{
+                            fontWeight: 400,
+                            fontSize: "var(--FontSize-Body1)",
+
+                            textDecoration: isLocked ? "none" : "underline",
+
+                            color: isSelected
+                                ? (isLectureActive ? activeLinkColor : selectedTextColor)
+                                : defaultTextColor,
+
+                            cursor: isLocked ? "default" : "pointer",
                         }}
                     >
                         Lecture
@@ -78,10 +105,28 @@ export default function ContentsNavItem({
 
                 {/* Quiz */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <QuizIcon />
+                    {isQuizLocked ? (
+                        <LockOutlinedIcon sx={{ fontSize: 24 }} />
+                    ) : isQuizPending ? (
+                        <WarningAmberRoundedIcon sx={{ fontSize: 24 }} />
+                    ) : (
+                        <QuizOutlinedIcon sx={{ fontSize: 24 }} />
+                    )}
                     <Links
                         onClick={() => {
-                            if (!isLocked) onQuizClick?.(lesson)
+                            if (!isQuizLocked) onQuizClick?.(lesson)
+                        }}
+                        sx={{
+                            fontWeight: 400,
+                            fontSize: "var(--FontSize-Body1)",
+
+                            textDecoration: isQuizLocked ? "none" : "underline",
+                            cursor: isQuizLocked ? "default" : "pointer",
+
+                            color: isSelected
+                                ? (isQuizActive ? activeLinkColor : selectedTextColor)
+                                : defaultTextColor,
+
                         }}
                     >
                         Quiz

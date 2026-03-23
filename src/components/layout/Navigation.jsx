@@ -88,11 +88,11 @@ export default function Navigation({ page, setPage, forceCollapsed = false, onSi
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                         '&.Mui-selected': {
-                                            backgroundColor: '#fff',
+                                            backgroundColor: 'var(--Color-Secondary-Contrast)',
                                             color: '#1F2430',
                                         },
                                         '&.Mui-selected:hover': {
-                                            backgroundColor: '#fff',
+                                            backgroundColor: 'var(--Color-Secondary-Contrast)',
                                         },
                                     }}
 
