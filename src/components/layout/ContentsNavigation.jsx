@@ -8,7 +8,7 @@ import ContentsNavItem from "../reusable-ui/ContentsNavItem"
 import SidebarBase from "../reusable-ui/SideBarBase"
 //Icons
 import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
+import LessonLectureIcon from "../../assets/icons/LessonLectureIcon"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 
 const expandedWidth = 389
@@ -18,6 +18,7 @@ const ContentsDrawer = styled(SidebarBase)(({ open }) => ({
     width: open ? expandedWidth : collapsedWidth,
     backgroundColor: "var(--Brand-Indigo-900)",
     color: "#fff",
+    overflowX: open ? "hidden" : "visible",
 }))
 
 export default function ContentsNavigation({
@@ -34,7 +35,7 @@ export default function ContentsNavigation({
             setOpen(false)
         }
     }, [forceCollapsed])
-    
+
     const [selectedContentType, setSelectedContentType] = useState("lecture")
     return (
         <ContentsDrawer open={open}
@@ -53,9 +54,44 @@ export default function ContentsNavigation({
             >
                 <IconButton
                     onClick={() => setOpen(!open)}
-                    sx={{ color: "#fff" }}
+                    sx={{
+                        color: "#fff",
+                        p: 0,
+                        width: 48,
+                        height: 48,
+                        minWidth: 36,
+                        minHeight: 36,
+                        "&:hover": {
+                            backgroundColor: "transparent",
+                        },
+                        transform: open ? "none" : "translateX(20px)",
+                    }}
                 >
-                    {open ? <ChevronLeftIcon /> : <MenuIcon />}
+                    {open ? (
+                        <ChevronLeftIcon />
+                    ) : (
+                        <Box
+                            sx={{
+                                width: 48,
+                                height: 48,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                backgroundColor: "var(--Color-Secondary-Main)",
+                                color: "#fff",
+                                "& svg": {
+                                    width: "36px",
+                                    height: "36px",
+                                    display: "block",
+                                },
+                                "& path": {
+                                    fill: "#fff",
+                                },
+                            }}
+                        >
+                            <LessonLectureIcon />
+                        </Box>
+                    )}
                 </IconButton>
             </Box>
 
