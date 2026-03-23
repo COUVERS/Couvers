@@ -1,6 +1,14 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import "../auth.css"
+import { Link as RouterLink } from "react-router-dom"
+import {
+    Box,
+    Button,
+    IconButton,
+    InputAdornment,
+    Link,
+    TextField,
+    Typography,
+} from "@mui/material"
 import LogoLarge from "../assets/Logo_large_dark.png"
 import Visibility from "../assets/icons/Visibility"
 import VisibilityOff from "../assets/icons/VisibilityOff"
@@ -21,18 +29,18 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
         setPasswordError("")
         setLoginError("")
 
-        if (!email.trim()) {
-            setEmailError("Email is required.")
-            valid = false
-        }
-
-        if (!password.trim()) {
-            setPasswordError("Password is required.")
-            valid = false
-        }
-
-        return valid
+    if (!email.trim()) {
+        setEmailError("Email is required.")
+        valid = false
     }
+
+    if (!password.trim()) {
+        setPasswordError("Password is required.")
+        valid = false
+    }
+
+    return valid
+}
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -43,129 +51,434 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
         setLoginError("")
 
         try {
-            const res = await fetch(`${API_BASE_URL}/auth/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            })
+        const res = await fetch(`${API_BASE_URL}/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        })
 
-            const text = await res.text()
+        const text = await res.text()
 
-            let data
-            try {
-                data = JSON.parse(text)
-            } catch {
-                throw new Error("Server did not return valid JSON")
-            }
-
-            if (!res.ok) {
-                throw new Error(data.message || "Invalid email or password.")
-            }
-
-            if (data.token) {
-                localStorage.setItem("token", data.token)
-            }
-
-            if (onLoginSuccess) {
-                onLoginSuccess(data)
-            }
-        } catch (err) {
-            setLoginError("Invalid email or password.")
-        } finally {
-            setLoading(false)
+        let data
+        try {
+            data = JSON.parse(text)
+        } catch {
+            throw new Error("Server did not return valid JSON")
         }
-    }
 
-    const disabled = loading || !email.trim() || !password.trim()
+        if (!res.ok) {
+            throw new Error(data.message || "Invalid email or password.")
+        }
+
+        if (data.token) {
+            localStorage.setItem("token", data.token)
+        }
+
+        if (onLoginSuccess) {
+            onLoginSuccess(data)
+        }
+        } catch {
+        setLoginError("Invalid email or password.")
+        } finally {
+        setLoading(false)
+    }
+}
+
+    const isSubmitDisabled = loading || !email.trim() || !password.trim()
 
     return (
-        <div className="auth-page">
-            <div className="auth-card">
-                <img src={LogoLarge} alt="TeTe" className="auth-logo" />
+        <Box
+        sx={{
+            display: "flex",
+            width: "1440px",
+            height: "1024px",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "var(--5, 40px)",
+            flexShrink: 0,
+            mx: "auto",
+            bgcolor: "var(--Color-Background-Default)",
+        }}
+        >
+        <Box
+            sx={{
+            display: "flex",
+            width: "640px",
+            padding: "var(--7, 56px) var(--5, 40px)",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "var(--6, 48px)",
+            flexShrink: 0,
+            borderRadius: "var(--md, 8px)",
+            background: "var(--Color-Background-Paper)",
+            boxShadow:
+                "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+            }}
+        >
+        <Box
+            component="img"
+            src={LogoLarge}
+            alt="TeTe"
+            sx={{
+                display: "flex",
+                width: "207px",
+                height: "91.747px",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "10px",
+                flexShrink: 0,
+                aspectRatio: "207 / 91.75",
+                objectFit: "contain",
+            }}
+        />
 
-                <h1 className="auth-title">Welcome to Our Platform</h1>
+        <Typography
+            sx={{
+                alignSelf: "stretch",
+                color: "var(--Color-Text-Primary)",
+                textAlign: "center",
+                fontFamily: "var(--font-family)",
+                fontSize: "var(--FontSize-Display-Medium)",
+                fontStyle: "normal",
+                fontWeight: 600,
+                lineHeight: "var(--LineHeight-Display-Medium)",
+                letterSpacing: "var(--LetterSpace-DisplayMedium)",
+            }}
+        >
+        Welcome to Our Platform
+        </Typography>
 
-                <form className="auth-form" onSubmit={handleLogin}>
-                    <div className="auth-field-group">
-                        <label className={`auth-label ${emailError || loginError ? "auth-label-error" : ""}`}>
-                            E-mail
-                        </label>
-                        <input
-                            className={`auth-input ${emailError || loginError ? "auth-input-error" : ""}`}
-                            type="email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value)
-                                if (emailError) setEmailError("")
-                                if (loginError) setLoginError("")
-                            }}
-                            placeholder=""
-                        />
-                        {emailError && (
-                            <p className="auth-error-text">{emailError}</p>
-                        )}
-                    </div>
+        <Box
+            component="form"
+            onSubmit={handleLogin}
+            sx={{
+                display: "flex",
+                width: "560px",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "48px",
+            }}
+        >
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                alignSelf: "stretch",
+            }}
+        >
+        <TextField
+                fullWidth
+                variant="standard"
+                label="E-mail"
+                type="email"
+                value={email}
+                error={Boolean(emailError || loginError)}
+                helperText={emailError || " "}
+                onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (emailError) setEmailError("")
+                    if (loginError) setLoginError("")
+                }}
+                InputLabelProps={{ shrink: true }}
+                FormHelperTextProps={{
+                    sx: {
+                    pt: "3px",
+                    mx: 0,
+                    color: "var(--Color-Error-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Caption)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "normal",
+                    letterSpacing: "0.1px",
+                    },
+                }}
+                sx={{
+                    alignSelf: "stretch",
+                    "& .MuiInputLabel-root": {
+                    color: "var(--Color-Text-Secondary)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Caption)",
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                    lineHeight: "normal",
+                    transform: "translate(0, -1px) scale(1)",
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                    color:
+                        emailError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Text-Secondary)",
+                    },
+                    "& .MuiInputBase-root": {
+                    mt: "18px",
+                    width: "560px",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    color: "var(--Color-Text-Primary)",
+                    },
+                    "& .MuiInputBase-input": {
+                    py: "10px",
+                    },
+                    "& .MuiInput-underline:before": {
+                    borderBottom: `1px solid ${
+                        emailError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Default)"
+                    }`,
+                    },
+                    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                    borderBottom: `1px solid ${
+                        emailError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Default)"
+                    }`,
+                    },
+                    "& .MuiInput-underline:after": {
+                    borderBottom: `1px solid ${
+                        emailError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Active)"
+                    }`,
+                    },
+                }}
+            />
 
-                    <div className="auth-field-group">
-                        <label className={`auth-label ${passwordError || loginError ? "auth-label-error" : ""}`}>
-                            Password
-                        </label>
-
-                        <div className={`auth-password-wrap ${passwordError || loginError ? "auth-input-error" : ""}`}>
-                            <input
-                                className="auth-input auth-password-input"
-                                type={showPassword ? "text" : "password"}
-                                value={password}
-                                onChange={(e) => {
-                                    setPassword(e.target.value)
-                                    if (passwordError) setPasswordError("")
-                                    if (loginError) setLoginError("")
-                                }}
-                                placeholder=""
+            <TextField
+                fullWidth
+                variant="standard"
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                error={Boolean(passwordError || loginError)}
+                helperText={passwordError || (!passwordError && loginError) || " "}
+                onChange={(e) => {
+                    setPassword(e.target.value)
+                    if (passwordError) setPasswordError("")
+                    if (loginError) setLoginError("")
+                }}
+                InputLabelProps={{ shrink: true }}
+                InputProps={{
+                    endAdornment: (
+                    <InputAdornment position="end">
+                        <IconButton
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        edge="end"
+                        disableRipple
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        sx={{
+                            p: 0,
+                            color: "var(--Color-Secondary-Main)",
+                        }}
+                        >
+                        {showPassword ? (
+                            <VisibilityOff
+                            size={20}
+                            color="var(--Color-Secondary-Main)"
                             />
-
-                            <button
-                                type="button"
-                                className="auth-eye-btn"
-                                onClick={() => setShowPassword((prev) => !prev)}
-                                aria-label={showPassword ? "Hide password" : "Show password"}
-                            >
-                                {showPassword ? (
-                                    <VisibilityOff size={20} color="#2E2A5F" />
-                                ) : (
-                                    <Visibility size={20} color="#2E2A5F" />
-                                )}
-                            </button>
-                        </div>
-
-                        {passwordError && (
-                            <p className="auth-error-text">{passwordError}</p>
+                        ) : (
+                            <Visibility
+                            size={20}
+                            color="var(--Color-Secondary-Main)"
+                            />
                         )}
+                        </IconButton>
+                    </InputAdornment>
+                    ),
+                }}
+                FormHelperTextProps={{
+                    sx: {
+                    pt: "3px",
+                    mx: 0,
+                    color: "var(--Color-Error-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Caption)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "normal",
+                    letterSpacing: "0.1px",
+                    },
+                }}
+                sx={{
+                    alignSelf: "stretch",
+                    "& .MuiInputLabel-root": {
+                    color: "var(--Color-Text-Secondary)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Caption)",
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                    lineHeight: "normal",
+                    transform: "translate(0, -1px) scale(1)",
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                    color:
+                        passwordError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Text-Secondary)",
+                    },
+                    "& .MuiInputBase-root": {
+                    mt: "18px",
+                    width: "560px",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    color: "var(--Color-Text-Primary)",
+                    },
+                    "& .MuiInputBase-input": {
+                    py: "10px",
+                    },
+                    "& .MuiInput-underline:before": {
+                    borderBottom: `1px solid ${
+                        passwordError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Default)"
+                    }`,
+                    },
+                    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                    borderBottom: `1px solid ${
+                        passwordError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Default)"
+                    }`,
+                    },
+                    "& .MuiInput-underline:after": {
+                    borderBottom: `1px solid ${
+                        passwordError || loginError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Active)"
+                    }`,
+                    },
+                }}
+            />
 
-                        {!passwordError && loginError && (
-                            <p className="auth-error-text">{loginError}</p>
-                        )}
-                    </div>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "var(--md, 8px)",
+                    alignSelf: "stretch",
+                }}
+            >
+            <Typography
+                sx={{
+                    color: "var(--Color-Text-Primary)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                }}
+            >
+            Forgot your password?
+            </Typography>
 
-                    <div className="auth-row">
-                        <span>Forgot your password?</span>
-                        <Link to="/forgot-password" className="auth-link">
-                            Password Reset
-                        </Link>
-                    </div>
+            <Link
+                component={RouterLink}
+                to="/forgot-password"
+                underline="always"
+                sx={{
+                    color: "var(--Color-Info-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                    textDecorationColor: "rgba(59, 130, 246, 0.4)",
+                    textUnderlineOffset: "3px",
+                }}
+            >
+            Password Reset
+            </Link>
+        </Box>
+    </Box>
 
-                    <button className="auth-btn" disabled={disabled}>
-                        {loading ? "Signing In..." : "Sign In"}
-                    </button>
+        <Button
+            type="submit"
+            size="large"
+            disabled={isSubmitDisabled}
+            sx={{
+                display: "flex",
+                width: "560px",
+                height: "48px",
+                padding: "8px 24px",
+                justifyContent: "center",
+                alignItems: "center",
+                flexShrink: 0,
+                borderRadius: "var(--borderRadius, 4px)",
+                textTransform: "none",
+                fontFamily: "var(--font-family)",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "normal",
+                letterSpacing: "0.2px",
+                whiteSpace: "nowrap",
+                backgroundColor: "var(--Color-Primary-Main)",
+                color: "var(--Color-Primary-Contrast)",
+                boxShadow:
+                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                "&:hover": {
+                    backgroundColor: "var(--Color-Primary-Main)",
+                },
+                "&.Mui-disabled": {
+                    backgroundColor: "var(--Color-Action-Disabled)",
+                    color: "var(--Color-Text-Disabled)",
+                    boxShadow: "none",
+                    opacity: 1,
+                },
+            }}
+        >
+            {loading ? "Signing In..." : "Sign In"}
+        </Button>
 
-                    <div className="auth-footer">
-                        <span>No Account?</span>
-                        <button type="button" className="auth-link" onClick={onGoSignup}>
-                            Join Us
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <Box
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "var(--md, 8px)",
+            }}
+        >
+        <Typography
+            sx={{
+                color: "var(--Color-Text-Primary)",
+                fontFamily: "var(--font-family)",
+                fontSize: "var(--FontSize-Body1)",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "var(--LineHeight-Body1)",
+                letterSpacing: "var(--LetterSpace-Body1)",
+            }}
+            >
+            No Account?
+            </Typography>
+
+            <Link
+                component="button"
+                type="button"
+                onClick={onGoSignup}
+                underline="always"
+                sx={{
+                    color: "var(--Color-Info-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                    textDecorationColor: "rgba(59, 130, 246, 0.4)",
+                    textUnderlineOffset: "3px",
+                }}
+            >
+            Join Us
+            </Link>
+        </Box>
+        </Box>
+    </Box>
+    </Box>
     )
 }

@@ -1,6 +1,12 @@
 import { useState } from "react"
-import { Button } from "@mui/material"
-import "../auth.css"
+import {
+    Box,
+    Button,
+    Link,
+    TextField,
+    Typography,
+} from "@mui/material"
+import { Link as RouterLink } from "react-router-dom"
 import LogoLarge from "../assets/Logo_large_dark.png"
 import Visibility from "../assets/icons/Visibility"
 import VisibilityOff from "../assets/icons/VisibilityOff"
@@ -21,7 +27,7 @@ export default function SignupForm({ onGoLogin }) {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    const validateEmailFormat = (value) => {
+    const validateEmailFormat = value => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
     }
 
@@ -29,21 +35,21 @@ export default function SignupForm({ onGoLogin }) {
         setEmailError("")
 
         if (!email.trim()) {
-            setEmailError("Email is required.")
-            return false
+        setEmailError("Email is required.")
+        return false
         }
 
         if (!validateEmailFormat(email)) {
-            setEmailError("Please enter a valid email address.")
-            return false
+        setEmailError("Please enter a valid email address.")
+        return false
         }
 
         if (
-            !email.endsWith("@codyacademy.edu") &&
-            !email.endsWith("@tete.edu")
+        !email.endsWith("@codyacademy.edu") &&
+        !email.endsWith("@tete.edu")
         ) {
-            setEmailError("This email domain is not registered for a corporate account.")
-            return false
+        setEmailError("This email domain is not registered for a corporate account.")
+        return false
         }
 
         return true
@@ -55,33 +61,33 @@ export default function SignupForm({ onGoLogin }) {
         setConfirmPasswordError("")
 
         if (!password.trim()) {
-            setPasswordError("Password is required.")
-            valid = false
+        setPasswordError("Password is required.")
+        valid = false
         } else if (password.length < 6) {
-            setPasswordError("Minimum 6 characters required.")
-            valid = false
+        setPasswordError("Minimum 6 characters required.")
+        valid = false
         }
 
         if (!confirmPassword.trim()) {
-            setConfirmPasswordError("Please confirm your password.")
-            valid = false
+        setConfirmPasswordError("Please confirm your password.")
+        valid = false
         } else if (confirmPassword !== password) {
-            setConfirmPasswordError("Passwords must match.")
-            valid = false
+        setConfirmPasswordError("Passwords must match.")
+        valid = false
         }
 
         return valid
     }
 
-    const handleContinue = (e) => {
+    const handleContinue = e => {
         e.preventDefault()
 
         if (validateEmailStep()) {
-            setStep(2)
+        setStep(2)
         }
     }
 
-    const handleSignup = async (e) => {
+    const handleSignup = async e => {
         e.preventDefault()
 
         if (!validatePasswordStep()) return
@@ -89,230 +95,702 @@ export default function SignupForm({ onGoLogin }) {
         setLoading(true)
 
         try {
-            const res = await fetch(`${API_BASE_URL}/auth/signup`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            })
+        const res = await fetch(`${API_BASE_URL}/auth/signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        })
 
-            const data = await res.json()
+        const data = await res.json()
 
-            if (!res.ok) {
-                throw new Error(data.message || "Signup failed")
-            }
+        if (!res.ok) {
+            throw new Error(data.message || "Signup failed")
+        }
 
-            if (onGoLogin) {
-                onGoLogin()
-            }
+        if (onGoLogin) {
+            onGoLogin()
+        }
         } catch (err) {
-            setEmailError(err.message || "Signup failed.")
-            setStep(1)
+        setEmailError(err.message || "Signup failed.")
+        setStep(1)
         } finally {
-            setLoading(false)
+        setLoading(false)
         }
     }
+    const trimmedEmail = email.trim()
+
+    const isEmailStepValid =
+        !!trimmedEmail &&
+        validateEmailFormat(trimmedEmail) &&
+        (trimmedEmail.endsWith("@codyacademy.edu") ||
+            trimmedEmail.endsWith("@tete.edu")) &&
+        !emailError
+
+    const isSubmitDisabled = loading || !trimmedEmail || !!emailError
+
+    const isPasswordStepValid =
+        !!password.trim() &&
+        !!confirmPassword.trim() &&
+        password.length >= 6 &&
+        confirmPassword === password &&
+        !passwordError &&
+        !confirmPasswordError
+
+    const isPasswordSubmitDisabled = !isPasswordStepValid || loading
 
     return (
-        <div className="auth-page">
-            <div className="auth-card">
-                <img src={LogoLarge} alt="TeTe" className="auth-logo" />
+        <Box
+            sx={{
+                display: "flex",
+                width: "1440px",
+                height: "1024px",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "40px",
+                flexShrink: 0,
+                mx: "auto",
+                bgcolor: "var(--Color-Background-Default)",
+            }}
+        >
+        <Box
+            sx={{
+            display: "flex",
+            width: "640px",
+            height: "802px",
+            padding: "56px 40px",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "var(--6, 48px)",
+            flexShrink: 0,
+            borderRadius: "8px",
+            backgroundColor: "var(--Color-Background-Paper)",
+            boxShadow:
+                "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+            }}
+        >
+        <Box
+            component="img"
+            src={LogoLarge}
+            alt="TeTe"
+            sx={{
+                display: "flex",
+                width: "207px",
+                height: "91.747px",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "10px",
+                flexShrink: 0,
+                aspectRatio: "207 / 91.75",
+                objectFit: "contain",
+            }}
+        />
 
-                <h1 className="auth-title">Get started</h1>
+        <Box
+            sx={{
+                display: "flex",
+                height: "134px",
+                padding: "0 38px",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "var(--5, 40px)",
+                alignSelf: "stretch",
+            }}
+        >
+        <Typography
+            sx={{
+                alignSelf: "stretch",
+                color: "var(--Color-Text-Primary)",
+                textAlign: "center",
+                fontFamily: "var(--font-family)",
+                fontSize: "var(--FontSize-Display-Medium)",
+                fontStyle: "normal",
+                fontWeight: 600,
+                lineHeight: "var(--LineHeight-Display-Medium)",
+                letterSpacing: "var(--LetterSpace-DisplayMedium)",
+            }}
+        >
+            Get started
+        </Typography>
+        </Box>
 
-                {step === 1 ? (
-                    <form className="auth-form" onSubmit={handleContinue}>
-                        <div className="auth-field-group">
-                            <label className={`auth-label ${emailError ? "auth-label-error" : ""}`}>
-                                E-mail
-                            </label>
-                            <input
-                                className={`auth-input ${emailError ? "auth-input-error" : ""}`}
-                                type="email"
-                                value={email}
-                                onChange={(e) => {
-                                    const value = e.target.value
-                                    setEmail(value)
+        {step === 1 ? (
+        <Box
+            component="form"
+            onSubmit={handleContinue}
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "48px",
+                alignSelf: "stretch",
+                width: "560px",
+                mx: "auto",
+            }}
+        >
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: "6px",
+                    alignSelf: "stretch",
+                }}
+            >
+                <TextField
+                    fullWidth
+                    variant="standard"
+                    label="E-mail"
+                    type="email"
+                    value={email}
+                    error={Boolean(emailError)}
+                    helperText={emailError || " "}
+                    onChange={e => {
+                    const value = e.target.value
+                    setEmail(value)
 
-                                    if (!value.trim()) {
-                                        setEmailError("")
-                                        return
-                                    }
+                    if (!value.trim()) {
+                        setEmailError("")
+                        return
+                    }
 
-                                    if (!validateEmailFormat(value)) {
-                                        setEmailError("Please enter a valid email address.")
-                                    } else if (
-                                        !value.endsWith("@codyacademy.edu") &&
-                                        !value.endsWith("@tete.edu")
-                                    ) {
-                                        setEmailError("This email domain is not registered for a corporate account.")
-                                    } else {
-                                        setEmailError("")
-                                    }
-                                }}
-                            />
-                            {emailError && (
-                                <p className="auth-error-text">{emailError}</p>
-                            )}
-                        </div>
+                    if (!validateEmailFormat(value)) {
+                        setEmailError("Please enter a valid email address.")
+                    } else if (
+                        !value.endsWith("@codyacademy.edu") &&
+                        !value.endsWith("@tete.edu")
+                    ) {
+                        setEmailError("This email domain is not registered for a corporate account.")
+                    } else {
+                        setEmailError("")
+                    }
+                    }}
+                    InputLabelProps={{
+                    shrink: true,
+                    }}
+                    FormHelperTextProps={{
+                    sx: {
+                        pt: "3px",
+                        mx: 0,
+                        color: "var(--Color-Error-Main)",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Caption)",
+                        fontWeight: 400,
+                        lineHeight: "normal",
+                        letterSpacing: "0.1px",
+                    },
+                    }}
+                    sx={{
+                    alignSelf: "stretch",
+                    "& .MuiInputLabel-root": {
+                        color: "var(--Color-Text-Secondary)",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Caption)",
+                        fontStyle: "normal",
+                        fontWeight: 500,
+                        lineHeight: "normal",
+                        transform: "translate(0, -1px) scale(1)",
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                        color: emailError ? "#EF4444" : "#64748B",
+                    },
+                    "& .MuiInputBase-root": {
+                        mt: "18px",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Body1)",
+                        color: "var(--Color-Text-Primary)",
+                    },
+                    "& .MuiInputBase-input": {
+                        py: "10px",
+                    },
+                    "& .MuiInput-underline:before": {
+                        borderBottom: "1px solid var(--Color-Border-Default)",
+                    },
+                    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                        borderBottom: `1px solid ${emailError ? "#EF4444" : "#CBD5E1"}`,
+                    },
+                    "& .MuiInput-underline:after": {
+                        borderBottom: `1px solid ${emailError ? "#EF4444" : "#6B63FF"}`,
+                    },
+                    }}
+                />
+            </Box>
 
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            disabled={loading || !email.trim() || !!emailError}
-                            sx={{
-                                width: "100%",
-                                height: "72px",
-                                borderRadius: "8px",
-                                fontSize: "var(--FontSize-Headings-h3)",
-                                fontWeight: 600,
-                                textTransform: "none",
-                            }}
+            <Button
+                type="submit"
+                size="large"
+                disabled={isSubmitDisabled}
+                sx={{
+                    display: "flex",
+                    width: "var(--Button-Dialog, 560px)",
+                    height: "48px",
+                    padding: "8px 24px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexShrink: 0,
+                    borderRadius: "4px",
+                    textTransform: "none",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "15px",
+                    fontWeight: 500,
+                    lineHeight: "normal",
+                    letterSpacing: "0.2px",
+                    whiteSpace: "nowrap",
+
+                    mx: "auto", 
+
+                    backgroundColor: "var(--Color-Primary-Main)",
+                    color: "var(--Color-Primary-Contrast)",
+                    boxShadow:
+                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+
+                    "&:hover": {
+                    backgroundColor: "#6B63FF",
+                    },
+
+                    "&.Mui-disabled": {
+                    backgroundColor: "var(--Color-Action-Disabled)",
+                    color: "var(--Color-Text-Disabled)",
+                    boxShadow: "none",
+                    opacity: 1,
+                    },
+                }}
+            >
+                {isEmailStepValid ? "Continue" : "Sign Up"}
+            </Button>
+
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                }}
+                >
+                <Typography
+                    sx={{
+                    color: "var(--Color-Text-Primary)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "24px",
+                    letterSpacing: "0",
+                    }}
+                >
+                    Already have an account?
+                </Typography>
+
+                <Link
+                    component="button"
+                    type="button"
+                    onClick={onGoLogin}
+                    underline="always"
+                    sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    color: "var(--Color-Info-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "24px",
+                    letterSpacing: "0",
+                    textDecorationColor: "rgba(59, 130, 246, 0.4)",
+                    textUnderlineOffset: "3px",
+                    }}
+                >
+                    Sign In
+                </Link>
+                </Box>
+
+                <Typography
+                sx={{
+                    alignSelf: "stretch",
+                    color: "var(--Color-Text-Primary)",
+                    textAlign: "center",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "24px",
+                    letterSpacing: "0",
+                }}
+                >
+                This service requires a corporate license agreement.
+                <br />
+                Individual sign-ups are not available.
+                </Typography>
+            </Box>
+            ) : (
+            <Box component="form" onSubmit={handleSignup}>
+            </Box>
+            )}
+
+        {step === 2 ? (
+            <Box
+                component="form"
+                onSubmit={handleSignup}
+                sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "48px",
+                alignSelf: "stretch",
+                width: "560px",
+                mx: "auto",
+                }}
+            >
+                <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: "6px",
+                    alignSelf: "stretch",
+                }}
+                >
+                <TextField
+                    fullWidth
+                    variant="standard"
+                    label="Password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    error={Boolean(passwordError || confirmPasswordError)}
+                    helperText={passwordError || ""}
+                    onChange={(e) => {
+                    const value = e.target.value
+                    setPassword(value)
+
+                    if (!value.trim()) {
+                        setPasswordError("")
+                    } else if (value.length < 6) {
+                        setPasswordError("Minimum 6 characters required.")
+                    } else {
+                        setPasswordError("")
+                    }
+
+                    if (confirmPassword) {
+                        if (confirmPassword !== value) {
+                        setConfirmPasswordError("Passwords must match.")
+                        } else {
+                        setConfirmPasswordError("")
+                        }
+                    }
+                    }}
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                    endAdornment: (
+                        <Box
+                        component="button"
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            p: 0,
+                            border: "none",
+                            background: "transparent",
+                            cursor: "pointer",
+                        }}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
                         >
-                            Continue
-                        </Button>
+                        {showPassword ? (
+                            <VisibilityOff size={20} color="var(--Color-Primary-Main)" />
+                        ) : (
+                            <Visibility size={20} color="var(--Color-Primary-Main)" />
+                        )}
+                        </Box>
+                    ),
+                    }}
+                    FormHelperTextProps={{
+                    sx: {
+                        pt: "3px",
+                        mx: 0,
+                        color: passwordError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Text-Secondary)",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Caption)",
+                        fontWeight: 400,
+                        lineHeight: "normal",
+                        letterSpacing: "0.1px",
+                    },
+                    }}
+                    sx={{
+                    "& .MuiInputLabel-root": {
+                        color: "var(--Color-Text-Secondary)",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Caption)",
+                        fontWeight: 500,
+                        lineHeight: "normal",
+                        transform: "translate(0, -1px) scale(1)",
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                        color: passwordError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Text-Secondary)",
+                    },
+                    "& .MuiInputBase-root": {
+                        mt: "18px",
+                        width: "560px",
+                        mx: "auto",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Body1)",
+                        color: "var(--Color-Text-Primary)",
+                    },
+                    "& .MuiInputBase-input": {
+                        py: "10px",
+                    },
+                    "& .MuiInput-underline:before": {
+                        borderBottom: `1px solid ${
+                        passwordError || confirmPasswordError
+                            ? "var(--Color-Error-Main)"
+                            : "var(--Color-Border-Default)"
+                        }`,
+                    },
+                    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                        borderBottom: `1px solid ${
+                        passwordError
+                            ? "var(--Color-Error-Main)"
+                            : "var(--Color-Border-Default)"
+                        }`,
+                    },
+                    "& .MuiInput-underline:after": {
+                        borderBottom: `1px solid ${
+                        passwordError || confirmPasswordError
+                            ? "var(--Color-Error-Main)"
+                            : "var(--Color-Border-Active)"
+                        }`,
+                    },
+                    }}
+                />
+                </Box>
 
-                        <div className="auth-footer">
-                            <span>Already have an account?</span>
-                            <button type="button" className="auth-link" onClick={onGoLogin}>
-                                Sign In
-                            </button>
-                        </div>
+                <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: "6px",
+                    alignSelf: "stretch",
+                }}
+                >
+                <TextField
+                    fullWidth
+                    variant="standard"
+                    label="Confirm Password"
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    error={Boolean(confirmPasswordError)}
+                    helperText={confirmPasswordError || " "}
+                    onChange={(e) => {
+                    const value = e.target.value
+                    setConfirmPassword(value)
 
-                        <p className="auth-note">
-                            This service requires a corporate license agreement.
-                            Individual sign-ups are not available.
-                        </p>
-                    </form>
-                ) : (
-                    <form className="auth-form" onSubmit={handleSignup}>
-                        <div className="auth-field-group">
-                            <label className={`auth-label ${passwordError ? "auth-label-error" : ""}`}>
-                                Password
-                            </label>
-
-                            <div className={`auth-password-wrap ${passwordError ? "auth-input-error" : ""}`}>
-                                <input
-                                    className="auth-input auth-password-input"
-                                    type={showPassword ? "text" : "password"}
-                                    value={password}
-                                    onChange={(e) => {
-                                        const value = e.target.value
-                                        setPassword(value)
-
-                                        if (!value.trim()) {
-                                            setPasswordError("")
-                                        } else if (value.length < 6) {
-                                            setPasswordError("Minimum 6 characters required.")
-                                        } else {
-                                            setPasswordError("")
-                                        }
-
-                                        if (confirmPassword) {
-                                            if (confirmPassword !== value) {
-                                                setConfirmPasswordError("Passwords must match.")
-                                            } else {
-                                                setConfirmPasswordError("")
-                                            }
-                                        }
-                                    }}
-                                />
-                                <button
-                                    type="button"
-                                    className="auth-eye-btn"
-                                    onClick={() => setShowPassword((prev) => !prev)}
-                                    aria-label={showPassword ? "Hide password" : "Show password"}
-                                >
-                                    {showPassword ? (
-                                        <VisibilityOff size={20} color="#2E2A5F" />
-                                    ) : (
-                                        <Visibility size={20} color="#2E2A5F" />
-                                    )}
-                                </button>
-                            </div>
-
-                            {passwordError && (
-                                <p className="auth-error-text">{passwordError}</p>
-                            )}
-                        </div>
-
-                        <div className="auth-field-group">
-                            <label className={`auth-label ${confirmPasswordError ? "auth-label-error" : ""}`}>
-                                Confirm Password
-                            </label>
-
-                            <div className={`auth-password-wrap ${confirmPasswordError ? "auth-input-error" : ""}`}>
-                                <input
-                                    className="auth-input auth-password-input"
-                                    type={showConfirmPassword ? "text" : "password"}
-                                    value={confirmPassword}
-                                    onChange={(e) => {
-                                        const value = e.target.value
-                                        setConfirmPassword(value)
-
-                                        if (!value.trim()) {
-                                            setConfirmPasswordError("")
-                                        } else if (value !== password) {
-                                            setConfirmPasswordError("Passwords must match.")
-                                        } else {
-                                            setConfirmPasswordError("")
-                                        }
-                                    }}
-                                />
-                                <button
-                                    type="button"
-                                    className="auth-eye-btn"
-                                    onClick={() => setShowConfirmPassword((prev) => !prev)}
-                                    aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                                >
-                                    {showConfirmPassword ? (
-                                        <VisibilityOff size={20} color="#2E2A5F" />
-                                    ) : (
-                                        <Visibility size={20} color="#2E2A5F" />
-                                    )}
-                                </button>
-                            </div>
-
-                            {confirmPasswordError && (
-                                <p className="auth-error-text">{confirmPasswordError}</p>
-                            )}
-                        </div>
-
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            disabled={
-                                loading ||
-                                !password.trim() ||
-                                !confirmPassword.trim() ||
-                                password.length < 6 ||
-                                confirmPassword !== password
-                            }
-                            sx={{
-                                width: "100%",
-                                height: "72px",
-                                borderRadius: "8px",
-                                fontSize: "var(--FontSize-Headings-h3)",
-                                fontWeight: 600,
-                                textTransform: "none",
-                            }}
+                    if (!value.trim()) {
+                        setConfirmPasswordError("")
+                    } else if (value !== password) {
+                        setConfirmPasswordError("Passwords must match.")
+                    } else {
+                        setConfirmPasswordError("")
+                    }
+                    }}
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                    endAdornment: (
+                        <Box
+                        component="button"
+                        type="button"
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            p: 0,
+                            border: "none",
+                            background: "transparent",
+                            cursor: "pointer",
+                        }}
+                        aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                         >
-                            {loading ? "Creating Account..." : "Continue"}
-                        </Button>
+                        {showConfirmPassword ? (
+                            <VisibilityOff size={20} color="var(--Color-Primary-Main)" />
+                        ) : (
+                            <Visibility size={20} color="var(--Color-Primary-Main)" />
+                        )}
+                        </Box>
+                    ),
+                    }}
+                    FormHelperTextProps={{
+                    sx: {
+                        pt: "3px",
+                        mx: 0,
+                        color: "var(--Color-Error-Main)",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Caption)",
+                        fontWeight: 400,
+                        lineHeight: "normal",
+                        letterSpacing: "0.1px",
+                    },
+                    }}
+                    sx={{
+                    "& .MuiInputLabel-root": {
+                        color: "var(--Color-Text-Secondary)",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Caption)",
+                        fontWeight: 500,
+                        lineHeight: "normal",
+                        transform: "translate(0, -1px) scale(1)",
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                        color: confirmPasswordError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Text-Secondary)",
+                    },
+                    "& .MuiInputBase-root": {
+                        mt: "18px",
+                        width: "560px",
+                        mx: "auto",
+                        fontFamily: "var(--font-family)",
+                        fontSize: "var(--FontSize-Body1)",
+                        color: "var(--Color-Text-Primary)",
+                    },
+                    "& .MuiInputBase-input": {
+                        py: "10px",
+                    },
+                    "& .MuiInput-underline:before": {
+                        borderBottom: `1px solid ${
+                        confirmPasswordError
+                            ? "var(--Color-Error-Main)"
+                            : "var(--Color-Border-Default)"
+                        }`,
+                    },
+                    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                        borderBottom: `1px solid ${
+                        confirmPasswordError
+                            ? "var(--Color-Error-Main)"
+                            : "var(--Color-Border-Default)"
+                        }`,
+                    },
+                    "& .MuiInput-underline:after": {
+                        borderBottom: `1px solid ${
+                        confirmPasswordError
+                            ? "var(--Color-Error-Main)"
+                            : "var(--Color-Border-Active)"
+                        }`,
+                    },
+                    }}
+                />
+                </Box>
 
-                        <div className="auth-footer">
-                            <span>Already have an account?</span>
-                            <button type="button" className="auth-link" onClick={onGoLogin}>
-                                Sign In
-                            </button>
-                        </div>
+                <Button
+                type="submit"
+                size="large"
+                disabled={isPasswordSubmitDisabled}
+                sx={{
+                    display: "flex",
+                    width: "560px",
+                    height: "48px",
+                    padding: "8px 24px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexShrink: 0,
+                    borderRadius: "4px",
+                    textTransform: "none",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "15px",
+                    fontWeight: 500,
+                    lineHeight: "normal",
+                    letterSpacing: "0.2px",
+                    whiteSpace: "nowrap",
+                    mx: "auto",
+                    backgroundColor: "var(--Color-Primary-Main)",
+                    color: "var(--Color-Primary-Contrast)",
+                    boxShadow:
+                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                    "&:hover": {
+                    backgroundColor: "var(--Color-Primary-Main)",
+                    },
+                    "&.Mui-disabled": {
+                    backgroundColor: "var(--Color-Action-Disabled)",
+                    color: "var(--Color-Text-Disabled)",
+                    boxShadow: "none",
+                    opacity: 1,
+                    },
+                }}
+                >
+                {isPasswordStepValid ? "Sign In" : "Continue"}
+                </Button>
 
-                        <p className="auth-note">
-                            This service requires a corporate license agreement.
-                            Individual sign-ups are not available.
-                        </p>
-                    </form>
-                )}
-            </div>
-        </div>
+                <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                }}
+                >
+                <Typography
+                    sx={{
+                    color: "var(--Color-Text-Primary)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                    }}
+                >
+                    Already have an account?
+                </Typography>
+
+                <Link
+                    component="button"
+                    type="button"
+                    onClick={onGoLogin}
+                    underline="always"
+                    sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    color: "var(--Color-Info-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                    textDecorationColor: "var(--Color-Primary-_States-Outlined)",
+                    textUnderlineOffset: "3px",
+                    }}
+                >
+                    Sign In
+                </Link>
+                </Box>
+
+                <Typography
+                sx={{
+                    alignSelf: "stretch",
+                    color: "var(--Color-Text-Primary)",
+                    textAlign: "center",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                }}
+                >
+                This service requires a corporate license agreement.
+                <br />
+                Individual sign-ups are not available.
+                </Typography>
+            </Box>
+            ) : null}
+        </Box>
+        </Box>
     )
 }

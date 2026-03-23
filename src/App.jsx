@@ -10,8 +10,10 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
 import ForgotPassword from "./pages/ForgotPassword"
+import ForgotPasswordSent from "./pages/ForgotPasswordSent"
 import PasswordResetSent from "./pages/PasswordResetSent"
 import ResetPassword from "./pages/ResetPassword"
+import SignOutDialog from "./components/features/auth/SignOutDialog"
 import Navigation from "./components/layout/Navigation"
 import CoursePage from "./pages/CoursePage"
 import AccountSettings from "./components/features/AccountSettings"
@@ -29,6 +31,7 @@ export default function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
+  const [signOutOpen, setSignOutOpen] = useState(false)
   const [continueCourseId, setContinueCourseId] = useState(null)
   const [continueLessonId, setContinueLessonId] = useState(null)
   const [courseResetSignal, setCourseResetSignal] = useState(0)
@@ -47,15 +50,28 @@ export default function App() {
       ? "changePassword"
       : "settings"
 
-  const handleSignOut = () => {
-    localStorage.removeItem("token")
-    setIsLoggedIn(false)
-    setAuthUser(null)
-    setDashboardHeader(null)
-    setContinueCourseId(null)
-    setContinueLessonId(null)
-    navigate("/login")
-  }
+  const handleOpenSignOutDialog = () => {
+  setSignOutOpen(true)
+}
+
+const handleCloseSignOutDialog = () => {
+  setSignOutOpen(false)
+}
+
+const handleConfirmSignOut = () => {
+  setSignOutOpen(false)
+
+  localStorage.removeItem("token")
+  localStorage.removeItem("user")
+
+  setIsLoggedIn(false)
+  setAuthUser(null)
+  setDashboardHeader(null)
+  setContinueCourseId(null)
+  setContinueLessonId(null)
+
+  navigate("/login")
+}
 
   const openCoursesOverview = () => {
     setContinueCourseId(null)
@@ -130,6 +146,7 @@ export default function App() {
             element={<SignupForm onGoLogin={() => navigate("/login")} />}
           />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/forgot-password/sent" element={<ForgotPasswordSent />} />
           <Route path="/forgot-password/sent" element={<PasswordResetSent />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
@@ -170,7 +187,7 @@ export default function App() {
               }
             }}
             forceCollapsed={page === "courses" || isMedium}
-            onSignOut={handleSignOut}
+            onSignOut={handleOpenSignOutDialog}
           />
         </Box>
       )}
@@ -316,6 +333,7 @@ export default function App() {
                 setPage={(nextPage) => {
                   setMobileNavOpen(false)
 
+<<<<<<< HEAD
                   if (nextPage === "courses") {
                     openCoursesOverview()
                     return
@@ -331,12 +349,21 @@ export default function App() {
                   }
                 }}
                 forceCollapsed={false}
-                onSignOut={handleSignOut}
+                onSignOut={handleOpenSignOutDialog}
               />
             </Box>
           </Drawer>
         )}
+         <SignOutDialog
+        open={signOutOpen}
+        onClose={handleCloseSignOutDialog}
+        onConfirm={handleConfirmSignOut}
+      />
       </Box>
     </Box>
+=======
+     
+
+>>>>>>> develop
   )
 }
