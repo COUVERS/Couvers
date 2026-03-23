@@ -144,7 +144,6 @@ export default function App() {
         display: "flex",
         minHeight: "100vh",
         width: "100%",
-        overflowX: "hidden",
       }}
     >
       {!isMobile && (
