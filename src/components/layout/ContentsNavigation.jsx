@@ -68,7 +68,7 @@ export default function ContentsNavigation({
                     }}
                 >
                     {open ? (
-                        <ChevronLeftIcon />
+                        <ChevronLeftIcon sx={{ fontSize: 32 }} />
                     ) : (
                         <Box
                             sx={{

@@ -13,11 +13,11 @@ import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded"
 function getStatusIcon(status, sx = {}) {
     switch (status) {
         case "locked":
-            return <LockOutlinedIcon fontSize="small" sx={sx} />
+            return <LockOutlinedIcon sx={{ fontSize: 24, ...sx }} />
         case "completed":
-            return <VerifiedIcon fontSize="small" sx={sx} />
+            return <VerifiedIcon sx={{ fontSize: 24, ...sx }} />
         default:
-            return <CircleOutlinedIcon fontSize="small" sx={sx} />
+            return <CircleOutlinedIcon sx={{ fontSize: 24, ...sx }} />
     }
 }
 
@@ -75,9 +75,9 @@ export default function ContentsNavItem({
                 {/* Lecture */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     {showPendingQuizState ? (
-                        <CheckIcon fontSize="small" />
+                        <CheckIcon sx={{ fontSize: 24 }} />
                     ) : (
-                        <ArticleOutlinedIcon fontSize="small" />
+                        <ArticleOutlinedIcon sx={{ fontSize: 24 }} />
                     )}
                     <Links
                         onClick={() => {
@@ -96,9 +96,9 @@ export default function ContentsNavItem({
                 {/* Quiz */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     {showPendingQuizState ? (
-                        <WarningAmberRoundedIcon fontSize="small" />
+                        <WarningAmberRoundedIcon sx={{ fontSize: 24 }} />
                     ) : (
-                        <QuizOutlinedIcon fontSize="small" />
+                        <QuizOutlinedIcon sx={{ fontSize: 24 }} />
                     )}
                     <Links
                         onClick={() => {
