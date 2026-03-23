@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
+import { useTheme } from "@mui/material/styles"
+import Box from "@mui/material/Box"
+import IconButton from "@mui/material/IconButton"
+import Drawer from "@mui/material/Drawer"
+import MenuIcon from "./assets/icons/MenuIcon"
+import LogoLarge from "./assets/Logo_large_dark.png"
+import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
 import ForgotPassword from "./pages/ForgotPassword"
@@ -16,6 +23,12 @@ import { API_BASE_URL } from "./config"
 import DashboardHeader from "./components/reusable-ui/DashboardHeader"
 
 export default function App() {
+  const theme = useTheme()
+  const isMobile = useMediaQuery("(max-width:899px)")
+  const isMedium = useMediaQuery("(min-width:900px) and (max-width:1095px)")
+  const isDesktop = useMediaQuery("(min-width:1096px)")
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
   const [signOutOpen, setSignOutOpen] = useState(false)
@@ -143,29 +156,91 @@ const handleConfirmSignOut = () => {
   }
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <Navigation
-        page={page}
-        setPage={(nextPage) => {
-          if (nextPage === "courses") {
-            openCoursesOverview()
-            return
-          }
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        width: "100%",
+      }}
+    >
+      {!isMobile && (
+        <Box
+          sx={{
+            flexShrink: 0,
+          }}
+        >
+          <Navigation
+            page={page}
+            setPage={(nextPage) => {
+              if (nextPage === "courses") {
+                openCoursesOverview()
+                return
+              }
 
-          if (nextPage === "home") {
-            navigate("/")
-            return
-          }
+              if (nextPage === "home") {
+                navigate("/")
+                return
+              }
 
-          if (nextPage === "account") {
-            navigate("/account")
-          }
+              if (nextPage === "account") {
+                navigate("/account")
+              }
+            }}
+            forceCollapsed={page === "courses" || isMedium}
+            onSignOut={handleOpenSignOutDialog}
+          />
+        </Box>
+      )}
+
+
+      <Box
+        component="main"
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          p: isMobile ? 0 : page === "courses" ? 0 : 2,
         }}
-        forceCollapsed={page === "courses"}
-        onSignOut={handleOpenSignOutDialog}
-      />
+      >
+        {isMobile && (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: "24px",
+              px: 3,
+              pt: 7,
+              pb: 2,
+              backgroundColor: "#fff",
+              position: "sticky",
+              boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)", top: 0,
+              zIndex: 1200,
+            }}
+          >
+            <IconButton
+              onClick={() => setMobileNavOpen(true)}
+              sx={{
+                p: 0,
+                width: 40,
+                height: 40,
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
 
-      <main style={{ flex: 1, padding: page === "courses" ? 0 : 16 }}>
+            <img
+              src={LogoLarge}
+              alt="TeTe"
+              style={{
+                width: 104,
+                height: 80,
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+
+            <Box sx={{ width: 40 }} />
+          </Box>
+        )}
         {page === "home" && (
           <DashboardHeader
             title={dashboardHeader?.title || (authUser ? `Hello ${authUser.username}` : "Hello")}
@@ -246,14 +321,44 @@ const handleConfirmSignOut = () => {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </main>
+        {isMobile && (
+          <Drawer
+            anchor="left"
+            open={mobileNavOpen}
+            onClose={() => setMobileNavOpen(false)}
+          >
+            <Box sx={{ width: 240 }}>
+              <Navigation
+                page={page}
+                setPage={(nextPage) => {
+                  setMobileNavOpen(false)
 
-      <SignOutDialog
+                  if (nextPage === "courses") {
+                    openCoursesOverview()
+                    return
+                  }
+
+                  if (nextPage === "home") {
+                    navigate("/")
+                    return
+                  }
+
+                  if (nextPage === "account") {
+                    navigate("/account")
+                  }
+                }}
+                forceCollapsed={false}
+                onSignOut={handleOpenSignOutDialog}
+              />
+            </Box>
+          </Drawer>
+        )}
+         <SignOutDialog
         open={signOutOpen}
         onClose={handleCloseSignOutDialog}
         onConfirm={handleConfirmSignOut}
       />
-
-    </div>
+      </Box>
+    </Box>
   )
 }

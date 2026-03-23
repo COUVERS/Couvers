@@ -1,5 +1,5 @@
 import '../../styles/global.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import SidebarBase from '../reusable-ui/SideBarBase'
 import {
@@ -29,12 +29,22 @@ const CategoryIcon = styled(Box, { shouldForwardProp: (p) => p !== 'active' })((
     justifyContent: 'center',
     flexShrink: 0,
     backgroundColor: active ? '#E0E0F8' : 'rgba(255, 255, 255, 0.1)',
-    color: active ? 'var(--Color-Secondary)' : '#fff',
+    color: active ? 'var(--Color-Secondary)' : 'var(--Color-Secondary-Contrast)',
 }))
 
-export default function CourseNavigation({ courses = [], selectedCourseId, onSelectCourse }) {
+export default function CourseNavigation({
+    courses = [],
+    selectedCourseId,
+    onSelectCourse,
+    forceCollapsed = false,
+}) {
     const [open, setOpen] = useState(true)
-    // const [activeId, setActiveId] = useState(1)
+
+    useEffect(() => {
+        if (forceCollapsed) {
+            setOpen(false)
+        }
+    }, [forceCollapsed])
 
     return (
         <CourseDrawer open={open}>
@@ -49,7 +59,7 @@ export default function CourseNavigation({ courses = [], selectedCourseId, onSel
                         fontSize: '20px',
                         fontStyle: 'normal',
                         fontWeight: 600,
-                        color: '#fff',
+                        color: 'var(--Color-Secondary-Contrast)',
                         lineHeight: 'normal',
                         textAlign: 'center',
                     }}>
@@ -57,7 +67,7 @@ export default function CourseNavigation({ courses = [], selectedCourseId, onSel
                     </Typography>
                 ) : (
                     <Typography sx={{
-                        color: '#fff',
+                        color: 'var(--Color-Secondary-Contrast)',
                         fontWeight: 500,
                         fontSize: '12px',
                         textAlign: 'center',
@@ -94,18 +104,18 @@ export default function CourseNavigation({ courses = [], selectedCourseId, onSel
                                 sx={{
                                     borderRadius: '8px',
                                     p: '8px',
-                                    backgroundColor: isSelected ? '#FFF' : 'transparent',
-                                    color: isSelected ? 'var(--Color-Secondary-Dark)' : '#FFF',
+                                    backgroundColor: isSelected ? 'var(--Color-Secondary-Contrast)' : 'transparent',
+                                    color: isSelected ? 'var(--Color-Secondary-Dark)' : 'var(--Color-Secondary-Contrast)',
                                     justifyContent: open ? 'flex-start' : 'center',
                                     transition: '0.2s',
                                     '&:hover': {
-                                        backgroundColor: isSelected ? '#FFF' : 'rgba(255,255,255,0.08)'
+                                        backgroundColor: isSelected ? 'var(--Color-Secondary-Contrast)' : 'rgba(255,255,255,0.08)'
                                     }
                                 }}
                             >
                                 <CategoryIcon active={isSelected}>
                                     {Icon && (
-                                        <Icon bgColor={isSelected ? "#A3B2FB" : "#fff"} />
+                                        <Icon bgColor={isSelected ? "#A3B2FB" : "var(--Color-Secondary-Contrast)"} />
                                     )}
                                 </CategoryIcon>
 
@@ -117,7 +127,7 @@ export default function CourseNavigation({ courses = [], selectedCourseId, onSel
                                             fontStyle: 'normal',
                                             fontWeight: 500,
                                             lineHeight: 'normal',
-                                            color: isSelected ? 'var(--Color-Secondary-Dark)' : '#FFF',
+                                            color: isSelected ? 'var(--Color-Secondary-Dark)' : 'var(--Color-Secondary-Contrast)',
                                         }}
                                     >
                                         {course.title}
@@ -132,7 +142,7 @@ export default function CourseNavigation({ courses = [], selectedCourseId, onSel
             <Box sx={{ p: 2 }}>
                 <IconButton
                     onClick={() => setOpen(!open)}
-                    sx={{ color: '#fff', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
+                    sx={{ color: 'var(--Color-Secondary-Contrast)', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
                 >
                     {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                 </IconButton>
