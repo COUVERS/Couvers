@@ -2,6 +2,10 @@ import { useEffect, useState } from "react"
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
 import { useTheme } from "@mui/material/styles"
 import Box from "@mui/material/Box"
+import IconButton from "@mui/material/IconButton"
+import Drawer from "@mui/material/Drawer"
+import MenuIcon from "@mui/icons-material/Menu"
+import LogoLarge from "./assets/Logo_large_dark.png"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
 import SignupForm from "./pages/SignupForm"
@@ -21,6 +25,7 @@ export default function App() {
   const isMobile = useMediaQuery("(max-width:899px)")
   const isMedium = useMediaQuery("(min-width:900px) and (max-width:1095px)")
   const isDesktop = useMediaQuery("(min-width:1096px)")
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
@@ -177,14 +182,48 @@ export default function App() {
         sx={{
           flex: 1,
           minWidth: 0,
-          p: page === "courses" ? 0 : 2,
+          p: isMobile ? 0 : page === "courses" ? 0 : 2,
         }}
-      >        {page === "home" && (
-        <DashboardHeader
-          title={dashboardHeader?.title || (authUser ? `Hello ${authUser.username}` : "Hello")}
-          description={dashboardHeader?.description || ""}
-        />
-      )}
+      >
+        {isMobile && (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              px: 3,
+              pt: 7,
+              pb: 2,
+              backgroundColor: "#fff",
+              position: "sticky",
+              boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)", top: 0,
+              zIndex: 1200,
+            }}
+          >
+            <IconButton onClick={() => setMobileNavOpen(true)}>
+              <MenuIcon />
+            </IconButton>
+
+            <img
+              src={LogoLarge}
+              alt="TeTe"
+              style={{
+                width: 104,
+                height: 80,
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+
+            <Box sx={{ width: 40 }} />
+          </Box>
+        )}
+        {page === "home" && (
+          <DashboardHeader
+            title={dashboardHeader?.title || (authUser ? `Hello ${authUser.username}` : "Hello")}
+            description={dashboardHeader?.description || ""}
+          />
+        )}
 
         <Routes>
           <Route
@@ -259,6 +298,38 @@ export default function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        {isMobile && (
+          <Drawer
+            anchor="left"
+            open={mobileNavOpen}
+            onClose={() => setMobileNavOpen(false)}
+          >
+            <Box sx={{ width: 240 }}>
+              <Navigation
+                page={page}
+                setPage={(nextPage) => {
+                  setMobileNavOpen(false)
+
+                  if (nextPage === "courses") {
+                    openCoursesOverview()
+                    return
+                  }
+
+                  if (nextPage === "home") {
+                    navigate("/")
+                    return
+                  }
+
+                  if (nextPage === "account") {
+                    navigate("/account")
+                  }
+                }}
+                forceCollapsed={false}
+                onSignOut={handleSignOut}
+              />
+            </Box>
+          </Drawer>
+        )}
       </Box>
     </Box>
   )
