@@ -18,7 +18,7 @@ export default function ForgotPassword() {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const validateEmailFormat = value =>
+    const validateEmailFormat = (value) =>
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
 
     const trimmedEmail = email.trim()
@@ -26,26 +26,26 @@ export default function ForgotPassword() {
     const isEmailValid = validateEmailFormat(trimmedEmail)
     const isSubmitDisabled = loading || !isEmailFilled || !isEmailValid
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setEmailError("")
 
-        if (!trimmedEmail) {
+    if (!trimmedEmail) {
         setEmailError("Email is required.")
         return
-        }
+    }
 
-        if (!validateEmailFormat(trimmedEmail)) {
+    if (!validateEmailFormat(trimmedEmail)) {
         setEmailError("Please enter a valid email address.")
         return
-        }
+    }
 
-        if (!API_BASE_URL) {
+    if (!API_BASE_URL) {
         setEmailError("Something went wrong. Please try again later.")
         return
-        }
+    }
 
-        try {
+    try {
         setLoading(true)
 
         const res = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
@@ -82,12 +82,15 @@ export default function ForgotPassword() {
     return (
         <Box
         sx={{
-            minHeight: "100vh",
             display: "flex",
+            width: "1440px",
+            height: "1024px",
             justifyContent: "center",
             alignItems: "center",
-            p: 3,
-            bgcolor: "#F8FAFC",
+            gap: "var(--5, 40px)",
+            flexShrink: 0,
+            mx: "auto",
+            bgcolor: "var(--Color-Background-Default)",
         }}
         >
         <Box
@@ -97,79 +100,87 @@ export default function ForgotPassword() {
             display: "flex",
             width: "640px",
             height: "706px",
-            padding: "56px 40px",
+            padding: "var(--7, 56px) var(--5, 40px)",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            gap: "48px",
-            borderRadius: "8px",
-            bgcolor: "#FFF",
+            gap: "var(--6, 48px)",
+            flexShrink: 0,
+            borderRadius: "var(--md, 8px)",
+            bgcolor: "var(--Color-Background-Paper)",
             boxShadow:
                 "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
             }}
         >
-            <Box
+        <Box
             component="img"
             src={LogoLarge}
             alt="TeTe"
             sx={{
+                display: "flex",
                 width: "207px",
                 height: "91.747px",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "10px",
                 flexShrink: 0,
+                aspectRatio: "207 / 91.75",
                 objectFit: "contain",
             }}
-            />
+        />
 
-            <Typography
+        <Typography
             sx={{
                 alignSelf: "stretch",
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary)",
                 textAlign: "center",
-                fontFamily: "IBM Plex Sans",
-                fontSize: "56px",
+                fontFamily: "var(--font-family)",
+                fontSize: "var(--FontSize-Display-Medium)",
+                fontStyle: "normal",
                 fontWeight: 600,
-                lineHeight: "60px",
-                letterSpacing: "-0.56px",
+                lineHeight: "var(--LineHeight-Display-Medium)",
+                letterSpacing: "var(--LetterSpace-DisplayMedium)",
             }}
-            >
-            Forgot Password?
-            </Typography>
+        >
+        Forgot Password?
+        </Typography>
 
-            <Typography
+        <Typography
             sx={{
                 height: "47px",
                 alignSelf: "stretch",
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary)",
                 textAlign: "center",
-                fontFamily: "IBM Plex Sans",
-                fontSize: "16px",
+                fontFamily: "var(--font-family)",
+                fontSize: "var(--FontSize-Body1)",
+                fontStyle: "normal",
                 fontWeight: 500,
                 lineHeight: "normal",
             }}
-            >
-            Enter your email address and we&apos;ll send you a link to reset your
-            password.
-            </Typography>
+        >
+        Enter your email address and we&apos;ll send you a link to reset your
+        password.
+        </Typography>
 
-            <Box
+        <Box
             sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: "32px",
+                gap: "var(--6, 48px)",
                 alignSelf: "stretch",
-                width: "100%",
             }}
-            >
-            <Box
-                sx={{
+        >
+        <Box
+            sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 alignSelf: "stretch",
-                }}
-            >
-                <TextField
+                mx:"auto",
+            }}
+        >
+        <TextField
                 fullWidth
                 variant="standard"
                 label="E-mail"
@@ -177,20 +188,19 @@ export default function ForgotPassword() {
                 value={email}
                 error={Boolean(emailError)}
                 helperText={emailError || " "}
-                onChange={e => {
+                onChange={(e) => {
                     setEmail(e.target.value)
                     if (emailError) setEmailError("")
                 }}
-                InputLabelProps={{
-                    shrink: true,
-                }}
+                InputLabelProps={{ shrink: true }}
                 FormHelperTextProps={{
                     sx: {
                     pt: "3px",
                     mx: 0,
-                    color: "#EF4444",
-                    fontFamily: "IBM Plex Sans",
-                    fontSize: "12px",
+                    color: "var(--Color-Error-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Caption)",
+                    fontStyle: "normal",
                     fontWeight: 400,
                     lineHeight: "normal",
                     letterSpacing: "0.1px",
@@ -199,43 +209,60 @@ export default function ForgotPassword() {
                 sx={{
                     alignSelf: "stretch",
                     "& .MuiInputLabel-root": {
-                    color: "#64748B",
-                    fontFamily: "IBM Plex Sans",
-                    fontSize: "12px",
+                    color: "var(--Color-Text-Secondary)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Caption)",
+                    fontStyle: "normal",
                     fontWeight: 500,
                     lineHeight: "normal",
                     transform: "translate(0, -1px) scale(1)",
                     },
                     "& .MuiInputLabel-root.Mui-focused": {
-                    color: emailError ? "#EF4444" : "#64748B",
+                    color:
+                        emailError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Text-Secondary)",
                     },
                     "& .MuiInputBase-root": {
                     mt: "18px",
-                    fontFamily: "IBM Plex Sans",
-                    fontSize: "16px",
-                    color: "#0F172A",
+                    width: "560px",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    color: "var(--Color-Text-Primary)",
                     },
                     "& .MuiInputBase-input": {
                     py: "10px",
                     },
                     "& .MuiInput-underline:before": {
-                    borderBottom: "1px solid #CBD5E1",
+                    borderBottom: `1px solid ${
+                        emailError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Default)"
+                    }`,
                     },
                     "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                    borderBottom: `1px solid ${emailError ? "#EF4444" : "#CBD5E1"}`,
+                    borderBottom: `1px solid ${
+                        emailError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Default)"
+                    }`,
                     },
                     "& .MuiInput-underline:after": {
-                    borderBottom: `1px solid ${emailError ? "#EF4444" : "#6B63FF"}`,
+                    borderBottom: `1px solid ${
+                        emailError
+                        ? "var(--Color-Error-Main)"
+                        : "var(--Color-Border-Active)"
+                    }`,
                     },
                 }}
-                />
-            </Box>
+            />
+        </Box>
 
-            <Button
-                type="submit"
-                size="large"
-                disabled={isSubmitDisabled}
-                sx={{
+        <Button
+            type="submit"
+            size="large"
+            disabled={isSubmitDisabled}
+            sx={{
                 display: "flex",
                 width: "var(--Button-Dialog, 560px)",
                 height: "48px",
@@ -243,72 +270,72 @@ export default function ForgotPassword() {
                 justifyContent: "center",
                 alignItems: "center",
                 flexShrink: 0,
-                borderRadius: "4px",
+                borderRadius: "var(--borderRadius, 4px)",
                 textTransform: "none",
-                fontFamily: "IBM Plex Sans",
+                fontFamily: "var(--font-family)",
                 fontSize: "15px",
                 fontWeight: 500,
                 lineHeight: "normal",
                 letterSpacing: "0.2px",
                 whiteSpace: "nowrap",
-
-                backgroundColor: "#6B63FF",
-                color: "#FFF",
+                backgroundColor: "var(--Color-Primary-Main)",
+                color: "var(--Color-Primary-Contrast)",
                 boxShadow:
-                "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
-
+                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
                 "&:hover": {
-                backgroundColor: "#6B63FF",
+                    backgroundColor: "var(--Color-Primary-Main)",
                 },
-
                 "&.Mui-disabled": {
-                backgroundColor: "#E2E8F0", // Color-Action-Disabled
-                color: "#94A3B8",           // Text-Disabled
-                boxShadow: "none",
+                    backgroundColor: "var(--Color-Action-Disabled)",
+                    color: "var(--Color-Text-Disabled)",
+                    boxShadow: "none",
+                    opacity: 1,
                 },
             }}
-            >
-                {loading ? "Sending..." : "Send Reset Link"}
-            </Button>
+        >
+            {loading ? "Sending..." : "Send Reset Link"}
+        </Button>
 
-            <Box
-                sx={{
+        <Box
+            sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: "8px",
-                }}
-            >
-                <Typography
-                sx={{
-                    color: "#0F172A",
-                    fontFamily: "IBM Plex Sans",
-                    fontSize: "16px",
-                    fontWeight: 400,
-                    lineHeight: "24px",
-                }}
-                >
-                Back to
-                </Typography>
+                gap: "var(--md, 8px)",
+            }}
+        >
+        <Typography
+            sx={{
+                color: "var(--Color-Text-Primary)",
+                fontFamily: "var(--font-family)",
+                fontSize: "var(--FontSize-Body1)",
+                fontWeight: 400,
+                lineHeight: "var(--LineHeight-Body1)",
+                letterSpacing: "var(--LetterSpace-Body1)",
+            }}
+        >
+        Back to
+        </Typography>
 
-                <Link
-                component={RouterLink}
-                to="/login"
-                underline="always"
-                sx={{
-                    color: "#3B82F6",
-                    fontFamily: "IBM Plex Sans",
-                    fontSize: "16px",
-                    fontWeight: 400,
-                    lineHeight: "24px",
-                    textDecorationColor: "rgba(59, 130, 246, 0.4)",
-                    textUnderlineOffset: "3px",
-                }}
-                >
-                Sign In
-                </Link>
-            </Box>
-            </Box>
+        <Link
+            component={RouterLink}
+            to="/login"
+            underline="always"
+            sx={{
+                color: "var(--Color-Info-Main)",
+                fontFamily: "var(--font-family)",
+                fontSize: "var(--FontSize-Body1)",
+                fontWeight: 400,
+                lineHeight: "var(--LineHeight-Body1)",
+                letterSpacing: "var(--LetterSpace-Body1)",
+                textDecorationColor: "var(--Color-Primary-_States-Outlined)",
+                textUnderlineOffset: "3px",
+            }}
+        >
+        Sign In
+        </Link>
         </Box>
         </Box>
+    </Box>
+    </Box>
     )
 }
