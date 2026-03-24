@@ -44,11 +44,13 @@ export default function CourseCompletionCard() {
         <Box
             sx={{
                 display: "flex",
-                width: "592px",
+                // width: "592px",
                 padding: "40px 32px",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 gap: "32px",
+                borderRadius: "8px",
+                background: "var(--Color-Background-Paper, #FFF)",
             }}
         >
             <Typography
