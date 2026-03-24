@@ -22,13 +22,24 @@ const StyledAccordion = styled(Accordion)(() => ({
 const StyledSummary = styled(AccordionSummary)(() => ({
     padding: 0,
     minHeight: "auto",
+    alignItems: "center",
+    width: "auto",
+    flexGrow: 0,
+
     "& .MuiAccordionSummary-content": {
         margin: 0,
+        display: "flex",
+        alignItems: "center",
+        gap: "16px",
+    },
+
+    "& .MuiAccordionSummary-expandIconWrapper": {
+        marginLeft: "16px",
     },
 }))
 
 const SectionHeading = styled(Typography)(() => ({
-    fontSize: "var(--FontSize-Headings-h3)",
+    fontSize: "28px",
     fontWeight: 600,
     color: "var(--Color-Text-Primary)",
 }))
@@ -82,7 +93,9 @@ export default function LectureContent({ lesson }) {
                         expanded={isOpen}
                         onChange={() => toggle(key)}
                     >
-                        <StyledSummary expandIcon={<ExpandMoreIcon />}>
+                        <StyledSummary expandIcon={
+                            <ExpandMoreIcon sx={{ fontSize: 32, color: "var(--Color-Text-Primary)" }} />
+                        }>
                             <SectionHeading>{sec.heading}</SectionHeading>
                         </StyledSummary>
 
