@@ -44,11 +44,12 @@ export default function CourseCompletionCard() {
         <Box
             sx={{
                 display: "flex",
-                width: "592px",
                 padding: "40px 32px",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 gap: "32px",
+                borderRadius: "8px",
+                background: "var(--Color-Background-Paper, #FFF)",
             }}
         >
             <Typography
@@ -69,7 +70,12 @@ export default function CourseCompletionCard() {
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "32px", width: "100%" }}>
                 {items.map((item) => (
-                    <ProgressBar key={item.id} title={item.title} value={item.value} />
+                    <ProgressBar
+                        key={item.id}
+                        title={item.title}
+                        value={item.value}
+                        courseId={item.id}
+                    />
                 ))}
             </Box>
         </Box>
