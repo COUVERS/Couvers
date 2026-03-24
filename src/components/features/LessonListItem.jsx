@@ -44,7 +44,7 @@ export default function LessonListItem({
                 <Links
                     component="button"
                     onClick={isLocked ? undefined : onClick}
-                    underline="always"
+                    underline={isLocked ? "none" : "always"}
                     sx={{
                         fontFamily: "IBM Plex Sans",
                         fontSize: "16px",
