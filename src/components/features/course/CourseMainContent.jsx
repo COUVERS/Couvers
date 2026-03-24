@@ -19,6 +19,7 @@ export default function CourseMainContent({
     onTakeQuiz,
     onBackToLessonList,
     onBackToLecture,
+    onQuizSubmitted,
 }) {
     const navigate = useNavigate()
     const location = useLocation()
@@ -87,6 +88,7 @@ export default function CourseMainContent({
                         lessonId={selectedLesson?._id}
                         quizItems={matchedQuizzes}
                         onBack={onBackToLecture}
+                        onQuizSubmitted={onQuizSubmitted}
                     />
                 )}
 
