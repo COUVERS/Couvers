@@ -12,12 +12,13 @@ export default function CourseOverview({
     if (!course) return null
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 5, mt: 5, }}>
             {nextLessonData?.lessonId && nextLessonData?.hasStartedLesson && (
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
                     <Typography
                         sx={{
-                            fontSize: "32px",
+                            color: "var(--Color-Secondary-Main)",
+                            fontSize: "var(--FontSize-Headings-h2)",
                             fontWeight: 600,
                             letterSpacing: "-0.2px",
                         }}
@@ -40,10 +41,11 @@ export default function CourseOverview({
                 </Box>
             )}
 
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 <Typography
                     sx={{
-                        fontSize: "32px",
+                        color: "var(--Color-Secondary-Main)",
+                        fontSize: "var(--FontSize-Headings-h2)",
                         fontWeight: 600,
                         letterSpacing: "-0.2px",
                     }}
