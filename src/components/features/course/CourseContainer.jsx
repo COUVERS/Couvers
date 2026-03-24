@@ -46,6 +46,64 @@ export default function CourseContainer({
         navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/quiz`)
     }
 
+    const loadNextLesson = async (courseId) => {
+        if (!courseId) return
+
+        try {
+            const token = localStorage.getItem("token")
+
+            const res = await fetch(`${API_BASE_URL}/api/dashboard/next-lesson`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+            const data = await res.json()
+
+            if (String(data.courseId) === String(courseId)) {
+                setNextLessonData(data)
+            } else {
+                setNextLessonData(null)
+            }
+        } catch (e) {
+            console.error("load next lesson error:", e)
+            setNextLessonData(null)
+        }
+    }
+
+    const loadCourseFull = async (courseId) => {
+        if (!courseId) return
+
+        try {
+            setIsLoading(true)
+            setError("")
+
+            const token = localStorage.getItem("token")
+
+            const res = await fetch(`${API_BASE_URL}/api/courses/${courseId}/full`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+            const data = await res.json()
+
+            setCourse(data.course || null)
+            setLessons(data.lessons || [])
+            setQuizzes(data.quizzes || [])
+        } catch (e) {
+            setError(e.message)
+            setCourse(null)
+            setLessons([])
+            setQuizzes([])
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         setSelectedLesson(null)
         setViewMode("lessonList")
@@ -96,69 +154,16 @@ export default function CourseContainer({
         setStartedLesson(null)
     }, [selectedCourseId])
 
+
+
     useEffect(() => {
         if (!selectedCourseId) return
-
-            ; (async () => {
-                try {
-                    const token = localStorage.getItem("token")
-
-                    const res = await fetch(`${API_BASE_URL}/api/dashboard/next-lesson`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
-
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-
-                    const data = await res.json()
-
-                    if (String(data.courseId) === String(selectedCourseId)) {
-                        setNextLessonData(data)
-                    } else {
-                        setNextLessonData(null)
-                    }
-                } catch (e) {
-                    console.error("load next lesson error:", e)
-                    setNextLessonData(null)
-                }
-            })()
+        loadNextLesson(selectedCourseId)
     }, [selectedCourseId])
 
     useEffect(() => {
         if (!selectedCourseId) return
-
-            ; (async () => {
-                try {
-                    setIsLoading(true)
-                    setError("")
-
-                    const token = localStorage.getItem("token")
-
-                    const res = await fetch(
-                        `${API_BASE_URL}/api/courses/${selectedCourseId}/full`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                            },
-                        }
-                    )
-
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-                    const data = await res.json()
-
-                    setCourse(data.course || null)
-                    setLessons(data.lessons || [])
-                    setQuizzes(data.quizzes || [])
-                } catch (e) {
-                    setError(e.message)
-                    setCourse(null)
-                    setLessons([])
-                    setQuizzes([])
-                } finally {
-                    setIsLoading(false)
-                }
-            })()
+        loadCourseFull(selectedCourseId)
     }, [selectedCourseId])
 
     useEffect(() => {
@@ -268,7 +273,12 @@ export default function CourseContainer({
                 onBackToLecture={() => {
                     if (!selectedCourseId || !selectedLesson?._id) return
                     navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/lecture`)
-                }} />
+                }}
+                onQuizSubmitted={async () => {
+                    await loadCourseFull(selectedCourseId)
+                    await loadNextLesson(selectedCourseId)
+                }}
+            />
         </Box>
     )
 }

@@ -9,7 +9,7 @@ import { API_BASE_URL } from "../config"
 import DialogConfirm from "../components/reusable-ui/DialogConfirm"
 
 
-export default function QuizPage({ courseId, lessonId, quizItems = [], onBack }) {
+export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, onQuizSubmitted }) {
 
   const navigate = useNavigate()
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -84,7 +84,7 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack })
       if (!response.ok) {
         throw new Error(data.message || "Submit failed")
       }
-
+      await onQuizSubmitted?.()
       // setResultData(data)
       // setShowResult(true)
       navigate(`/courses/${courseId}/lessons/${lessonId}/result`, {
