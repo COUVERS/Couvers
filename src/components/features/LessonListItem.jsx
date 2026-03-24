@@ -33,7 +33,7 @@ export default function LessonListItem({
         <Box
             sx={{
                 display: "flex",
-                alignItems: "flex-start",
+                alignItems: "center",
                 gap: 5,
                 opacity: isLocked ? 0.7 : 1,
             }}
@@ -50,7 +50,17 @@ export default function LessonListItem({
                         fontSize: "16px",
                         fontWeight: 500,
                         lineHeight: "normal",
-                        color: isLocked ? "text.disabled" : undefined,
+
+                        color: isLocked ? "text.disabled" : "var(--Color-Info-Main)",
+                        textDecorationColor: isLocked
+                            ? "text.disabled"
+                            : "color-mix(in srgb, var(--Color-Info-Main) 40%, transparent)",
+                        "&:hover": {
+                            textDecorationColor: isLocked
+                                ? "text.disabled"
+                                : "var(--Color-Info-Main)",
+                        },
+
                         pointerEvents: isLocked ? "none" : "auto",
                         textAlign: "left",
                     }}
@@ -78,7 +88,10 @@ export default function LessonListItem({
                             gap: "8px",
                         }}
                     >
-                        <VerifiedIcon fontSize="small" />
+                        <VerifiedIcon
+                            fontSize="small"
+                            sx={{ color: "var(--Brand-Indigo-700)" }}
+                        />
                         <Typography
                             sx={{
                                 fontFamily: "IBM Plex Sans",
