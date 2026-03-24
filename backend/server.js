@@ -486,17 +486,16 @@ app.post("/api/lessons/:lessonId/start", authMiddleware, async (req, res) => {
     const userId = req.user.userId
     const { lessonId } = req.params
 
-    const progress = await LessonProgress.findOneAndUpdate(
-      { userId, lessonId },
-      {
-        $set: { status: "in_progress" },
-        $setOnInsert: { bestScore: 0 },
-      },
-      {
-        new: true,
-        upsert: true,
-      }
-    )
+    let progress = await LessonProgress.findOne({ userId, lessonId })
+
+    if (!progress) {
+      progress = await LessonProgress.create({
+        userId,
+        lessonId,
+        status: "in_progress",
+        bestScore: 0,
+      })
+    }
 
     return res.status(200).json({
       message: "Lesson marked as in progress",
