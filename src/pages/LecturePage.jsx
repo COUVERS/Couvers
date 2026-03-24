@@ -3,27 +3,49 @@ import { styled } from "@mui/material/styles"
 import { Box } from "@mui/material"
 import Button from "@mui/material/Button"
 import LectureContent from "../components/features/LectureContent"
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 
 const Page = styled(Box)(() => ({
     display: "flex",
+    flexDirection: "column",
     minHeight: "100vh",
     background: "var(--Color-Background-Default)",
 }))
 
 const Main = styled(Box)(() => ({
     flex: 1,
-    padding: "48px",
     display: "flex",
     flexDirection: "column",
     gap: "32px",
 }))
+
+const ContentWrap = styled(Box)(() => ({
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    padding: "0 100px 0 56px",
+    boxSizing: "border-box",
+}))
+
 const Footer = styled(Box)(() => ({
-    marginTop: "auto",
+    position: "sticky",
+    bottom: 0,
+    zIndex: 10,
+    display: "flex",
+    alignItems: "center",
+    height: "111px",
+    flexShrink: 0,
+    background: "var(--Color-Background-Paper, #FFF)",
+    boxShadow:
+        "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+}))
+
+const FooterInner = styled(Box)(() => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: "24px",
+    width: "100%",
+    padding: "0 100px 0 56px",
+    boxSizing: "border-box",
 }))
 
 export default function LecturePage({
@@ -39,13 +61,16 @@ export default function LecturePage({
 
     return (
         <Page>
-            <Main>
-                <LectureContent lesson={activeLesson} />
-
-                <Footer>
+            <ContentWrap>
+                <Main>
+                    <LectureContent lesson={activeLesson} />
+                </Main>
+            </ContentWrap>
+            <Footer>
+                <FooterInner>
                     <Button
                         variant="outlined"
-                        size="medium"
+                        size="large"
                         onClick={onExit}
                     >
                         Exit a Lecture
@@ -54,13 +79,12 @@ export default function LecturePage({
                     <Button
                         variant="contained"
                         size="large"
-                        endIcon={<ChevronRightIcon />}
                         onClick={onTakeQuiz}
                     >
                         Take a Quiz
                     </Button>
-                </Footer>
-            </Main>
-        </Page>
+                </FooterInner>
+            </Footer>
+        </Page >
     )
 }

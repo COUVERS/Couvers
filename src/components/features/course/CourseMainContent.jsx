@@ -52,7 +52,7 @@ export default function CourseMainContent({
         : course?.description || ""
 
     return (
-        <Box sx={{ flex: 1, pt: 0, px: 0, pb: 4 }}>
+        <Box sx={{ flex: 1, pt: 0, px: 0, pb: viewMode === "lecture" ? 0 : 4, }}>
             {isLoading && <p>Loading...</p>}
             {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
@@ -63,7 +63,7 @@ export default function CourseMainContent({
                 />
             )}
 
-            <Box sx={{ px: 4 }}>
+            <Box sx={{ px: viewMode === "lecture" ? 0 : 4 }}>
                 {viewMode === "lessonList" && (
                     <CourseOverview
                         course={course}

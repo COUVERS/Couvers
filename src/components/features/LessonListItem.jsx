@@ -33,7 +33,7 @@ export default function LessonListItem({
         <Box
             sx={{
                 display: "flex",
-                alignItems: "flex-start",
+                alignItems: "center",
                 gap: 5,
                 opacity: isLocked ? 0.7 : 1,
             }}
@@ -44,13 +44,23 @@ export default function LessonListItem({
                 <Links
                     component="button"
                     onClick={isLocked ? undefined : onClick}
-                    underline="always"
+                    underline={isLocked ? "none" : "always"}
                     sx={{
                         fontFamily: "IBM Plex Sans",
                         fontSize: "16px",
                         fontWeight: 500,
                         lineHeight: "normal",
-                        color: isLocked ? "text.disabled" : undefined,
+
+                        color: isLocked ? "text.disabled" : "var(--Color-Info-Main)",
+                        textDecorationColor: isLocked
+                            ? "text.disabled"
+                            : "color-mix(in srgb, var(--Color-Info-Main) 40%, transparent)",
+                        "&:hover": {
+                            textDecorationColor: isLocked
+                                ? "text.disabled"
+                                : "var(--Color-Info-Main)",
+                        },
+
                         pointerEvents: isLocked ? "none" : "auto",
                         textAlign: "left",
                     }}
@@ -61,9 +71,9 @@ export default function LessonListItem({
                 <Typography
                     sx={{
                         fontFamily: "IBM Plex Sans",
-                        fontSize: "16px",
-                        fontWeight: 400,
-                        lineHeight: "24px",
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        letterSpacing: "0.1px",
                         color: isLocked ? "text.disabled" : "var(--Color-Text-Primary)",
                     }}
                 >
@@ -78,12 +88,17 @@ export default function LessonListItem({
                             gap: "8px",
                         }}
                     >
-                        <VerifiedIcon fontSize="small" />
+                        <VerifiedIcon
+                            sx={{
+                                fontSize: 24,
+                                color: "var(--Brand-Indigo-700)",
+                            }}
+                        />
                         <Typography
                             sx={{
                                 fontFamily: "IBM Plex Sans",
-                                fontSize: "14px",
-                                fontWeight: 500,
+                                fontSize: "16px",
+                                fontWeight: 400,
                                 lineHeight: "normal",
                                 letterSpacing: "0.1px",
                                 color: "var(--Color-Text-Primary)",
@@ -102,7 +117,12 @@ export default function LessonListItem({
                             gap: "8px",
                         }}
                     >
-                        <ErrorIcon fontSize="small" />
+                        <ErrorIcon
+                            sx={{
+                                fontSize: 24,
+                                color: "var(--Brand-Indigo-700)",
+                            }}
+                        />
                         <Typography
                             sx={{
                                 fontFamily: "IBM Plex Sans",

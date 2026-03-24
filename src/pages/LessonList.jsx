@@ -9,7 +9,7 @@ export default function LessonList({ lessons = [], onOpenLesson }) {
         }))
     )
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {lessons.map((lesson) => {
                 const badgeVariant =
                     lesson.status === "completed"
