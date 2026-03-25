@@ -139,7 +139,7 @@ export default function Dashboard({ onStartCourse, setPage }) {
                 <CourseCompletionCard />
             </Box>
             <Box>
-                <CertificateCard onTakeCourse={() => setPage("courses")} />
+                <CertificateCard onTakeCourse={() => onStartCourse(null)} />
             </Box>
             <Box>
                 <ReviewCourseCard>
