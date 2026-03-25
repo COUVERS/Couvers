@@ -90,7 +90,14 @@ export default function CertificateCard({ onTakeCourse }) {
                         Prove your skills. Get certified.
                     </Typography>
 
-                    <Button onClick={onTakeCourse}>
+                    <Button
+                        variant="outlined"
+                        size="large"
+                        onClick={onTakeCourse}
+                        sx={{
+                            height: 48,
+                        }}
+                    >
                         Take a Course
                     </Button>
                 </Box>
