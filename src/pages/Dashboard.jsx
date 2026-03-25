@@ -17,7 +17,7 @@ const SKILL_LABELS = [
     "Student Engagement",
 ]
 
-export default function Dashboard({ onStartCourse, setPage }) {
+export default function Dashboard({ onStartCourse, onOpenRecommendedCourse, setPage }) {
     const [nextLesson, setNextLesson] = useState(null)
     const [error, setError] = useState("")
     const [reviewLesson, setReviewLesson] = useState(null)
@@ -105,6 +105,32 @@ export default function Dashboard({ onStartCourse, setPage }) {
         loadSkillMetrics()
     }, [])
 
+    async function handleTakeCourse() {
+        try {
+            const token = localStorage.getItem("token")
+
+            const res = await fetch(`${API_BASE_URL}/api/dashboard/courses`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+            const data = await res.json()
+            const courses = data.courses || []
+
+            const targetCourse = courses
+                .filter((course) => Number(course.progress) > 0 && Number(course.progress) < 100)
+                .sort((a, b) => Number(b.progress) - Number(a.progress))[0]
+
+            onOpenRecommendedCourse?.(targetCourse?.courseId || null)
+        } catch (e) {
+            console.error("handleTakeCourse error:", e)
+            onOpenRecommendedCourse?.(null)
+        }
+    }
+
     return (
         <Box
             sx={{
@@ -139,7 +165,7 @@ export default function Dashboard({ onStartCourse, setPage }) {
                 <CourseCompletionCard />
             </Box>
             <Box>
-                <CertificateCard onTakeCourse={() => onStartCourse(null)} />
+                <CertificateCard onTakeCourse={handleTakeCourse} />
             </Box>
             <Box>
                 <ReviewCourseCard>
