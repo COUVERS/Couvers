@@ -51,27 +51,27 @@ export default function App() {
       : "settings"
 
   const handleOpenSignOutDialog = () => {
-  setSignOutOpen(true)
-}
+    setSignOutOpen(true)
+  }
 
-const handleCloseSignOutDialog = () => {
-  setSignOutOpen(false)
-}
+  const handleCloseSignOutDialog = () => {
+    setSignOutOpen(false)
+  }
 
-const handleConfirmSignOut = () => {
-  setSignOutOpen(false)
+  const handleConfirmSignOut = () => {
+    setSignOutOpen(false)
 
-  localStorage.removeItem("token")
-  localStorage.removeItem("user")
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
 
-  setIsLoggedIn(false)
-  setAuthUser(null)
-  setDashboardHeader(null)
-  setContinueCourseId(null)
-  setContinueLessonId(null)
+    setIsLoggedIn(false)
+    setAuthUser(null)
+    setDashboardHeader(null)
+    setContinueCourseId(null)
+    setContinueLessonId(null)
 
-  navigate("/login")
-}
+    navigate("/login")
+  }
 
   const openCoursesOverview = () => {
     setContinueCourseId(null)
@@ -89,6 +89,19 @@ const handleConfirmSignOut = () => {
       setContinueCourseId(null)
       setContinueLessonId(null)
     }
+    navigate("/courses")
+  }
+
+  const openRecommendedCourse = (courseId) => {
+    setContinueCourseId(null)
+    setContinueLessonId(null)
+    setCourseResetSignal((prev) => prev + 1)
+
+    if (courseId) {
+      navigate(`/courses/${courseId}`)
+      return
+    }
+
     navigate("/courses")
   }
 
@@ -251,7 +264,11 @@ const handleConfirmSignOut = () => {
         <Routes>
           <Route
             path="/"
-            element={<Dashboard onStartCourse={openContinueLesson} />}
+            element={
+              <Dashboard
+                onStartCourse={openContinueLesson}
+                onOpenRecommendedCourse={openRecommendedCourse}
+              />}
           />
           <Route
             path="/courses"
@@ -353,11 +370,11 @@ const handleConfirmSignOut = () => {
             </Box>
           </Drawer>
         )}
-         <SignOutDialog
-        open={signOutOpen}
-        onClose={handleCloseSignOutDialog}
-        onConfirm={handleConfirmSignOut}
-      />
+        <SignOutDialog
+          open={signOutOpen}
+          onClose={handleCloseSignOutDialog}
+          onConfirm={handleConfirmSignOut}
+        />
       </Box>
     </Box>
   )
