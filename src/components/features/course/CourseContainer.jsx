@@ -46,32 +46,32 @@ export default function CourseContainer({
         navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/quiz`)
     }
 
-    const loadNextLesson = async (courseId) => {
-        if (!courseId) return
+    // const loadNextLesson = async (courseId) => {
+    //     if (!courseId) return
 
-        try {
-            const token = localStorage.getItem("token")
+    //     try {
+    //         const token = localStorage.getItem("token")
 
-            const res = await fetch(`${API_BASE_URL}/api/dashboard/next-lesson`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+    //         const res = await fetch(`${API_BASE_URL}/api/dashboard/next-lesson`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         })
 
-            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    //         if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
-            const data = await res.json()
+    //         const data = await res.json()
 
-            if (String(data.courseId) === String(courseId)) {
-                setNextLessonData(data)
-            } else {
-                setNextLessonData(null)
-            }
-        } catch (e) {
-            console.error("load next lesson error:", e)
-            setNextLessonData(null)
-        }
-    }
+    //         if (String(data.courseId) === String(courseId)) {
+    //             setNextLessonData(data)
+    //         } else {
+    //             setNextLessonData(null)
+    //         }
+    //     } catch (e) {
+    //         console.error("load next lesson error:", e)
+    //         setNextLessonData(null)
+    //     }
+    // }
 
     const loadCourseFull = async (courseId) => {
         if (!courseId) return
@@ -91,14 +91,41 @@ export default function CourseContainer({
             if (!res.ok) throw new Error(`HTTP ${res.status}`)
             const data = await res.json()
 
-            setCourse(data.course || null)
-            setLessons(data.lessons || [])
-            setQuizzes(data.quizzes || [])
+            const loadedCourse = data.course || null
+            const loadedLessons = data.lessons || []
+            const loadedQuizzes = data.quizzes || []
+
+            setCourse(loadedCourse)
+            setLessons(loadedLessons)
+            setQuizzes(loadedQuizzes)
+
+            const nextLesson = loadedLessons.find(
+                (lesson) => lesson.status !== "completed" && lesson.status !== "locked"
+            )
+
+            const hasStartedLesson = loadedLessons.some(
+                (lesson) => lesson.status === "completed"
+            )
+
+            if (nextLesson && hasStartedLesson) {
+                setNextLessonData({
+                    courseId,
+                    courseName: loadedCourse?.title || "",
+                    iconKey: loadedCourse?.iconKey || loadedCourse?.icon || "empathy",
+                    lessonId: nextLesson._id,
+                    lessonTitle: nextLesson.title,
+                    hasStartedLesson: true,
+                })
+            } else {
+                setNextLessonData(null)
+            }
+
         } catch (e) {
             setError(e.message)
             setCourse(null)
             setLessons([])
             setQuizzes([])
+            setNextLessonData(null)
         } finally {
             setIsLoading(false)
         }
@@ -156,10 +183,10 @@ export default function CourseContainer({
 
 
 
-    useEffect(() => {
-        if (!selectedCourseId) return
-        loadNextLesson(selectedCourseId)
-    }, [selectedCourseId])
+    // useEffect(() => {
+    //     if (!selectedCourseId) return
+    //     loadNextLesson(selectedCourseId)
+    // }, [selectedCourseId])
 
     useEffect(() => {
         if (!selectedCourseId) return
@@ -276,7 +303,7 @@ export default function CourseContainer({
                 }}
                 onQuizSubmitted={async () => {
                     await loadCourseFull(selectedCourseId)
-                    await loadNextLesson(selectedCourseId)
+                    // await loadNextLesson(selectedCourseId)
                 }}
             />
         </Box>
