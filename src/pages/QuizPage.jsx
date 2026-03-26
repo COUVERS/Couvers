@@ -139,10 +139,34 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
           />
 
           {isLastQuestion && answers.length === quizItems.length && (
-            <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
+            <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end", px: "110px" }}>
               <Button
                 variant="contained"
                 onClick={handleCheckResult}
+                sx={{
+                  width: "160px",
+                  height: "48px",
+                  px: "40px",
+                  py: "12px",
+                  borderRadius: "4px",
+                  backgroundColor: "#6B63FF",
+                  boxShadow:
+                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+
+                  fontFamily: '"IBM Plex Sans", sans-serif',
+                  fontSize: "15px",
+                  fontWeight: 500,
+                  letterSpacing: "0.2px",
+                  textTransform: "none",
+
+                  "&:hover": {
+                    backgroundColor: "#5a52e0",
+                  },
+                }}
               >
                 Check the Result
               </Button>
