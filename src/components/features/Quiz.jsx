@@ -92,12 +92,35 @@ const OptionWrapper = styled(Box, {
 })
 
 const SubmitButton = styled(Button)(() => ({
-  backgroundColor: "var(--Color-Primary-Main)",
-  textTransform: "none",
-  borderRadius: "8px",
-  padding: "10px 28px"
-}))
+  width: "160px",
+  height: "48px",
+  padding: "12px 40px",
+  borderRadius: "4px",
+  backgroundColor: "#6B63FF",
+  boxShadow:
+    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
 
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  fontFamily: '"IBM Plex Sans", sans-serif',
+  fontSize: "15px",
+  fontStyle: "normal",
+  fontWeight: 500,
+  lineHeight: "normal",
+  letterSpacing: "0.2px",
+  textTransform: "none",
+
+  "&:hover": {
+    backgroundColor: "#5a52e0",
+  },
+
+  "&.Mui-disabled": {
+    backgroundColor: "#C7C3FF",
+    color: "#FFF",
+  },
+}))
 const ScenarioWrapper = styled(Box)(() => ({
   display: "flex",
   padding: "8px 56px 20px 56px",
@@ -248,7 +271,34 @@ export default function Quiz({
           <Button
             variant="outlined"
             onClick={onBack}
-            sx={{ minWidth: 180 }}
+            sx={{
+              width: "160px",
+              height: "48px",
+              px: "40px",
+              py: "12px",
+              borderRadius: "4px",
+              border: "1px solid rgba(46, 42, 95, 0.50)",
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+
+              color: "#2E2A5F",
+              fontFamily: '"IBM Plex Sans", sans-serif',
+              fontSize: "15px",
+              fontStyle: "normal",
+              fontWeight: 500,
+              lineHeight: "normal",
+              letterSpacing: "0.2px",
+              textTransform: "none",
+
+              boxSizing: "border-box",
+
+              "&:hover": {
+                border: "1px solid rgba(46, 42, 95, 0.80)",
+                backgroundColor: "rgba(46, 42, 95, 0.04)",
+              },
+            }}
           >
             Return to Lecture
           </Button>
@@ -257,7 +307,6 @@ export default function Quiz({
             variant="contained"
             disabled={!selected}
             onClick={handleSubmit}
-            sx={{ minWidth: 180 }}
           >
             {showResult ? "Next Question" : "Submit Answer"}
           </SubmitButton>

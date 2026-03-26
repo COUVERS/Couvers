@@ -42,6 +42,19 @@ const labelPositions = [
   { top: "32%", left: -100 },
 ]
 
+const SKILL_DESCRIPTIONS = {
+  "Lesson Structure":
+    "Ability to organize lesson components in a clear and logical sequence.",
+  "Explanation Clarity":
+    "Ability to explain concepts, objectives, and instructions clearly and understandably.",
+  "Assessment":
+    "Ability to check and evaluate learner understanding during and after instruction.",
+  "Pacing":
+    "Ability to manage lesson timing and progression effectively.",
+  "Student Engagement":
+    "Ability to maintain learner attention, participation, and involvement during instruction.",
+}
+
 const tooltipProps = {
   title: "Your skills will improve as you progress through the quiz.",
   placement: "right",
@@ -243,41 +256,92 @@ export default function SkillDevelopmentRadarChart({
         >
           {metrics.map((metric, index) => (
             <Box
-              key={metric.label}
+              key={metric.label || metric.skill || index}
               sx={{
                 position: "absolute",
                 textAlign: "center",
                 width: 150,
+                zIndex: 2,
                 ...labelPositions[index],
               }}
             >
-              <Typography
-                sx={{
-                  color: "var(--Color-Text-Primary, #0F172A)",
-                  fontFamily: '"IBM Plex Sans", sans-serif',
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: 500,
-                  lineHeight: "normal",
+              <Tooltip
+                title={
+                  <Box>
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: "12px",
+                        mb: "4px",
+                      }}
+                    >
+                      {metric.label || metric.skill}
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        fontSize: "10px",
+                        lineHeight: "14px",
+                        opacity: 0.9,
+                      }}
+                    >
+                      {SKILL_DESCRIPTIONS[metric.label || metric.skill] || "No description available"}
+                    </Typography>
+                  </Box>
+                }
+                arrow
+                placement="top"
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      backgroundColor: "#1E3A8A",
+                      color: "#FFF",
+                      fontFamily: '"IBM Plex Sans", sans-serif',
+                      fontSize: "10px",
+                      fontWeight: 500,
+                      lineHeight: "14px",
+                      borderRadius: "8px",
+                      px: "10px",
+                      py: "6px",
+                      maxWidth: "220px",
+                      whiteSpace: "normal",
+                    },
+                  },
+                  arrow: {
+                    sx: {
+                      color: "#1E3A8A",
+                    },
+                  },
                 }}
               >
-                {metric.label}
-              </Typography>
+                <span style={{ display: "inline-block", cursor: "pointer" }}>
+                  <Typography
+                    component="span"
+                    sx={{
+                      color: "var(--Color-Text-Primary, #0F172A)",
+                      fontFamily: '"IBM Plex Sans", sans-serif',
+                      fontSize: "16px",
+                      fontWeight: 500,
+                      lineHeight: "normal",
+                    }}
+                  >
+                    {metric.label || metric.skill}
+                  </Typography>
+                </span>
+              </Tooltip>
 
               <Typography fontSize="12px">
-                {metric.value}%
+                {(metric.value ?? metric.score) || 0}%
               </Typography>
             </Box>
           ))}
-
-          <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} fill="none">
-            {/* contorno exterior sólido */}
-            <polygon
-              points={polygonPoints(CENTER, CENTER, RADIUS, metrics.length)}
-              fill="none"
-              stroke="#676767"
-              strokeWidth={1.2}
-            />
+          <svg
+            width={SIZE}
+            height={SIZE}
+            viewBox={`0 0 ${SIZE} ${SIZE}`}
+            fill="none"
+            style={{ position: "relative", zIndex: 1, pointerEvents: "none" }}
+          >
 
             {/* niveles internos punteados */}
             {Array.from({ length: LEVELS - 1 }, (_, index) => {

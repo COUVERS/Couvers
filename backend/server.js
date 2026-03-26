@@ -824,6 +824,7 @@ app.get("/api/dashboard/skills", authMiddleware, async (req, res) => {
         skillId: skill._id,
         skill: skill.name,
         score: 0,
+        description: skill.description || "",
         passedLessons: 0,
         totalLessons: 5,
       });
