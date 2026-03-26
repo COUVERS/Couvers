@@ -21,6 +21,7 @@ import ChangePassword from "./components/features/ChangePassword"
 import Dashboard from "./pages/Dashboard"
 import { API_BASE_URL } from "./config"
 import DashboardHeader from "./components/reusable-ui/DashboardHeader"
+import PageHeader from "./components/reusable-ui/PageHeader"
 
 export default function App() {
   const theme = useTheme()
@@ -92,6 +93,8 @@ export default function App() {
     navigate("/courses")
   }
 
+
+
   const openRecommendedCourse = (courseId) => {
     setContinueCourseId(null)
     setContinueLessonId(null)
@@ -116,15 +119,20 @@ export default function App() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("auth/me data:", data)
+        console.log("accountHeader from backend:", data.accountHeader)
+        console.log("changePasswordHeader from backend:", data.changePasswordHeader)
         if (data.user) {
           setAuthUser(data.user)
           setDashboardHeader(data.dashboardHeader || null)
+
           setIsLoggedIn(true)
         } else {
           localStorage.removeItem("token")
           setIsLoggedIn(false)
           setAuthUser(null)
           setDashboardHeader(null)
+
           navigate("/login")
         }
       })
@@ -133,6 +141,7 @@ export default function App() {
         setIsLoggedIn(false)
         setAuthUser(null)
         setDashboardHeader(null)
+
         navigate("/login")
       })
   }, [navigate])
@@ -211,7 +220,7 @@ export default function App() {
         sx={{
           flex: 1,
           minWidth: 0,
-          p: isMobile ? 0 : page === "courses" ? 0 : 2,
+          p: isMobile ? 0 : page === "courses" || page === "account" ? 0 : 2,
         }}
       >
         {isMobile && (
@@ -260,6 +269,22 @@ export default function App() {
             description={dashboardHeader?.description || ""}
           />
         )}
+
+        {location.pathname === "/account" && (
+          <PageHeader
+            title="Account Settings"
+            description="Manage your personal information, security preferences, and account details here."
+          />
+        )}
+
+        {location.pathname === "/account/change-password" && (
+          <PageHeader
+            title="Change Password"
+            description="For your security, we recommend changing your password periodically."
+          />
+        )}
+
+
 
         <Routes>
           <Route

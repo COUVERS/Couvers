@@ -156,15 +156,13 @@ function SkillDevelopmentCard({ children, loading = false }) {
         ) : (
           <>
             <Typography
+              variant="h2"
               sx={{
                 color: "var(--Color-Text-Primary, #0F172A)",
-                fontFamily: '"IBM Plex Sans", sans-serif',
-                fontSize: "32px",
-                fontStyle: "normal",
+                fontFamily: '"IBM Plex Sans"',
+                fontSize: "var(--FontSize-Headings-h2, 32px)",
                 fontWeight: 600,
-                lineHeight: "normal",
                 letterSpacing: "-0.2px",
-                whiteSpace: "nowrap",
               }}
             >
               Skill Development

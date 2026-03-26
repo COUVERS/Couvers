@@ -7,6 +7,9 @@ import {
   RadioGroup,
   Button
 } from "@mui/material"
+import CheckIcon from "@mui/icons-material/Check"
+import CloseIcon from "@mui/icons-material/Close"
+
 
 /* =========================
    Styled Components
@@ -59,33 +62,35 @@ const OptionWrapper = styled(Box, {
     prop !== "correct" &&
     prop !== "incorrect"
 })(({ selected, correct, incorrect }) => {
-  let border = "2px solid var(--color-outline)"
+  let border = "1px solid #A5B4FC"
   let background = "transparent"
-  let color = "inherit"
+  let color = "#0F172A"
 
   if (correct) {
-    border = "2px solid #22c55e"
-    background = "#22c55e"
-    color = "white"
+    border = "1px solid #10B981"
+    background = "#10B981"
+    color = "#FFFFFF"
   } else if (incorrect) {
-    border = "2px solid #ef4444"
-    background = "#ef4444"
-    color = "white"
+    border = "1px solid #EF4444"
+    background = "#EF4444"
+    color = "#FFFFFF"
   } else if (selected) {
-    border = "2px solid var(--color-primary)"
-    background = "rgba(107, 99, 255, 0.18)"
+    border = "1px solid rgba(107, 99, 255, 0.08)"
+    background = "#A5B4FC"
+    color = "#0F172A"
   }
 
   return {
     border,
-    borderRadius: "10px",
-    padding: "14px 18px",
+    borderRadius: "12px",
+    minWidth: "320px",
+    padding: "12px",
     width: "100%",
     backgroundColor: background,
     color,
     display: "flex",
     alignItems: "center",
-    gap: "16px",
+    gap: "20px",
     transition: "all 0.2s ease",
     boxSizing: "border-box",
   }
@@ -213,15 +218,23 @@ export default function Quiz({
                 }}
               >
                 {showResult && correct && (
-                  <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
-                    ✓
-                  </Typography>
+                  <CheckIcon
+                    sx={{
+                      fontSize: 28,
+                      color: "#FFFFFF",
+                      flexShrink: 0,
+                    }}
+                  />
                 )}
 
                 {showResult && incorrect && (
-                  <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
-                    ✕
-                  </Typography>
+                  <CloseIcon
+                    sx={{
+                      fontSize: 28,
+                      color: "#FFFFFF",
+                      flexShrink: 0,
+                    }}
+                  />
                 )}
 
                 {!showResult && (
@@ -229,10 +242,11 @@ export default function Quiz({
                     value={option}
                     checked={selected === option}
                     sx={{
-                      color: "var(--Color-Primary-Main)",
+                      mt: "2px",
+                      color: "#2E2A5F",
                       "&.Mui-checked": {
-                        color: "var(--Color-Primary-Main)"
-                      }
+                        color: "#4F46E5",
+                      },
                     }}
                   />
                 )}
