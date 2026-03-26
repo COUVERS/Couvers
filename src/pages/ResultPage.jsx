@@ -7,6 +7,8 @@ import {
   AccordionDetails,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import CheckIcon from "@mui/icons-material/Check"
+import CloseIcon from "@mui/icons-material/Close"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import SkillAccuracyBar from "../components/reusable-ui/SkillAccuracyBar"
 
@@ -134,45 +136,71 @@ export default function ResultPage() {
             disableGutters
             sx={{
               mb: 2,
-              border: "1px solid #d1d5db",
-              borderRadius: "16px",
+              border: "1px solid #A5B4FC",
+              borderRadius: "0px",
               boxShadow: "none",
               overflow: "hidden",
-              backgroundColor: "#fff",
+              backgroundColor: "#FFF",
               "&:before": {
                 display: "none",
               },
             }}
           >
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={
+                <ExpandMoreIcon
+                  sx={{
+                    color: "#0F172A",
+                    fontSize: 32,
+                  }}
+                />
+              }
               sx={{
-                px: 3,
-                py: 2,
+                minHeight: "80px",
+                height: "80px",
+                px: "24px",
+                py: 0,
+                justifyContent: "space-between",
+                alignItems: "center",
                 "& .MuiAccordionSummary-content": {
                   margin: 0,
+                  alignItems: "center",
                 },
               }}
             >
-              <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
-                <Typography
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "20px",
+                  width: "100%",
+                }}
+              >
+                <Box
                   sx={{
-                    color,
-                    fontWeight: "bold",
-                    fontSize: 24,
-                    lineHeight: 1,
-                    mt: "2px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 36,
+                    height: 36,
+                    color: item.correct ? "#10B981" : "#EF4444",
+                    flexShrink: 0,
                   }}
                 >
-                  {item.correct ? "✓" : "✕"}
-                </Typography>
+                  {item.correct ? (
+                    <CheckIcon sx={{ fontSize: 36 }} />
+                  ) : (
+                    <CloseIcon sx={{ fontSize: 36 }} />
+                  )}
+                </Box>
 
-                <Box>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                   <Typography
                     sx={{
                       fontWeight: 700,
-                      fontSize: 20,
-                      color: "#0f172a",
+                      fontSize: "20px",
+                      color: "#0F172A",
+                      lineHeight: 1.2,
                     }}
                   >
                     {item.question}
@@ -180,9 +208,10 @@ export default function ResultPage() {
 
                   <Typography
                     sx={{
-                      color: "#6b7280",
-                      fontSize: 16,
-                      mt: 0.5,
+                      color: "#64748B",
+                      fontSize: "16px",
+                      fontWeight: 500,
+                      lineHeight: 1.2,
                     }}
                   >
                     {item.correct ? "Correct" : "Incorrect"}
@@ -193,29 +222,30 @@ export default function ResultPage() {
 
             <AccordionDetails
               sx={{
-                px: 3,
-                pb: 3,
+                px: "24px",
+                pb: "24px",
                 pt: 0,
+                backgroundColor: "#FFF",
               }}
             >
-              <Typography sx={{ fontWeight: 700, mb: 1, color: "#0f172a" }}>
+              <Typography sx={{ fontWeight: 700, mb: 1, color: "#0F172A", fontSize: "18px" }}>
                 Your Answer
               </Typography>
-              <Typography sx={{ mb: 3, color: "#0f172a" }}>
+              <Typography sx={{ mb: 3, color: "#0F172A", fontSize: "16px" }}>
                 {item.userAnswer}
               </Typography>
 
-              <Typography sx={{ fontWeight: 700, mb: 1, color: "#0f172a" }}>
+              <Typography sx={{ fontWeight: 700, mb: 1, color: "#0F172A", fontSize: "18px" }}>
                 Correct Answer
               </Typography>
-              <Typography sx={{ mb: 3, color: "#0f172a" }}>
+              <Typography sx={{ mb: 3, color: "#0F172A", fontSize: "16px" }}>
                 {item.correctAnswer}
               </Typography>
 
-              <Typography sx={{ fontWeight: 700, mb: 1, color: "#0f172a" }}>
+              <Typography sx={{ fontWeight: 700, mb: 1, color: "#0F172A", fontSize: "18px" }}>
                 Explanation
               </Typography>
-              <Typography sx={{ color: "#0f172a" }}>
+              <Typography sx={{ color: "#0F172A", fontSize: "16px" }}>
                 {item.explanation}
               </Typography>
             </AccordionDetails>
