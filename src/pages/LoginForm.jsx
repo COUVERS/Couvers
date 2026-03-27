@@ -141,23 +141,40 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                     }}
                 />
 
-                <Typography
-                    sx={{
-                        alignSelf: "stretch",
-                        color: "var(--Color-Text-Primary, #0F172A)",
-                        textAlign: "center",
-                        fontFamily: "IBM Plex Sans",
-                        fontSize: "var(--FontSize-Display-Medium, 40px)",
-                        fontStyle: "normal",
-                        fontWeight: 600,
-                        lineHeight: "var(--LineHeight-Display-Medium, 48px)",
-                        letterSpacing: "var(--LetterSpace-DisplayMedium, -0.2px)",
-                    }}
-                >
-                    Welcome to
-                    <br />
-                    Our Platform
-                </Typography>
+
+<Box
+            sx={{
+                display: "flex",
+                height: "134px",
+                padding: "0 38px",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+                alignSelf: "stretch",
+                boxSizing: "border-box",
+            }}
+            >
+            <Typography
+                sx={{
+                whiteSpace: "nowrap",
+                alignSelf: "stretch",
+                color: "var(--Color-Text-Primary, #0F172A)",
+                textAlign: "center",
+                fontFamily: "IBM Plex Sans",
+                fontSize: "var(--FontSize-Display-Medium, 40px)",
+                fontStyle: "normal",
+                fontWeight: 600,
+                lineHeight: "var(--LineHeight-Display-Medium, 48px)",
+                letterSpacing: "var(--LetterSpace-DisplayMedium, -0.2px)",
+                m: 0,
+                }}
+            >
+                        Welcome to
+                        <br />
+                        Our Platform
+                    </Typography>
+                    </Box>
 
                 <Box
                     component="form"
