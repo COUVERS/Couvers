@@ -272,10 +272,6 @@ export default function App() {
 
                   <IconButton
                     onClick={() => setMobileCourseNavOpen(true)}
-                    sx={{
-                      backgroundColor: "#E6E6FA",
-                      borderRadius: "12px",
-                    }}
                   >
                     <CourseIcon />
                   </IconButton>
@@ -304,8 +300,6 @@ export default function App() {
             description="For your security, we recommend changing your password periodically."
           />
         )}
-
-
 
         <Routes>
           <Route
@@ -401,7 +395,9 @@ export default function App() {
             onClose={() => setMobileNavOpen(false)}
             sx={{
               "& .MuiDrawer-paper": {
-                width: "80vw",
+                width: "300px",
+                maxWidth: "300px",
+                overflowX: "hidden",
               },
             }}
           >
@@ -412,7 +408,9 @@ export default function App() {
                 onClose={() => setMobileCourseNavOpen(false)}
                 sx={{
                   "& .MuiDrawer-paper": {
-                    width: "80vw",
+                    width: "300px",
+                    maxWidth: "300px",
+                    overflowX: "hidden",
                   },
                 }}
               >
@@ -447,8 +445,9 @@ export default function App() {
                 }
               }}
               forceCollapsed={false}
-              drawerCustomWidth="80vw"
+              drawerCustomWidth="100%"
               onSignOut={handleOpenSignOutDialog}
+              isMobileDrawer={true}
             />
             {/* </Box> */}
           </Drawer>
