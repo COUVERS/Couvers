@@ -211,17 +211,18 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                                     color: "var(--Color-Text-Secondary)",
                                     fontFamily: "IBM Plex Sans",
                                     fontSize: "var(--FontSize-Caption)",
-                                    fontStyle: "normal",
                                     fontWeight: 500,
-                                    lineHeight: "normal",
                                     transform: "translate(0, -1px) scale(1)",
                                 },
+
                                 "& .MuiInputLabel-root.Mui-focused": {
-                                    color:
-                                        emailError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Text-Secondary)",
+                                    color: "var(--Color-Text-Secondary)",
                                 },
+
+                                "& .MuiInputLabel-root.Mui-error": {
+                                    color: "var(--Color-Error-Main)",
+                                },
+
                                 "& .MuiInputBase-root": {
                                     mt: "18px",
                                     width: "100%",
@@ -229,29 +230,33 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                                     fontSize: "var(--FontSize-Body1)",
                                     color: "var(--Color-Text-Primary)",
                                 },
+
                                 "& .MuiInputBase-input": {
                                     py: "10px",
                                 },
+
                                 "& .MuiInput-underline:before": {
-                                    borderBottom: `1px solid ${
-                                        emailError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Border-Default)"
-                                    }`,
+                                    borderBottom: "1px solid var(--Color-Border-Default)",
                                 },
+
                                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                                    borderBottom: `1px solid ${
-                                        emailError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Border-Default)"
-                                    }`,
+                                    borderBottom: "1px solid var(--Color-Border-Default)",
                                 },
+
                                 "& .MuiInput-underline:after": {
-                                    borderBottom: `1px solid ${
-                                        emailError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Border-Active)"
-                                    }`,
+                                    borderBottom: "1px solid var(--Color-Border-Active)",
+                                },
+
+                                "& .MuiInput-underline.Mui-error:before": {
+                                    borderBottom: "1px solid var(--Color-Error-Main)",
+                                },
+
+                                "& .MuiInput-underline.Mui-error:hover:before": {
+                                    borderBottom: "1px solid var(--Color-Error-Main)",
+                                },
+
+                                "& .MuiInput-underline.Mui-error:after": {
+                                    borderBottom: "2px solid var(--Color-Error-Main)",
                                 },
                             }}
                         />
@@ -318,17 +323,18 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                                     color: "var(--Color-Text-Secondary)",
                                     fontFamily: "IBM Plex Sans",
                                     fontSize: "var(--FontSize-Caption)",
-                                    fontStyle: "normal",
                                     fontWeight: 500,
-                                    lineHeight: "normal",
                                     transform: "translate(0, -1px) scale(1)",
                                 },
+
                                 "& .MuiInputLabel-root.Mui-focused": {
-                                    color:
-                                        passwordError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Text-Secondary)",
+                                    color: "var(--Color-Text-Secondary)",
                                 },
+
+                                "& .MuiInputLabel-root.Mui-error": {
+                                    color: "var(--Color-Error-Main)",
+                                },
+
                                 "& .MuiInputBase-root": {
                                     mt: "18px",
                                     width: "100%",
@@ -336,29 +342,33 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                                     fontSize: "var(--FontSize-Body1)",
                                     color: "var(--Color-Text-Primary)",
                                 },
+
                                 "& .MuiInputBase-input": {
                                     py: "10px",
                                 },
+
                                 "& .MuiInput-underline:before": {
-                                    borderBottom: `1px solid ${
-                                        passwordError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Border-Default)"
-                                    }`,
+                                    borderBottom: "1px solid var(--Color-Border-Default)",
                                 },
+
                                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                                    borderBottom: `1px solid ${
-                                        passwordError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Border-Default)"
-                                    }`,
+                                    borderBottom: "1px solid var(--Color-Border-Default)",
                                 },
+
                                 "& .MuiInput-underline:after": {
-                                    borderBottom: `1px solid ${
-                                        passwordError || loginError
-                                            ? "var(--Color-Error-Main)"
-                                            : "var(--Color-Border-Active)"
-                                    }`,
+                                    borderBottom: "1px solid var(--Color-Border-Active)",
+                                },
+
+                                "& .MuiInput-underline.Mui-error:before": {
+                                    borderBottom: "1px solid var(--Color-Error-Main)",
+                                },
+
+                                "& .MuiInput-underline.Mui-error:hover:before": {
+                                    borderBottom: "1px solid var(--Color-Error-Main)",
+                                },
+
+                                "& .MuiInput-underline.Mui-error:after": {
+                                    borderBottom: "2px solid var(--Color-Error-Main)",
                                 },
                             }}
                         />
