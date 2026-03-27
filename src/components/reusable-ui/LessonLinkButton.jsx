@@ -26,7 +26,7 @@ const LessonButton = styled(Button, {
     shouldForwardProp: (prop) => prop !== "buttonsize",
 })(({ buttonsize }) => ({
     ...sizeStyles[buttonsize],
-    height: "100px",
+    height: "80px",
     minHeight: "80px",
     borderRadius: 12,
     padding: 0,
@@ -38,7 +38,7 @@ const LessonButton = styled(Button, {
 }))
 
 const IconBox = styled(Box)(() => ({
-    width: 100,
+    width: 80,
     display: "flex",
     alignItems: "stretch",
     justifyContent: "center",
@@ -64,6 +64,9 @@ const ActionBox = styled(Box)(() => ({
     paddingRight: 24,
     whiteSpace: "nowrap",
     flexShrink: 0,
+    "@media (max-width:650px)": {
+        display: "none",
+    },
 }))
 
 export default function LessonLinkButton({
@@ -84,7 +87,7 @@ export default function LessonLinkButton({
             onClick={onClick}
         >
             <IconBox>
-                {Icon && <Icon size={100} />}
+                {Icon && <Icon size={80} />}
             </IconBox>
 
             <Content>
@@ -95,6 +98,9 @@ export default function LessonLinkButton({
                         lineHeight: "var(--LineHeight-Body1)",
                         letterSpacing: "var(--LetterSpace-Body1)",
                         color: "var(--Color-Primary-Contrast)",
+                        "@media (max-width:650px)": {
+                            fontSize: "16px",
+                        },
                     }}
                 >
                     {courseName}
