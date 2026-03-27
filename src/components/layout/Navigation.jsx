@@ -19,11 +19,17 @@ import SignOutIcon from '../../assets/icons/SignOutIcon'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
-export default function Navigation({ page, setPage, forceCollapsed = false, onSignOut }) {
+export default function Navigation({
+    page,
+    setPage,
+    forceCollapsed = false,
+    onSignOut,
+    drawerCustomWidth
+}) {
     const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
         setIsExpanded(!forceCollapsed)
-}, [forceCollapsed])
+    }, [forceCollapsed])
 
     const toggleDrawer = () => {
         setIsExpanded((prev) => !prev)
@@ -39,7 +45,10 @@ export default function Navigation({ page, setPage, forceCollapsed = false, onSi
 
     return (
         <>
-            <SidebarBase open={isExpanded}>
+            <SidebarBase
+                open={isExpanded}
+                drawerCustomWidth={drawerCustomWidth}
+            >
 
                 {/* Logo Area */}
                 <Box sx={{

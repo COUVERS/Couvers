@@ -31,6 +31,9 @@ export default function ProgressBar({ title, value, courseId }) {
                         color: "var(--Color-Info-Main)",
                         textDecorationColor:
                             "var(--Color-Info-Main)",
+                        "@media (max-width:650px)": {
+                            fontSize: "18px",
+                        },
                         "&:hover": {
                             textDecorationColor:
                                 "color-mix(in srgb, var(--Color-Info-Main) 40%, transparent)",

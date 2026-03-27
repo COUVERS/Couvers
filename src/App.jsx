@@ -368,31 +368,38 @@ export default function App() {
             anchor="left"
             open={mobileNavOpen}
             onClose={() => setMobileNavOpen(false)}
+            sx={{
+              "& .MuiDrawer-paper": {
+                width: "80vw",
+              },
+            }}
           >
-            <Box sx={{ width: 240 }}>
-              <Navigation
-                page={page}
-                setPage={(nextPage) => {
-                  setMobileNavOpen(false)
+            {/* <Box sx={{ width: 240 }}> */}
+            <Navigation
+              page={page}
+              setPage={(nextPage) => {
+                setMobileNavOpen(false)
 
-                  if (nextPage === "courses") {
-                    openCoursesOverview()
-                    return
-                  }
 
-                  if (nextPage === "home") {
-                    navigate("/")
-                    return
-                  }
+                if (nextPage === "courses") {
+                  openCoursesOverview()
+                  return
+                }
 
-                  if (nextPage === "account") {
-                    navigate("/account")
-                  }
-                }}
-                forceCollapsed={false}
-                onSignOut={handleOpenSignOutDialog}
-              />
-            </Box>
+                if (nextPage === "home") {
+                  navigate("/")
+                  return
+                }
+
+                if (nextPage === "account") {
+                  navigate("/account")
+                }
+              }}
+              forceCollapsed={false}
+              drawerCustomWidth="80vw"
+              onSignOut={handleOpenSignOutDialog}
+            />
+            {/* </Box> */}
           </Drawer>
         )}
         <SignOutDialog

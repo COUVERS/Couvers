@@ -163,6 +163,9 @@ function SkillDevelopmentCard({ children, loading = false }) {
                 fontSize: "var(--FontSize-Headings-h2, 32px)",
                 fontWeight: 600,
                 letterSpacing: "-0.2px",
+                "@media (max-width:650px)": {
+                  fontSize: "24px",
+                },
               }}
             >
               Skill Development
@@ -321,6 +324,9 @@ export default function SkillDevelopmentRadarChart({
                       fontSize: "16px",
                       fontWeight: 500,
                       lineHeight: "normal",
+                      "@media (max-width:650px)": {
+                        fontSize: "14px",
+                      },
                     }}
                   >
                     {metric.label || metric.skill}
