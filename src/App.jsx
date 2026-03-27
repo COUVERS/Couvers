@@ -5,6 +5,8 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
 import MenuIcon from "./assets/icons/MenuIcon"
+import CourseIcon from "./assets/icons/CourseIcon"
+import LectureIcon from "./assets/icons/LectureIcon"
 import LogoLarge from "./assets/Logo_large_dark.png"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
@@ -260,7 +262,24 @@ export default function App() {
               }}
             />
 
-            <Box sx={{ width: 40 }} />
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {page === "courses" && (
+                <>
+                  <IconButton>
+                    <LectureIcon />
+                  </IconButton>
+
+                  <IconButton
+                    sx={{
+                      backgroundColor: "#E6E6FA",
+                      borderRadius: "12px",
+                    }}
+                  >
+                    <CourseIcon />
+                  </IconButton>
+                </>
+              )}
+            </Box>
           </Box>
         )}
         {page === "home" && (
