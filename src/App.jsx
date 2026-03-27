@@ -31,6 +31,7 @@ export default function App() {
   const isMedium = useMediaQuery("(min-width:900px) and (max-width:1095px)")
   const isDesktop = useMediaQuery("(min-width:1096px)")
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [mobileCourseNavOpen, setMobileCourseNavOpen] = useState(false)
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
@@ -270,6 +271,7 @@ export default function App() {
                   </IconButton>
 
                   <IconButton
+                    onClick={() => setMobileCourseNavOpen(true)}
                     sx={{
                       backgroundColor: "#E6E6FA",
                       borderRadius: "12px",
@@ -321,6 +323,8 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
               />
             }
           />
@@ -331,6 +335,8 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
               />
             }
           />
@@ -341,6 +347,8 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
               />
             }
           />
@@ -351,6 +359,8 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
               />
             }
           />
@@ -361,6 +371,8 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
               />
             }
           />
@@ -393,6 +405,26 @@ export default function App() {
               },
             }}
           >
+            {isMobile && (
+              <Drawer
+                anchor="left"
+                open={mobileCourseNavOpen}
+                onClose={() => setMobileCourseNavOpen(false)}
+                sx={{
+                  "& .MuiDrawer-paper": {
+                    width: "80vw",
+                  },
+                }}
+              >
+                <CoursePage
+                  continueCourseId={continueCourseId}
+                  continueLessonId={continueLessonId}
+                  courseResetSignal={courseResetSignal}
+                  mobileCourseNavOpen={mobileCourseNavOpen}
+                  setMobileCourseNavOpen={setMobileCourseNavOpen}
+                />
+              </Drawer>
+            )}
             {/* <Box sx={{ width: 240 }}> */}
             <Navigation
               page={page}

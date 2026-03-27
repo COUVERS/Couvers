@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import Drawer from "@mui/material/Drawer"
+import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
 import CourseSidebar from "./CourseSidebar"
 import CourseMainContent from "./CourseMainContent"
@@ -14,6 +16,8 @@ export default function CourseContainer({
     routeViewMode,
     forceCollapsed = false,
     isMobile = false,
+    mobileCourseNavOpen,
+    setMobileCourseNavOpen,
 }) {
     const navigate = useNavigate()
 
@@ -274,6 +278,45 @@ export default function CourseContainer({
                     await loadCourseFull(selectedCourseId)
                 }}
             />
+
+            {isMobile && (
+                <Drawer
+                    anchor="left"
+                    open={mobileCourseNavOpen}
+                    onClose={() => setMobileCourseNavOpen(false)}
+                    sx={{
+                        "& .MuiDrawer-paper": {
+                            width: "80vw",
+                        },
+                    }}
+                >
+                    <CourseSidebar
+                        navMode={navMode}
+                        courses={courses}
+                        selectedCourseId={selectedCourseId}
+                        lessons={lessons}
+                        selectedLesson={selectedLesson}
+                        onSelectCourse={(id) => {
+                            setMobileCourseNavOpen(false)
+                            goToCourseById(id)
+                        }}
+                        onSelectLecture={(lesson) => {
+                            setMobileCourseNavOpen(false)
+                            goToLessonLecture(lesson)
+                        }}
+                        onSelectQuiz={(lesson) => {
+                            setMobileCourseNavOpen(false)
+                            if (!selectedCourseId || !lesson?._id) return
+                            navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
+                        }}
+                        onBack={() => {
+                            setMobileCourseNavOpen(false)
+                            goToCourseOverview()
+                        }}
+                        forceCollapsed={false}
+                    />
+                </Drawer>
+            )}
         </Box>
     )
 }
