@@ -70,7 +70,6 @@ export default function Navigation({
                             width: isExpanded ? '160px' : '58px',
                             height: 'auto',
                             objectFit: 'contain',
-                            transition: '0.3s',
                             display: 'block',
                         }}
                     />

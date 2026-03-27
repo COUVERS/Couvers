@@ -232,39 +232,53 @@ export default function App() {
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: "24px",
+              justifyContent: "space-between",
               px: 3,
-              pt: 7,
-              pb: 2,
+              pt: 4,
+              pb: 1,
               backgroundColor: "#fff",
               position: "sticky",
               boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)", top: 0,
               zIndex: 1200,
             }}
           >
-            <IconButton
-              onClick={() => setMobileNavOpen(true)}
+            {/* Left */}
+            <Box sx={{ width: 40, display: "flex", justifyContent: "center" }}>
+              <IconButton
+                onClick={() => setMobileNavOpen(true)}
+                sx={{
+                  p: 0,
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+
+            {/* Center */}
+            <Box sx={{ display: "flex", justifyContent: "center", flex: 1 }}>
+              <img
+                src={LogoLarge}
+                alt="TeTe"
+                style={{
+                  width: 104,
+                  height: 80,
+                  objectFit: "contain",
+                  display: "block",
+                }}
+              />
+            </Box>
+
+            {/* Right */}
+            <Box
               sx={{
-                p: 0,
-                width: 40,
-                height: 40,
+                width: 96,
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 1,
               }}
             >
-              <MenuIcon />
-            </IconButton>
-
-            <img
-              src={LogoLarge}
-              alt="TeTe"
-              style={{
-                width: 104,
-                height: 80,
-                objectFit: "contain",
-                display: "block",
-              }}
-            />
-
-            <Box sx={{ display: "flex", gap: 1 }}>
               {page === "courses" && (
                 <>
                   <IconButton
@@ -286,7 +300,6 @@ export default function App() {
                     sx={{
                       width: 60,
                       height: 60,
-                      color: "#36316B",
                     }}
                   >
                     <CourseIcon />
