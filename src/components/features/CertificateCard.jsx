@@ -65,6 +65,9 @@ export default function CertificateCard({ onTakeCourse }) {
                     fontSize: "var(--FontSize-Headings-h2)",
                     fontWeight: 600,
                     letterSpacing: "-0.2px",
+                    "@media (max-width:650px)": {
+                        fontSize: "24px",
+                    },
                 }}
             >
                 Certifications
