@@ -37,6 +37,7 @@ export default function CourseNavigation({
     selectedCourseId,
     onSelectCourse,
     forceCollapsed = false,
+    isMobileDrawer = false
 }) {
     const [open, setOpen] = useState(true)
 
@@ -139,14 +140,17 @@ export default function CourseNavigation({
                 })}
             </Stack>
 
-            <Box sx={{ p: 2 }}>
-                <IconButton
-                    onClick={() => setOpen(!open)}
-                    sx={{ color: 'var(--Color-Secondary-Contrast)', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
-                >
-                    {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </IconButton>
-            </Box>
+
+            {!isMobileDrawer && (
+                <Box sx={{ p: 2 }}>
+                    <IconButton
+                        onClick={() => setOpen(!open)}
+                        sx={{ color: 'var(--Color-Secondary-Contrast)', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
+                    >
+                        {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    </IconButton>
+                </Box>
+            )}
         </CourseDrawer>
     )
 }

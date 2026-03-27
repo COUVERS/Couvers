@@ -22,6 +22,7 @@ export default function CourseSidebar({
                 selectedCourseId={selectedCourseId}
                 onSelectCourse={onSelectCourse}
                 forceCollapsed={forceCollapsed}
+                isMobileDrawer={true}
             />
         )
     }

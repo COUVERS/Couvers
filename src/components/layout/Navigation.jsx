@@ -24,7 +24,8 @@ export default function Navigation({
     setPage,
     forceCollapsed = false,
     onSignOut,
-    drawerCustomWidth
+    drawerCustomWidth,
+    isMobileDrawer = false,
 }) {
     const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
@@ -51,25 +52,25 @@ export default function Navigation({
             >
 
                 {/* Logo Area */}
-                <Box sx={{
-                    display: 'flex',
-                    width: isExpanded ? '160px' : '58px',
-                    height: isExpanded ? '123px' : '48px',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    flexShrink: 0,
-                    aspectRatio: isExpanded ? '160 / 123' : '29/24',
-                    mx: 'auto',
-                }}>
-                    <img src={isExpanded ? LogoLarge : LogoSmall}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        width: '100%',
+                        height: isExpanded ? '123px' : '48px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                        mb: 2,
+                    }}
+                >
+                    <img
+                        src={isExpanded ? LogoLarge : LogoSmall}
                         alt="TeTe"
                         style={{
-                            width: '100%',
+                            width: isExpanded ? '160px' : '58px',
                             height: 'auto',
                             objectFit: 'contain',
-                            transition: '0.3s'
+                            display: 'block',
                         }}
                     />
                 </Box>
@@ -180,16 +181,19 @@ export default function Navigation({
                 </Box>
 
                 {/* Toggle Button */}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        mt: 2
-                    }}>
-                    <IconButton onClick={toggleDrawer}>
-                        {isExpanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </Box>
+                {!isMobileDrawer && (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            mt: 2
+                        }}
+                    >
+                        <IconButton onClick={toggleDrawer}>
+                            {isExpanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        </IconButton>
+                    </Box>
+                )}
 
             </SidebarBase>
         </>

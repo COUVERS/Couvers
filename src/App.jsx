@@ -5,6 +5,8 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
 import MenuIcon from "./assets/icons/MenuIcon"
+import CourseIcon from "./assets/icons/CourseIcon"
+import LessonLectureIcon from "./assets/icons/LessonLectureIcon"
 import LogoLarge from "./assets/Logo_large_dark.png"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
@@ -29,6 +31,8 @@ export default function App() {
   const isMedium = useMediaQuery("(min-width:900px) and (max-width:1095px)")
   const isDesktop = useMediaQuery("(min-width:1096px)")
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [mobileCourseNavOpen, setMobileCourseNavOpen] = useState(false)
+  const [mobileContentsNavOpen, setMobileContentsNavOpen] = useState(false)
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
@@ -228,39 +232,81 @@ export default function App() {
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: "24px",
+              justifyContent: "space-between",
               px: 3,
-              pt: 7,
-              pb: 2,
+              pt: 4,
+              pb: 1,
               backgroundColor: "#fff",
               position: "sticky",
               boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)", top: 0,
               zIndex: 1200,
             }}
           >
-            <IconButton
-              onClick={() => setMobileNavOpen(true)}
+            {/* Left */}
+            <Box sx={{ width: 40, display: "flex", justifyContent: "center" }}>
+              <IconButton
+                onClick={() => setMobileNavOpen(true)}
+                sx={{
+                  p: 0,
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+
+            {/* Center */}
+            <Box sx={{ display: "flex", justifyContent: "center", flex: 1 }}>
+              <img
+                src={LogoLarge}
+                alt="TeTe"
+                style={{
+                  width: 104,
+                  height: 80,
+                  objectFit: "contain",
+                  display: "block",
+                }}
+              />
+            </Box>
+
+            {/* Right */}
+            <Box
               sx={{
-                p: 0,
-                width: 40,
-                height: 40,
+                width: 96,
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 1,
               }}
             >
-              <MenuIcon />
-            </IconButton>
+              {page === "courses" && (
+                <>
+                  <IconButton
+                    onClick={() => setMobileContentsNavOpen(true)}
+                    sx={{
+                      width: 60,
+                      height: 60,
+                      "& svg": {
+                        width: 40,
+                        height: 40,
+                      },
+                    }}
+                  >
+                    <LessonLectureIcon />
+                  </IconButton>
 
-            <img
-              src={LogoLarge}
-              alt="TeTe"
-              style={{
-                width: 104,
-                height: 80,
-                objectFit: "contain",
-                display: "block",
-              }}
-            />
-
-            <Box sx={{ width: 40 }} />
+                  <IconButton
+                    onClick={() => setMobileCourseNavOpen(true)}
+                    sx={{
+                      width: 60,
+                      height: 60,
+                    }}
+                  >
+                    <CourseIcon />
+                  </IconButton>
+                </>
+              )}
+            </Box>
           </Box>
         )}
         {page === "home" && (
@@ -284,8 +330,6 @@ export default function App() {
           />
         )}
 
-
-
         <Routes>
           <Route
             path="/"
@@ -302,6 +346,10 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -312,6 +360,10 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -322,6 +374,10 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -332,6 +388,10 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -342,6 +402,10 @@ export default function App() {
                 continueCourseId={continueCourseId}
                 continueLessonId={continueLessonId}
                 courseResetSignal={courseResetSignal}
+                mobileCourseNavOpen={mobileCourseNavOpen}
+                setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -370,10 +434,34 @@ export default function App() {
             onClose={() => setMobileNavOpen(false)}
             sx={{
               "& .MuiDrawer-paper": {
-                width: "80vw",
+                width: "300px",
+                maxWidth: "300px",
+                overflowX: "hidden",
               },
             }}
           >
+            {isMobile && (
+              <Drawer
+                anchor="left"
+                open={mobileCourseNavOpen}
+                onClose={() => setMobileCourseNavOpen(false)}
+                sx={{
+                  "& .MuiDrawer-paper": {
+                    width: "300px",
+                    maxWidth: "300px",
+                    overflowX: "hidden",
+                  },
+                }}
+              >
+                <CoursePage
+                  continueCourseId={continueCourseId}
+                  continueLessonId={continueLessonId}
+                  courseResetSignal={courseResetSignal}
+                  mobileCourseNavOpen={mobileCourseNavOpen}
+                  setMobileCourseNavOpen={setMobileCourseNavOpen}
+                />
+              </Drawer>
+            )}
             {/* <Box sx={{ width: 240 }}> */}
             <Navigation
               page={page}
@@ -396,8 +484,9 @@ export default function App() {
                 }
               }}
               forceCollapsed={false}
-              drawerCustomWidth="80vw"
+              drawerCustomWidth="100%"
               onSignOut={handleOpenSignOutDialog}
+              isMobileDrawer={true}
             />
             {/* </Box> */}
           </Drawer>
