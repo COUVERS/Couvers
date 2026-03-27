@@ -9,6 +9,7 @@ export default function CoursePage({
     courseResetSignal,
 }) {
     const isMedium = useMediaQuery("(min-width:900px) and (max-width:1095px)")
+    const isMobile = useMediaQuery("(max-width:899px)")
     const { courseId, lessonId } = useParams()
     const location = useLocation()
 
@@ -30,6 +31,7 @@ export default function CoursePage({
             routeLessonId={lessonId || null}
             routeViewMode={routeViewMode}
             forceCollapsed={isMedium || isQuizView}
+            isMobile={isMobile}
         />
     )
 }

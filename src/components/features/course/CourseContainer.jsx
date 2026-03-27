@@ -13,6 +13,7 @@ export default function CourseContainer({
     routeLessonId,
     routeViewMode,
     forceCollapsed = false,
+    isMobile = false,
 }) {
     const navigate = useNavigate()
 
@@ -235,21 +236,23 @@ export default function CourseContainer({
 
     return (
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
-            <CourseSidebar
-                navMode={navMode}
-                courses={courses}
-                selectedCourseId={selectedCourseId}
-                lessons={lessons}
-                selectedLesson={selectedLesson}
-                onSelectCourse={goToCourseById}
-                onSelectLecture={goToLessonLecture}
-                onSelectQuiz={(lesson) => {
-                    if (!selectedCourseId || !lesson?._id) return
-                    navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
-                }}
-                onBack={goToCourseOverview}
-                forceCollapsed={forceCollapsed}
-            />
+            {!isMobile && (
+                <CourseSidebar
+                    navMode={navMode}
+                    courses={courses}
+                    selectedCourseId={selectedCourseId}
+                    lessons={lessons}
+                    selectedLesson={selectedLesson}
+                    onSelectCourse={goToCourseById}
+                    onSelectLecture={goToLessonLecture}
+                    onSelectQuiz={(lesson) => {
+                        if (!selectedCourseId || !lesson?._id) return
+                        navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
+                    }}
+                    onBack={goToCourseOverview}
+                    forceCollapsed={forceCollapsed}
+                />
+            )}
 
             <CourseMainContent
                 isLoading={isLoading}
