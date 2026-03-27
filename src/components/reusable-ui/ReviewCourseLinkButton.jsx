@@ -1,5 +1,6 @@
 import { Button, Box, Typography } from "@mui/material"
-import { styled } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { styled, useTheme } from "@mui/material/styles"
 import courseIconMap from "../../assets/icons/CourseIconMap"
 
 const sizeStyles = {
@@ -25,12 +26,16 @@ const ReviewButton = styled(Button, {
     textTransform: "none",
     display: "flex",
     alignItems: "stretch",
+    "@media (min-width:899px) and (max-width:1305px)": {
+        minHeight: "96px",
+    },
 }))
 
 const IconBox = styled(Box)(() => ({
     width: 80,
     display: "flex",
     alignItems: "stretch",
+    alignSelf: "stretch",
     justifyContent: "center",
     flexShrink: 0,
     overflow: "hidden",
@@ -43,8 +48,12 @@ const Content = styled(Box)(() => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
-    padding: "20px 24px",
-    gap: 8,
+    textAlign: "left",
+    padding: "8px 32px",
+    gap: 4,
+    "@media (min-width:899px) and (max-width:1305px)": {
+        padding: "8px 20px",
+    },
 }))
 
 const ActionBox = styled(Box)(() => ({
@@ -54,6 +63,12 @@ const ActionBox = styled(Box)(() => ({
     paddingRight: 24,
     whiteSpace: "nowrap",
     flexShrink: 0,
+    "@media (min-width:899px) and (max-width:1305px)": {
+        paddingRight: 16,
+    },
+    "@media (max-width:650px)": {
+        display: "none",
+    },
 }))
 
 export default function ReviewCourseLinkButton({
@@ -63,6 +78,12 @@ export default function ReviewCourseLinkButton({
     size = "default",
     onClick,
 }) {
+    const theme = useTheme()
+    const isMediumRange = useMediaQuery(
+        "(min-width:899px) and (max-width:1305px)"
+    )
+    const iconSize = isMediumRange ? 96 : 80
+
     const Icon = courseIconMap[iconKey]
 
     return (
@@ -71,9 +92,7 @@ export default function ReviewCourseLinkButton({
             buttonsize={size}
             onClick={onClick}
         >
-            <IconBox>
-                {Icon && <Icon size={80} />}
-            </IconBox>
+            {Icon && <Icon size={iconSize} />}
 
             <Content>
                 <Typography
@@ -83,6 +102,9 @@ export default function ReviewCourseLinkButton({
                         lineHeight: "var(--LineHeight-Body1)",
                         letterSpacing: "var(--LetterSpace-Body1)",
                         color: "inherit",
+                        "@media (min-width:899px) and (max-width:1305px)": {
+                            lineHeight: "22px",
+                        },
                     }}
                 >
                     {courseName}
