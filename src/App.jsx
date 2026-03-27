@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
 import MenuIcon from "./assets/icons/MenuIcon"
 import CourseIcon from "./assets/icons/CourseIcon"
-import LectureIcon from "./assets/icons/LectureIcon"
+import LessonLectureIcon from "./assets/icons/LessonLectureIcon"
 import LogoLarge from "./assets/Logo_large_dark.png"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LoginForm from "./pages/LoginForm"
@@ -32,6 +32,7 @@ export default function App() {
   const isDesktop = useMediaQuery("(min-width:1096px)")
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [mobileCourseNavOpen, setMobileCourseNavOpen] = useState(false)
+  const [mobileContentsNavOpen, setMobileContentsNavOpen] = useState(false)
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"))
   const [authUser, setAuthUser] = useState(null)
@@ -266,12 +267,27 @@ export default function App() {
             <Box sx={{ display: "flex", gap: 1 }}>
               {page === "courses" && (
                 <>
-                  <IconButton>
-                    <LectureIcon />
+                  <IconButton
+                    onClick={() => setMobileContentsNavOpen(true)}
+                    sx={{
+                      width: 60,
+                      height: 60,
+                      "& svg": {
+                        width: 40,
+                        height: 40,
+                      },
+                    }}
+                  >
+                    <LessonLectureIcon />
                   </IconButton>
 
                   <IconButton
                     onClick={() => setMobileCourseNavOpen(true)}
+                    sx={{
+                      width: 60,
+                      height: 60,
+                      color: "#36316B",
+                    }}
                   >
                     <CourseIcon />
                   </IconButton>
@@ -319,6 +335,8 @@ export default function App() {
                 courseResetSignal={courseResetSignal}
                 mobileCourseNavOpen={mobileCourseNavOpen}
                 setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -331,6 +349,8 @@ export default function App() {
                 courseResetSignal={courseResetSignal}
                 mobileCourseNavOpen={mobileCourseNavOpen}
                 setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -343,6 +363,8 @@ export default function App() {
                 courseResetSignal={courseResetSignal}
                 mobileCourseNavOpen={mobileCourseNavOpen}
                 setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -355,6 +377,8 @@ export default function App() {
                 courseResetSignal={courseResetSignal}
                 mobileCourseNavOpen={mobileCourseNavOpen}
                 setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
@@ -367,6 +391,8 @@ export default function App() {
                 courseResetSignal={courseResetSignal}
                 mobileCourseNavOpen={mobileCourseNavOpen}
                 setMobileCourseNavOpen={setMobileCourseNavOpen}
+                mobileContentsNavOpen={mobileContentsNavOpen}
+                setMobileContentsNavOpen={setMobileContentsNavOpen}
               />
             }
           />
