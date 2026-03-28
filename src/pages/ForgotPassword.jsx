@@ -30,22 +30,22 @@ export default function ForgotPassword() {
         e.preventDefault()
         setEmailError("")
 
-    if (!trimmedEmail) {
+        if (!trimmedEmail) {
         setEmailError("Email is required.")
         return
-    }
+        }
 
-    if (!validateEmailFormat(trimmedEmail)) {
+        if (!validateEmailFormat(trimmedEmail)) {
         setEmailError("Please enter a valid email address.")
         return
-    }
+        }
 
-    if (!API_BASE_URL) {
+        if (!API_BASE_URL) {
         setEmailError("Something went wrong. Please try again later.")
         return
-    }
+        }
 
-    try {
+        try {
         setLoading(true)
 
         const res = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
@@ -64,7 +64,9 @@ export default function ForgotPassword() {
         }
 
         if (!res.ok) {
-            setEmailError(data.message || "Unable to send reset link. Please try again.")
+            setEmailError(
+            data.message || "Unable to send reset link. Please try again."
+            )
             return
         }
 
@@ -83,8 +85,8 @@ export default function ForgotPassword() {
         <Box
         sx={{
             display: "flex",
-            width: "1440px",
-            height: "1024px",
+            width: { xs: "100%", md: "1440px" },
+            minHeight: { xs: "100vh", md: "1024px" },
             justifyContent: "center",
             alignItems: "center",
             gap: "var(--5, 40px)",
@@ -98,21 +100,25 @@ export default function ForgotPassword() {
             onSubmit={handleSubmit}
             sx={{
             display: "flex",
-            width: "640px",
-            height: "706px",
+            width: { xs: "430px", md: "640px" },
+            height: { xs: "100vh", md: "706px" },
             padding: "var(--7, 56px) var(--5, 40px)",
+            boxSizing: "border-box",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             gap: "var(--6, 48px)",
             flexShrink: 0,
-            borderRadius: "var(--md, 8px)",
+            borderRadius: { xs: 0, md: "var(--md, 8px)" },
             bgcolor: "var(--Color-Background-Paper)",
-            boxShadow:
-                "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+            boxShadow: {
+                xs: "none",
+                md: "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+            },
+            overflow: "hidden",
             }}
         >
-        <Box
+            <Box
             component="img"
             src={LogoLarge}
             alt="TeTe"
@@ -127,9 +133,9 @@ export default function ForgotPassword() {
                 aspectRatio: "207 / 91.75",
                 objectFit: "contain",
             }}
-        />
+            />
 
-        <Typography
+            <Typography
             sx={{
                 alignSelf: "stretch",
                 color: "var(--Color-Text-Primary)",
@@ -141,13 +147,12 @@ export default function ForgotPassword() {
                 lineHeight: "var(--LineHeight-Display-Medium)",
                 letterSpacing: "var(--LetterSpace-DisplayMedium)",
             }}
-        >
-        Forgot Password?
-        </Typography>
+            >
+            Forgot Password?
+            </Typography>
 
-        <Typography
+            <Typography
             sx={{
-                height: "47px",
                 alignSelf: "stretch",
                 color: "var(--Color-Text-Primary)",
                 textAlign: "center",
@@ -157,30 +162,32 @@ export default function ForgotPassword() {
                 fontWeight: 500,
                 lineHeight: "normal",
             }}
-        >
-        Enter your email address and we&apos;ll send you a link to reset your
-        password.
-        </Typography>
+            >
+            Enter your email address and we&apos;ll send you a link to reset your
+            password.
+            </Typography>
 
-        <Box
+            <Box
             sx={{
                 display: "flex",
+                width: { xs: "100%", md: "560px" },
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "var(--6, 48px)",
                 alignSelf: "stretch",
             }}
-        >
-        <Box
+            >
+            <Box
             sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 alignSelf: "stretch",
-                mx:"auto",
+                width: { xs: "350px", md: "560px" },
+                mx: "auto",
             }}
-        >
-        <TextField
+            >
+            <TextField
                 fullWidth
                 variant="standard"
                 label="E-mail"
@@ -189,12 +196,12 @@ export default function ForgotPassword() {
                 error={Boolean(emailError)}
                 helperText={emailError || " "}
                 onChange={(e) => {
-                    setEmail(e.target.value)
-                    if (emailError) setEmailError("")
+                setEmail(e.target.value)
+                if (emailError) setEmailError("")
                 }}
                 InputLabelProps={{ shrink: true }}
                 FormHelperTextProps={{
-                    sx: {
+                sx: {
                     pt: "3px",
                     mx: 0,
                     color: "var(--Color-Error-Main)",
@@ -204,11 +211,12 @@ export default function ForgotPassword() {
                     fontWeight: 400,
                     lineHeight: "normal",
                     letterSpacing: "0.1px",
-                    },
+                },
                 }}
                 sx={{
-                    alignSelf: "stretch",
-                    "& .MuiInputLabel-root": {
+                alignSelf: "stretch",
+                width: "100%",
+                "& .MuiInputLabel-root": {
                     color: "var(--Color-Text-Secondary)",
                     fontFamily: "var(--font-family)",
                     fontSize: "var(--FontSize-Caption)",
@@ -216,55 +224,54 @@ export default function ForgotPassword() {
                     fontWeight: 500,
                     lineHeight: "normal",
                     transform: "translate(0, -1px) scale(1)",
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                    color:
-                        emailError
-                        ? "var(--Color-Error-Main)"
-                        : "var(--Color-Text-Secondary)",
-                    },
-                    "& .MuiInputBase-root": {
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                    color: emailError
+                    ? "var(--Color-Error-Main)"
+                    : "var(--Color-Text-Secondary)",
+                },
+                "& .MuiInputBase-root": {
                     mt: "18px",
-                    width: "560px",
+                    width: "100%",
                     fontFamily: "var(--font-family)",
                     fontSize: "var(--FontSize-Body1)",
                     color: "var(--Color-Text-Primary)",
-                    },
-                    "& .MuiInputBase-input": {
+                },
+                "& .MuiInputBase-input": {
                     py: "10px",
-                    },
-                    "& .MuiInput-underline:before": {
+                },
+                "& .MuiInput-underline:before": {
                     borderBottom: `1px solid ${
-                        emailError
+                    emailError
                         ? "var(--Color-Error-Main)"
                         : "var(--Color-Border-Default)"
                     }`,
-                    },
-                    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottom: `1px solid ${
-                        emailError
+                    emailError
                         ? "var(--Color-Error-Main)"
                         : "var(--Color-Border-Default)"
                     }`,
-                    },
-                    "& .MuiInput-underline:after": {
+                },
+                "& .MuiInput-underline:after": {
                     borderBottom: `1px solid ${
-                        emailError
+                    emailError
                         ? "var(--Color-Error-Main)"
                         : "var(--Color-Border-Active)"
                     }`,
-                    },
+                },
                 }}
             />
-        </Box>
+            </Box>
 
-        <Button
-            type="submit"
-            size="large"
-            disabled={isSubmitDisabled}
-            sx={{
+            <Button
+                type="submit"
+                size="large"
+                disabled={isSubmitDisabled}
+                sx={{
                 display: "flex",
-                width: "var(--Button-Dialog, 560px)",
+                width: "100%",
                 height: "48px",
                 padding: "8px 24px",
                 justifyContent: "center",
@@ -291,51 +298,53 @@ export default function ForgotPassword() {
                     boxShadow: "none",
                     opacity: 1,
                 },
-            }}
-        >
-            {loading ? "Sending..." : "Send Reset Link"}
-        </Button>
+                }}
+            >
+                {loading ? "Sending..." : "Send Reset Link"}
+            </Button>
 
-        <Box
-            sx={{
+            <Box
+                sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: "var(--md, 8px)",
-            }}
-        >
-        <Typography
-            sx={{
-                color: "var(--Color-Text-Primary)",
-                fontFamily: "var(--font-family)",
-                fontSize: "var(--FontSize-Body1)",
-                fontWeight: 400,
-                lineHeight: "var(--LineHeight-Body1)",
-                letterSpacing: "var(--LetterSpace-Body1)",
-            }}
-        >
-        Back to
-        </Typography>
+                flexWrap: "wrap",
+                justifyContent: "center",
+                }}
+            >
+                <Typography
+                sx={{
+                    color: "var(--Color-Text-Primary)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                }}
+                >
+                Back to
+                </Typography>
 
-        <Link
-            component={RouterLink}
-            to="/login"
-            underline="always"
-            sx={{
-                color: "var(--Color-Info-Main)",
-                fontFamily: "var(--font-family)",
-                fontSize: "var(--FontSize-Body1)",
-                fontWeight: 400,
-                lineHeight: "var(--LineHeight-Body1)",
-                letterSpacing: "var(--LetterSpace-Body1)",
-                textDecorationColor: "var(--Color-Primary-_States-Outlined)",
-                textUnderlineOffset: "3px",
-            }}
-        >
-        Sign In
-        </Link>
+                <Link
+                component={RouterLink}
+                to="/login"
+                underline="always"
+                sx={{
+                    color: "var(--Color-Info-Main)",
+                    fontFamily: "var(--font-family)",
+                    fontSize: "var(--FontSize-Body1)",
+                    fontWeight: 400,
+                    lineHeight: "var(--LineHeight-Body1)",
+                    letterSpacing: "var(--LetterSpace-Body1)",
+                    textDecorationColor: "var(--Color-Primary-_States-Outlined)",
+                    textUnderlineOffset: "3px",
+                }}
+                >
+                Sign In
+                </Link>
+            </Box>
+            </Box>
         </Box>
         </Box>
-    </Box>
-    </Box>
     )
 }
