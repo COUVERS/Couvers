@@ -19,11 +19,18 @@ import SignOutIcon from '../../assets/icons/SignOutIcon'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
-export default function Navigation({ page, setPage, forceCollapsed = false, onSignOut }) {
+export default function Navigation({
+    page,
+    setPage,
+    forceCollapsed = false,
+    onSignOut,
+    drawerCustomWidth,
+    isMobileDrawer = false,
+}) {
     const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
         setIsExpanded(!forceCollapsed)
-}, [forceCollapsed])
+    }, [forceCollapsed])
 
     const toggleDrawer = () => {
         setIsExpanded((prev) => !prev)
@@ -39,28 +46,31 @@ export default function Navigation({ page, setPage, forceCollapsed = false, onSi
 
     return (
         <>
-            <SidebarBase open={isExpanded}>
+            <SidebarBase
+                open={isExpanded}
+                drawerCustomWidth={drawerCustomWidth}
+            >
 
                 {/* Logo Area */}
-                <Box sx={{
-                    display: 'flex',
-                    width: isExpanded ? '160px' : '58px',
-                    height: isExpanded ? '123px' : '48px',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    flexShrink: 0,
-                    aspectRatio: isExpanded ? '160 / 123' : '29/24',
-                    mx: 'auto',
-                }}>
-                    <img src={isExpanded ? LogoLarge : LogoSmall}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        width: '100%',
+                        height: isExpanded ? '123px' : '48px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                        mb: 2,
+                    }}
+                >
+                    <img
+                        src={isExpanded ? LogoLarge : LogoSmall}
                         alt="TeTe"
                         style={{
-                            width: '100%',
+                            width: isExpanded ? '160px' : '58px',
                             height: 'auto',
                             objectFit: 'contain',
-                            transition: '0.3s'
+                            display: 'block',
                         }}
                     />
                 </Box>
@@ -171,16 +181,19 @@ export default function Navigation({ page, setPage, forceCollapsed = false, onSi
                 </Box>
 
                 {/* Toggle Button */}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        mt: 2
-                    }}>
-                    <IconButton onClick={toggleDrawer}>
-                        {isExpanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </Box>
+                {!isMobileDrawer && (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            mt: 2
+                        }}
+                    >
+                        <IconButton onClick={toggleDrawer}>
+                            {isExpanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        </IconButton>
+                    </Box>
+                )}
 
             </SidebarBase>
         </>

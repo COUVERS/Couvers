@@ -5,9 +5,9 @@ export const drawerWidth = 240
 export const shrunkWidth = 88
 
 export const SidebarBase = styled(Box, {
-    shouldForwardProp: (prop) => prop !== 'open'
-})(({ theme, open }) => ({
-    width: open ? drawerWidth : shrunkWidth,
+    shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerCustomWidth'
+})(({ theme, open, drawerCustomWidth }) => ({
+    width: drawerCustomWidth || (open ? drawerWidth : shrunkWidth),
     transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
