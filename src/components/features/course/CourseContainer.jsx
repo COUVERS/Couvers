@@ -4,6 +4,8 @@ import Box from "@mui/material/Box"
 import CourseSidebar from "./CourseSidebar"
 import CourseMainContent from "./CourseMainContent"
 import { API_BASE_URL } from "../../../config"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import LessonMobileHeader from "../../reusable-ui/LessonMobileHeader"
 
 export default function CourseContainer({
     continueCourseId,
@@ -233,44 +235,58 @@ export default function CourseContainer({
         navigate(`/courses/${courseId}`)
     }
 
-    return (
-        <Box sx={{ display: "flex", minHeight: "100vh" }}>
-            <CourseSidebar
-                navMode={navMode}
-                courses={courses}
-                selectedCourseId={selectedCourseId}
-                lessons={lessons}
-                selectedLesson={selectedLesson}
-                onSelectCourse={goToCourseById}
-                onSelectLecture={goToLessonLecture}
-                onSelectQuiz={(lesson) => {
-                    if (!selectedCourseId || !lesson?._id) return
-                    navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
-                }}
-                onBack={goToCourseOverview}
-                forceCollapsed={forceCollapsed}
-            />
+    const isMobile = useMediaQuery("(max-width:899px)")
+    const isLessonView =
+        routeViewMode === "lecture" ||
+        routeViewMode === "quiz" ||
+        routeViewMode === "result"
 
-            <CourseMainContent
-                isLoading={isLoading}
-                error={error}
-                course={course}
-                viewMode={viewMode}
-                lessons={lessons}
-                selectedLesson={selectedLesson}
-                nextLessonData={nextLessonData}
-                matchedQuizzes={matchedQuizzes}
-                onOpenLesson={goToLessonLecture}
-                onTakeQuiz={goToLessonQuiz}
-                onBackToLessonList={goToCourseOverview}
-                onBackToLecture={() => {
-                    if (!selectedCourseId || !selectedLesson?._id) return
-                    navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/lecture`)
-                }}
-                onQuizSubmitted={async () => {
-                    await loadCourseFull(selectedCourseId)
-                }}
-            />
-        </Box>
+    return (
+        <>
+            {isMobile && isLessonView && (
+                <LessonMobileHeader onMenuClick={() => { }} />
+            )}
+
+            <Box sx={{ display: "flex", minHeight: "100vh" }}>
+                {!(isMobile && isLessonView) && (
+                    <CourseSidebar
+                        navMode={navMode}
+                        courses={courses}
+                        selectedCourseId={selectedCourseId}
+                        lessons={lessons}
+                        selectedLesson={selectedLesson}
+                        onSelectCourse={goToCourseById}
+                        onSelectLecture={goToLessonLecture}
+                        onSelectQuiz={(lesson) => {
+                            if (!selectedCourseId || !lesson?._id) return
+                            navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
+                        }}
+                        onBack={goToCourseOverview}
+                        forceCollapsed={forceCollapsed}
+                    />
+                )}
+
+                <CourseMainContent
+                    isLoading={isLoading}
+                    error={error}
+                    course={course}
+                    viewMode={viewMode}
+                    lessons={lessons}
+                    selectedLesson={selectedLesson}
+                    nextLessonData={nextLessonData}
+                    matchedQuizzes={matchedQuizzes}
+                    onOpenLesson={goToLessonLecture}
+                    onTakeQuiz={goToLessonQuiz}
+                    onBackToLessonList={goToCourseOverview}
+                    onBackToLecture={() => {
+                        if (!selectedCourseId || !selectedLesson?._id) return
+                        navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/lecture`)
+                    }}
+                    onQuizSubmitted={async () => {
+                        await loadCourseFull(selectedCourseId)
+                    }}
+                />
+            </Box>
+        </>
     )
 }

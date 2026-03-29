@@ -5,9 +5,9 @@ export default function PageHeader({ title, description }) {
     <Box
       sx={{
         backgroundColor: "var(--color-surface)",
-        px: 5,
-        py: 3,
-        mb: 2,
+        px: 4,
+        py: 2,
+        mb: 1.4,
         boxShadow: "0 3px 0 rgba(0,0,0,0.18)"
       }}
     >
