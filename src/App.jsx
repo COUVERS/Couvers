@@ -181,6 +181,14 @@ export default function App() {
     )
   }
 
+  const isCourseRoute = location.pathname.startsWith("/courses")
+
+  const isLessonRoute =
+    location.pathname.includes("/lecture") ||
+    location.pathname.includes("/quiz") ||
+    location.pathname.includes("/result")
+
+
   return (
     <Box
       sx={{
@@ -227,7 +235,7 @@ export default function App() {
           p: isMobile ? 0 : page === "courses" || page === "account" ? 0 : 2,
         }}
       >
-        {isMobile && (
+        {isMobile && !isLessonRoute && (
           <Box
             sx={{
               display: "flex",
@@ -427,7 +435,7 @@ export default function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        {isMobile && (
+        {isMobile && !isLessonRoute && (
           <Drawer
             anchor="left"
             open={mobileNavOpen}

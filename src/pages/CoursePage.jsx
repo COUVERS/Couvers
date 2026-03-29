@@ -2,7 +2,6 @@ import { useLocation, useParams } from "react-router-dom"
 import CourseContainer from "../components/features/course/CourseContainer"
 import useMediaQuery from "@mui/material/useMediaQuery"
 
-
 export default function CoursePage({
     continueCourseId,
     continueLessonId,
@@ -26,6 +25,7 @@ export default function CoursePage({
                 : "lessonList"
 
     const isQuizView = routeViewMode === "quiz"
+
     return (
         <CourseContainer
             continueCourseId={continueCourseId}

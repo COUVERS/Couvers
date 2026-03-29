@@ -39,11 +39,16 @@ export default function ResultPage() {
     })) ?? []
 
   const skillProgress = resultData.skillProgress
+  console.log("skillProgress:", skillProgress)
   const percentage = total > 0 ? (score / total) * 100 : 0
   const passed = percentage >= 80
 
-  const currentSkillScore = skillProgress?.skillScore ?? 0
-  const previousSkillScore = Math.max(0, currentSkillScore - score)
+  const currentSkillScore =
+    skillProgress?.totalLessons > 0
+      ? (skillProgress.passedLessons / skillProgress.totalLessons) * 100
+      : 0
+
+  const previousSkillScore = 0
 
   const handleGoHome = () => {
     navigate("/")
