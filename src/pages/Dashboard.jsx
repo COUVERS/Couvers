@@ -9,6 +9,8 @@ import ReviewCourseLinkButton from "../components/reusable-ui/ReviewCourseLinkBu
 import CertificateCard from "../components/features/CertificateCard"
 import { API_BASE_URL } from "../config"
 
+import { getRecommendedCourse } from '../utils/dashboardUtils'
+
 const SKILL_LABELS = [
     "Lesson Structure",
     "Explanation Clarity",
@@ -105,24 +107,27 @@ export default function Dashboard({ onStartCourse, onOpenRecommendedCourse, setP
         loadSkillMetrics()
     }, [])
 
+    //////////////////Vitest Test /////////////////////////
     async function handleTakeCourse() {
         try {
             const token = localStorage.getItem("token")
 
-            const res = await fetch(`${API_BASE_URL}/api/dashboard/courses`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+            // const res = await fetch(`${API_BASE_URL}/api/dashboard/courses`, {
+            //     headers: {
+            //         Authorization: `Bearer ${token}`,
+            //     },
+            // })
 
-            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+            // if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
             const data = await res.json()
             const courses = data.courses || []
 
-            const targetCourse = courses
-                .filter((course) => Number(course.progress) > 0 && Number(course.progress) < 100)
-                .sort((a, b) => Number(b.progress) - Number(a.progress))[0]
+            // const targetCourse = courses
+            //     .filter((course) => Number(course.progress) > 0 && Number(course.progress) < 100)
+            //     .sort((a, b) => Number(b.progress) - Number(a.progress))[0]
+
+            const targetCourse = getRecommendedCourse(courses)
 
             onOpenRecommendedCourse?.(targetCourse?.courseId || null)
         } catch (e) {
