@@ -83,39 +83,33 @@ export default function ForgotPassword() {
 
     return (
         <Box
-        sx={{
-            display: "flex",
-            width: { xs: "100%", md: "1440px" },
-            minHeight: { xs: "100vh", md: "1024px" },
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "var(--5, 40px)",
-            flexShrink: 0,
-            mx: "auto",
-            bgcolor: "var(--Color-Background-Default)",
-        }}
+            sx={{
+                display: "flex",
+                width: { xs: "430px", md: "640px" },
+                height: { xs: "706px", md: "606px" },
+                padding: "56px 40px",
+                boxSizing: "border-box",
+                flexDirection: "column",
+                justifyContent: { xs: "flex-start", md: "center" },
+                alignItems: "center",
+                gap: "48px",
+                borderRadius: { xs: 0, md: "8px" },
+                bgcolor: "var(--Color-Background-Paper, #FFF)",
+                boxShadow: {
+                xs: "none",
+                md: "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+                },
+            }}
         >
         <Box
             component="form"
             onSubmit={handleSubmit}
             sx={{
-            display: "flex",
-            width: { xs: "430px", md: "640px" },
-            height: { xs: "100vh", md: "706px" },
-            padding: "var(--7, 56px) var(--5, 40px)",
-            boxSizing: "border-box",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "var(--6, 48px)",
-            flexShrink: 0,
-            borderRadius: { xs: 0, md: "var(--md, 8px)" },
-            bgcolor: "var(--Color-Background-Paper)",
-            boxShadow: {
-                xs: "none",
-                md: "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
-            },
-            overflow: "hidden",
+                display: "flex",
+                width: "100%",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "48px",
             }}
         >
             <Box
