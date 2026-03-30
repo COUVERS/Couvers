@@ -526,6 +526,11 @@ app.post("/api/lessons/:lessonId/start", authMiddleware, async (req, res) => {
  * - Highest attempt score per lesson is used
  */
 
+function getLessonSkillContribution(correctCount, totalQuestions = 5) {
+  if (correctCount < 4) return 0;
+  return Math.round((correctCount / totalQuestions) * 20);
+}
+
 app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
   try {
     const { lessonId } = req.params;
@@ -592,6 +597,38 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
       answers: resultAnswers,
       submittedAt: new Date(),
     });
+
+    let skillAccuracy = { show: false };
+
+    if (passed) {
+      const previousPassedAttempt = await QuizAttempt.findOne({
+        userId,
+        lessonId: lesson._id,
+        passed: true,
+        submittedAt: { $lt: attempt.submittedAt },
+      })
+        .sort({ submittedAt: -1 })
+        .lean();
+
+      const previous = previousPassedAttempt
+        ? getLessonSkillContribution(
+            previousPassedAttempt.correctCount,
+            previousPassedAttempt.totalQuestions
+          )
+        : 0;
+
+      const current = getLessonSkillContribution(correctCount, totalQuestions);
+
+      const skill = await Skill.findById(lesson.skillId).lean();
+
+      skillAccuracy = {
+        show: true,
+        skillName: skill?.name || "Skill",
+        previous,
+        current,
+        growth: current - previous,
+      };
+    }
 
     // Update or create LessonProgress
     const existingLessonProgress = await LessonProgress.findOne({
@@ -763,6 +800,7 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
         }
         : null,
       results,
+      skillAccuracy,
     });
 
   } catch (err) {
