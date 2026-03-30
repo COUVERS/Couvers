@@ -241,7 +241,9 @@ export default function CourseContainer({
 
     const isMobile = useMediaQuery("(max-width:899px)")
     const isMobileHeaderView =
-        routeViewMode === "lecture" || routeViewMode === "quiz"
+        routeViewMode === "lecture" ||
+        routeViewMode === "quiz" ||
+        routeViewMode === "result"
 
     return (
         <>
