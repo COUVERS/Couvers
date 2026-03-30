@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react"
+import { useTheme } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
@@ -26,6 +28,9 @@ export default function ChangePassword({ onCancel }) {
     const [submitting, setSubmitting] = useState(false)
     const [snackbarOpen, setSnackbarOpen] = useState(false)
 
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"))
+
     const resetErrors = () => {
         setCurrentPasswordError("")
         setNewPasswordError("")
@@ -34,12 +39,12 @@ export default function ChangePassword({ onCancel }) {
 
     const isFormValid = useMemo(() => {
         return (
-            currentPassword.trim() &&
-            newPassword.trim() &&
-            confirmPassword.trim() &&
-            !currentPasswordError &&
-            !newPasswordError &&
-            !confirmPasswordError
+        currentPassword.trim() &&
+        newPassword.trim() &&
+        confirmPassword.trim() &&
+        !currentPasswordError &&
+        !newPasswordError &&
+        !confirmPasswordError
         )
     }, [
         currentPassword,
@@ -55,27 +60,27 @@ export default function ChangePassword({ onCancel }) {
         resetErrors()
 
         if (!currentPassword.trim()) {
-            setCurrentPasswordError("Current password is required.")
-            valid = false
+        setCurrentPasswordError("Current password is required.")
+        valid = false
         }
 
         if (!newPassword.trim()) {
-            setNewPasswordError("New password is required.")
-            valid = false
+        setNewPasswordError("New password is required.")
+        valid = false
         } else if (newPassword === currentPassword) {
-            setNewPasswordError("You cannot reuse your current password.")
-            valid = false
+        setNewPasswordError("You cannot reuse your current password.")
+        valid = false
         } else if (newPassword.length < 6) {
-            setNewPasswordError("Password must be at least 6 characters.")
-            valid = false
+        setNewPasswordError("Password must be at least 6 characters.")
+        valid = false
         }
 
         if (!confirmPassword.trim()) {
-            setConfirmPasswordError("Please confirm your new password.")
-            valid = false
+        setConfirmPasswordError("Please confirm your new password.")
+        valid = false
         } else if (confirmPassword !== newPassword) {
-            setConfirmPasswordError("Passwords do not match.")
-            valid = false
+        setConfirmPasswordError("Passwords do not match.")
+        valid = false
         }
 
         return valid
@@ -87,74 +92,86 @@ export default function ChangePassword({ onCancel }) {
         setSubmitting(true)
 
         try {
-            const token = localStorage.getItem("token")
+        const token = localStorage.getItem("token")
 
-            const res = await fetch("http://localhost:5050/auth/change-password", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    currentPassword,
-                    newPassword,
-                }),
-            })
+        const res = await fetch("http://localhost:5050/auth/change-password", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+            currentPassword,
+            newPassword,
+            }),
+        })
 
-            const data = await res.json()
+        const data = await res.json()
 
-            if (!res.ok) {
-                if (data.message === "Current password is incorrect") {
-                    setCurrentPasswordError("The current password you entered is incorrect.")
-                    return
-                }
-
-                if (data.message === "You cannot reuse your current password") {
-                    setNewPasswordError("You cannot reuse your current password.")
-                    return
-                }
-
-                throw new Error(data.message || "Failed to update password.")
+        if (!res.ok) {
+            if (data.message === "Current password is incorrect") {
+            setCurrentPasswordError(
+                "The current password you entered is incorrect."
+            )
+            return
             }
 
-            setCurrentPassword("")
-            setNewPassword("")
-            setConfirmPassword("")
-            resetErrors()
-            setSnackbarOpen(true)
+            if (data.message === "You cannot reuse your current password") {
+            setNewPasswordError("You cannot reuse your current password.")
+            return
+            }
+
+            throw new Error(data.message || "Failed to update password.")
+        }
+
+        setCurrentPassword("")
+        setNewPassword("")
+        setConfirmPassword("")
+        resetErrors()
+        setSnackbarOpen(true)
         } catch (error) {
-            setCurrentPasswordError(
-                error.message || "The current password you entered is incorrect."
-            )
+        setCurrentPasswordError(
+            error.message || "The current password you entered is incorrect."
+        )
         } finally {
-            setSubmitting(false)
+        setSubmitting(false)
         }
     }
 
     const inputSx = {
         width: "100%",
         "& .MuiInputBase-root": {
-            fontFamily: "IBM Plex Sans",
-            fontSize: "16px",
-            fontWeight: 400,
-            color: "#0F172A",
+        fontFamily: "IBM Plex Sans",
+        fontSize: "16px",
+        fontWeight: 400,
+        color: "#0F172A",
+        width: "100%",
+        },
+        "& .MuiInputBase-input": {
+        py: 0,
         },
         "& .MuiInput-underline:before": {
-            borderBottom: "2px solid #C7D2FE",
+        borderBottom: "1px solid #C7D2FE",
         },
         "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-            borderBottom: "2px solid #A5B4FC",
+        borderBottom: "1px solid #A5B4FC",
         },
         "& .MuiInput-underline:after": {
-            borderBottom: "2px solid #6366F1",
+        borderBottom: "1px solid #6366F1",
+        },
+        "& .MuiInput-underline.Mui-error:before": {
+        borderBottom: "1px solid #EF4444",
+        },
+        "& .MuiInput-underline.Mui-error:hover:not(.Mui-disabled):before": {
+        borderBottom: "1px solid #EF4444",
         },
         "& .MuiInput-underline.Mui-error:after": {
-            borderBottomColor: "#EF4444",
+        borderBottom: "1px solid #EF4444",
         },
     }
 
     const fieldLabelSx = {
-        color: "#64748B",
+        color: "var(--Color-Text-Secondary, #64748B)",
         fontFamily: "IBM Plex Sans",
         fontSize: "12px",
         fontStyle: "normal",
@@ -181,265 +198,282 @@ export default function ChangePassword({ onCancel }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        gap: "6px",
         alignSelf: "stretch",
         width: "100%",
+        gap: "6px",
     }
 
     return (
         <>
+        <Box
+            sx={{
+            width: "100%",
+            minHeight: { xs: "100vh", md: "auto" },
+            pt: { xs: "24px", md: "120px" },
+            backgroundColor: { xs: "#FFF", md: "transparent" },
+            boxSizing: "border-box",
+            }}
+        >
+            <Box
+            sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+            }}
+            >
             <Box
                 sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingTop: "120px",
+                display: "flex",
+                width: { xs: "380px", md: "387px" },
+                maxWidth: { xs: "380px", md: "387px" },
+                padding: "40px 32px",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "48px",
+                borderRadius: { xs: 0, md: "8px" },
+                background: "#FFF",
+                boxShadow: {
+                    xs: "none",
+                    md: "0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 3px 5px -1px rgba(0, 0, 0, 0.20)",
+                },
+                boxSizing: "border-box",
                 }}
             >
                 <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: "24px",
+                    alignSelf: "stretch",
+                }}
+                >
+                <Box sx={fieldWrapperSx}>
+                    <Typography sx={fieldLabelSx}>Current Password</Typography>
+                    <TextField
+                    variant="standard"
+                    fullWidth
+                    type={showCurrent ? "text" : "password"}
+                    value={currentPassword}
+                    onChange={(e) => {
+                        setCurrentPassword(e.target.value)
+                        if (currentPasswordError) setCurrentPasswordError("")
+                    }}
+                    error={!!currentPasswordError}
+                    sx={inputSx}
+                    InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                            onClick={() => setShowCurrent((prev) => !prev)}
+                            edge="end"
+                            disableRipple
+                            sx={{ p: 0 }}
+                            >
+                            {showCurrent ? (
+                                <VisibilityOff size={20} color="#7A7A7A" />
+                            ) : (
+                                <Visibility size={20} color="#7A7A7A" />
+                            )}
+                            </IconButton>
+                        </InputAdornment>
+                        ),
+                    }}
+                    />
+                    {currentPasswordError && (
+                    <Box sx={errorTextSx}>{currentPasswordError}</Box>
+                    )}
+                </Box>
+
+                <Box sx={fieldWrapperSx}>
+                    <Typography sx={fieldLabelSx}>New Password</Typography>
+                    <TextField
+                    variant="standard"
+                    fullWidth
+                    type={showNew ? "text" : "password"}
+                    value={newPassword}
+                    onChange={(e) => {
+                        setNewPassword(e.target.value)
+                        if (newPasswordError) setNewPasswordError("")
+                    }}
+                    error={!!newPasswordError}
+                    sx={inputSx}
+                    InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                            onClick={() => setShowNew((prev) => !prev)}
+                            edge="end"
+                            disableRipple
+                            sx={{ p: 0 }}
+                            >
+                            {showNew ? (
+                                <VisibilityOff size={20} color="#7A7A7A" />
+                            ) : (
+                                <Visibility size={20} color="#7A7A7A" />
+                            )}
+                            </IconButton>
+                        </InputAdornment>
+                        ),
+                    }}
+                    />
+                    {newPasswordError && <Box sx={errorTextSx}>{newPasswordError}</Box>}
+                </Box>
+
+                <Box sx={fieldWrapperSx}>
+                    <Typography sx={fieldLabelSx}>Confirm New Password</Typography>
+                    <TextField
+                    variant="standard"
+                    fullWidth
+                    type={showConfirm ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => {
+                        setConfirmPassword(e.target.value)
+                        if (confirmPasswordError) setConfirmPasswordError("")
+                    }}
+                    error={!!confirmPasswordError}
+                    sx={inputSx}
+                    InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                            onClick={() => setShowConfirm((prev) => !prev)}
+                            edge="end"
+                            disableRipple
+                            sx={{ p: 0 }}
+                            >
+                            {showConfirm ? (
+                                <VisibilityOff size={20} color="#7A7A7A" />
+                            ) : (
+                                <Visibility size={20} color="#7A7A7A" />
+                            )}
+                            </IconButton>
+                        </InputAdornment>
+                        ),
+                    }}
+                    />
+                    {confirmPasswordError && (
+                    <Box sx={errorTextSx}>{confirmPasswordError}</Box>
+                    )}
+                </Box>
+                </Box>
+
+                <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    gap: "16px",
+                    alignSelf: "stretch",
+                }}
+                >
+                <Button
+                    onClick={onCancel}
                     sx={{
-                        display: "flex",
-                        width: "387px",
-                        padding: "40px 32px",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: "48px",
-                        borderRadius: "8px",
-                        background: "#FFF",
-                        boxShadow:
-                            "0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 3px 5px -1px rgba(0, 0, 0, 0.20)",
-                        boxSizing: "border-box",
+                    display: "flex",
+                    height: "48px",
+                    padding: "8px 11px",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: "1 0 0",
+                    borderRadius: "4px",
+                    textTransform: "none",
+                    color: "var(--Color-Primary-Main, #6B63FF)",
+                    fontFamily: "IBM Plex Sans",
+                    fontSize: "15px",
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                    lineHeight: "normal",
+                    letterSpacing: "0.2px",
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                            gap: "24px",
-                            alignSelf: "stretch",
-                        }}
-                    >
-                        {/* Current Password */}
-                        <Box sx={fieldWrapperSx}>
-                            <Typography sx={fieldLabelSx}>
-                                Current Password
-                            </Typography>
+                    Cancel
+                </Button>
 
-                            <TextField
-                                variant="standard"
-                                fullWidth
-                                type={showCurrent ? "text" : "password"}
-                                value={currentPassword}
-                                onChange={(e) => {
-                                    setCurrentPassword(e.target.value)
-                                    if (currentPasswordError) setCurrentPasswordError("")
-                                }}
-                                error={!!currentPasswordError}
-                                sx={inputSx}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => setShowCurrent((prev) => !prev)}
-                                                edge="end"
-                                            >
-                                                {showCurrent ? (
-                                                    <VisibilityOff size={20} color="#7A7A7A" />
-                                                ) : (
-                                                    <Visibility size={20} color="#7A7A7A" />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-
-                            {currentPasswordError && (
-                                <Box sx={errorTextSx}>
-                                    {currentPasswordError}
-                                </Box>
-                            )}
-                        </Box>
-
-                        {/* New Password */}
-                        <Box sx={fieldWrapperSx}>
-                            <Typography sx={fieldLabelSx}>
-                                New Password
-                            </Typography>
-
-                            <TextField
-                                variant="standard"
-                                fullWidth
-                                type={showNew ? "text" : "password"}
-                                value={newPassword}
-                                onChange={(e) => {
-                                    setNewPassword(e.target.value)
-                                    if (newPasswordError) setNewPasswordError("")
-                                }}
-                                error={!!newPasswordError}
-                                sx={inputSx}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => setShowNew((prev) => !prev)}
-                                                edge="end"
-                                            >
-                                                {showNew ? (
-                                                    <VisibilityOff size={20} color="#7A7A7A" />
-                                                ) : (
-                                                    <Visibility size={20} color="#7A7A7A" />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-
-                            {newPasswordError && (
-                                <Box sx={errorTextSx}>
-                                    {newPasswordError}
-                                </Box>
-                            )}
-                        </Box>
-
-                        {/* Confirm New Password */}
-                        <Box sx={fieldWrapperSx}>
-                            <Typography sx={fieldLabelSx}>
-                                Confirm New Password
-                            </Typography>
-
-                            <TextField
-                                variant="standard"
-                                fullWidth
-                                type={showConfirm ? "text" : "password"}
-                                value={confirmPassword}
-                                onChange={(e) => {
-                                    setConfirmPassword(e.target.value)
-                                    if (confirmPasswordError) setConfirmPasswordError("")
-                                }}
-                                error={!!confirmPasswordError}
-                                sx={inputSx}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => setShowConfirm((prev) => !prev)}
-                                                edge="end"
-                                            >
-                                                {showConfirm ? (
-                                                    <VisibilityOff size={20} color="#7A7A7A" />
-                                                ) : (
-                                                    <Visibility size={20} color="#7A7A7A" />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-
-                            {confirmPasswordError && (
-                                <Box sx={errorTextSx}>
-                                    {confirmPasswordError}
-                                </Box>
-                            )}
-                        </Box>
-                    </Box>
-
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "16px",
-                            alignSelf: "stretch",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Button
-                            onClick={onCancel}
-                            sx={{
-                                display: "flex",
-                                height: "48px",
-                                padding: "8px 11px",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                flex: "1 0 0",
-                                borderRadius: "4px",
-                                textTransform: "none",
-                                color: "#6B63FF",
-                                fontFamily: "IBM Plex Sans",
-                                fontSize: "15px",
-                                fontStyle: "normal",
-                                fontWeight: 500,
-                                lineHeight: "normal",
-                                letterSpacing: "0.2px",
-                            }}
-                        >
-                            Cancel
-                        </Button>
-
-                        <Button
-                            variant="contained"
-                            disabled={!isFormValid || submitting}
-                            onClick={handleSubmit}
-                            sx={{
-                                display: "flex",
-                                height: "48px",
-                                padding: "8px 11px",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                flex: "1 0 0",
-                                borderRadius: "4px",
-                                textTransform: "none",
-                                fontFamily: "IBM Plex Sans",
-                                fontSize: "15px",
-                                fontStyle: "normal",
-                                fontWeight: 500,
-                                lineHeight: "normal",
-                                letterSpacing: "0.2px",
-                                backgroundColor: "#6366F1",
-                                boxShadow:
-                                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
-                                color: "#FFF",
-                                "&.Mui-disabled": {
-                                    backgroundColor: "#E2E8F0",
-                                    color: "#94A3B8",
-                                    boxShadow: "none",
-                                },
-                                "&:hover": {
-                                    backgroundColor: "#5658E6",
-                                },
-                            }}
-                        >
-                            Change Password
-                        </Button>
-                    </Box>
+                <Button
+                    variant="contained"
+                    disabled={!isFormValid || submitting}
+                    onClick={handleSubmit}
+                    sx={{
+                    display: "flex",
+                    height: "48px",
+                    padding: "8px 11px",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: "1 0 0",
+                    borderRadius: "4px",
+                    textTransform: "none",
+                    fontFamily: "IBM Plex Sans",
+                    fontSize: "15px",
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                    lineHeight: "normal",
+                    letterSpacing: "0.2px",
+                    backgroundColor: "#6366F1",
+                    boxShadow:
+                        "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                    color: "#FFF",
+                    "&.Mui-disabled": {
+                        backgroundColor: "#E2E8F0",
+                        color: "#94A3B8",
+                        boxShadow: "none",
+                    },
+                    "&:hover": {
+                        backgroundColor: "#5658E6",
+                    },
+                    }}
+                >
+                    Change Password
+                </Button>
                 </Box>
             </Box>
+            </Box>
+        </Box>
 
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={6000}
-                onClose={() => setSnackbarOpen(false)}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            >
-                <Alert
-                    onClose={() => setSnackbarOpen(false)}
-                    severity="success"
-                    variant="filled"
-                    sx={{
-                        minWidth: "360px",
-                        fontFamily: "IBM Plex Sans",
-                        fontSize: "16px",
-                        fontWeight: 500,
-                        alignItems: "center",
-                    }}
-                >
-                    Password updated successfully
-                </Alert>
-            </Snackbar>
+        <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={() => setSnackbarOpen(false)}
+            anchorOrigin={{
+                vertical: isMobile ? "bottom" : "top",
+                horizontal: isMobile ? "left" : "right",
+            }}
+            sx={
+                isMobile
+                ? {
+                    width: "100%",
+                    left: "0 !important",
+                    right: "0 !important",
+                    bottom: "0 !important",
+                    transform: "none !important",
+                    }
+                : undefined
+            }
+        >
+        <Alert
+            onClose={() => setSnackbarOpen(false)}
+            severity="success"
+            variant="filled"
+            sx={{
+                width: isMobile ? "100%" : "360px",
+                minWidth: isMobile ? "100%" : "360px",
+                maxWidth: isMobile ? "100%" : "360px",
+                borderRadius: isMobile ? 0 : "4px",
+                margin: 0,
+                fontFamily: "Roboto, var(--fontFamily, Roboto)",
+                fontSize: "16px",
+                fontWeight: 500,
+                lineHeight: "150%",
+                letterSpacing: "0.15px",
+                color: "var(--Color-Success-Contrast, #FFF)",
+                alignItems: "center",
+            }}
+        >
+        Password updated successfully
+        </Alert>
+        </Snackbar>
         </>
     )
 }
