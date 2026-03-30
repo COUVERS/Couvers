@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
+// import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
 import CourseSidebar from "./CourseSidebar"
 import CourseMainContent from "./CourseMainContent"
 import { API_BASE_URL } from "../../../config"
-import useMediaQuery from "@mui/material/useMediaQuery"
-import LessonMobileHeader from "../../reusable-ui/LessonMobileHeader"
+// import useMediaQuery from "@mui/material/useMediaQuery"
+// import LessonMobileHeader from "../../reusable-ui/LessonMobileHeader"
 import Drawer from "@mui/material/Drawer"
-import Navigation from "../../layout/Navigation"
+// import Navigation from "../../layout/Navigation"
 
 export default function CourseContainer({
     continueCourseId,
@@ -17,6 +18,11 @@ export default function CourseContainer({
     routeLessonId,
     routeViewMode,
     forceCollapsed = false,
+    isMobile = false,
+    mobileCourseNavOpen,
+    setMobileCourseNavOpen,
+    mobileContentsNavOpen,
+    setMobileContentsNavOpen,
 }) {
     const navigate = useNavigate()
 
@@ -237,98 +243,166 @@ export default function CourseContainer({
         navigate(`/courses/${courseId}`)
     }
 
-    const [mobileNavOpen, setMobileNavOpen] = useState(false)
+    // const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
-    const isMobile = useMediaQuery("(max-width:899px)")
-    const isMobileHeaderView =
-        routeViewMode === "lecture" ||
-        routeViewMode === "quiz" ||
-        routeViewMode === "result"
+    // const isMobile = useMediaQuery("(max-width:899px)")
+    // const isMobileHeaderView =
+    //     routeViewMode === "lecture" || routeViewMode === "quiz"
 
     return (
-        <>
-            {isMobile && isMobileHeaderView && (
-                <LessonMobileHeader onMenuClick={() => setMobileNavOpen(true)} />
-            )}
+        // <>
+        //     {isMobile && isMobileHeaderView && (
+        //         <LessonMobileHeader onMenuClick={() => setMobileNavOpen(true)} />
+        //     )}
 
-            <Box sx={{ display: "flex", minHeight: "100vh" }}>
-                {!isMobile && (
-                    <CourseSidebar
-                        navMode={navMode}
-                        courses={courses}
-                        selectedCourseId={selectedCourseId}
-                        lessons={lessons}
-                        selectedLesson={selectedLesson}
-                        onSelectCourse={goToCourseById}
-                        onSelectLecture={goToLessonLecture}
-                        onSelectQuiz={(lesson) => {
-                            if (!selectedCourseId || !lesson?._id) return
-                            navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
-                        }}
-                        onBack={goToCourseOverview}
-                        forceCollapsed={forceCollapsed}
-                    />
-                )}
-
-                <CourseMainContent
-                    isLoading={isLoading}
-                    error={error}
-                    course={course}
-                    viewMode={viewMode}
+        <Box sx={{ display: "flex", minHeight: "100vh" }}>
+            {!isMobile && (
+                <CourseSidebar
+                    navMode={navMode}
+                    courses={courses}
+                    selectedCourseId={selectedCourseId}
                     lessons={lessons}
                     selectedLesson={selectedLesson}
-                    nextLessonData={nextLessonData}
-                    matchedQuizzes={matchedQuizzes}
-                    onOpenLesson={goToLessonLecture}
-                    onTakeQuiz={goToLessonQuiz}
-                    onBackToLessonList={goToCourseOverview}
-                    onBackToLecture={() => {
-                        if (!selectedCourseId || !selectedLesson?._id) return
-                        navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/lecture`)
+                    onSelectCourse={goToCourseById}
+                    onSelectLecture={goToLessonLecture}
+                    onSelectQuiz={(lesson) => {
+                        if (!selectedCourseId || !lesson?._id) return
+                        navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
                     }}
-                    onQuizSubmitted={async () => {
-                        await loadCourseFull(selectedCourseId)
-                    }}
+                    onBack={goToCourseOverview}
+                    forceCollapsed={forceCollapsed}
                 />
-            </Box>
-            {isMobile && isMobileHeaderView && (
-                <Drawer
-                    anchor="left"
-                    open={mobileNavOpen}
-                    onClose={() => setMobileNavOpen(false)}
-                    sx={{
-                        "& .MuiDrawer-paper": {
-                            width: "300px",
-                            maxWidth: "300px",
-                            overflowX: "hidden",
-                        },
-                    }}
-                >
-                    <Navigation
-                        page="courses"
-                        setPage={(nextPage) => {
-                            setMobileNavOpen(false)
-
-                            if (nextPage === "courses") {
-                                goToCourseOverview()
-                                return
-                            }
-
-                            if (nextPage === "home") {
-                                navigate("/")
-                                return
-                            }
-
-                            if (nextPage === "account") {
-                                navigate("/account")
-                            }
-                        }}
-                        forceCollapsed={false}
-                        drawerCustomWidth="100%"
-                        isMobileDrawer={true}
-                    />
-                </Drawer>
             )}
-        </>
+
+            <CourseMainContent
+                isLoading={isLoading}
+                error={error}
+                course={course}
+                viewMode={viewMode}
+                lessons={lessons}
+                selectedLesson={selectedLesson}
+                nextLessonData={nextLessonData}
+                matchedQuizzes={matchedQuizzes}
+                onOpenLesson={goToLessonLecture}
+                onTakeQuiz={goToLessonQuiz}
+                onBackToLessonList={goToCourseOverview}
+                onBackToLecture={() => {
+                    if (!selectedCourseId || !selectedLesson?._id) return
+                    navigate(`/courses/${selectedCourseId}/lessons/${selectedLesson._id}/lecture`)
+                }}
+                onQuizSubmitted={async () => {
+                    await loadCourseFull(selectedCourseId)
+                }}
+            />
+            {/* </Box> */}
+            {/* {isMobile && isMobileHeaderView && ( */}
+            {isMobile && (
+                <>
+                    <Drawer
+                        anchor="left"
+                        open={mobileCourseNavOpen}
+                        onClose={() => setMobileCourseNavOpen(false)}
+                        // open={mobileNavOpen}
+                        // onClose={() => setMobileNavOpen(false)}
+                        sx={{
+                            "& .MuiDrawer-paper": {
+                                width: "240px",
+                                maxWidth: "240px",
+                                overflowX: "hidden",
+                            },
+                        }}
+                    >
+                        <CourseSidebar
+                            navMode="course"
+                            courses={courses}
+                            selectedCourseId={selectedCourseId}
+                            lessons={lessons}
+                            selectedLesson={selectedLesson}
+                            onSelectCourse={(id) => {
+                                setMobileCourseNavOpen(false)
+                                goToCourseById(id)
+                            }}
+                            onSelectLecture={(lesson) => {
+                                setMobileCourseNavOpen(false)
+                                goToLessonLecture(lesson)
+                            }}
+                            onSelectQuiz={(lesson) => {
+                                setMobileCourseNavOpen(false)
+                                if (!selectedCourseId || !lesson?._id) return
+                                navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
+                            }}
+                            onBack={() => {
+                                setMobileCourseNavOpen(false)
+                                goToCourseOverview()
+                            }}
+                            forceCollapsed={false}
+                        />
+                    </Drawer>
+
+                    {/* Contents Navigation */}
+                    <Drawer
+                        anchor="left"
+                        open={mobileContentsNavOpen}
+                        onClose={() => setMobileContentsNavOpen(false)}
+                        sx={{
+                            "& .MuiDrawer-paper": {
+                                width: "80vw",
+                                maxWidth: "360px",
+                                overflowX: "hidden",
+                            },
+                        }}
+                    >
+                        <CourseSidebar
+                            navMode="contents"
+                            courses={courses}
+                            selectedCourseId={selectedCourseId}
+                            lessons={lessons}
+                            selectedLesson={selectedLesson}
+                            onSelectCourse={(id) => {
+                                setMobileContentsNavOpen(false)
+                                goToCourseById(id)
+                            }}
+                            onSelectLecture={(lesson) => {
+                                setMobileContentsNavOpen(false)
+                                goToLessonLecture(lesson)
+                            }}
+                            onSelectQuiz={(lesson) => {
+                                setMobileContentsNavOpen(false)
+                                if (!selectedCourseId || !lesson?._id) return
+                                navigate(`/courses/${selectedCourseId}/lessons/${lesson._id}/quiz`)
+                            }}
+                            onBack={() => {
+                                setMobileContentsNavOpen(false)
+                                goToCourseOverview()
+                            }}
+                            forceCollapsed={false}
+                            // {/* <Navigation
+                            // page="courses" */}
+                            // {/* setPage={(nextPage) => {
+                            //     setMobileNavOpen(false)
+
+                            //     if (nextPage === "courses") { */}
+                            // {/* goToCourseOverview()
+                            //         return
+                            //     }
+
+                            //     if (nextPage === "home") {
+                            //         navigate("/")
+                            //         return
+                            //     }
+
+                            //     if (nextPage === "account") {
+                            //         navigate("/account") */}
+                        //     }
+                        // }}
+                        // forceCollapsed={false}
+                        // drawerCustomWidth="100%"
+                        // isMobileDrawer={true}
+                        />
+                    </Drawer>
+                    {/* )} */}
+                </>
+            )}
+        </Box>
     )
 }
