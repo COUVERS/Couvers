@@ -6,6 +6,8 @@ import CourseMainContent from "./CourseMainContent"
 import { API_BASE_URL } from "../../../config"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LessonMobileHeader from "../../reusable-ui/LessonMobileHeader"
+import Drawer from "@mui/material/Drawer"
+import Navigation from "../../layout/Navigation"
 
 export default function CourseContainer({
     continueCourseId,
@@ -235,20 +237,20 @@ export default function CourseContainer({
         navigate(`/courses/${courseId}`)
     }
 
+    const [mobileNavOpen, setMobileNavOpen] = useState(false)
+
     const isMobile = useMediaQuery("(max-width:899px)")
-    const isLessonView =
-        routeViewMode === "lecture" ||
-        routeViewMode === "quiz" ||
-        routeViewMode === "result"
+    const isMobileHeaderView =
+        routeViewMode === "lecture" || routeViewMode === "quiz"
 
     return (
         <>
-            {isMobile && isLessonView && (
-                <LessonMobileHeader onMenuClick={() => { }} />
+            {isMobile && isMobileHeaderView && (
+                <LessonMobileHeader onMenuClick={() => setMobileNavOpen(true)} />
             )}
 
             <Box sx={{ display: "flex", minHeight: "100vh" }}>
-                {!(isMobile && isLessonView) && (
+                {!isMobile && (
                     <CourseSidebar
                         navMode={navMode}
                         courses={courses}
@@ -287,6 +289,44 @@ export default function CourseContainer({
                     }}
                 />
             </Box>
+            {isMobile && isMobileHeaderView && (
+                <Drawer
+                    anchor="left"
+                    open={mobileNavOpen}
+                    onClose={() => setMobileNavOpen(false)}
+                    sx={{
+                        "& .MuiDrawer-paper": {
+                            width: "300px",
+                            maxWidth: "300px",
+                            overflowX: "hidden",
+                        },
+                    }}
+                >
+                    <Navigation
+                        page="courses"
+                        setPage={(nextPage) => {
+                            setMobileNavOpen(false)
+
+                            if (nextPage === "courses") {
+                                goToCourseOverview()
+                                return
+                            }
+
+                            if (nextPage === "home") {
+                                navigate("/")
+                                return
+                            }
+
+                            if (nextPage === "account") {
+                                navigate("/account")
+                            }
+                        }}
+                        forceCollapsed={false}
+                        drawerCustomWidth="100%"
+                        isMobileDrawer={true}
+                    />
+                </Drawer>
+            )}
         </>
     )
 }

@@ -246,12 +246,13 @@ export default function App() {
               pb: 1,
               backgroundColor: "#fff",
               position: "sticky",
-              boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)", top: 0,
+              top: 0,
               zIndex: 1200,
+              boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)",
             }}
           >
             {/* Left */}
-            <Box sx={{ width: 40, display: "flex", justifyContent: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <IconButton
                 onClick={() => setMobileNavOpen(true)}
                 sx={{
@@ -262,10 +263,7 @@ export default function App() {
               >
                 <MenuIcon />
               </IconButton>
-            </Box>
 
-            {/* Center */}
-            <Box sx={{ display: "flex", justifyContent: "center", flex: 1 }}>
               <img
                 src={LogoLarge}
                 alt="TeTe"
@@ -279,42 +277,7 @@ export default function App() {
             </Box>
 
             {/* Right */}
-            <Box
-              sx={{
-                width: 96,
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: 1,
-              }}
-            >
-              {page === "courses" && (
-                <>
-                  <IconButton
-                    onClick={() => setMobileContentsNavOpen(true)}
-                    sx={{
-                      width: 60,
-                      height: 60,
-                      "& svg": {
-                        width: 40,
-                        height: 40,
-                      },
-                    }}
-                  >
-                    <LessonLectureIcon />
-                  </IconButton>
-
-                  <IconButton
-                    onClick={() => setMobileCourseNavOpen(true)}
-                    sx={{
-                      width: 60,
-                      height: 60,
-                    }}
-                  >
-                    <CourseIcon />
-                  </IconButton>
-                </>
-              )}
-            </Box>
+            <Box sx={{ width: 40 }} />
           </Box>
         )}
         {page === "home" && (
@@ -448,28 +411,7 @@ export default function App() {
               },
             }}
           >
-            {isMobile && (
-              <Drawer
-                anchor="left"
-                open={mobileCourseNavOpen}
-                onClose={() => setMobileCourseNavOpen(false)}
-                sx={{
-                  "& .MuiDrawer-paper": {
-                    width: "300px",
-                    maxWidth: "300px",
-                    overflowX: "hidden",
-                  },
-                }}
-              >
-                <CoursePage
-                  continueCourseId={continueCourseId}
-                  continueLessonId={continueLessonId}
-                  courseResetSignal={courseResetSignal}
-                  mobileCourseNavOpen={mobileCourseNavOpen}
-                  setMobileCourseNavOpen={setMobileCourseNavOpen}
-                />
-              </Drawer>
-            )}
+
             {/* <Box sx={{ width: 240 }}> */}
             <Navigation
               page={page}
