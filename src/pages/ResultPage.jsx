@@ -41,16 +41,9 @@ export default function ResultPage() {
       correct: item.isCorrect,
     })) ?? []
 
-  const skillProgress = resultData.skillProgress
+  const skillAccuracy = resultData.skillAccuracy
   const percentage = total > 0 ? (score / total) * 100 : 0
   const passed = percentage >= 80
-
-  const currentSkillScore =
-    skillProgress?.totalLessons > 0
-      ? (skillProgress.passedLessons / skillProgress.totalLessons) * 100
-      : 0
-
-  const previousSkillScore = 0
 
   const handleGoHome = () => {
     navigate("/")
@@ -125,14 +118,16 @@ export default function ResultPage() {
         </Typography>
       </Box>
 
-      <Box sx={{ mb: { xs: 5, sm: 5 } }}>
-        <SkillAccuracyBar
-          title="Skill Accuracy"
-          label={skillProgress?.skillName || "Skill"}
-          previous={previousSkillScore}
-          current={currentSkillScore}
-        />
-      </Box>
+      {skillAccuracy?.show && (
+        <Box sx={{ mb: { xs: 5, sm: 5 } }}>
+          <SkillAccuracyBar
+            title="Skill Accuracy"
+            label={skillAccuracy.skillName || "Skill"}
+            previous={skillAccuracy.previous}
+            current={skillAccuracy.current}
+          />
+        </Box>
+      )}
 
       <Typography
         sx={{
