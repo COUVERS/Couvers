@@ -181,12 +181,12 @@ export default function App() {
     )
   }
 
-  const isCourseRoute = location.pathname.startsWith("/courses")
+  // const isCourseRoute = location.pathname.startsWith("/courses")
 
-  const isLessonRoute =
-    location.pathname.includes("/lecture") ||
-    location.pathname.includes("/quiz") ||
-    location.pathname.includes("/result")
+  // const isLessonRoute =
+  //   location.pathname.includes("/lecture") ||
+  //   location.pathname.includes("/quiz") ||
+  //   location.pathname.includes("/result")
 
 
   return (
@@ -235,7 +235,8 @@ export default function App() {
           p: isMobile ? 0 : page === "courses" || page === "account" ? 0 : 2,
         }}
       >
-        {isMobile && !isLessonRoute && (
+        {/* {isMobile && !isLessonRoute && ( */}
+        {isMobile && (
           <Box
             sx={{
               display: "flex",
@@ -252,7 +253,8 @@ export default function App() {
             }}
           >
             {/* Left */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            {/* <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}> */}
+            <Box sx={{ width: 40, display: "flex", justifyContent: "center" }}>
               <IconButton
                 onClick={() => setMobileNavOpen(true)}
                 sx={{
@@ -263,7 +265,9 @@ export default function App() {
               >
                 <MenuIcon />
               </IconButton>
+            </Box>
 
+            <Box sx={{ display: "flex", justifyContent: "center", flex: 1 }}>
               <img
                 src={LogoLarge}
                 alt="TeTe"
@@ -278,6 +282,42 @@ export default function App() {
 
             {/* Right */}
             <Box sx={{ width: 40 }} />
+            <Box
+              sx={{
+                width: 96,
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 1,
+              }}
+            >
+              {page === "courses" && (
+                <>
+                  <IconButton
+                    onClick={() => setMobileContentsNavOpen(true)}
+                    sx={{
+                      width: 60,
+                      height: 60,
+                      "& svg": {
+                        width: 40,
+                        height: 40,
+                      },
+                    }}
+                  >
+                    <LessonLectureIcon />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={() => setMobileCourseNavOpen(true)}
+                    sx={{
+                      width: 60,
+                      height: 60,
+                    }}
+                  >
+                    <CourseIcon />
+                  </IconButton>
+                </>
+              )}
+            </Box>
           </Box>
         )}
         {page === "home" && (
@@ -398,7 +438,8 @@ export default function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        {isMobile && !isLessonRoute && (
+        {/* {isMobile && !isLessonRoute && ( */}
+        {isMobile && (
           <Drawer
             anchor="left"
             open={mobileNavOpen}
@@ -411,7 +452,28 @@ export default function App() {
               },
             }}
           >
-
+            {isMobile && (
+              <Drawer
+                anchor="left"
+                open={mobileCourseNavOpen}
+                onClose={() => setMobileCourseNavOpen(false)}
+                sx={{
+                  "& .MuiDrawer-paper": {
+                    width: "300px",
+                    maxWidth: "300px",
+                    overflowX: "hidden",
+                  },
+                }}
+              >
+                <CoursePage
+                  continueCourseId={continueCourseId}
+                  continueLessonId={continueLessonId}
+                  courseResetSignal={courseResetSignal}
+                  mobileCourseNavOpen={mobileCourseNavOpen}
+                  setMobileCourseNavOpen={setMobileCourseNavOpen}
+                />
+              </Drawer>
+            )}
             {/* <Box sx={{ width: 240 }}> */}
             <Navigation
               page={page}
