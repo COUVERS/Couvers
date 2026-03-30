@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react"
+import { API_BASE_URL } from "../../config"
 import { useTheme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
@@ -94,7 +95,7 @@ export default function ChangePassword({ onCancel }) {
         try {
         const token = localStorage.getItem("token")
 
-        const res = await fetch("http://localhost:5050/auth/change-password", {
+        const res = await fetch(`${API_BASE_URL}/auth/change-password`, {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
