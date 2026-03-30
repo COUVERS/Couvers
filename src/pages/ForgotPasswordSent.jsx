@@ -1,36 +1,42 @@
 import { Link as RouterLink, useLocation } from "react-router-dom"
-import { Box, Button, Link, Typography } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import LogoLarge from "../assets/Logo_large_dark.png"
 
 export default function ForgotPasswordSent() {
     const location = useLocation()
     const email = location.state?.email || ""
 
-    return (
-        <Box
+return (
+    <Box
         sx={{
-            minHeight: "100vh",
             display: "flex",
+            width: { xs: "100%", md: "1440px" },
+            minHeight: { xs: "100vh", md: "1024px" },
             justifyContent: "center",
             alignItems: "center",
-            p: 3,
+            gap: "var(--5, 40px)",
+            flexShrink: 0,
+            mx: "auto",
             bgcolor: "#F8FAFC",
         }}
-        >
-        <Box
+    >
+    <Box
             sx={{
-            display: "flex",
-            width: "640px",
-            height: "606px",
-            padding: "var(--7, 56px) var(--5, 40px)",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "var(--6, 48px)",
-            borderRadius: "var(--md, 8px)",
-            bgcolor: "var(--Color-Background-Paper, #FFF)",
-            boxShadow:
-                "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+                display: "flex",
+                width: { xs: "430px", md: "640px" },
+                height: { xs: "606px", md: "606px" },
+                padding: "56px 40px",
+                boxSizing: "border-box",
+                flexDirection: "column",
+                justifyContent: { xs: "flex-start", md: "center" },
+                alignItems: "center",
+                gap: "48px",
+                borderRadius: { xs: 0, md: "8px" },
+                bgcolor: "var(--Color-Background-Paper, #FFF)",
+                boxShadow: {
+                xs: "none",
+                md: "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
+                },
             }}
         >
         <Box
@@ -51,10 +57,10 @@ export default function ForgotPasswordSent() {
                 color: "var(--Color-Text-Primary, #0F172A)",
                 textAlign: "center",
                 fontFamily: "IBM Plex Sans",
-                fontSize: "56px",
+                fontSize: { xs: "40px", md: "56px" },
                 fontWeight: 600,
-                lineHeight: "60px",
-                letterSpacing: "-0.56px",
+                lineHeight: { xs: "48px", md: "60px" },
+                letterSpacing: { xs: "-0.2px", md: "-0.56px" },
             }}
         >
             Check Your Email
@@ -68,7 +74,7 @@ export default function ForgotPasswordSent() {
                 fontFamily: "IBM Plex Sans",
                 fontSize: "16px",
                 fontWeight: 500,
-                lineHeight: "normal",
+                lineHeight: "24px",
                 wordBreak: "break-word",
             }}
         >
@@ -81,10 +87,15 @@ export default function ForgotPasswordSent() {
                 fontWeight: "inherit",
             }}
         >
-        {email}
+            {email}
         </Box>
         </Typography>
 
+        <Box
+            sx={{
+                width: { xs: "100%", md: "560px" },
+            }}
+        >
         <Button
             component={RouterLink}
             to="/login"
@@ -92,7 +103,7 @@ export default function ForgotPasswordSent() {
             size="large"
             sx={{
                 display: "flex",
-                width: "var(--Button-Dialog, 560px)",
+                width: "100%",
                 height: "48px",
                 padding: "8px 24px",
                 justifyContent: "center",
@@ -110,14 +121,15 @@ export default function ForgotPasswordSent() {
                 backgroundColor: "#6B63FF",
                 color: "#FFF",
                 boxShadow:
-                "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                    "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
                 "&:hover": {
-                backgroundColor: "#6B63FF",
+                    backgroundColor: "#6B63FF",
                 },
             }}
-            >
+        >
             Back to Sign In
             </Button>
+            </Box>
         </Box>
         </Box>
     )
