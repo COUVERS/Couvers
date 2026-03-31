@@ -24,7 +24,9 @@ export default function ResultPage() {
   if (!resultData) {
     return (
       <Box sx={{ p: 4 }}>
-        <Typography variant="h5">No result data found.</Typography>
+        <Typography variant="h5" sx={{ color: "var(--Color-Text-Primary)" }}>
+          No result data found.
+        </Typography>
       </Box>
     )
   }
@@ -98,7 +100,7 @@ export default function ResultPage() {
           sx={{
             fontSize: { xs: 44, sm: 48 },
             fontWeight: 700,
-            color: passed ? "#10B981" : "#EF4444",
+            color: passed ? "var(--Color-Success-Main)" : "var(--Color-Error-Main)",
             lineHeight: 1.1,
           }}
         >
@@ -110,7 +112,7 @@ export default function ResultPage() {
             fontSize: { xs: 44, sm: 36 },
             mt: { xs: 3, sm: 2 },
             fontWeight: 600,
-            color: "var(--Color-Primary-Main)",
+            color: "var(--Color-Text-Primary)",
             lineHeight: 1.1,
           }}
         >
@@ -134,7 +136,7 @@ export default function ResultPage() {
           fontSize: 28,
           fontWeight: 600,
           mb: 3,
-          color: "#0F172A",
+          color: "var(--Color-Text-Primary)",
           lineHeight: 1.1,
         }}
       >
@@ -149,11 +151,11 @@ export default function ResultPage() {
             disableGutters
             sx={{
               mb: 2,
-              border: "1px solid #A5B4FC",
+              border: "1px solid var(--Color-Border-Default)",
               borderRadius: "0px",
               boxShadow: "none",
               overflow: "hidden",
-              backgroundColor: "#FFF",
+              backgroundColor: "var(--Color-Background-Paper)",
               "&:before": {
                 display: "none",
               },
@@ -163,7 +165,7 @@ export default function ResultPage() {
               expandIcon={
                 <ExpandMoreIcon
                   sx={{
-                    color: "#0F172A",
+                    color: "var(--Color-Text-Primary)",
                     fontSize: { xs: 28, sm: 32 },
                   }}
                 />
@@ -195,7 +197,7 @@ export default function ResultPage() {
                     justifyContent: "center",
                     width: { xs: 28, sm: 36 },
                     height: { xs: 28, sm: 36 },
-                    color: item.correct ? "#10B981" : "#EF4444",
+                    color: item.correct ? "var(--Color-Success-Main)" : "var(--Color-Error-Main)",
                     flexShrink: 0,
                   }}
                 >
@@ -211,7 +213,7 @@ export default function ResultPage() {
                     sx={{
                       fontWeight: 700,
                       fontSize: { xs: "18px", sm: "20px" },
-                      color: "#0F172A",
+                      color: "var(--Color-Text-Primary)",
                       lineHeight: 1.2,
                     }}
                   >
@@ -220,7 +222,7 @@ export default function ResultPage() {
 
                   <Typography
                     sx={{
-                      color: "#64748B",
+                      color: "var(--Color-Text-Secondary)",
                       fontSize: { xs: "12px", sm: "16px" },
                       fontWeight: 500,
                       lineHeight: 1.2,
@@ -237,14 +239,14 @@ export default function ResultPage() {
                 px: { xs: "16px", sm: "24px" },
                 pb: { xs: "16px", sm: "24px" },
                 pt: 0,
-                backgroundColor: "#FFF",
+                backgroundColor: "var(--Color-Background-Paper)",
               }}
             >
               <Typography
                 sx={{
                   fontWeight: 700,
                   mb: 1,
-                  color: "#0F172A",
+                  color: "var(--Color-Text-Primary)",
                   fontSize: { xs: "16px", sm: "18px" },
                 }}
               >
@@ -253,7 +255,7 @@ export default function ResultPage() {
               <Typography
                 sx={{
                   mb: 3,
-                  color: "#0F172A",
+                  color: "var(--Color-Text-Primary)",
                   fontSize: { xs: "14px", sm: "16px" },
                   lineHeight: 1.45,
                 }}
@@ -265,7 +267,7 @@ export default function ResultPage() {
                 sx={{
                   fontWeight: 700,
                   mb: 1,
-                  color: "#0F172A",
+                  color: "var(--Color-Text-Primary)",
                   fontSize: { xs: "16px", sm: "18px" },
                 }}
               >
@@ -274,7 +276,7 @@ export default function ResultPage() {
               <Typography
                 sx={{
                   mb: 3,
-                  color: "#0F172A",
+                  color: "var(--Color-Text-Primary)",
                   fontSize: { xs: "14px", sm: "16px" },
                   lineHeight: 1.45,
                 }}
@@ -286,7 +288,7 @@ export default function ResultPage() {
                 sx={{
                   fontWeight: 700,
                   mb: 1,
-                  color: "#0F172A",
+                  color: "var(--Color-Text-Primary)",
                   fontSize: { xs: "16px", sm: "18px" },
                 }}
               >
@@ -294,7 +296,7 @@ export default function ResultPage() {
               </Typography>
               <Typography
                 sx={{
-                  color: "#0F172A",
+                  color: "var(--Color-Text-Primary)",
                   fontSize: { xs: "14px", sm: "16px" },
                   lineHeight: 1.45,
                 }}
@@ -325,7 +327,7 @@ export default function ResultPage() {
             bottom: 0,
             zIndex: 1200,
             mt: 0,
-            background: "var(--Color-Background-Paper, #FFF)",
+            background: "var(--Color-Background-Paper)",
             boxShadow:
               "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
           },
@@ -344,16 +346,16 @@ export default function ResultPage() {
                   px: "12px",
                   py: "12px",
                   borderRadius: "4px",
-                  border: "1px solid rgba(46, 42, 95, 0.50)",
-                  color: "#2E2A5F",
+                  border: "1px solid var(--Color-Secondary-_States-Outlined)",
+                  color: "var(--Color-Secondary-Main)",
                   fontFamily: '"IBM Plex Sans", sans-serif',
                   fontSize: "12px",
                   fontWeight: 500,
                   letterSpacing: "0.2px",
                   textTransform: "none",
                   "&:hover": {
-                    border: "1px solid rgba(46, 42, 95, 0.80)",
-                    backgroundColor: "rgba(46, 42, 95, 0.04)",
+                    border: "1px solid var(--Color-Secondary-_States-OutlinedHovered)",
+                    backgroundColor: "var(--Color-Secondary-_States-HoverSubtle)",
                   },
                 }}
               >
@@ -370,19 +372,19 @@ export default function ResultPage() {
                     px: "40px",
                     py: "12px",
                     borderRadius: "4px",
-                    border: "1px solid rgba(46, 42, 95, 0.50)",
+                    border: "1px solid var(--Color-Secondary-_States-Outlined)",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    color: "#2E2A5F",
+                    color: "var(--Color-Secondary-Main)",
                     fontFamily: '"IBM Plex Sans", sans-serif',
                     fontSize: "15px",
                     fontWeight: 500,
                     letterSpacing: "0.2px",
                     textTransform: "none",
                     "&:hover": {
-                      border: "1px solid rgba(46, 42, 95, 0.80)",
-                      backgroundColor: "rgba(46, 42, 95, 0.04)",
+                      border: "1px solid var(--Color-Secondary-_States-OutlinedHovered)",
+                      backgroundColor: "var(--Color-Secondary-_States-HoverSubtle)",
                     },
                   }}
                 >
@@ -393,7 +395,7 @@ export default function ResultPage() {
                   variant="text"
                   onClick={handleRetryQuiz}
                   sx={{
-                    color: "#6B63FF",
+                    color: "var(--Color-Primary-Main)",
                     fontFamily: '"IBM Plex Sans", sans-serif',
                     fontSize: "15px",
                     fontWeight: 500,
@@ -422,7 +424,7 @@ export default function ResultPage() {
                 px: isMobile ? "12px" : "40px",
                 py: "12px",
                 borderRadius: "4px",
-                backgroundColor: "#6B63FF",
+                backgroundColor: "var(--Color-Primary-Main)",
                 boxShadow:
                   "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
                 display: "flex",
@@ -434,7 +436,7 @@ export default function ResultPage() {
                 letterSpacing: "0.2px",
                 textTransform: "none",
                 "&:hover": {
-                  backgroundColor: "#5a52e0",
+                  backgroundColor: "var(--Color-Primary-Dark)",
                 },
               }}
             >
@@ -453,8 +455,8 @@ export default function ResultPage() {
                 px: isMobile ? "12px" : "40px",
                 py: "12px",
                 borderRadius: "4px",
-                border: "1px solid rgba(46, 42, 95, 0.50)",
-                color: "#2E2A5F",
+                border: "1px solid var(--Color-Secondary-_States-Outlined)",
+                color: "var(--Color-Secondary-Main)",
                 fontFamily: '"IBM Plex Sans", sans-serif',
                 fontSize: isMobile ? "12px" : "15px",
                 fontWeight: 500,
@@ -462,8 +464,8 @@ export default function ResultPage() {
                 textTransform: "none",
                 boxSizing: "border-box",
                 "&:hover": {
-                  border: "1px solid rgba(46, 42, 95, 0.80)",
-                  backgroundColor: "rgba(46, 42, 95, 0.04)",
+                  border: "1px solid var(--Color-Secondary-_States-OutlinedHovered)",
+                  backgroundColor: "var(--Color-Secondary-_States-HoverSubtle)",
                 },
               }}
             >
@@ -480,7 +482,7 @@ export default function ResultPage() {
                 px: isMobile ? "12px" : "40px",
                 py: "12px",
                 borderRadius: "4px",
-                backgroundColor: "#6B63FF",
+                backgroundColor: "var(--Color-Primary-Main)",
                 boxShadow:
                   "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
                 fontFamily: '"IBM Plex Sans", sans-serif',
@@ -489,7 +491,7 @@ export default function ResultPage() {
                 letterSpacing: "0.2px",
                 textTransform: "none",
                 "&:hover": {
-                  backgroundColor: "#5a52e0",
+                  backgroundColor: "var(--Color-Primary-Dark)",
                 },
               }}
             >

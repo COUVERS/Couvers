@@ -185,7 +185,7 @@ export default function Dashboard({ onStartCourse, onOpenRecommendedCourse, setP
                 </ReviewCourseCard>
             </Box>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p style={{ color: "var(--Color-Error-Main)" }}>{error}</p>}
 
         </Box>
     )

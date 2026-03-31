@@ -4,7 +4,7 @@ export default function PageHeader({ title, description }) {
   return (
     <Box
       sx={{
-        backgroundColor: "var(--color-surface)",
+        backgroundColor: "var(--Color-Background-Paper)",
         px: 4,
         py: 2,
         mb: 1.4,
@@ -20,7 +20,7 @@ export default function PageHeader({ title, description }) {
             md: "44px"
           },
           fontWeight: 600,
-          color: "var(--color-primary)",
+          color: "var(--Color-Primary-Main)",
           lineHeight: 1.05,
           mb: 1.5
         }}

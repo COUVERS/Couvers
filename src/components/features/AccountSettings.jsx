@@ -3,56 +3,56 @@ import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 
 export default function AccountSettings({
-    name = "",
-    email = "",
-    onChangePassword,
+  name = "",
+  email = "",
+  onChangePassword,
 }) {
   return (
     <Box
-        sx={{
-            display: "flex",
-            width: "100%",
-            minWidth: 0,
-            padding: {
-            xs: "32px 24px 40px",
-            md: "0 56px",
-            },
-            mt: { xs: 0, md: "40px" },
-            alignItems: "flex-start",
-            alignContent: "flex-start",
-            gap: { xs: "42px", md: "var(--7, 56px)" },
-            flexWrap: "wrap",
-            boxSizing: "border-box",
-            bgcolor: { xs: "#FFF", md: "transparent" },
-            minHeight: { xs: "100vh", md: "auto" },
-        }}
-        >
-    <Box
-        sx={{
-            display: "flex",
-            flex: { xs: "0 0 auto", md: "1 1 360px" },
-            width: { xs: "319px", md: "408px" },
-            height: { xs: "270px", md: "360px" },
-            padding: { xs: "0", md: "40px 32px" },
-            flexDirection: "column",
-            alignItems: "flex-start",
-            gap: { xs: "24px", md: 4 },
-            border: { xs: "none", md: "1px solid #2E2A5F" },
-            backgroundColor: { xs: "transparent", md: "#FFF" },
-            boxSizing: "border-box",
-        }}
+      sx={{
+        display: "flex",
+        width: "100%",
+        minWidth: 0,
+        padding: {
+          xs: "32px 24px 40px",
+          md: "0 56px",
+        },
+        mt: { xs: 0, md: "40px" },
+        alignItems: "flex-start",
+        alignContent: "flex-start",
+        gap: { xs: "42px", md: "var(--7, 56px)" },
+        flexWrap: "wrap",
+        boxSizing: "border-box",
+        bgcolor: { xs: "var(--Color-Background-Paper)", md: "transparent" },
+        minHeight: { xs: "100vh", md: "auto" },
+      }}
     >
+      <Box
+        sx={{
+          display: "flex",
+          flex: { xs: "0 0 auto", md: "1 1 360px" },
+          width: { xs: "319px", md: "408px" },
+          height: { xs: "270px", md: "360px" },
+          padding: { xs: "0", md: "40px 32px" },
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: { xs: "24px", md: 4 },
+          border: { xs: "none", md: "1px solid var(--Color-Border-Default)" },
+          backgroundColor: { xs: "transparent", md: "var(--Color-Background-Paper)" },
+          boxSizing: "border-box",
+        }}
+      >
         <Typography
-            sx={{
-                color: "#0F172A",
-                fontFamily: "IBM Plex Sans",
-                fontSize: { xs: "24px", md: "32px" },
-                fontWeight: 600,
-                lineHeight: { xs: "32px", md: "normal" },
-                letterSpacing: { xs: "0", md: "-0.2px" },
-            }}
+          sx={{
+            color: "var(--Color-Text-Primary)",
+            fontFamily: "IBM Plex Sans",
+            fontSize: { xs: "24px", md: "32px" },
+            fontWeight: 600,
+            lineHeight: { xs: "32px", md: "normal" },
+            letterSpacing: { xs: "0", md: "-0.2px" },
+          }}
         >
-            Profile Details
+          Profile Details
         </Typography>
 
         <Box
@@ -67,7 +67,7 @@ export default function AccountSettings({
           <Box sx={{ width: "100%" }}>
             <Typography
               sx={{
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary)",
                 fontFamily: "IBM Plex Sans",
                 fontSize: { xs: "20px", md: "20px" },
                 fontWeight: 600,
@@ -80,7 +80,7 @@ export default function AccountSettings({
 
             <Typography
               sx={{
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary)",
                 fontFamily: "IBM Plex Sans",
                 fontSize: "16px",
                 fontWeight: 400,
@@ -94,7 +94,7 @@ export default function AccountSettings({
           <Box sx={{ width: "100%" }}>
             <Typography
               sx={{
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary)",
                 fontFamily: "IBM Plex Sans",
                 fontSize: { xs: "20px", md: "20px" },
                 fontWeight: 600,
@@ -107,7 +107,7 @@ export default function AccountSettings({
 
             <Typography
               sx={{
-                color: "#0F172A",
+                color: "var(--Color-Text-Primary)",
                 fontFamily: "IBM Plex Sans",
                 fontSize: "16px",
                 fontWeight: 400,
@@ -123,7 +123,7 @@ export default function AccountSettings({
         <Typography
           sx={{
             width: "100%",
-            color: "#64748B",
+            color: "var(--Color-Text-Secondary)",
             fontFamily: "IBM Plex Sans",
             fontSize: "12px",
             fontWeight: 500,
@@ -138,8 +138,8 @@ export default function AccountSettings({
       <Box
         sx={{
           display: "flex",
-        flex: { xs: "0 0 auto", md: "1 1 420px" },
-        width: { xs: "319px", md: "594px" },
+          flex: { xs: "0 0 auto", md: "1 1 420px" },
+          width: { xs: "319px", md: "594px" },
           height: { xs: "218px", md: "auto" },
           padding: { xs: "0", md: "40px" },
           flexDirection: "column",
@@ -148,15 +148,15 @@ export default function AccountSettings({
           alignSelf: "stretch",
           border: {
             xs: "none",
-            md: "1px solid var(--Brand-Indigo-900, #2E2A5F)",
+            md: "1px solid var(--Color-Border-Default)",
           },
-          backgroundColor: { xs: "transparent", md: "#FFF" },
+          backgroundColor: { xs: "transparent", md: "var(--Color-Background-Paper)" },
           boxSizing: "border-box",
         }}
       >
         <Typography
           sx={{
-            color: "#0F172A",
+            color: "var(--Color-Text-Primary)",
             fontFamily: "IBM Plex Sans",
             fontSize: { xs: "24px", md: "32px" },
             fontStyle: "normal",
@@ -180,7 +180,7 @@ export default function AccountSettings({
         >
           <Typography
             sx={{
-              color: "#0F172A",
+              color: "var(--Color-Text-Primary)",
               fontFamily: "IBM Plex Sans",
               fontSize: "20px",
               fontStyle: "normal",
@@ -194,7 +194,7 @@ export default function AccountSettings({
 
           <Typography
             sx={{
-              color: "var(--Color-Text-Primary, #0F172A)",
+              color: "var(--Color-Text-Primary)",
               fontFamily: "IBM Plex Sans",
               fontSize: "16px",
               fontStyle: "normal",
@@ -220,7 +220,7 @@ export default function AccountSettings({
               alignItems: "center",
               gap: "10px",
               borderRadius: { xs: "8px", md: "4px" },
-              background: "#6B63FF",
+              background: "var(--Color-Primary-Main)",
               boxShadow:
                 "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
               textTransform: "none",
@@ -232,7 +232,7 @@ export default function AccountSettings({
               letterSpacing: "0.2px",
               whiteSpace: "nowrap",
               "&:hover": {
-                backgroundColor: "#5E57F5",
+                backgroundColor: "var(--Color-Primary-Dark)",
               },
             }}
           >
