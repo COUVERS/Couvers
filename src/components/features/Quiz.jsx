@@ -10,7 +10,6 @@ import {
 import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
 
-
 /* =========================
    Styled Components
 ========================= */
@@ -30,6 +29,7 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   marginBottom: "8px",
   lineHeight: 1.1,
+  color: "var(--Color-Text-Primary)",
 
   [theme.breakpoints.down("sm")]: {
     fontSize: "44px",
@@ -44,6 +44,7 @@ const QuestionTitle = styled(Typography)(({ theme }) => ({
   marginTop: "8px",
   marginBottom: "12px",
   lineHeight: 1.1,
+  color: "var(--Color-Text-Primary)",
 
   [theme.breakpoints.down("sm")]: {
     padding: "0 24px",
@@ -102,22 +103,22 @@ const OptionWrapper = styled(Box, {
     prop !== "correct" &&
     prop !== "incorrect"
 })(({ selected, correct, incorrect, theme }) => {
-  let border = "1px solid #A5B4FC"
+  let border = "1px solid var(--Color-Border-Default)"
   let background = "transparent"
-  let color = "#0F172A"
+  let color = "var(--Color-Text-Primary)"
 
   if (correct) {
-    border = "1px solid #10B981"
-    background = "#10B981"
-    color = "#FFFFFF"
+    border = "1px solid var(--Color-Success-Main)"
+    background = "var(--Color-Success-Main)"
+    color = "var(--Color-Success-Contrast)"
   } else if (incorrect) {
-    border = "1px solid #EF4444"
-    background = "#EF4444"
-    color = "#FFFFFF"
+    border = "1px solid var(--Color-Error-Main)"
+    background = "var(--Color-Error-Main)"
+    color = "var(--Color-Error-Contrast)"
   } else if (selected) {
-    border = "1px solid rgba(107, 99, 255, 0.08)"
-    background = "#A5B4FC"
-    color = "#0F172A"
+    border = "1px solid var(--Color-Primary-_States-Selected)"
+    background = "var(--Color-Primary-Light)"
+    color = "var(--Color-Secondary-Dark)"
   }
 
   return {
@@ -148,7 +149,7 @@ const SubmitButton = styled(Button)(({ theme }) => ({
   height: "48px",
   padding: "12px 40px",
   borderRadius: "4px",
-  backgroundColor: "#6B63FF",
+  backgroundColor: "var(--Color-Primary-Main)",
   boxShadow:
     "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
 
@@ -165,12 +166,12 @@ const SubmitButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
 
   "&:hover": {
-    backgroundColor: "#5a52e0",
+    backgroundColor: "var(--Color-Primary-Dark)",
   },
 
   "&.Mui-disabled": {
-    backgroundColor: "#C7C3FF",
-    color: "#FFF",
+    backgroundColor: "var(--Color-Action-Disabled)",
+    color: "var(--Color-Text-Disabled)",
   },
 
   [theme.breakpoints.down("sm")]: {
@@ -226,6 +227,7 @@ export default function Quiz({
         <Typography
           sx={{
             fontSize: "var(--FontSize-Body1)",
+            color: "var(--Color-Text-Primary)",
             "@media (max-width:600px)": {
               fontSize: "15px",
               lineHeight: 1.5,
@@ -278,7 +280,7 @@ export default function Quiz({
                   <CheckIcon
                     sx={{
                       fontSize: 28,
-                      color: "#FFFFFF",
+                      color: "var(--Color-Success-Contrast)",
                       flexShrink: 0,
                     }}
                   />
@@ -288,7 +290,7 @@ export default function Quiz({
                   <CloseIcon
                     sx={{
                       fontSize: 28,
-                      color: "#FFFFFF",
+                      color: "var(--Color-Error-Contrast)",
                       flexShrink: 0,
                     }}
                   />
@@ -300,9 +302,9 @@ export default function Quiz({
                     checked={selected === option}
                     sx={{
                       mt: "2px",
-                      color: "#2E2A5F",
+                      color: "var(--Color-Secondary-Main)",
                       "&.Mui-checked": {
-                        color: "#4F46E5",
+                        color: "var(--Color-Primary-Dark)",
                       },
                       "@media (max-width:600px)": {
                         p: "6px",
@@ -336,6 +338,7 @@ export default function Quiz({
             marginTop: "16px",
             px: { xs: "24px", sm: "56px" },
             fontSize: { xs: "14px", sm: "var(--FontSize-Body1)" },
+            color: "var(--Color-Text-Primary)",
           }}
         >
           <strong>Review:</strong> {question.review}
@@ -363,7 +366,7 @@ export default function Quiz({
               px: "24px",
               py: "16px",
 
-              background: "var(--Color-Background-Paper, #FFF)",
+              background: "var(--Color-Background-Paper)",
               boxShadow:
                 "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
 
@@ -382,13 +385,13 @@ export default function Quiz({
               px: "40px",
               py: "12px",
               borderRadius: "4px",
-              border: "1px solid rgba(46, 42, 95, 0.50)",
+              border: "1px solid var(--Color-Secondary-_States-Outlined)",
 
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
 
-              color: "#2E2A5F",
+              color: "var(--Color-Secondary-Main)",
               fontFamily: '"IBM Plex Sans", sans-serif',
               fontSize: "15px",
               fontStyle: "normal",
@@ -400,8 +403,8 @@ export default function Quiz({
               boxSizing: "border-box",
 
               "&:hover": {
-                border: "1px solid rgba(46, 42, 95, 0.80)",
-                backgroundColor: "rgba(46, 42, 95, 0.04)",
+                border: "1px solid var(--Color-Secondary-_States-OutlinedHovered)",
+                backgroundColor: "var(--Color-Secondary-_States-HoverSubtle)",
               },
 
               "@media (max-width:600px)": {

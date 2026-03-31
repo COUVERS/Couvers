@@ -3,14 +3,41 @@
 @import "./colors.css";
 @import "./typography.css";
 
+/* --- Alias (compatibilidad con componentes actuales) --- */
+:root {
+    --color-background: var(--Color-Background-Default);
+    --color-surface: var(--Color-Background-Paper);
+    --color-on-surface: var(--Color-Text-Primary);
+    --color-on-surface-variant: var(--Color-Text-Secondary);
+    --color-primary: var(--Color-Primary-Main);
+    --color-on-primary: var(--Color-Primary-Contrast);
+    --color-outline: var(--Color-Border-Default);
+}
+
+/* --- Base reset --- */
+* {
+    box-sizing: border-box;
+}
+
+/* --- Typography base --- */
 html,
 body {
     font-family: var(--font-family);
 }
 
+/* --- Body --- */
 body {
     margin: 0;
-    background-color: var(--color-background);
-    color: var(--color-on-surface);
+    background-color: var(--Color-Background-Default);
+    color: var(--Color-Text-Primary);
     font-family: var(--font-family);
+}
+
+/* --- Smooth transitions (opcional pero recomendado para dark mode) --- */
+body,
+* {
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
 }

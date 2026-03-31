@@ -8,9 +8,7 @@ import Quiz from "../components/features/Quiz"
 import { API_BASE_URL } from "../config"
 import DialogConfirm from "../components/reusable-ui/DialogConfirm"
 
-
 export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, onQuizSubmitted }) {
-
   const navigate = useNavigate()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState([])
@@ -23,9 +21,6 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
   const isLastQuestion = currentIndex === quizItems.length - 1
 
   const handleSubmit = (selectedAnswer) => {
-
-    // const quizId = currentQuestion?._id || currentQuestion?.id
-
     setAnswers((prev) => [
       ...prev,
       {
@@ -38,22 +33,6 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
       setCurrentIndex((prev) => prev + 1)
     }
   }
-  // const handleSubmit = (selectedAnswer) => {
-  //   const correct = selectedAnswer === currentQuestion.answer
-  //   setAnswers((prev) => [
-  //     ...prev,
-  //     {
-  //       question: currentQuestion.question,
-  //       userAnswer: selectedAnswer,
-  //       correctAnswer: currentQuestion.answer,
-  //       explanation: currentQuestion.review,
-  //       correct
-  //     }
-  //   ])
-  //   if (!isLastQuestion) {
-  //     setCurrentIndex((prev) => prev + 1)
-  //   }
-  // }
 
   async function handleCheckResult() {
     try {
@@ -79,14 +58,12 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
       const data = await response.json()
       console.log("submit result data:", data)
 
-      // console.log("submit result data:", data)
-
       if (!response.ok) {
         throw new Error(data.message || "Submit failed")
       }
+
       await onQuizSubmitted?.()
-      // setResultData(data)
-      // setShowResult(true)
+
       navigate(`/courses/${courseId}/lessons/${lessonId}/result`, {
         state: { resultData: data },
       })
@@ -96,36 +73,12 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
     }
   }
 
-  // if (showResult && resultData) {
-  //   return (
-  //     <ResultPage
-  //       score={resultData.correctCount}
-  //       total={resultData.totalQuestions}
-  //       answers={resultData.results.map((item) => ({
-  //         question: item.question,
-  //         userAnswer: item.selectedAnswer,
-  //         correctAnswer: item.correctAnswer,
-  //         explanation: item.review,
-  //         correct: item.isCorrect,
-  //       }))}
-  //       skillProgress={resultData.skillProgress}
-  //       onRetry={() => {
-  //         setCurrentIndex(0)
-  //         setAnswers([])
-  //         setShowResult(false)
-  //         setResultData(null)
-  //         setError("")
-  //       }}
-  //       onBack={onBack}
-  //     />
-  //   )
-  // }
-
   return (
     <Box sx={{ pt: 0, px: 0, pb: 4 }}>
-
       {!currentQuestion ? (
-        <p>No quiz found for this lesson.</p>
+        <Typography color="var(--Color-Text-Primary)">
+          No quiz found for this lesson.
+        </Typography>
       ) : (
         <>
           <Quiz
@@ -149,14 +102,12 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
                   px: "40px",
                   py: "12px",
                   borderRadius: "4px",
-                  backgroundColor: "#6B63FF",
+                  backgroundColor: "var(--Color-Primary-Main)",
                   boxShadow:
                     "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
-
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-
                   fontFamily: '"IBM Plex Sans", sans-serif',
                   fontSize: "15px",
                   fontWeight: 500,
@@ -164,7 +115,7 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
                   textTransform: "none",
 
                   "&:hover": {
-                    backgroundColor: "#5a52e0",
+                    backgroundColor: "var(--Color-Primary-Dark)",
                   },
                 }}
               >
@@ -180,7 +131,6 @@ export default function QuizPage({ courseId, lessonId, quizItems = [], onBack, o
           )}
         </>
       )}
-
 
       <DialogConfirm
         open={openDialog}

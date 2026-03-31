@@ -53,9 +53,8 @@ export default function CourseMainContent({
 
     return (
         <Box sx={{ flex: 1, pt: 0, px: 0, pb: viewMode === "lecture" ? 0 : 4, }}>
-            {isLoading && <p>Loading...</p>}
-            {error && <p style={{ color: "red" }}>Error: {error}</p>}
-
+            {isLoading && <p style={{ color: "var(--Color-Text-Primary)" }}>Loading...</p>}
+            {error && <p style={{ color: "var(--Color-Error-Main)" }}>Error: {error}</p>}
             {(headerTitle || headerDescription) && (
                 <PageHeader
                     title={headerTitle}

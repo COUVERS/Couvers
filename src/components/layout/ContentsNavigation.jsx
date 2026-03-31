@@ -38,39 +38,73 @@ export default function ContentsNavigation({
     }, [forceCollapsed])
 
     const [selectedContentType, setSelectedContentType] = useState("lecture")
+
     return (
-        <ContentsDrawer open={open}
+        <ContentsDrawer
+            open={open}
             sx={{
                 p: 3,
-
-            }}>
-
-            {/* collapse / expand button */}
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: open ? "flex-end" : "center",
-                    mb: 2
-                }}
-            >
-                <IconButton
-                    onClick={() => setOpen(!open)}
+            }}
+        >
+            {open ? (
+                <Box
                     sx={{
-                        color: "var(--Color-Secondary-Contrast)",
-                        p: 0,
-                        width: 48,
-                        height: 48,
-                        minWidth: 36,
-                        minHeight: 36,
-                        "&:hover": {
-                            backgroundColor: "transparent",
-                        },
-                        transform: open ? "none" : "translateX(20px)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        mb: 4,
                     }}
                 >
-                    {open ? (
+                    <Typography
+                        sx={{
+                            fontSize: 28,
+                            fontWeight: 500,
+                            m: 0,
+                        }}
+                    >
+                        Contents
+                    </Typography>
+
+                    <IconButton
+                        onClick={() => setOpen(!open)}
+                        sx={{
+                            color: "var(--Color-Secondary-Contrast)",
+                            p: 0,
+                            width: 48,
+                            height: 48,
+                            minWidth: 36,
+                            minHeight: 36,
+                            "&:hover": {
+                                backgroundColor: "transparent",
+                            },
+                        }}
+                    >
                         <ChevronLeftIcon sx={{ fontSize: 32 }} />
-                    ) : (
+                    </IconButton>
+                </Box>
+            ) : (
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        mb: 2,
+                    }}
+                >
+                    <IconButton
+                        onClick={() => setOpen(!open)}
+                        sx={{
+                            color: "var(--Color-Secondary-Contrast)",
+                            p: 0,
+                            width: 48,
+                            height: 48,
+                            minWidth: 36,
+                            minHeight: 36,
+                            "&:hover": {
+                                backgroundColor: "transparent",
+                            },
+                            transform: "translateX(20px)",
+                        }}
+                    >
                         <Box
                             sx={{
                                 width: 48,
@@ -92,49 +126,33 @@ export default function ContentsNavigation({
                         >
                             <LessonLectureIcon />
                         </Box>
-                    )}
-                </IconButton>
-            </Box>
-
-            {open && (
-                <>
-                    <Typography
-                        sx={{
-                            fontSize: 28,
-                            fontWeight: 500,
-                            mb: 4
-                        }}
-                    >
-                        Contents
-                    </Typography>
-
-                    {/* Lesson list */}
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-
-                        {lessons.map((lesson) => (
-                            <ContentsNavItem
-                                key={lesson._id}
-                                lesson={lesson}
-                                activeType={
-                                    selectedLesson?._id === lesson._id
-                                        ? selectedContentType
-                                        : null
-                                }
-                                onLectureClick={(clickedLesson) => {
-                                    onSelectLecture?.(clickedLesson)
-                                    setSelectedContentType("lecture")
-                                }}
-                                onQuizClick={(clickedLesson) => {
-                                    onSelectQuiz?.(clickedLesson)
-                                    setSelectedContentType("quiz")
-                                }}
-                            />
-                        ))}
-
-                    </Box>
-                </>
+                    </IconButton>
+                </Box>
             )}
 
+            {open && (
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                    {lessons.map((lesson) => (
+                        <ContentsNavItem
+                            key={lesson._id}
+                            lesson={lesson}
+                            activeType={
+                                selectedLesson?._id === lesson._id
+                                    ? selectedContentType
+                                    : null
+                            }
+                            onLectureClick={(clickedLesson) => {
+                                onSelectLecture?.(clickedLesson)
+                                setSelectedContentType("lecture")
+                            }}
+                            onQuizClick={(clickedLesson) => {
+                                onSelectQuiz?.(clickedLesson)
+                                setSelectedContentType("quiz")
+                            }}
+                        />
+                    ))}
+                </Box>
+            )}
         </ContentsDrawer>
     )
 }

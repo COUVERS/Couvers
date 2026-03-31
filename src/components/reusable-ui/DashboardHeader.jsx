@@ -19,7 +19,7 @@ export default function DashboardHeader({ title, description }) {
             md: "56px"
           },
           fontWeight: 600,
-          color: "var(--color-primary)",
+          color: "var(--Color-Primary-Main)",
           lineHeight: 1.1,
           mb: 2
         }}

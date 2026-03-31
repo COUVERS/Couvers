@@ -16,7 +16,7 @@ export const SidebarBase = styled(Box, {
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'var(--color-surface)',
+    backgroundColor: 'var(--Color-Background-Paper)',
     boxShadow: '0 6px 30px 5px rgba(0, 0, 0, 0.12)',
     padding: '40px 0',
     boxSizing: 'border-box',

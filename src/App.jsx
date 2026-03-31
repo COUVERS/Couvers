@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
-import { useTheme } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
@@ -26,10 +25,8 @@ import DashboardHeader from "./components/reusable-ui/DashboardHeader"
 import PageHeader from "./components/reusable-ui/PageHeader"
 
 export default function App() {
-  const theme = useTheme()
   const isMobile = useMediaQuery("(max-width:899px)")
   const isMedium = useMediaQuery("(min-width:900px) and (max-width:1095px)")
-  const isDesktop = useMediaQuery("(min-width:1096px)")
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [mobileCourseNavOpen, setMobileCourseNavOpen] = useState(false)
   const [mobileContentsNavOpen, setMobileContentsNavOpen] = useState(false)
@@ -49,11 +46,6 @@ export default function App() {
     : location.pathname.startsWith("/account")
       ? "account"
       : "home"
-
-  const accountView =
-    location.pathname === "/account/change-password"
-      ? "changePassword"
-      : "settings"
 
   const handleOpenSignOutDialog = () => {
     setSignOutOpen(true)
@@ -86,6 +78,7 @@ export default function App() {
   }
 
   const [dashboardHeader, setDashboardHeader] = useState(null)
+
   const openContinueLesson = (nextLesson) => {
     if (nextLesson) {
       setContinueCourseId(nextLesson.courseId)
@@ -96,8 +89,6 @@ export default function App() {
     }
     navigate("/courses")
   }
-
-
 
   const openRecommendedCourse = (courseId) => {
     setContinueCourseId(null)
@@ -123,20 +114,15 @@ export default function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("auth/me data:", data)
-        console.log("accountHeader from backend:", data.accountHeader)
-        console.log("changePasswordHeader from backend:", data.changePasswordHeader)
         if (data.user) {
           setAuthUser(data.user)
           setDashboardHeader(data.dashboardHeader || null)
-
           setIsLoggedIn(true)
         } else {
           localStorage.removeItem("token")
           setIsLoggedIn(false)
           setAuthUser(null)
           setDashboardHeader(null)
-
           navigate("/login")
         }
       })
@@ -145,7 +131,6 @@ export default function App() {
         setIsLoggedIn(false)
         setAuthUser(null)
         setDashboardHeader(null)
-
         navigate("/login")
       })
   }, [navigate])
@@ -181,20 +166,14 @@ export default function App() {
     )
   }
 
-  // const isCourseRoute = location.pathname.startsWith("/courses")
-
-  // const isLessonRoute =
-  //   location.pathname.includes("/lecture") ||
-  //   location.pathname.includes("/quiz") ||
-  //   location.pathname.includes("/result")
-
-
   return (
     <Box
       sx={{
         display: "flex",
         minHeight: "100vh",
         width: "100%",
+        backgroundColor: "var(--Color-Background-Default)",
+        color: "var(--Color-Text-Primary)",
       }}
     >
       {!isMobile && (
@@ -226,16 +205,16 @@ export default function App() {
         </Box>
       )}
 
-
       <Box
         component="main"
         sx={{
           flex: 1,
           minWidth: 0,
           p: isMobile ? 0 : page === "courses" || page === "account" ? 0 : 2,
+          backgroundColor: "var(--Color-Background-Default)",
+          color: "var(--Color-Text-Primary)",
         }}
       >
-        {/* {isMobile && !isLessonRoute && ( */}
         {isMobile && (
           <Box
             sx={{
@@ -245,15 +224,15 @@ export default function App() {
               px: 3,
               pt: 4,
               pb: 1,
-              backgroundColor: "#fff",
+              backgroundColor: "var(--Color-Background-Paper)",
+              color: "var(--Color-Text-Primary)",
+              borderBottom: "1px solid var(--Color-Divider)",
               position: "sticky",
               top: 0,
               zIndex: 1200,
               boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)",
             }}
           >
-            {/* Left */}
-            {/* <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}> */}
             <Box sx={{ width: 40, display: "flex", justifyContent: "center" }}>
               <IconButton
                 onClick={() => setMobileNavOpen(true)}
@@ -261,6 +240,7 @@ export default function App() {
                   p: 0,
                   width: 40,
                   height: 40,
+                  color: "var(--Color-Text-Primary)",
                 }}
               >
                 <MenuIcon />
@@ -280,7 +260,6 @@ export default function App() {
               />
             </Box>
 
-            {/* Right */}
             <Box sx={{ width: 40 }} />
             <Box
               sx={{
@@ -297,6 +276,7 @@ export default function App() {
                     sx={{
                       width: 60,
                       height: 60,
+                      color: "var(--Color-Text-Primary)",
                       "& svg": {
                         width: 40,
                         height: 40,
@@ -311,6 +291,7 @@ export default function App() {
                     sx={{
                       width: 60,
                       height: 60,
+                      color: "var(--Color-Text-Primary)",
                     }}
                   >
                     <CourseIcon />
@@ -320,6 +301,7 @@ export default function App() {
             </Box>
           </Box>
         )}
+
         {page === "home" && (
           <DashboardHeader
             title={dashboardHeader?.title || (authUser ? `Hello ${authUser.username}` : "Hello")}
@@ -348,7 +330,8 @@ export default function App() {
               <Dashboard
                 onStartCourse={openContinueLesson}
                 onOpenRecommendedCourse={openRecommendedCourse}
-              />}
+              />
+            }
           />
           <Route
             path="/courses"
@@ -438,7 +421,7 @@ export default function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        {/* {isMobile && !isLessonRoute && ( */}
+
         {isMobile && (
           <Drawer
             anchor="left"
@@ -449,6 +432,8 @@ export default function App() {
                 width: "300px",
                 maxWidth: "300px",
                 overflowX: "hidden",
+                backgroundColor: "var(--Color-Background-Paper)",
+                color: "var(--Color-Text-Primary)",
               },
             }}
           >
@@ -462,6 +447,8 @@ export default function App() {
                     width: "300px",
                     maxWidth: "300px",
                     overflowX: "hidden",
+                    backgroundColor: "var(--Color-Background-Paper)",
+                    color: "var(--Color-Text-Primary)",
                   },
                 }}
               >
@@ -474,12 +461,11 @@ export default function App() {
                 />
               </Drawer>
             )}
-            {/* <Box sx={{ width: 240 }}> */}
+
             <Navigation
               page={page}
               setPage={(nextPage) => {
                 setMobileNavOpen(false)
-
 
                 if (nextPage === "courses") {
                   openCoursesOverview()
@@ -500,9 +486,9 @@ export default function App() {
               onSignOut={handleOpenSignOutDialog}
               isMobileDrawer={true}
             />
-            {/* </Box> */}
           </Drawer>
         )}
+
         <SignOutDialog
           open={signOutOpen}
           onClose={handleCloseSignOutDialog}
