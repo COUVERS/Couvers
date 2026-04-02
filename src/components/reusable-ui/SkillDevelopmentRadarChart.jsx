@@ -256,13 +256,27 @@ function RadarSvg({ metrics, size = CHART.SIZE }) {
       {Array.from({ length: LEVELS - 1 }, (_, i) => (
         <polygon
           key={i}
-          points={buildPolygonPoints(center, center, (radius / LEVELS) * (i + 1), metrics.length)}
+          points={buildPolygonPoints(
+            center,
+            center,
+            (radius / LEVELS) * (i + 1),
+            metrics.length
+          )}
           fill="none"
           stroke="#6B7280"
           strokeDasharray="4 4"
           strokeWidth={1.2}
         />
       ))}
+
+      {/* Outer border (100%) */}
+      <polygon
+        points={buildPolygonPoints(center, center, radius, metrics.length)}
+        fill="none"
+        stroke="#6B7280"
+        strokeWidth={1.5}
+      />
+
       <polygon
         points={buildDataPoints(center, center, radius, metrics)}
         fill="rgba(99,102,241,0.28)"
