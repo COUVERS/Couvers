@@ -60,6 +60,7 @@ export default function DialogConfirm({
             onClick={onClose}
             sx={{
               flex: 1,
+              height: "48px",
               borderColor: "#6366f1",
               color: "#111827",
               textTransform: "none"
@@ -73,6 +74,7 @@ export default function DialogConfirm({
             onClick={onConfirm}
             sx={{
               flex: 1,
+              height: "48px",
               backgroundColor: "#6366f1",
               textTransform: "none",
               "&:hover": {
