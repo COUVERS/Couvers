@@ -145,9 +145,9 @@ const OptionWrapper = styled(Box, {
 })
 
 const SubmitButton = styled(Button)(({ theme }) => ({
-  width: "160px",
+  width: "fit-content",
   height: "48px",
-  padding: "12px 40px",
+  padding: "12px 24px",
   borderRadius: "4px",
   backgroundColor: "var(--Color-Primary-Main)",
   boxShadow:
@@ -380,9 +380,9 @@ export default function Quiz({
             variant="outlined"
             onClick={onBack}
             sx={{
-              width: "160px",
+              width: "fit-content",
               height: "48px",
-              px: "40px",
+              px: "24px",
               py: "12px",
               borderRadius: "4px",
               border: "1px solid var(--Color-Secondary-_States-Outlined)",
@@ -392,26 +392,14 @@ export default function Quiz({
               alignItems: "center",
 
               color: "var(--Color-Secondary-Main)",
-              fontFamily: '"IBM Plex Sans", sans-serif',
               fontSize: "15px",
-              fontStyle: "normal",
               fontWeight: 500,
-              lineHeight: "normal",
-              letterSpacing: "0.2px",
               textTransform: "none",
-
-              boxSizing: "border-box",
+              whiteSpace: "nowrap", // 🔥 importante
 
               "&:hover": {
                 border: "1px solid var(--Color-Secondary-_States-OutlinedHovered)",
                 backgroundColor: "var(--Color-Secondary-_States-HoverSubtle)",
-              },
-
-              "@media (max-width:600px)": {
-                width: "50%",
-                minWidth: 0,
-                px: "12px",
-                fontSize: "12px",
               },
             }}
           >
