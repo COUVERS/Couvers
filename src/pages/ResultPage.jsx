@@ -242,26 +242,30 @@ export default function ResultPage() {
                 backgroundColor: "var(--Color-Background-Paper)",
               }}
             >
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  mb: 1,
-                  color: "var(--Color-Text-Primary)",
-                  fontSize: { xs: "16px", sm: "18px" },
-                }}
-              >
-                Your Answer
-              </Typography>
-              <Typography
-                sx={{
-                  mb: 3,
-                  color: "var(--Color-Text-Primary)",
-                  fontSize: { xs: "14px", sm: "16px" },
-                  lineHeight: 1.45,
-                }}
-              >
-                {item.userAnswer}
-              </Typography>
+              {!item.correct && (
+                <>
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      mb: 1,
+                      color: "var(--Color-Text-Primary)",
+                      fontSize: { xs: "16px", sm: "18px" },
+                    }}
+                  >
+                    Your Answer
+                  </Typography>
+                  <Typography
+                    sx={{
+                      mb: 3,
+                      color: "var(--Color-Text-Primary)",
+                      fontSize: { xs: "14px", sm: "16px" },
+                      lineHeight: 1.45,
+                    }}
+                  >
+                    {item.userAnswer}
+                  </Typography>
+                </>
+              )}
 
               <Typography
                 sx={{
