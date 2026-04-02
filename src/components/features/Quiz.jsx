@@ -17,7 +17,7 @@ import CloseIcon from "@mui/icons-material/Close"
 const Container = styled(Box)(({ theme }) => ({
   width: "100%",
   boxSizing: "border-box",
-  padding: "0 48px 24px 48px",
+  padding: "0 48px 0 48px",
 
   [theme.breakpoints.down("sm")]: {
     padding: "0 0 16px 0",
@@ -40,7 +40,7 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
 const QuestionTitle = styled(Typography)(({ theme }) => ({
   fontSize: "var(--FontSize-Headings-h3)",
   fontWeight: 600,
-  padding: "0 56px",
+  padding: "0 32px",
   marginTop: "8px",
   marginBottom: "12px",
   lineHeight: 1.1,
@@ -68,7 +68,7 @@ const BodyText = styled(Typography)(({ theme }) => ({
 
 const AnswersContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  padding: "8px 56px 12px 56px",
+  padding: "8px 32px 12px 32px",
   flexDirection: "column",
   gap: "12px",
   width: "100%",
@@ -82,7 +82,7 @@ const AnswersContainer = styled(Box)(({ theme }) => ({
 
 const ScenarioWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
-  padding: "8px 56px 12px 56px",
+  padding: "8px 32px 12px 32px",
   flexDirection: "column",
   gap: "8px",
   boxSizing: "border-box",
@@ -147,7 +147,7 @@ const OptionWrapper = styled(Box, {
 const SubmitButton = styled(Button)(({ theme }) => ({
   width: "fit-content",
   height: "48px",
-  padding: "12px 24px",
+  padding: "12px 40px",
   borderRadius: "4px",
   backgroundColor: "var(--Color-Primary-Main)",
   boxShadow:
@@ -276,43 +276,49 @@ export default function Quiz({
                   cursor: showResult ? "default" : "pointer"
                 }}
               >
-                {showResult && correct && (
-                  <CheckIcon
-                    sx={{
-                      fontSize: 28,
-                      color: "var(--Color-Success-Contrast)",
-                      flexShrink: 0,
-                    }}
-                  />
-                )}
-
-                {showResult && incorrect && (
-                  <CloseIcon
-                    sx={{
-                      fontSize: 28,
-                      color: "var(--Color-Error-Contrast)",
-                      flexShrink: 0,
-                    }}
-                  />
-                )}
-
-                {!showResult && (
-                  <Radio
-                    value={option}
-                    checked={selected === option}
-                    sx={{
-                      mt: "2px",
-                      color: "var(--Color-Secondary-Main)",
-                      "&.Mui-checked": {
-                        color: "var(--Color-Primary-Dark)",
-                      },
-                      "@media (max-width:600px)": {
-                        p: "6px",
-                        mr: "2px",
-                      },
-                    }}
-                  />
-                )}
+                {/* 🔥 ICON / RADIO FIX */}
+                <Box
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  {!showResult ? (
+                    <Radio
+                      value={option}
+                      checked={selected === option}
+                      sx={{
+                        mt: "2px",
+                        color: "var(--Color-Secondary-Main)",
+                        "&.Mui-checked": {
+                          color: "var(--Color-Primary-Dark)",
+                        },
+                        "@media (max-width:600px)": {
+                          p: "6px",
+                          mr: "2px",
+                        },
+                      }}
+                    />
+                  ) : correct ? (
+                    <CheckIcon
+                      sx={{
+                        fontSize: 28,
+                        color: "var(--Color-Success-Contrast)",
+                      }}
+                    />
+                  ) : incorrect ? (
+                    <CloseIcon
+                      sx={{
+                        fontSize: 28,
+                        color: "var(--Color-Error-Contrast)",
+                      }}
+                    />
+                  ) : null}
+                </Box>
 
                 <Typography
                   sx={{
@@ -351,8 +357,8 @@ export default function Quiz({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginTop: "48px",
-            px: "56px",
+            marginTop: "24px",
+            px: "32px",
             boxSizing: "border-box",
 
             "@media (max-width:600px)": {
