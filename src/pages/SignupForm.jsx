@@ -9,8 +9,8 @@ import {
     Typography,
 } from "@mui/material"
 import LogoLarge from "../assets/Logo_large_dark.png"
-import Visibility from "../assets/icons/Visibility"
-import VisibilityOff from "../assets/icons/VisibilityOff"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import { API_BASE_URL } from "../config"
 
     const inputSx = {
@@ -290,29 +290,29 @@ import { API_BASE_URL } from "../config"
         <Box
         sx={{
             display: "flex",
-            width: { xs: "100%", md: "1440px" },
+            width: "100%",
             minHeight: { xs: "100vh", md: "1024px" },
             justifyContent: "center",
             alignItems: "center",
-            gap: "var(--5, 40px)",
-            flexShrink: 0,
             mx: "auto",
             bgcolor: "var(--Color-Background-Default)",
+            overflowX: "hidden",
         }}
         >
         <Box
             sx={{
             display: "flex",
-            width: { xs: "430px", md: "640px" },
-            height: { xs: "818px", md: "auto" },
-            padding: "var(--7, 56px) var(--5, 40px)",
+            width: { xs: "100%", md: "640px" },
+            maxWidth: { xs: "430px", md: "640px" },
+            minHeight: { xs: "100vh", md: "auto" },
+            px: { xs: "40px", md: "40px" },
+            py: { xs: "56px", md: "56px" },
             boxSizing: "border-box",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            gap: "var(--6, 48px)",
-            flexShrink: 0,
-            borderRadius: { xs: 0, md: "var(--md, 8px)" },
+            gap: "48px",
+            borderRadius: { xs: 0, md: "8px" },
             background: "var(--Color-Background-Paper)",
             boxShadow: {
                 xs: "none",
@@ -341,29 +341,26 @@ import { API_BASE_URL } from "../config"
             <Box
             sx={{
                 display: "flex",
-                height: "134px",
-                padding: "0 38px",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                gap: "10px",
                 alignSelf: "stretch",
+                px: { xs: 0, md: "38px" },
                 boxSizing: "border-box",
             }}
             >
             <Typography
                 component="h1"
                 sx={{
-                whiteSpace: "nowrap",
                 alignSelf: "stretch",
                 color: "var(--Color-Text-Primary, #0F172A)",
                 textAlign: "center",
                 fontFamily: "IBM Plex Sans",
-                fontSize: "var(--FontSize-Display-Medium, 40px)",
+                fontSize: { xs: "40px", md: "56px" },
                 fontStyle: "normal",
                 fontWeight: 600,
-                lineHeight: "var(--LineHeight-Display-Medium, 48px)",
-                letterSpacing: "var(--LetterSpace-DisplayMedium, -0.2px)",
+                lineHeight: { xs: "48px", md: "64px" },
+                letterSpacing: { xs: "-0.2px", md: "-0.25px" },
                 m: 0,
                 }}
             >
@@ -389,6 +386,7 @@ import { API_BASE_URL } from "../config"
                     flexDirection: "column",
                     alignItems: "flex-start",
                     alignSelf: "stretch",
+                    minWidth: 0,
                 }}
                 >
                 <TextField
@@ -485,6 +483,7 @@ import { API_BASE_URL } from "../config"
                     alignItems: "flex-start",
                     alignSelf: "stretch",
                     gap: "24px",
+                    minWidth: 0,
                 }}
                 >
                 <TextField
@@ -526,31 +525,25 @@ import { API_BASE_URL } from "../config"
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
                         endAdornment: (
-                        <InputAdornment position="end">
+                            <InputAdornment position="end">
                             <IconButton
-                            type="button"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            edge="end"
-                            disableRipple
-                            aria-label={showPassword ? "Hide password" : "Show password"}
-                            sx={{
+                                type="button"
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                edge="end"
+                                disableRipple
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                sx={{
                                 p: 0,
-                                color: "var(--Color-Secondary-Main)",
-                            }}
+                                color: "action.active",
+                                }}
                             >
-                            {showPassword ? (
-                                <VisibilityOff
-                                size={20}
-                                color="var(--Color-Secondary-Main)"
-                                />
-                            ) : (
-                                <Visibility
-                                size={20}
-                                color="var(--Color-Secondary-Main)"
-                                />
-                            )}
+                                {showPassword ? (
+                                <VisibilityOffIcon sx={{ fontSize: 20 }} />
+                                ) : (
+                                <VisibilityIcon sx={{ fontSize: 20 }} />
+                                )}
                             </IconButton>
-                        </InputAdornment>
+                            </InputAdornment>
                         ),
                     }}
                     FormHelperTextProps={{
@@ -587,32 +580,26 @@ import { API_BASE_URL } from "../config"
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
                     endAdornment: (
-                        <InputAdornment position="end">
-                        <IconButton
-                            type="button"
-                            onClick={() => setShowConfirmPassword((prev) => !prev)}
-                            edge="end"
-                            disableRipple
-                            aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                            sx={{
-                            p: 0,
-                            color: "var(--Color-Secondary-Main)",
-                            }}
-                        >
-                            {showConfirmPassword ? (
-                            <VisibilityOff
-                                size={20}
-                                color="var(--Color-Secondary-Main)"
-                            />
-                            ) : (
-                            <Visibility
-                                size={20}
-                                color="var(--Color-Secondary-Main)"
-                            />
-                            )}
-                        </IconButton>
-                        </InputAdornment>
-                    ),
+                            <InputAdornment position="end">
+                            <IconButton
+                                type="button"
+                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                edge="end"
+                                disableRipple
+                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                sx={{
+                                p: 0,
+                                color: "action.active",
+                                }}
+                            >
+                                {showConfirmPassword ? (
+                                <VisibilityOffIcon sx={{ fontSize: 20 }} />
+                                ) : (
+                                <VisibilityIcon sx={{ fontSize: 20 }} />
+                                )}
+                            </IconButton>
+                            </InputAdornment>
+                        ),
                     }}
                     FormHelperTextProps={{ sx: errorHelperTextSx }}
                     sx={inputSx}
