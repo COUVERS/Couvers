@@ -147,7 +147,7 @@ export default function ResultPage() {
         return (
           <Accordion
             key={index}
-            defaultExpanded={!passed && index === 0}
+            defaultExpanded={!item.correct}
             disableGutters
             sx={{
               mb: 2,
