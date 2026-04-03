@@ -141,7 +141,7 @@ await courses.insertMany([
     _id: fundamentalsTeachingCourseId,
     title: "Fundamentals of Teaching",
     description:
-      "Fundamentals of Teaching introduces the core principles that support effective instruction in modern classrooms. This course focuses on how instructors design learning experiences, deliver content strategically, and respond to student needs in real time. Rather than focusing only on content delivery, this course emphasizes decision-making during instruction, including how to manage cognitive load, support diverse learners, and maintain engagement while ensuring learning outcomes are achieved.",
+      "This course examines the foundational principles that support effective instruction in modern classrooms. It explores how instructors design learning experiences, deliver content strategically, and respond to student needs in real time. Particular emphasis is placed on instructional decision-making, including managing cognitive load, supporting diverse learners, and sustaining engagement to achieve learning outcomes.",
     order: 1,
     icon: "fundamentalsOfTeaching",
   },
@@ -149,7 +149,7 @@ await courses.insertMany([
     _id: effectiveCommunicationCourseId,
     title: "Effective Communication",
     description:
-      "Effective communication is a foundational teaching skill. It helps instructors explain ideas clearly, listen actively, provide meaningful feedback, encourage interaction, and use verbal and nonverbal communication to support student understanding and engagement. When communication is clear and purposeful, students are more likely to participate, understand expectations, and feel confident in their learning.",
+      "This course explores effective communication as a core teaching competency. It examines how instructors articulate ideas clearly, engage in active listening, provide constructive feedback, and facilitate meaningful interaction. Effective communication supports student understanding, participation, and overall learning effectiveness.",
     order: 2,
     icon: "effectiveCommunication",
     },
@@ -157,7 +157,7 @@ await courses.insertMany([
     _id: empathyCourseId,
     title: "Empathy and Classroom Management",
     description:
-      "Empathy and classroom management course for new instructors (industry specialists).",
+      "This course examines the role of empathy in effective classroom management, particularly for new instructors transitioning from industry to teaching. It explores strategies for understanding learner behavior, responding to classroom challenges, and fostering respectful and inclusive learning environments. Emphasis is placed on developing practical skills to support both engagement and classroom stability.",
     order: 3,
     icon: "empathy",
   },
@@ -165,7 +165,7 @@ await courses.insertMany([
     _id: planningCourseId,
     title: "Lesson Planning",
     description:
-      "Lesson planning is a critical skill for effective teaching. A well-designed lesson provides structure, clarity, and purpose for both instructors and learners. Rather than improvising instruction, teachers who plan carefully can create learning experiences that are organized, engaging, and aligned with clear objectives.",
+      "This course examines the principles of effective lesson planning as a foundation for successful instruction. It explores how to design structured and purposeful learning experiences aligned with clear objectives. Thoughtful planning enables instructors to deliver content effectively and support meaningful learning outcomes.",
     order: 4,
     icon: "lessonPlanning",
   },
@@ -173,7 +173,7 @@ await courses.insertMany([
     _id: assessmentFeedbackCourseId,
     title: "Assessment and Feedback",
     description:
-      "Assessment and feedback are central to effective teaching. While assessment measures student understanding, feedback guides improvement and supports continued learning. In professional teaching contexts, assessment is not only about grading. It helps instructors identify student strengths and weaknesses, adjust instruction strategies, encourage reflection and self-improvement, and support long-term learning outcomes. When assessment and feedback are used together, they create a continuous learning cycle where students can evaluate their progress and improve their performance.",
+      "This course examines the role of assessment and feedback in supporting student learning. It explores how assessment informs instructional decisions and how feedback promotes improvement and reflection. Together, these practices contribute to a continuous learning process and the achievement of long-term learning outcomes.",
     order: 5,
     icon: "assessment",
   },
@@ -183,98 +183,98 @@ await courses.insertMany([
   // =========================
   // Empathy and Classroom Management
   // =========================
-{
-  _id: empathyLesson1Id,
-  courseId: empathyCourseId,
-  skillId: studentEngagementSkillId,
-  order: 1,
-  title: "Empathy as an Instructional Skill",
-  lessonDescription:
-    "This lesson introduces empathy as an instructional skill that supports effective classroom management, especially for instructors who know their subject but feel unsure about handling classroom dynamics.",
-  sections: [
-    {
-      heading: "What Empathy Means in Teaching",
-      blocks: [
-        {
-          type: "text",
-          text: "In an instructional context, empathy means understanding learners’ experiences and responding intentionally to support learning.",
-        },
-        {
-          type: "text",
-          text: "Empathy in teaching is not:\n• being overly lenient\n• removing expectations\n• avoiding difficult situations",
-        },
-        {
-          type: "text",
-          text: "Instead, empathy helps instructors respond professionally and thoughtfully, even when challenges arise.",
-        },
-        {
-          type: "text",
-          text: "Empathy is:\n• recognizing confusion, frustration, or anxiety\n• staying calm and professional\n• choosing responses that keep learning moving forward",
-        },
-        {
-          type: "text",
-          text: "When learners feel understood, they are more likely to stay engaged, cooperative, and open to instruction.",
-        },
-      ],
-    },
-    {
-      heading: "Why Empathy Matters for Classroom Management",
-      blocks: [
-        {
-          type: "text",
-          text: "Classroom management is not about control, it’s about creating conditions where learning can happen.",
-        },
-        {
-          type: "text",
-          text: "When empathy is missing, small issues can quickly turn into tension or resistance. When empathy is present, instructors can address challenges early and calmly.",
-        },
-        {
-          type: "text",
-          text: "In real classrooms, instructors often see mixed reactions at the same time.",
-        },
-        {
-          type: "image",
-          imgUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-          imgAlt: "Students collaborating in a classroom",
-        },
-        {
-          type: "text",
-          text: "Empathy helps instructors:\n• reduce tension and defensiveness\n• build trust with learners\n• address issues before they escalate",
-        },
-        {
-          type: "text",
-          text: "For example:\n• A quiet learner may be overwhelmed, not uninterested\n• A challenging comment may reflect frustration, not disrespect",
-        },
-        {
-          type: "text",
-          text: "Effective instructors pause, observe, and respond with intention rather than reacting emotionally in the moment.",
-        },
-      ],
-    },
-    {
-      heading: "Empathy Is a Skill You Can Practice",
-      blocks: [
-        {
-          type: "text",
-          text: "Empathy is not something you either have or don’t have—it’s a skill that improves with practice.",
-        },
-        {
-          type: "text",
-          text: "Instructors can develop empathy by:\n• paying close attention to learner behavior and reactions\n• reflecting briefly before responding\n• balancing understanding with clear expectations",
-        },
-        {
-          type: "text",
-          text: "Empathy does not weaken authority. Strong classroom management combines empathy and structure, not one without the other.",
-        },
-      ],
-    },
-  ],
-  keyTakeaways: [
-    "Empathy is a practical instructional skill, not just a personality trait.",
-    "Understanding learner behavior supports classroom management.",
-    "Empathy and clear expectations work best together.",
-  ],
-},
+  {
+    _id: empathyLesson1Id,
+    courseId: empathyCourseId,
+    skillId: studentEngagementSkillId,
+    order: 1,
+    title: "Empathy as an Instructional Skill",
+    lessonDescription:
+      "This lesson introduces empathy as an instructional skill that supports effective classroom management, especially for instructors who know their subject but feel unsure about handling classroom dynamics.",
+    sections: [
+      {
+        heading: "What Empathy Means in Teaching",
+        blocks: [
+          {
+            type: "text",
+            text: "In an instructional context, empathy means understanding learners’ experiences and responding intentionally to support learning.",
+          },
+          {
+            type: "text",
+            text: "Empathy in teaching is not:\n• being overly lenient\n• removing expectations\n• avoiding difficult situations",
+          },
+          {
+            type: "text",
+            text: "Instead, empathy helps instructors respond professionally and thoughtfully, even when challenges arise.",
+          },
+          {
+            type: "text",
+            text: "Empathy is:\n• recognizing confusion, frustration, or anxiety\n• staying calm and professional\n• choosing responses that keep learning moving forward",
+          },
+          {
+            type: "text",
+            text: "When learners feel understood, they are more likely to stay engaged, cooperative, and open to instruction.",
+          },
+        ],
+      },
+      {
+        heading: "Why Empathy Matters for Classroom Management",
+        blocks: [
+          {
+            type: "text",
+            text: "Classroom management is not about control, it’s about creating conditions where learning can happen.",
+          },
+          {
+            type: "text",
+            text: "When empathy is missing, small issues can quickly turn into tension or resistance. When empathy is present, instructors can address challenges early and calmly.",
+          },
+          {
+            type: "text",
+            text: "In real classrooms, instructors often see mixed reactions at the same time.",
+          },
+          {
+            type: "image",
+            imgUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+            imgAlt: "Students collaborating in a classroom",
+          },
+          {
+            type: "text",
+            text: "Empathy helps instructors:\n• reduce tension and defensiveness\n• build trust with learners\n• address issues before they escalate",
+          },
+          {
+            type: "text",
+            text: "For example:\n• A quiet learner may be overwhelmed, not uninterested\n• A challenging comment may reflect frustration, not disrespect",
+          },
+          {
+            type: "text",
+            text: "Effective instructors pause, observe, and respond with intention rather than reacting emotionally in the moment.",
+          },
+        ],
+      },
+      {
+        heading: "Empathy Is a Skill You Can Practice",
+        blocks: [
+          {
+            type: "text",
+            text: "Empathy is not something you either have or don’t have—it’s a skill that improves with practice.",
+          },
+          {
+            type: "text",
+            text: "Instructors can develop empathy by:\n• paying close attention to learner behavior and reactions\n• reflecting briefly before responding\n• balancing understanding with clear expectations",
+          },
+          {
+            type: "text",
+            text: "Empathy does not weaken authority. Strong classroom management combines empathy and structure, not one without the other.",
+          },
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "Empathy is a practical instructional skill, not just a personality trait.",
+      "Understanding learner behavior supports classroom management.",
+      "Empathy and clear expectations work best together.",
+    ],
+  },
   {
     _id: empathyLesson2Id,
     courseId: empathyCourseId,
@@ -371,7 +371,7 @@ await courses.insertMany([
     order: 3,
     title: "Managing Your Reactions as an Instructor",
     lessonDescription:
-      "“Responding instead of reacting.”\n This lesson helps instructors recognize emotional triggers in the classroom and respond professionally rather than react impulsively. It focuses on maintaining composure, authority, and clarity during challenging moments.",
+      "This lesson helps instructors recognize emotional triggers in the classroom and respond professionally rather than react impulsively. It focuses on maintaining composure, authority, and clarity during challenging moments.",
     sections: [
     {
       heading: "Why Instructor Reactions Matter",
@@ -448,7 +448,7 @@ await courses.insertMany([
     order: 4,
     title: "Empathy-Based Communication in the Classroom",
     lessonDescription:
-      "“What to say - and how to say it.” /n This lesson focuses on using language, tone, and structure to communicate empathy while maintaining authority. It explores how instructors can respond clearly and professionally in everyday classroom interactions.",
+      "This lesson focuses on using language, tone, and structure to communicate empathy while maintaining authority. It explores how instructors can respond clearly and professionally in everyday classroom interactions.",
     sections: [
     {
       heading: "Language Shapes Classroom Climate",
@@ -533,7 +533,7 @@ await courses.insertMany([
     order: 5,
     title: "Responding to Challenging Classroom Situations",
     lessonDescription:
-      "”Applying empathy and structure in real moments.” /n This lesson focuses on how instructors can respond professionally to challenging classroom situations. It emphasizes maintaining authority, clarity, and empathy during difficult interactions.",
+      "This lesson focuses on how instructors can respond professionally to challenging classroom situations. It emphasizes maintaining authority, clarity, and empathy during difficult interactions.",
     sections: [
     {
       heading: "Challenging Situations Are Normal",
