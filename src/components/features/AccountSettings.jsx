@@ -37,7 +37,7 @@ export default function AccountSettings({
           flexDirection: "column",
           alignItems: "flex-start",
           gap: { xs: "24px", md: 4 },
-          border: { xs: "none", md: "1px solid var(--Color-Border-Default)" },
+          border: { xs: "none", md: "1px solid var(--Brand-Indigo-900)" },
           backgroundColor: { xs: "transparent", md: "var(--Color-Background-Paper)" },
           boxSizing: "border-box",
         }}
@@ -148,7 +148,7 @@ export default function AccountSettings({
           alignSelf: "stretch",
           border: {
             xs: "none",
-            md: "1px solid var(--Color-Border-Default)",
+            md: "1px solid var(--Brand-Indigo-900)",
           },
           backgroundColor: { xs: "transparent", md: "var(--Color-Background-Paper)" },
           boxSizing: "border-box",
