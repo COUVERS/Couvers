@@ -1,4 +1,4 @@
-const HomeIcon = ({ size = 32, color = "currentColor" }) => (
+const HomeIcon = ({ size = 32, color = "#36316B" }) => (
   <svg
     width={size}
     height={size}
