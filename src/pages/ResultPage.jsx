@@ -78,17 +78,7 @@ export default function ResultPage() {
         pb: { xs: 12, sm: 4 },
       }}
     >
-      <Typography
-        sx={{
-          fontSize: { xs: "28px", sm: "40px" },
-          fontWeight: 600,
-          mb: { xs: 4, sm: 5 },
-          color: "var(--Color-Primary-Main)",
-          lineHeight: 1.1,
-        }}
-      >
-        Quiz Result
-      </Typography>
+
 
       <Box
         sx={{

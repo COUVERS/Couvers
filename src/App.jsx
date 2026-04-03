@@ -47,6 +47,10 @@ export default function App() {
       ? "account"
       : "home"
 
+  const isAccountMobilePage =
+    location.pathname === "/account" ||
+    location.pathname === "/account/change-password"
+
   const handleOpenSignOutDialog = () => {
     setSignOutOpen(true)
   }
@@ -224,13 +228,19 @@ export default function App() {
               px: 3,
               pt: 4,
               pb: 1,
-              backgroundColor: "var(--Color-Background-Paper)",
+              backgroundColor: isAccountMobilePage
+                ? "#FFFFFF"
+                : "var(--Color-Background-Paper)",
               color: "var(--Color-Text-Primary)",
-              borderBottom: "1px solid var(--Color-Divider)",
+              borderBottom: isAccountMobilePage
+                ? "none"
+                : "1px solid var(--Color-Divider)",
               position: "sticky",
               top: 0,
               zIndex: 1200,
-              boxShadow: "0 6px 30px 5px rgba(0, 0, 0, 0.12)",
+              boxShadow: isAccountMobilePage
+                ? "none"
+                : "0 6px 30px 5px rgba(0, 0, 0, 0.12)",
             }}
           >
             <Box sx={{ width: 40, display: "flex", justifyContent: "center" }}>
