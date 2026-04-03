@@ -10,8 +10,8 @@ import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
 import Snackbar from "@mui/material/Snackbar"
 import Alert from "@mui/material/Alert"
-import Visibility from "../../assets/icons/Visibility"
-import VisibilityOff from "../../assets/icons/VisibilityOff"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 
 export default function ChangePassword({ onCancel }) {
     const [currentPassword, setCurrentPassword] = useState("")
@@ -269,14 +269,17 @@ export default function ChangePassword({ onCancel }) {
                                                     onClick={() => setShowCurrent((prev) => !prev)}
                                                     edge="end"
                                                     disableRipple
-                                                    sx={{ p: 0 }}
-                                                >
+                                                    sx={{
+                                                        p: 0,
+                                                        color: "action.active",
+                                                    }}
+                                                    >
                                                     {showCurrent ? (
-                                                        <VisibilityOff size={20} color="var(--Color-Text-Secondary)" />
+                                                        <VisibilityOffIcon sx={{ fontSize: 20 }} />
                                                     ) : (
-                                                        <Visibility size={20} color="var(--Color-Text-Secondary)" />
+                                                        <VisibilityIcon sx={{ fontSize: 20 }} />
                                                     )}
-                                                </IconButton>
+                                                    </IconButton>
                                             </InputAdornment>
                                         ),
                                     }}
@@ -302,17 +305,20 @@ export default function ChangePassword({ onCancel }) {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={() => setShowNew((prev) => !prev)}
-                                                    edge="end"
-                                                    disableRipple
-                                                    sx={{ p: 0 }}
+                                            <IconButton
+                                                onClick={() => setShowNew((prev) => !prev)}
+                                                edge="end"
+                                                disableRipple
+                                                sx={{
+                                                    p: 0,
+                                                    color: "action.active",
+                                                }}
                                                 >
-                                                    {showNew ? (
-                                                        <VisibilityOff size={20} color="var(--Color-Text-Secondary)" />
-                                                    ) : (
-                                                        <Visibility size={20} color="var(--Color-Text-Secondary)" />
-                                                    )}
+                                                {showNew ? (
+                                                    <VisibilityOffIcon sx={{ fontSize: 20 }} />
+                                                ) : (
+                                                    <VisibilityIcon sx={{ fontSize: 20 }} />
+                                                )}
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
@@ -338,16 +344,19 @@ export default function ChangePassword({ onCancel }) {
                                         endAdornment: (
                                             <InputAdornment position="end">
                                                 <IconButton
-                                                    onClick={() => setShowConfirm((prev) => !prev)}
-                                                    edge="end"
-                                                    disableRipple
-                                                    sx={{ p: 0 }}
+                                                onClick={() => setShowConfirm((prev) => !prev)}
+                                                edge="end"
+                                                disableRipple
+                                                sx={{
+                                                    p: 0,
+                                                    color: "action.active",
+                                                }}
                                                 >
-                                                    {showConfirm ? (
-                                                        <VisibilityOff size={20} color="var(--Color-Text-Secondary)" />
-                                                    ) : (
-                                                        <Visibility size={20} color="var(--Color-Text-Secondary)" />
-                                                    )}
+                                                {showConfirm ? (
+                                                    <VisibilityOffIcon sx={{ fontSize: 20 }} />
+                                                ) : (
+                                                    <VisibilityIcon sx={{ fontSize: 20 }} />
+                                                )}
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
