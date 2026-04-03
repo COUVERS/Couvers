@@ -43,13 +43,19 @@ export default function CourseMainContent({
         viewMode === "quiz" ||
         viewMode === "result"
 
-    const headerTitle = isLessonView
-        ? selectedLesson?.title || course?.title || ""
-        : course?.title || ""
+    const headerTitle =
+        viewMode === "result"
+            ? "Quiz Result"
+            : isLessonView
+                ? selectedLesson?.title || course?.title || ""
+                : course?.title || ""
 
-    const headerDescription = isLessonView
-        ? selectedLesson?.lessonDescription || selectedLesson?.description || course?.description || ""
-        : course?.description || ""
+    const headerDescription =
+        viewMode === "result"
+            ? ""
+            : isLessonView
+                ? selectedLesson?.lessonDescription || selectedLesson?.description || course?.description || ""
+                : course?.description || ""
 
     return (
         <Box sx={{ flex: 1, pt: 0, px: 0, pb: viewMode === "lecture" ? 0 : 4, }}>
