@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import SidebarBase from '../reusable-ui/SideBarBase'
 //Logo and Icons
-import LogoLarge from '../../assets/Logo_large_dark.png'
-import LogoSmall from '../../assets/Logo_small_dark.png'
+import LogoLarge from '../../assets/Logo_large_dark.svg'
+import LogoSmall from '../../assets/Logo_small_dark.svg'
 import HomeIcon from '../../assets/icons/HomeIcon'
 import CourseIcon from '../../assets/icons/CourseIcon'
 import ProfileIcon from '../../assets/icons/ProfileIcon'
@@ -50,7 +50,8 @@ export default function Navigation({
     return (
         <SidebarBase
             sx={{
-                py: 10,
+                pt: 10,
+                pb: 8,
             }}
 
             open={isExpanded}
@@ -58,23 +59,24 @@ export default function Navigation({
         >
             <Box
                 sx={{
+                    width: isExpanded ? 115 : 48,
+                    height: isExpanded ? 88 : 48,
                     display: 'flex',
-                    width: '100%',
-                    height: isExpanded ? '115px' : '48px',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
                     flexShrink: 0,
-                    mb: 4,
+                    alignSelf: 'center',
                 }}
             >
-                <img
+                <Box
+                    component="img"
                     src={isExpanded ? LogoLarge : LogoSmall}
                     alt="TeTe"
-                    style={{
-                        width: isExpanded ? '115px' : '48px',
-                        height: 'auto',
-                        objectFit: 'contain',
+                    sx={{
+                        width: isExpanded ? 115 : 48,
+                        height: isExpanded ? 51 : 'auto',
                         display: 'block',
+                        flexShrink: 0,
                     }}
                 />
             </Box>
@@ -228,7 +230,7 @@ export default function Navigation({
                     sx={{
                         display: 'flex',
                         justifyContent: 'flex-end',
-                        mt: 2
+                        // mt: 2
                     }}
                 >
                     <IconButton
