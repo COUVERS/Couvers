@@ -49,6 +49,10 @@ export default function Navigation({
 
     return (
         <SidebarBase
+            sx={{
+                py: 10,
+            }}
+
             open={isExpanded}
             drawerCustomWidth={drawerCustomWidth}
         >
