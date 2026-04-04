@@ -38,20 +38,20 @@ export default function Navigation({
     }
 
     const navItems = [
-        { text: "Home", icon: <HomeIcon size={40} />, pageKey: "home" },
-        { text: "Course", icon: <CourseIcon size={40} />, pageKey: "courses" },
+        { text: "Home", icon: <HomeIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "home" },
+        { text: "Course", icon: <CourseIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "courses" },
     ]
 
     const bottomItems = [
-        { text: "Account", icon: <ProfileIcon size={40} />, pageKey: "account" },
-        { text: "Sign Out", icon: <SignOutIcon size={40} />, pageKey: "signout" },
+        { text: "Account", icon: <ProfileIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "account" },
+        { text: "Sign Out", icon: <SignOutIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "signout" },
     ]
 
     return (
         <SidebarBase
             sx={{
                 pt: 10,
-                pb: 8,
+                pb: 5,
             }}
 
             open={isExpanded}
@@ -89,7 +89,8 @@ export default function Navigation({
                     flex: '1 0 0',
                     alignSelf: 'stretch',
                     px: 2,
-                    py: 1,
+                    pt: 2,
+                    pb: 1,
                     overflowY: 'auto',
                 }}
             >
@@ -111,20 +112,22 @@ export default function Navigation({
                                     alignItems: 'center',
                                     alignSelf: 'stretch',
                                     color: 'var(--Color-Text-Primary)',
-                                    borderRadius: '8px',
                                     px: isExpanded ? 3 : 1,
 
                                     '&:hover': {
                                         backgroundColor: 'var(--Color-Action-Hover)',
                                     },
 
+                                    '&:active': {
+                                        backgroundColor: 'var(--Color-Primary-_States-FocusVisible)',
+                                    },
+
                                     '&.Mui-selected': {
-                                        backgroundColor: 'var(--Color-Secondary-Contrast)',
-                                        color: 'var(--Color-Secondary-Dark)',
+                                        backgroundColor: 'var(--Color-Primary-_States-Selected)',
                                     },
 
                                     '&.Mui-selected:hover': {
-                                        backgroundColor: 'var(--Color-Secondary-Contrast)',
+                                        backgroundColor: 'var(--Color-Primary-_States-Selected)',
                                     },
 
                                     '& .MuiListItemIcon-root': {
@@ -138,7 +141,6 @@ export default function Navigation({
                                         mr: isExpanded ? 2 : 0,
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        color: 'inherit',
                                         flexShrink: 0,
                                     }}
                                 >
@@ -166,7 +168,7 @@ export default function Navigation({
                     py: 0,
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 6,
+                    gap: '40px',
                 }}>
                     {bottomItems.map((item) => (
                         <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
@@ -184,7 +186,6 @@ export default function Navigation({
                                     justifyContent: isExpanded ? 'flex-start' : 'center',
                                     alignItems: 'center',
                                     color: 'var(--Color-Text-Primary)',
-                                    borderRadius: '8px',
                                     px: isExpanded ? 3 : 1,
 
                                     '&:hover': {
