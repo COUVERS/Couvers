@@ -145,7 +145,7 @@ export default function Navigation({
                                         fontSize: isExpanded ? 'var(--fs-body1)' : 'var(--fs-caption)',
                                         lineHeight: isExpanded ? 'var(--lh-body1)' : 'var(--lh-caption)',
                                         fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
-                                        textAlign: 'center',
+                                        textAlign: 'left',
                                         color: 'inherit',
                                     }}
                                 />
@@ -209,7 +209,7 @@ export default function Navigation({
                                         fontSize: isExpanded ? 'var(--fs-body1)' : 'var(--fs-caption)',
                                         lineHeight: isExpanded ? 'var(--lh-body1)' : 'var(--lh-caption)',
                                         fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
-                                        textAlign: 'center',
+                                        textAlign: 'left',
                                         color: 'inherit',
                                     }}
                                 />
