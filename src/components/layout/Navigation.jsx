@@ -38,13 +38,13 @@ export default function Navigation({
     }
 
     const navItems = [
-        { text: "Home", icon: <HomeIcon />, pageKey: "home" },
-        { text: "Course", icon: <CourseIcon />, pageKey: "courses" },
+        { text: "Home", icon: <HomeIcon size={40} />, pageKey: "home" },
+        { text: "Course", icon: <CourseIcon size={40} />, pageKey: "courses" },
     ]
 
     const bottomItems = [
-        { text: "Account", icon: <ProfileIcon />, pageKey: "account" },
-        { text: "Sign Out", icon: <SignOutIcon />, pageKey: "signout" },
+        { text: "Account", icon: <ProfileIcon size={40} />, pageKey: "account" },
+        { text: "Sign Out", icon: <SignOutIcon size={40} />, pageKey: "signout" },
     ]
 
     return (
@@ -56,18 +56,18 @@ export default function Navigation({
                 sx={{
                     display: 'flex',
                     width: '100%',
-                    height: isExpanded ? '123px' : '48px',
+                    height: isExpanded ? '115px' : '48px',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
-                    mb: 2,
+                    mb: 4,
                 }}
             >
                 <img
                     src={isExpanded ? LogoLarge : LogoSmall}
                     alt="TeTe"
                     style={{
-                        width: isExpanded ? '160px' : '58px',
+                        width: isExpanded ? '115px' : '48px',
                         height: 'auto',
                         objectFit: 'contain',
                         display: 'block',
@@ -80,26 +80,33 @@ export default function Navigation({
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    alignItems: isExpanded ? 'flex-start' : 'center',
                     flex: '1 0 0',
                     alignSelf: 'stretch',
-                    padding: '16px 0',
+                    px: 2,
+                    py: 1,
                     overflowY: 'auto',
                 }}
             >
-                <List sx={{ flexGrow: 1, px: 1 }}>
+                <List sx={{
+                    py: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 6,
+                }}>
                     {navItems.map((item) => (
-                        <ListItem key={item.text} disablePadding sx={{ display: 'block', mb: 1 }}>
+                        <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 selected={page === item.pageKey}
                                 onClick={() => setPage(item.pageKey)}
                                 sx={{
                                     minHeight: 48,
                                     flexDirection: isExpanded ? 'row' : 'column',
-                                    justifyContent: 'center',
+                                    justifyContent: isExpanded ? 'flex-start' : 'center',
                                     alignItems: 'center',
+                                    alignSelf: 'stretch',
                                     color: 'var(--Color-Text-Primary)',
                                     borderRadius: '8px',
+                                    px: isExpanded ? 3 : 1,
 
                                     '&:hover': {
                                         backgroundColor: 'var(--Color-Action-Hover)',
@@ -124,7 +131,9 @@ export default function Navigation({
                                         minWidth: 0,
                                         mr: isExpanded ? 2 : 0,
                                         justifyContent: 'center',
+                                        alignItems: 'center',
                                         color: 'inherit',
+                                        flexShrink: 0,
                                     }}
                                 >
                                     {item.icon}
@@ -145,61 +154,69 @@ export default function Navigation({
                     ))}
                 </List>
 
-                <Box sx={{ pb: 4, px: 1 }}>
-                    <List>
-                        {bottomItems.map((item) => (
-                            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    onClick={() => {
-                                        if (item.pageKey === "signout") {
-                                            if (onSignOut) onSignOut()
-                                        } else {
-                                            setPage(item.pageKey)
-                                        }
-                                    }}
+                {/* Bottom */}
+
+                <List sx={{
+                    py: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 6,
+                }}>
+                    {bottomItems.map((item) => (
+                        <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                onClick={() => {
+                                    if (item.pageKey === "signout") {
+                                        if (onSignOut) onSignOut()
+                                    } else {
+                                        setPage(item.pageKey)
+                                    }
+                                }}
+                                sx={{
+                                    minHeight: 48,
+                                    flexDirection: isExpanded ? 'row' : 'column',
+                                    justifyContent: isExpanded ? 'flex-start' : 'center',
+                                    alignItems: 'center',
+                                    color: 'var(--Color-Text-Primary)',
+                                    borderRadius: '8px',
+                                    px: isExpanded ? 3 : 1,
+
+                                    '&:hover': {
+                                        backgroundColor: 'var(--Color-Action-Hover)',
+                                    },
+
+                                    '& .MuiListItemIcon-root': {
+                                        color: 'inherit',
+                                    },
+                                }}
+                            >
+                                <ListItemIcon
                                     sx={{
-                                        minHeight: 48,
-                                        flexDirection: isExpanded ? 'row' : 'column',
+                                        minWidth: 0,
+                                        mr: isExpanded ? 2 : 0,
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        color: 'var(--Color-Text-Primary)',
-                                        borderRadius: '8px',
-
-                                        '&:hover': {
-                                            backgroundColor: 'var(--Color-Action-Hover)',
-                                        },
-
-                                        '& .MuiListItemIcon-root': {
-                                            color: 'inherit',
-                                        },
+                                        color: 'inherit',
+                                        flexShrink: 0,
                                     }}
                                 >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: isExpanded ? 2 : 0,
-                                            justifyContent: 'center',
-                                            color: 'inherit',
-                                        }}
-                                    >
-                                        {item.icon}
-                                    </ListItemIcon>
+                                    {item.icon}
+                                </ListItemIcon>
 
-                                    <ListItemText
-                                        primary={item.text}
-                                        primaryTypographyProps={{
-                                            fontSize: isExpanded ? 'var(--fs-body1)' : 'var(--fs-caption)',
-                                            lineHeight: isExpanded ? 'var(--lh-body1)' : 'var(--lh-caption)',
-                                            fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
-                                            textAlign: 'center',
-                                            color: 'inherit',
-                                        }}
-                                    />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Box>
+                                <ListItemText
+                                    primary={item.text}
+                                    primaryTypographyProps={{
+                                        fontSize: isExpanded ? 'var(--fs-body1)' : 'var(--fs-caption)',
+                                        lineHeight: isExpanded ? 'var(--lh-body1)' : 'var(--lh-caption)',
+                                        fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
+                                        textAlign: 'center',
+                                        color: 'inherit',
+                                    }}
+                                />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
             </Box>
 
             {!isMobileDrawer && (
