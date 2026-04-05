@@ -88,6 +88,29 @@ export default function CourseNavigation({
                             title={!open ? course.title : ""}
                             placement="right"
                             arrow
+                            slotProps={{
+                                tooltip: {
+                                    sx: {
+                                        backgroundColor: "var(--Color-Secondary-Light)",
+                                        maxWidth: "120px",
+                                        whiteSpace: "normal",
+                                        boxShadow: "0px 4px 12px rgba(0,0,0,0.35)",
+                                        fontSize: "12px",
+                                        px: "8px",
+                                        py: "6px",
+                                        fontWeight: 400,
+                                        borderRadius: "8px",
+                                    },
+                                },
+                                arrow: {
+                                    sx: {
+                                        color: "var(--Color-Secondary-Light)",
+                                        "&:before": {
+                                            boxShadow: "0px 4px 12px rgba(0,0,0,0.22)",
+                                        },
+                                    },
+                                },
+                            }}
                         >
                             <ListItemButton
                                 onClick={() => {
