@@ -31,13 +31,9 @@ export default function ContentsNavItem({
     const isQuizActive = activeType === "quiz"
     const isLocked = lesson.status === "locked"
     const isLectureLocked = lesson.status === "locked"
-    const isQuizLocked = lesson.status === "not_started" || lesson.status === "locked"
+    const isQuizLocked = lesson.status === "locked"
     const isQuizPending = lesson.status === "in_progress"
     const isQuizCompleted = lesson.status === "completed"
-
-    // const showPendingQuizState =
-    //     lesson.status === "in_progress" ||
-    //     lesson.status === "not_started"
 
     const selectedTextColor = "var(--Color-Text-Primary)"
     const activeLinkColor = "var(--Color-Primary-Dark)"
@@ -105,9 +101,7 @@ export default function ContentsNavItem({
 
                 {/* Quiz */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    {isQuizLocked ? (
-                        <LockOutlinedIcon sx={{ fontSize: 24 }} />
-                    ) : isQuizPending ? (
+                    {isQuizPending ? (
                         <WarningAmberRoundedIcon sx={{ fontSize: 24 }} />
                     ) : (
                         <QuizOutlinedIcon sx={{ fontSize: 24 }} />

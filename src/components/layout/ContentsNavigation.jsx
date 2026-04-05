@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import { styled } from "@mui/material/styles"
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
-import Links from "../reusable-ui/Links"
 import ContentsNavItem from "../reusable-ui/ContentsNavItem"
 
 import SidebarBase from "../reusable-ui/SideBarBase"
@@ -12,10 +10,15 @@ import LessonLectureIcon from "../../assets/icons/LessonLectureIcon"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 
 const expandedWidth = 389
+const mobileExpandedWidth = 320
 const collapsedWidth = 40
 
-const ContentsDrawer = styled(SidebarBase)(({ open }) => ({
-    width: open ? expandedWidth : collapsedWidth,
+const ContentsDrawer = styled(SidebarBase, {
+    shouldForwardProp: (prop) => prop !== "open" && prop !== "isMobileDrawer",
+})(({ open, isMobileDrawer }) => ({
+    width: open
+        ? (isMobileDrawer ? mobileExpandedWidth : expandedWidth)
+        : collapsedWidth,
     backgroundColor: "var(--Brand-Indigo-900)",
     color: "var(--Color-Secondary-Contrast)",
     overflowX: open ? "hidden" : "visible",
@@ -28,6 +31,7 @@ export default function ContentsNavigation({
     onSelectQuiz,
     onBack,
     forceCollapsed = false,
+    isMobileDrawer = false,
 }) {
     const [open, setOpen] = useState(true)
 
@@ -42,8 +46,11 @@ export default function ContentsNavigation({
     return (
         <ContentsDrawer
             open={open}
+            isMobileDrawer={isMobileDrawer}
             sx={{
-                p: 3,
+                pl: isMobileDrawer ? 2 : 3,
+                pr: isMobileDrawer ? 2 : 2,
+                py: isMobileDrawer ? 4 : 5,
             }}
         >
             {open ? (
@@ -52,35 +59,37 @@ export default function ContentsNavigation({
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
-                        mb: 4,
+                        mb: 3,
                     }}
                 >
-                    <Typography
+                    <Box
                         sx={{
-                            fontSize: 28,
+                            fontSize: isMobileDrawer ? 24 : 28,
                             fontWeight: 500,
                             m: 0,
                         }}
                     >
                         Contents
-                    </Typography>
+                    </Box>
 
-                    <IconButton
-                        onClick={() => setOpen(!open)}
-                        sx={{
-                            color: "var(--Color-Secondary-Contrast)",
-                            p: 0,
-                            width: 48,
-                            height: 48,
-                            minWidth: 36,
-                            minHeight: 36,
-                            "&:hover": {
-                                backgroundColor: "transparent",
-                            },
-                        }}
-                    >
-                        <ChevronLeftIcon sx={{ fontSize: 32 }} />
-                    </IconButton>
+                    {!isMobileDrawer && (
+                        <IconButton
+                            onClick={() => setOpen(!open)}
+                            sx={{
+                                color: "var(--Color-Secondary-Contrast)",
+                                p: 0,
+                                width: 48,
+                                height: 48,
+                                minWidth: 36,
+                                minHeight: 36,
+                                "&:hover": {
+                                    backgroundColor: "transparent",
+                                },
+                            }}
+                        >
+                            <ChevronLeftIcon sx={{ fontSize: 32 }} />
+                        </IconButton>
+                    )}
                 </Box>
             ) : (
                 <Box
@@ -90,43 +99,45 @@ export default function ContentsNavigation({
                         mb: 2,
                     }}
                 >
-                    <IconButton
-                        onClick={() => setOpen(!open)}
-                        sx={{
-                            color: "var(--Color-Secondary-Contrast)",
-                            p: 0,
-                            width: 48,
-                            height: 48,
-                            minWidth: 36,
-                            minHeight: 36,
-                            "&:hover": {
-                                backgroundColor: "transparent",
-                            },
-                            transform: "translateX(20px)",
-                        }}
-                    >
-                        <Box
+                    {!isMobileDrawer && (
+                        <IconButton
+                            onClick={() => setOpen(!open)}
                             sx={{
+                                color: "var(--Color-Secondary-Contrast)",
+                                p: 0,
                                 width: 48,
                                 height: 48,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: "var(--Color-Secondary-Main)",
-                                color: "var(--Color-Secondary-Contrast)",
-                                "& svg": {
-                                    width: "36px",
-                                    height: "36px",
-                                    display: "block",
+                                minWidth: 36,
+                                minHeight: 36,
+                                "&:hover": {
+                                    backgroundColor: "transparent",
                                 },
-                                "& path": {
-                                    fill: "var(--Color-Secondary-Contrast)",
-                                },
+                                transform: "translateX(20px)",
                             }}
                         >
-                            <LessonLectureIcon />
-                        </Box>
-                    </IconButton>
+                            <Box
+                                sx={{
+                                    width: 48,
+                                    height: 48,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    backgroundColor: "var(--Color-Secondary-Main)",
+                                    color: "var(--Color-Secondary-Contrast)",
+                                    "& svg": {
+                                        width: "36px",
+                                        height: "36px",
+                                        display: "block",
+                                    },
+                                    "& path": {
+                                        fill: "var(--Color-Secondary-Contrast)",
+                                    },
+                                }}
+                            >
+                                <LessonLectureIcon />
+                            </Box>
+                        </IconButton>
+                    )}
                 </Box>
             )}
 

@@ -36,6 +36,7 @@ export default function CourseSidebar({
             onSelectQuiz={onSelectQuiz}
             onBack={onBack}
             forceCollapsed={forceCollapsed}
+            isMobileDrawer={isMobileDrawer}
         />
     )
 }
