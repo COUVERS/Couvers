@@ -51,7 +51,7 @@ export default function Navigation({
         <SidebarBase
             sx={{
                 pt: 10,
-                pb: 5,
+                pb: isExpanded ? 5 : 2,
             }}
 
             open={isExpanded}
@@ -66,6 +66,7 @@ export default function Navigation({
                     alignItems: 'flex-start',
                     flexShrink: 0,
                     alignSelf: 'center',
+                    // mb: isExpanded ? 0 : 1,
                 }}
             >
                 <Box
@@ -98,10 +99,15 @@ export default function Navigation({
                     py: 0,
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 6,
+                    gap: isExpanded ? 6 : '24px',
                 }}>
                     {navItems.map((item) => (
-                        <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={item.text} disablePadding
+                            sx={{
+                                display: 'block',
+                                width: isExpanded ? '100%' : '70px',
+                                alignSelf: isExpanded ? 'stretch' : 'center',
+                            }}>
                             <ListItemButton
                                 selected={page === item.pageKey}
                                 onClick={() => setPage(item.pageKey)}
@@ -168,10 +174,14 @@ export default function Navigation({
                     py: 0,
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '40px',
+                    gap: isExpanded ? '40px' : '24px',
                 }}>
                     {bottomItems.map((item) => (
-                        <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={item.text} disablePadding sx={{
+                            display: 'block',
+                            width: isExpanded ? '100%' : '70px',
+                            alignSelf: isExpanded ? 'stretch' : 'center',
+                        }}>
                             <ListItemButton
                                 onClick={() => {
                                     if (item.pageKey === "signout") {
