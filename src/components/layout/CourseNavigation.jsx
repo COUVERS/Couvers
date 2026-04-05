@@ -48,7 +48,10 @@ export default function CourseNavigation({
     }, [forceCollapsed])
 
     return (
-        <CourseDrawer open={open}>
+        <CourseDrawer
+            open={open}
+            drawerCustomWidth={open ? 240 : 88}
+        >
             <Box sx={{
                 px: 3,
                 mb: 4,
