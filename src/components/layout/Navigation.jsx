@@ -16,8 +16,6 @@ import HomeIcon from '../../assets/icons/HomeIcon'
 import CourseIcon from '../../assets/icons/CourseIcon'
 import ProfileIcon from '../../assets/icons/ProfileIcon'
 import SignOutIcon from '../../assets/icons/SignOutIcon'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 export default function Navigation({
     page,
@@ -27,10 +25,16 @@ export default function Navigation({
     drawerCustomWidth,
     isMobileDrawer = false,
 }) {
-    const [isExpanded, setIsExpanded] = useState(true)
-
+    const [isExpanded, setIsExpanded] = useState(isMobileDrawer ? true : false)
     useEffect(() => {
-        setIsExpanded(!forceCollapsed)
+        if (isMobileDrawer) {
+            setIsExpanded(true)
+            return
+        }
+
+        if (forceCollapsed) {
+            setIsExpanded(false)
+        }
     }, [forceCollapsed])
 
     const toggleDrawer = () => {
@@ -51,11 +55,17 @@ export default function Navigation({
         <SidebarBase
             sx={{
                 pt: 10,
-                pb: isExpanded ? 5 : 2,
+                pb: isExpanded ? 10 : 3,
             }}
 
             open={isExpanded}
             drawerCustomWidth={drawerCustomWidth}
+            onMouseEnter={() => {
+                if (!isMobileDrawer) setIsExpanded(true)
+            }}
+            onMouseLeave={() => {
+                if (!isMobileDrawer) setIsExpanded(false)
+            }}
         >
             <Box
                 sx={{
@@ -66,7 +76,7 @@ export default function Navigation({
                     alignItems: 'flex-start',
                     flexShrink: 0,
                     alignSelf: 'center',
-                    // mb: isExpanded ? 0 : 1,
+                    mb: isExpanded ? 0 : 1,
                 }}
             >
                 <Box
@@ -244,25 +254,6 @@ export default function Navigation({
                     ))}
                 </List>
             </Box>
-
-            {!isMobileDrawer && (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        // mt: 2
-                    }}
-                >
-                    <IconButton
-                        onClick={toggleDrawer}
-                        sx={{
-                            color: 'var(--Color-Text-Primary)',
-                        }}
-                    >
-                        {isExpanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </Box>
-            )}
         </SidebarBase>
     )
 }
