@@ -94,11 +94,6 @@ export default function LecturePage({
                         variant="outlined"
                         size="large"
                         onClick={onExit}
-                        sx={{
-                            minWidth: 0,
-                            flex: 1,
-                            maxWidth: { xs: "50%", md: "unset" },
-                        }}
                     >
                         Exit a Lecture
                     </Button>
@@ -107,11 +102,6 @@ export default function LecturePage({
                         variant="contained"
                         size="large"
                         onClick={onTakeQuiz}
-                        sx={{
-                            minWidth: 0,
-                            flex: 1,
-                            maxWidth: { xs: "50%", md: "unset" },
-                        }}
                     >
                         Take a Quiz
                     </Button>

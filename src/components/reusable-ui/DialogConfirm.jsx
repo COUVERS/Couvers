@@ -21,18 +21,24 @@ export default function DialogConfirm({
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: "16px",
-          padding: "16px"
+          borderRadius: "12px",
+          padding: "80px 40px",
+          boxShadow:
+            "0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 8px 10px -5px rgba(0, 0, 0, 0.20)"
         }
       }}
     >
-      <DialogContent>
+      <DialogContent
+        sx={{
+          p: 0
+        }}
+      >
         <Typography
           sx={{
-            fontSize: 28,
-            fontWeight: 700,
-            mb: 2,
-            color: "#0f172a"
+            fontSize: 'var(--FontSize-Headings-h2)',
+            fontWeight: 600,
+            mb: 3,
+            color: "var(--Color-Text-Primary)"
           }}
         >
           {title}
@@ -40,9 +46,9 @@ export default function DialogConfirm({
 
         <Typography
           sx={{
-            fontSize: 16,
-            color: "#374151",
-            mb: 4
+            fontSize: "var(--FontSize-Body1)",
+            color: "var(--Color-Text-Primary)",
+            mb: 5
           }}
         >
           {description}
@@ -52,7 +58,7 @@ export default function DialogConfirm({
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            gap: 2
+            gap: 3
           }}
         >
           <Button
