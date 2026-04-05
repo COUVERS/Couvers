@@ -2,7 +2,6 @@ import { useState } from "react"
 import { styled } from "@mui/material/styles"
 import {
     Box,
-    Typography,
     Accordion,
     AccordionSummary,
     AccordionDetails
@@ -38,13 +37,13 @@ const StyledSummary = styled(AccordionSummary)(() => ({
     },
 }))
 
-const SectionHeading = styled(Typography)(() => ({
+const SectionHeading = styled(Box)(() => ({
     fontSize: "28px",
     fontWeight: 600,
     color: "var(--Color-Text-Primary)",
 }))
 
-const Paragraph = styled(Typography)(() => ({
+const Paragraph = styled(Box)(() => ({
     fontSize: "var(--FontSize-Body1)",
     lineHeight: "var(--LineHeight-Body1)",
     color: "var(--Color-Text-Primary)",
