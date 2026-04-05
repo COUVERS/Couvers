@@ -13,12 +13,18 @@ const Page = styled(Box)(() => ({
     overflowX: "hidden",
 }))
 
-const Main = styled(Box)(() => ({
+const Main = styled(Box)(({ theme }) => ({
     flex: 1,
     display: "flex",
     flexDirection: "column",
     gap: "24px",
     minWidth: 0,
+    //
+    paddingBottom: "150px",
+
+    [theme.breakpoints.up("md")]: {
+        paddingBottom: "127px",
+    },
 }))
 
 const ContentWrap = styled(Box)(({ theme }) => ({
@@ -36,9 +42,11 @@ const ContentWrap = styled(Box)(({ theme }) => ({
 }))
 
 const Footer = styled(Box)(({ theme }) => ({
-    position: "sticky",
+   position: "fixed",
+    left: 0,
     bottom: 0,
-    zIndex: 10,
+    zIndex: 1200,
+
     display: "flex",
     alignItems: "center",
     minHeight: "76px",
