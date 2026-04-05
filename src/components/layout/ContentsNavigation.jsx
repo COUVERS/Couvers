@@ -26,6 +26,7 @@ export default function ContentsNavigation({
     onSelectQuiz,
     onBack,
     forceCollapsed = false,
+    isMobileDrawer = false,
 }) {
     const [open, setOpen] = useState(true)
 
@@ -66,22 +67,24 @@ export default function ContentsNavigation({
                         Contents
                     </Box>
 
-                    <IconButton
-                        onClick={() => setOpen(!open)}
-                        sx={{
-                            color: "var(--Color-Secondary-Contrast)",
-                            p: 0,
-                            width: 48,
-                            height: 48,
-                            minWidth: 36,
-                            minHeight: 36,
-                            "&:hover": {
-                                backgroundColor: "transparent",
-                            },
-                        }}
-                    >
-                        <ChevronLeftIcon sx={{ fontSize: 32 }} />
-                    </IconButton>
+                    {!isMobileDrawer && (
+                        <IconButton
+                            onClick={() => setOpen(!open)}
+                            sx={{
+                                color: "var(--Color-Secondary-Contrast)",
+                                p: 0,
+                                width: 48,
+                                height: 48,
+                                minWidth: 36,
+                                minHeight: 36,
+                                "&:hover": {
+                                    backgroundColor: "transparent",
+                                },
+                            }}
+                        >
+                            <ChevronLeftIcon sx={{ fontSize: 32 }} />
+                        </IconButton>
+                    )}
                 </Box>
             ) : (
                 <Box
@@ -91,43 +94,45 @@ export default function ContentsNavigation({
                         mb: 2,
                     }}
                 >
-                    <IconButton
-                        onClick={() => setOpen(!open)}
-                        sx={{
-                            color: "var(--Color-Secondary-Contrast)",
-                            p: 0,
-                            width: 48,
-                            height: 48,
-                            minWidth: 36,
-                            minHeight: 36,
-                            "&:hover": {
-                                backgroundColor: "transparent",
-                            },
-                            transform: "translateX(20px)",
-                        }}
-                    >
-                        <Box
+                    {!isMobileDrawer && (
+                        <IconButton
+                            onClick={() => setOpen(!open)}
                             sx={{
+                                color: "var(--Color-Secondary-Contrast)",
+                                p: 0,
                                 width: 48,
                                 height: 48,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: "var(--Color-Secondary-Main)",
-                                color: "var(--Color-Secondary-Contrast)",
-                                "& svg": {
-                                    width: "36px",
-                                    height: "36px",
-                                    display: "block",
+                                minWidth: 36,
+                                minHeight: 36,
+                                "&:hover": {
+                                    backgroundColor: "transparent",
                                 },
-                                "& path": {
-                                    fill: "var(--Color-Secondary-Contrast)",
-                                },
+                                transform: "translateX(20px)",
                             }}
                         >
-                            <LessonLectureIcon />
-                        </Box>
-                    </IconButton>
+                            <Box
+                                sx={{
+                                    width: 48,
+                                    height: 48,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    backgroundColor: "var(--Color-Secondary-Main)",
+                                    color: "var(--Color-Secondary-Contrast)",
+                                    "& svg": {
+                                        width: "36px",
+                                        height: "36px",
+                                        display: "block",
+                                    },
+                                    "& path": {
+                                        fill: "var(--Color-Secondary-Contrast)",
+                                    },
+                                }}
+                            >
+                                <LessonLectureIcon />
+                            </Box>
+                        </IconButton>
+                    )}
                 </Box>
             )}
 

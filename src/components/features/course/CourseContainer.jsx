@@ -377,6 +377,7 @@ export default function CourseContainer({
                                 goToCourseOverview()
                             }}
                             forceCollapsed={false}
+                            isMobileDrawer={true}
                         // {/* <Navigation
                         // page="courses" */}
                         // {/* setPage={(nextPage) => {
