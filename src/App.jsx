@@ -250,7 +250,7 @@ export default function App() {
                   p: 0,
                   width: 40,
                   height: 40,
-                  color: "var(--Color-Text-Primary)",
+                  color: "var(--Color-Primary-_States-Active)",
                 }}
               >
                 <MenuIcon />
@@ -286,7 +286,7 @@ export default function App() {
                     sx={{
                       width: 60,
                       height: 60,
-                      color: "var(--Color-Text-Primary)",
+                      color: "var(--Color-Primary-_States-Active)",
                       "& svg": {
                         width: 40,
                         height: 40,
@@ -301,7 +301,7 @@ export default function App() {
                     sx={{
                       width: 60,
                       height: 60,
-                      color: "var(--Color-Text-Primary)",
+                      color: "var(--Color-Primary-_States-Active)",
                     }}
                   >
                     <CourseIcon />
