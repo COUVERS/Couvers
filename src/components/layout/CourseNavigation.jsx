@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles'
 import SidebarBase from '../reusable-ui/SideBarBase'
 import {
     Box,
-    Typography,
     Stack,
     ListItemButton,
     Tooltip,
@@ -37,9 +36,10 @@ export default function CourseNavigation({
     selectedCourseId,
     onSelectCourse,
     forceCollapsed = false,
-    isMobileDrawer = false
+    isMobileDrawer = false,
 }) {
     const [open, setOpen] = useState(true)
+    console.log('isMobileDrawer', isMobileDrawer)
 
     useEffect(() => {
         if (forceCollapsed) {
@@ -69,7 +69,7 @@ export default function CourseNavigation({
             </Box>
 
             <Stack
-                // spacing={6} very wide
+                // spacing={6} very wide？？
                 spacing={5}
                 sx={{
                     px: open ? "16px" : 1,
@@ -95,7 +95,8 @@ export default function CourseNavigation({
                                 }}
                                 sx={{
                                     borderRadius: '8px',
-                                    p: '8px',
+                                    p: isSelected && !open ? '4px' : 1,
+                                    gap: 1,
                                     backgroundColor: isSelected ? 'var(--Color-Secondary-Contrast)' : 'transparent',
                                     color: isSelected ? 'var(--Color-Secondary-Dark)' : 'var(--Color-Secondary-Contrast)',
                                     justifyContent: open ? 'flex-start' : 'center',
@@ -124,10 +125,8 @@ export default function CourseNavigation({
                                     <Box
                                         component="span"
                                         sx={{
-                                            pl: 2,
                                             fontSize: '14px',
                                             fontWeight: 500,
-                                            // lineHeight: 1.2,
                                             color: isSelected
                                                 ? 'var(--Color-Secondary-Dark)'
                                                 : 'var(--Color-Secondary-Contrast)',
@@ -144,12 +143,20 @@ export default function CourseNavigation({
 
 
             {!isMobileDrawer && (
-                <Box sx={{ p: 2 }}>
+                <Box sx={{
+                    p: 2,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+
+                }}>
                     <IconButton
                         onClick={() => setOpen(!open)}
-                        sx={{ color: 'var(--Color-Secondary-Contrast)', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
+                        sx={{
+                            color: 'var(--Color-Secondary-Contrast)',
+                            '&:hover': { bgcolor: 'rgba(255,255,255,0.08)' }
+                        }}
                     >
-                        {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        {open ? <ChevronLeftIcon sx={{ fontSize: 32 }} /> : <ChevronRightIcon sx={{ fontSize: 32 }} />}
                     </IconButton>
                 </Box>
             )}
