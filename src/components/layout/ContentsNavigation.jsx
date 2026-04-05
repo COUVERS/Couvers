@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import { styled } from "@mui/material/styles"
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
-import Links from "../reusable-ui/Links"
 import ContentsNavItem from "../reusable-ui/ContentsNavItem"
 
 import SidebarBase from "../reusable-ui/SideBarBase"
@@ -43,7 +41,10 @@ export default function ContentsNavigation({
         <ContentsDrawer
             open={open}
             sx={{
-                p: 3,
+                pl: 3,
+                pr: 2,
+                py: 5,
+
             }}
         >
             {open ? (
@@ -52,10 +53,10 @@ export default function ContentsNavigation({
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
-                        mb: 4,
+                        mb: 3,
                     }}
                 >
-                    <Typography
+                    <Box
                         sx={{
                             fontSize: 28,
                             fontWeight: 500,
@@ -63,7 +64,7 @@ export default function ContentsNavigation({
                         }}
                     >
                         Contents
-                    </Typography>
+                    </Box>
 
                     <IconButton
                         onClick={() => setOpen(!open)}
