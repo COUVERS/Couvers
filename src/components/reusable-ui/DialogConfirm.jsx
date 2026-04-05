@@ -22,11 +22,17 @@ export default function DialogConfirm({
       PaperProps={{
         sx: {
           borderRadius: "12px",
-          padding: "16px"
+          padding: "80px 40px",
+          boxShadow:
+            "0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 8px 10px -5px rgba(0, 0, 0, 0.20)"
         }
       }}
     >
-      <DialogContent>
+      <DialogContent
+        sx={{
+          p: 0
+        }}
+      >
         <Typography
           sx={{
             fontSize: 'var(--FontSize-Headings-h2)',
