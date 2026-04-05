@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles'
 import SidebarBase from '../reusable-ui/SideBarBase'
 import {
     Box,
-    Typography,
     Stack,
     ListItemButton,
     Tooltip,
@@ -37,9 +36,10 @@ export default function CourseNavigation({
     selectedCourseId,
     onSelectCourse,
     forceCollapsed = false,
-    isMobileDrawer = false
+    isMobileDrawer = false,
 }) {
     const [open, setOpen] = useState(true)
+    console.log('isMobileDrawer', isMobileDrawer)
 
     useEffect(() => {
         if (forceCollapsed) {
@@ -48,40 +48,31 @@ export default function CourseNavigation({
     }, [forceCollapsed])
 
     return (
-        <CourseDrawer open={open}>
-            <Box sx={{
-                px: 3,
-                mb: 4,
-                textAlign: open ? 'left' : 'center',
-                minHeight: '40px'
-            }}>
-                {open ? (
-                    <Typography sx={{
-                        fontSize: '20px',
-                        fontStyle: 'normal',
-                        fontWeight: 600,
-                        color: 'var(--Color-Secondary-Contrast)',
-                        lineHeight: 'normal',
-                        textAlign: 'center',
-                    }}>
-                        Course Categories
-                    </Typography>
-                ) : (
-                    <Typography sx={{
-                        color: 'var(--Color-Secondary-Contrast)',
-                        fontWeight: 500,
-                        fontSize: '12px',
-                        textAlign: 'center',
-                    }}>
-                        Course Categories
-                    </Typography>
-                )}
+        <CourseDrawer
+            open={open}
+            drawerCustomWidth={open ? 240 : 88}
+        >
+            <Box
+                sx={{
+                    mb: 4,
+                    minHeight: 40,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: open ? 'var(--FontSize-Headings-h3)' : '12px',
+                    fontWeight: open ? 600 : 500,
+                    color: 'var(--Color-Secondary-Contrast)',
+                    textAlign: 'center',
+                }}
+            >
+                Course Categories
             </Box>
 
             <Stack
-                spacing={6}
+                // spacing={6} very wide？？
+                spacing={5}
                 sx={{
-                    px: open ? 2 : 1,
+                    px: open ? "16px" : 1,
                     alignSelf: 'stretch',
 
                 }}
@@ -97,6 +88,29 @@ export default function CourseNavigation({
                             title={!open ? course.title : ""}
                             placement="right"
                             arrow
+                            slotProps={{
+                                tooltip: {
+                                    sx: {
+                                        backgroundColor: "var(--Color-Secondary-Light)",
+                                        maxWidth: "120px",
+                                        whiteSpace: "normal",
+                                        boxShadow: "0px 4px 12px rgba(0,0,0,0.35)",
+                                        fontSize: "12px",
+                                        px: "8px",
+                                        py: "6px",
+                                        fontWeight: 400,
+                                        borderRadius: "8px",
+                                    },
+                                },
+                                arrow: {
+                                    sx: {
+                                        color: "var(--Color-Secondary-Light)",
+                                        "&:before": {
+                                            boxShadow: "0px 4px 12px rgba(0,0,0,0.22)",
+                                        },
+                                    },
+                                },
+                            }}
                         >
                             <ListItemButton
                                 onClick={() => {
@@ -104,7 +118,8 @@ export default function CourseNavigation({
                                 }}
                                 sx={{
                                     borderRadius: '8px',
-                                    p: '8px',
+                                    p: isSelected && !open ? '4px' : 1,
+                                    gap: 1,
                                     backgroundColor: isSelected ? 'var(--Color-Secondary-Contrast)' : 'transparent',
                                     color: isSelected ? 'var(--Color-Secondary-Dark)' : 'var(--Color-Secondary-Contrast)',
                                     justifyContent: open ? 'flex-start' : 'center',
@@ -115,24 +130,33 @@ export default function CourseNavigation({
                                 }}
                             >
                                 <CategoryIcon active={isSelected}>
-                                    {Icon && (
-                                        <Icon bgColor={isSelected ? "#A3B2FB" : "var(--Color-Secondary-Contrast)"} />
-                                    )}
+                                    <Box
+                                        sx={{
+                                            borderRadius: '4px',
+                                            overflow: 'hidden',
+                                            display: 'flex',
+                                        }}
+                                    >
+                                        {Icon && (
+                                            <Icon bgColor={isSelected ? "#A3B2FB" : "var(--Color-Secondary-Contrast)"}
+                                            />
+                                        )}
+                                    </Box>
                                 </CategoryIcon>
 
                                 {open && (
-                                    <Typography
+                                    <Box
+                                        component="span"
                                         sx={{
-                                            ml: 2,
                                             fontSize: '14px',
-                                            fontStyle: 'normal',
                                             fontWeight: 500,
-                                            lineHeight: 'normal',
-                                            color: isSelected ? 'var(--Color-Secondary-Dark)' : 'var(--Color-Secondary-Contrast)',
+                                            color: isSelected
+                                                ? 'var(--Color-Secondary-Dark)'
+                                                : 'var(--Color-Secondary-Contrast)',
                                         }}
                                     >
                                         {course.title}
-                                    </Typography>
+                                    </Box>
                                 )}
                             </ListItemButton>
                         </Tooltip>
@@ -142,12 +166,20 @@ export default function CourseNavigation({
 
 
             {!isMobileDrawer && (
-                <Box sx={{ p: 2 }}>
+                <Box sx={{
+                    p: 2,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+
+                }}>
                     <IconButton
                         onClick={() => setOpen(!open)}
-                        sx={{ color: 'var(--Color-Secondary-Contrast)', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}
+                        sx={{
+                            color: 'var(--Color-Secondary-Contrast)',
+                            '&:hover': { bgcolor: 'rgba(255,255,255,0.08)' }
+                        }}
                     >
-                        {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        {open ? <ChevronLeftIcon sx={{ fontSize: 32 }} /> : <ChevronRightIcon sx={{ fontSize: 32 }} />}
                     </IconButton>
                 </Box>
             )}

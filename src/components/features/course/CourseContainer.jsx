@@ -336,6 +336,7 @@ export default function CourseContainer({
                                 goToCourseOverview()
                             }}
                             forceCollapsed={false}
+                            isMobileDrawer={true}
                         />
                     </Drawer>
 
@@ -376,23 +377,23 @@ export default function CourseContainer({
                                 goToCourseOverview()
                             }}
                             forceCollapsed={false}
-                            // {/* <Navigation
-                            // page="courses" */}
-                            // {/* setPage={(nextPage) => {
-                            //     setMobileNavOpen(false)
+                        // {/* <Navigation
+                        // page="courses" */}
+                        // {/* setPage={(nextPage) => {
+                        //     setMobileNavOpen(false)
 
-                            //     if (nextPage === "courses") { */}
-                            // {/* goToCourseOverview()
-                            //         return
-                            //     }
+                        //     if (nextPage === "courses") { */}
+                        // {/* goToCourseOverview()
+                        //         return
+                        //     }
 
-                            //     if (nextPage === "home") {
-                            //         navigate("/")
-                            //         return
-                            //     }
+                        //     if (nextPage === "home") {
+                        //         navigate("/")
+                        //         return
+                        //     }
 
-                            //     if (nextPage === "account") {
-                            //         navigate("/account") */}
+                        //     if (nextPage === "account") {
+                        //         navigate("/account") */}
                         //     }
                         // }}
                         // forceCollapsed={false}

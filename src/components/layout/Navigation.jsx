@@ -135,10 +135,6 @@ export default function Navigation({
                                     '&.Mui-selected:hover': {
                                         backgroundColor: 'var(--Color-Primary-_States-Selected)',
                                     },
-
-                                    '& .MuiListItemIcon-root': {
-                                        color: 'inherit',
-                                    },
                                 }}
                             >
                                 <ListItemIcon
@@ -183,6 +179,7 @@ export default function Navigation({
                             alignSelf: isExpanded ? 'stretch' : 'center',
                         }}>
                             <ListItemButton
+                                selected={page === item.pageKey}
                                 onClick={() => {
                                     if (item.pageKey === "signout") {
                                         if (onSignOut) onSignOut()
@@ -195,6 +192,7 @@ export default function Navigation({
                                     flexDirection: isExpanded ? 'row' : 'column',
                                     justifyContent: isExpanded ? 'flex-start' : 'center',
                                     alignItems: 'center',
+                                    alignSelf: 'stretch',
                                     color: 'var(--Color-Text-Primary)',
                                     px: isExpanded ? 3 : 1,
 
@@ -202,8 +200,16 @@ export default function Navigation({
                                         backgroundColor: 'var(--Color-Action-Hover)',
                                     },
 
-                                    '& .MuiListItemIcon-root': {
-                                        color: 'inherit',
+                                    '&:active': {
+                                        backgroundColor: 'var(--Color-Primary-_States-FocusVisible)',
+                                    },
+
+                                    '&.Mui-selected': {
+                                        backgroundColor: 'var(--Color-Primary-_States-Selected)',
+                                    },
+
+                                    '&.Mui-selected:hover': {
+                                        backgroundColor: 'var(--Color-Primary-_States-Selected)',
                                     },
                                 }}
                             >
@@ -217,7 +223,9 @@ export default function Navigation({
                                         flexShrink: 0,
                                     }}
                                 >
-                                    {item.icon}
+                                    <Box sx={{ ml: '-4px', display: 'flex' }}>
+                                        {item.icon}
+                                    </Box>
                                 </ListItemIcon>
 
                                 <ListItemText
@@ -228,6 +236,7 @@ export default function Navigation({
                                         fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
                                         textAlign: 'left',
                                         color: 'inherit',
+                                        whiteSpace: 'nowrap',
                                     }}
                                 />
                             </ListItemButton>
