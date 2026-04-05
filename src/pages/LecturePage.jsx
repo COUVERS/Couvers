@@ -7,7 +7,9 @@ import LectureContent from "../components/features/LectureContent"
 const Page = styled(Box)(() => ({
     display: "flex",
     flexDirection: "column",
-    minHeight: "100vh",
+    flex: 1,
+    minHeight: 0,
+    minWidth: 0,
     background: "var(--Color-Background-Default)",
     width: "100%",
     overflowX: "hidden",
@@ -19,11 +21,12 @@ const Main = styled(Box)(({ theme }) => ({
     flexDirection: "column",
     gap: "24px",
     minWidth: 0,
-    //
-    paddingBottom: "150px",
+    minHeight: 0,
+
+    paddingBottom: "24px",
 
     [theme.breakpoints.up("md")]: {
-        paddingBottom: "127px",
+        paddingBottom: "32px",
     },
 }))
 
@@ -35,6 +38,7 @@ const ContentWrap = styled(Box)(({ theme }) => ({
     boxSizing: "border-box",
     width: "100%",
     minWidth: 0,
+    minHeight: 0,
 
     [theme.breakpoints.up("md")]: {
         padding: "0 100px 0 56px",
@@ -42,10 +46,10 @@ const ContentWrap = styled(Box)(({ theme }) => ({
 }))
 
 const Footer = styled(Box)(({ theme }) => ({
-   position: "fixed",
-    left: 0,
+    position: "sticky",
     bottom: 0,
-    zIndex: 1200,
+    marginTop: "auto",
+    zIndex: 10,
 
     display: "flex",
     alignItems: "center",
