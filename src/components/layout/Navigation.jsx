@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import SidebarBase from '../reusable-ui/SideBarBase'
 //Logo and Icons
-import LogoLarge from '../../assets/Logo_large_dark.png'
-import LogoSmall from '../../assets/Logo_small_dark.png'
+import LogoLarge from '../../assets/Logo_large_dark.svg'
+import LogoSmall from '../../assets/Logo_small_dark.svg'
 import HomeIcon from '../../assets/icons/HomeIcon'
 import CourseIcon from '../../assets/icons/CourseIcon'
 import ProfileIcon from '../../assets/icons/ProfileIcon'
@@ -38,39 +38,46 @@ export default function Navigation({
     }
 
     const navItems = [
-        { text: "Home", icon: <HomeIcon />, pageKey: "home" },
-        { text: "Course", icon: <CourseIcon />, pageKey: "courses" },
+        { text: "Home", icon: <HomeIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "home" },
+        { text: "Course", icon: <CourseIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "courses" },
     ]
 
     const bottomItems = [
-        { text: "Account", icon: <ProfileIcon />, pageKey: "account" },
-        { text: "Sign Out", icon: <SignOutIcon />, pageKey: "signout" },
+        { text: "Account", icon: <ProfileIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "account" },
+        { text: "Sign Out", icon: <SignOutIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "signout" },
     ]
 
     return (
         <SidebarBase
+            sx={{
+                pt: 10,
+                pb: isExpanded ? 5 : 2,
+            }}
+
             open={isExpanded}
             drawerCustomWidth={drawerCustomWidth}
         >
             <Box
                 sx={{
+                    width: isExpanded ? 115 : 48,
+                    height: isExpanded ? 88 : 48,
                     display: 'flex',
-                    width: '100%',
-                    height: isExpanded ? '123px' : '48px',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
                     flexShrink: 0,
-                    mb: 2,
+                    alignSelf: 'center',
+                    // mb: isExpanded ? 0 : 1,
                 }}
             >
-                <img
+                <Box
+                    component="img"
                     src={isExpanded ? LogoLarge : LogoSmall}
                     alt="TeTe"
-                    style={{
-                        width: isExpanded ? '160px' : '58px',
-                        height: 'auto',
-                        objectFit: 'contain',
+                    sx={{
+                        width: isExpanded ? 115 : 48,
+                        height: isExpanded ? 51 : 'auto',
                         display: 'block',
+                        flexShrink: 0,
                     }}
                 />
             </Box>
@@ -80,38 +87,53 @@ export default function Navigation({
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    alignItems: isExpanded ? 'flex-start' : 'center',
                     flex: '1 0 0',
                     alignSelf: 'stretch',
-                    padding: '16px 0',
+                    px: 2,
+                    pt: 2,
+                    pb: 1,
                     overflowY: 'auto',
                 }}
             >
-                <List sx={{ flexGrow: 1, px: 1 }}>
+                <List sx={{
+                    py: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: isExpanded ? 6 : '24px',
+                }}>
                     {navItems.map((item) => (
-                        <ListItem key={item.text} disablePadding sx={{ display: 'block', mb: 1 }}>
+                        <ListItem key={item.text} disablePadding
+                            sx={{
+                                display: 'block',
+                                width: isExpanded ? '100%' : '70px',
+                                alignSelf: isExpanded ? 'stretch' : 'center',
+                            }}>
                             <ListItemButton
                                 selected={page === item.pageKey}
                                 onClick={() => setPage(item.pageKey)}
                                 sx={{
                                     minHeight: 48,
                                     flexDirection: isExpanded ? 'row' : 'column',
-                                    justifyContent: 'center',
+                                    justifyContent: isExpanded ? 'flex-start' : 'center',
                                     alignItems: 'center',
+                                    alignSelf: 'stretch',
                                     color: 'var(--Color-Text-Primary)',
-                                    borderRadius: '8px',
+                                    px: isExpanded ? 3 : 1,
 
                                     '&:hover': {
                                         backgroundColor: 'var(--Color-Action-Hover)',
                                     },
 
+                                    '&:active': {
+                                        backgroundColor: 'var(--Color-Primary-_States-FocusVisible)',
+                                    },
+
                                     '&.Mui-selected': {
-                                        backgroundColor: 'var(--Color-Secondary-Contrast)',
-                                        color: 'var(--Color-Secondary-Dark)',
+                                        backgroundColor: 'var(--Color-Primary-_States-Selected)',
                                     },
 
                                     '&.Mui-selected:hover': {
-                                        backgroundColor: 'var(--Color-Secondary-Contrast)',
+                                        backgroundColor: 'var(--Color-Primary-_States-Selected)',
                                     },
 
                                     '& .MuiListItemIcon-root': {
@@ -124,7 +146,8 @@ export default function Navigation({
                                         minWidth: 0,
                                         mr: isExpanded ? 2 : 0,
                                         justifyContent: 'center',
-                                        color: 'inherit',
+                                        alignItems: 'center',
+                                        flexShrink: 0,
                                     }}
                                 >
                                     {item.icon}
@@ -136,7 +159,7 @@ export default function Navigation({
                                         fontSize: isExpanded ? 'var(--fs-body1)' : 'var(--fs-caption)',
                                         lineHeight: isExpanded ? 'var(--lh-body1)' : 'var(--lh-caption)',
                                         fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
-                                        textAlign: 'center',
+                                        textAlign: 'left',
                                         color: 'inherit',
                                     }}
                                 />
@@ -145,61 +168,72 @@ export default function Navigation({
                     ))}
                 </List>
 
-                <Box sx={{ pb: 4, px: 1 }}>
-                    <List>
-                        {bottomItems.map((item) => (
-                            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    onClick={() => {
-                                        if (item.pageKey === "signout") {
-                                            if (onSignOut) onSignOut()
-                                        } else {
-                                            setPage(item.pageKey)
-                                        }
-                                    }}
+                {/* Bottom */}
+
+                <List sx={{
+                    py: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: isExpanded ? '40px' : '24px',
+                }}>
+                    {bottomItems.map((item) => (
+                        <ListItem key={item.text} disablePadding sx={{
+                            display: 'block',
+                            width: isExpanded ? '100%' : '70px',
+                            alignSelf: isExpanded ? 'stretch' : 'center',
+                        }}>
+                            <ListItemButton
+                                onClick={() => {
+                                    if (item.pageKey === "signout") {
+                                        if (onSignOut) onSignOut()
+                                    } else {
+                                        setPage(item.pageKey)
+                                    }
+                                }}
+                                sx={{
+                                    minHeight: 48,
+                                    flexDirection: isExpanded ? 'row' : 'column',
+                                    justifyContent: isExpanded ? 'flex-start' : 'center',
+                                    alignItems: 'center',
+                                    color: 'var(--Color-Text-Primary)',
+                                    px: isExpanded ? 3 : 1,
+
+                                    '&:hover': {
+                                        backgroundColor: 'var(--Color-Action-Hover)',
+                                    },
+
+                                    '& .MuiListItemIcon-root': {
+                                        color: 'inherit',
+                                    },
+                                }}
+                            >
+                                <ListItemIcon
                                     sx={{
-                                        minHeight: 48,
-                                        flexDirection: isExpanded ? 'row' : 'column',
+                                        minWidth: 0,
+                                        mr: isExpanded ? 2 : 0,
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        color: 'var(--Color-Text-Primary)',
-                                        borderRadius: '8px',
-
-                                        '&:hover': {
-                                            backgroundColor: 'var(--Color-Action-Hover)',
-                                        },
-
-                                        '& .MuiListItemIcon-root': {
-                                            color: 'inherit',
-                                        },
+                                        color: 'inherit',
+                                        flexShrink: 0,
                                     }}
                                 >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: isExpanded ? 2 : 0,
-                                            justifyContent: 'center',
-                                            color: 'inherit',
-                                        }}
-                                    >
-                                        {item.icon}
-                                    </ListItemIcon>
+                                    {item.icon}
+                                </ListItemIcon>
 
-                                    <ListItemText
-                                        primary={item.text}
-                                        primaryTypographyProps={{
-                                            fontSize: isExpanded ? 'var(--fs-body1)' : 'var(--fs-caption)',
-                                            lineHeight: isExpanded ? 'var(--lh-body1)' : 'var(--lh-caption)',
-                                            fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
-                                            textAlign: 'center',
-                                            color: 'inherit',
-                                        }}
-                                    />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Box>
+                                <ListItemText
+                                    primary={item.text}
+                                    primaryTypographyProps={{
+                                        fontSize: isExpanded ? 'var(--fs-body1)' : 'var(--fs-caption)',
+                                        lineHeight: isExpanded ? 'var(--lh-body1)' : 'var(--lh-caption)',
+                                        fontWeight: isExpanded ? 'var(--fw-body1-bold)' : 'var(--fw-body1)',
+                                        textAlign: 'left',
+                                        color: 'inherit',
+                                    }}
+                                />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
             </Box>
 
             {!isMobileDrawer && (
@@ -207,7 +241,7 @@ export default function Navigation({
                     sx={{
                         display: 'flex',
                         justifyContent: 'flex-end',
-                        mt: 2
+                        // mt: 2
                     }}
                 >
                     <IconButton
