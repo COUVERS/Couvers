@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import Box from "@mui/material/Box"
 import CourseOverview from "./CourseOverview"
@@ -5,6 +6,7 @@ import PageHeader from "../../reusable-ui/PageHeader"
 import Lecture from "../../../pages/LecturePage"
 import QuizPage from "../../../pages/QuizPage"
 import ResultPage from "../../../pages/ResultPage"
+import DialogConfirm from "../../reusable-ui/DialogConfirm"
 
 export default function CourseMainContent({
     isLoading,
@@ -24,6 +26,20 @@ export default function CourseMainContent({
     const navigate = useNavigate()
     const location = useLocation()
     const resultData = location.state?.resultData
+    const [openExitLectureDialog, setOpenExitLectureDialog] = useState(false)
+
+    const handleOpenExitLectureDialog = () => {
+        setOpenExitLectureDialog(true)
+    }
+
+    const handleCloseExitLectureDialog = () => {
+        setOpenExitLectureDialog(false)
+    }
+
+    const handleConfirmExitLecture = () => {
+        setOpenExitLectureDialog(false)
+        onBackToLessonList()
+    }
 
     const resultAnswers =
         resultData?.results?.map((item) => ({
@@ -82,7 +98,7 @@ export default function CourseMainContent({
                     <Lecture
                         lessons={lessons}
                         activeLessonId={selectedLesson._id}
-                        onExit={onBackToLessonList}
+                        onExit={handleOpenExitLectureDialog}
                         onTakeQuiz={onTakeQuiz}
                     />
                 )}
@@ -112,6 +128,14 @@ export default function CourseMainContent({
                         }}
                     />
                 )}
+
+                <DialogConfirm
+                    open={openExitLectureDialog}
+                    onClose={handleCloseExitLectureDialog}
+                    onConfirm={handleConfirmExitLecture}
+                    title="Leave This Lecture?"
+                    description="If you leave now, your progress will not be saved. You will have to start over."
+                />
             </Box>
         </Box>
     )
