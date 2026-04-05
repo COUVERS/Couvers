@@ -10,10 +10,15 @@ import LessonLectureIcon from "../../assets/icons/LessonLectureIcon"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 
 const expandedWidth = 389
+const mobileExpandedWidth = 320
 const collapsedWidth = 40
 
-const ContentsDrawer = styled(SidebarBase)(({ open }) => ({
-    width: open ? expandedWidth : collapsedWidth,
+const ContentsDrawer = styled(SidebarBase, {
+    shouldForwardProp: (prop) => prop !== "open" && prop !== "isMobileDrawer",
+})(({ open, isMobileDrawer }) => ({
+    width: open
+        ? (isMobileDrawer ? mobileExpandedWidth : expandedWidth)
+        : collapsedWidth,
     backgroundColor: "var(--Brand-Indigo-900)",
     color: "var(--Color-Secondary-Contrast)",
     overflowX: open ? "hidden" : "visible",
@@ -41,11 +46,11 @@ export default function ContentsNavigation({
     return (
         <ContentsDrawer
             open={open}
+            isMobileDrawer={isMobileDrawer}
             sx={{
-                pl: 3,
-                pr: 2,
-                py: 5,
-
+                pl: isMobileDrawer ? 2 : 3,
+                pr: isMobileDrawer ? 2 : 2,
+                py: isMobileDrawer ? 4 : 5,
             }}
         >
             {open ? (
@@ -59,7 +64,7 @@ export default function ContentsNavigation({
                 >
                     <Box
                         sx={{
-                            fontSize: 28,
+                            fontSize: isMobileDrawer ? 24 : 28,
                             fontWeight: 500,
                             m: 0,
                         }}

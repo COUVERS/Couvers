@@ -347,8 +347,8 @@ export default function CourseContainer({
                         onClose={() => setMobileContentsNavOpen(false)}
                         sx={{
                             "& .MuiDrawer-paper": {
-                                width: "80vw",
-                                maxWidth: "360px",
+                                width: "320px",
+                                maxWidth: "320px",
                                 overflowX: "hidden",
                             },
                         }}
