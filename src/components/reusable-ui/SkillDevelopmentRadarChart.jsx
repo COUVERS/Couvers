@@ -11,8 +11,8 @@ import HelpIcon from "@mui/icons-material/Help"
 
 // Constants
 const CHART = {
-  SIZE: 260,
-  RADIUS: 78,
+  SIZE: 300,
+  RADIUS: 95,
   LEVELS: 5,
 }
 const CENTER = CHART.SIZE / 2
@@ -138,8 +138,10 @@ function CardShell({ loading = false, children }) {
         px: { xs: "16px", sm: "32px" },
         py: "40px",
         flexDirection: "column",
-        alignItems: "stretch", // 여기 수정
-        gap: "8px",
+        // alignItems: "stretch", // 여기 수정
+        // gap: "8px",
+        alignItems: "flex-start",
+        gap: 3,
         borderRadius: "8px",
         background: "var(--Color-Background-Paper, #FFF)",
         width: "100%",
@@ -226,13 +228,15 @@ function SkillLabelText({ metric, textAlign = "center" }) {
       enterTouchDelay={0}
       componentsProps={SKILL_TOOLTIP_COMPONENTS}
     >
-      <Box
-        sx={{
-          cursor: "pointer",
-          textAlign,
-          width: "100%",
-        }}
-      >
+      <Box sx={{
+        cursor: "pointer",
+        textAlign,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        // width: "100%",
+        gap: "4px",
+      }}>
         <Typography
           sx={{
             color: "var(--Color-Text-Primary, #0F172A)",
@@ -241,10 +245,20 @@ function SkillLabelText({ metric, textAlign = "center" }) {
             fontWeight: 500,
             lineHeight: "18px",
             letterSpacing: "0.1px",
-            maxWidth: "100%",
-            whiteSpace: "normal",
-            wordBreak: "break-word",
-            overflowWrap: "break-word",
+            whiteSpace: "nowrap",
+
+
+            "@media (min-width:899px) and (max-width:1300px)": {
+              whiteSpace: "normal",
+              lineHeight: "18px",
+              maxWidth: 110,
+            },
+
+            "@media (max-width:599px)": {
+              whiteSpace: "normal",
+              maxWidth: "110px",
+              textAlign: "center",
+            },
           }}
         >
           {name}
@@ -313,10 +327,19 @@ function RadarSvg({ metrics, size = CHART.SIZE }) {
 
 // Desktop layout
 
-function DesktopChart({ metrics }) {
+function DesktopChart({ metrics, isTightDesktop = false }) {
+  const chartSize = isTightDesktop ? 230 : CHART.SIZE
+
   return (
     <CenteredContent>
-      <Box sx={{ position: "relative", width: CHART.SIZE, height: CHART.SIZE }}>
+      <Box
+        sx={{
+          position: "relative",
+          width: chartSize,
+          height: `calc(${chartSize}px + 28px)`,
+          pt: "28px",
+        }}
+      >
         {metrics.map((metric, index) => (
           <Box
             key={metric.label ?? metric.skill ?? index}
@@ -327,13 +350,20 @@ function DesktopChart({ metrics }) {
               overflow: "hidden",
               zIndex: 2,
               ...DESKTOP_LABEL_POSITIONS[index],
+
+              ...(isTightDesktop && index === 0 ? { top: 10 } : {}),
+              ...(isTightDesktop && index === 1 ? { right: -70 } : {}),
+              ...(isTightDesktop && index === 2 ? { bottom: -10, right: -20 } : {}),
+              ...(isTightDesktop && index === 3 ? { bottom: -10, left: -20 } : {}),
+              ...(isTightDesktop && index === 4 ? { left: -78 } : {}),
             }}
           >
             <SkillLabelText metric={metric} textAlign="center" />
           </Box>
         ))}
+
         <Box sx={{ position: "relative", zIndex: 1, pointerEvents: "none" }}>
-          <RadarSvg metrics={metrics} />
+          <RadarSvg metrics={metrics} size={chartSize} />
         </Box>
       </Box>
     </CenteredContent>
@@ -366,7 +396,7 @@ function MobileChart({ metrics }) {
 
       <Box
         sx={{
-          gridColumn: "2 / span 2",
+          gridColumn: "1 / span 4",
           gridRow: 2,
           display: "flex",
           alignItems: "center",
@@ -374,7 +404,7 @@ function MobileChart({ metrics }) {
           height: 160,
         }}
       >
-        <RadarSvg metrics={metrics} size={160} />
+        <RadarSvg metrics={metrics} size={240} />
       </Box>
     </Box>
   )
@@ -415,13 +445,22 @@ function EmptyState() {
 export default function SkillDevelopmentRadarChart({ metrics = [], loading = false }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
-
+  const isTightDesktop = useMediaQuery(
+    "(min-width:899px) and (max-width:1150px)"
+  )
   if (loading) return <LoadingState />
   if (!Array.isArray(metrics) || metrics.length === 0) return <EmptyState />
 
   return (
     <CardShell>
-      {isMobile ? <MobileChart metrics={metrics} /> : <DesktopChart metrics={metrics} />}
+      {isMobile ? (
+        <MobileChart metrics={metrics} />
+      ) : (
+        <DesktopChart
+          metrics={metrics}
+          isTightDesktop={isTightDesktop}
+        />
+      )}
     </CardShell>
   )
 }
