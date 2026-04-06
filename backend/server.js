@@ -612,9 +612,9 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
 
       const previous = previousPassedAttempt
         ? getLessonSkillContribution(
-            previousPassedAttempt.correctCount,
-            previousPassedAttempt.totalQuestions
-          )
+          previousPassedAttempt.correctCount,
+          previousPassedAttempt.totalQuestions
+        )
         : 0;
 
       const current = getLessonSkillContribution(correctCount, totalQuestions);
@@ -1061,7 +1061,7 @@ app.get("/api/dashboard/review-lesson", authMiddleware, async (req, res) => {
     const userId = req.user.userId
 
     const attempts = await QuizAttempt.find({ userId })
-      .sort({ score: 1, submittedAt: 1 })
+    // .sort({ score: 1, submittedAt: 1 })
 
     if (!attempts.length) {
       return res.status(200).json({ reviewLesson: null })
@@ -1071,16 +1071,34 @@ app.get("/api/dashboard/review-lesson", authMiddleware, async (req, res) => {
 
     for (const attempt of attempts) {
       const key = String(attempt.lessonId)
+      const current = bestAttemptByLesson.get(key)
 
-      if (!bestAttemptByLesson.has(key)) {
+      if (
+        !current ||
+        attempt.score > current.score ||
+        (attempt.score === current.score &&
+          new Date(attempt.submittedAt) > new Date(current.submittedAt))
+      ) {
         bestAttemptByLesson.set(key, attempt)
       }
     }
 
     const attemptsList = [...bestAttemptByLesson.values()]
 
-    const reviewAttempt = attemptsList.find((a) => a.score < 100)
-    const targetAttempt = reviewAttempt || attemptsList[attemptsList.length - 1]
+    const reviewAttempt = attemptsList
+      .filter((a) => a.passed)
+      .sort((a, b) => {
+        if (a.score === 80 && b.score !== 80) return -1
+        if (b.score === 80 && a.score !== 80) return 1
+        return a.score - b.score
+      })[0]
+    // const reviewAttempt = attemptsList.find((a) => a.score < 100)
+    // const targetAttempt = reviewAttempt || attemptsList[attemptsList.length - 1]
+    const targetAttempt = reviewAttempt
+
+    if (!reviewAttempt) {
+      return res.status(200).json({ reviewLesson: null })
+    }
 
     const lesson = await Lesson.findById(targetAttempt.lessonId)
     if (!lesson) {
