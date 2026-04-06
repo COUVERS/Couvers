@@ -93,7 +93,13 @@ export default function CourseMainContent({
             )}
 
             <Box sx={{
-                px: viewMode === "lecture" ? 0 : 4,
+                pl: viewMode === "lecture" ? 0 : "24px",
+                pr: viewMode === "lecture" ? 0 : "24px",
+
+                "@media (min-width:900px)": {
+                    pl: viewMode === "lecture" ? 0 : "56px",
+                    pr: viewMode === "lecture" ? 0 : "105px",
+                },
                 flex: 1,
                 minWidth: 0,
                 display: "flex",
