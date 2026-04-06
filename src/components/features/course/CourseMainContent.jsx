@@ -78,7 +78,7 @@ export default function CourseMainContent({
             flex: 1,
             pt: 0,
             px: 0,
-            pb: viewMode === "lecture" ? 0 : 4,
+            pb: (viewMode === "lecture" || viewMode === "quiz") ? 0 : 4,
             display: "flex",
             flexDirection: "column",
             minWidth: 0,
@@ -93,12 +93,12 @@ export default function CourseMainContent({
             )}
 
             <Box sx={{
-                pl: viewMode === "lecture" ? 0 : "24px",
-                pr: viewMode === "lecture" ? 0 : "24px",
+                pl: (viewMode === "lecture" || viewMode === "quiz") ? 0 : "24px",
+                pr: (viewMode === "lecture" || viewMode === "quiz") ? 0 : "24px",
 
                 "@media (min-width:900px)": {
-                    pl: viewMode === "lecture" ? 0 : "56px",
-                    pr: viewMode === "lecture" ? 0 : "105px",
+                    pl: (viewMode === "lecture" || viewMode === "quiz") ? 0 : "56px",
+                    pr: (viewMode === "lecture" || viewMode === "quiz") ? 0 : "105px",
                 },
                 flex: 1,
                 minWidth: 0,

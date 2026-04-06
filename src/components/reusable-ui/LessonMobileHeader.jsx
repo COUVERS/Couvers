@@ -20,7 +20,13 @@ export default function LessonMobileHeader({ onMenuClick }) {
                 zIndex: 1200,
             }}
         >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                }}
+            >
                 <Box
                     onClick={onMenuClick}
                     sx={{
@@ -30,6 +36,7 @@ export default function LessonMobileHeader({ onMenuClick }) {
                         justifyContent: "center",
                         width: 32,
                         height: 32,
+                        flexShrink: 0,
                     }}
                 >
                     <MenuIcon />
@@ -45,17 +52,30 @@ export default function LessonMobileHeader({ onMenuClick }) {
                 />
             </Box>
 
-            <Box sx={{ display: "flex", gap: 3 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    gap: 2,
+                    alignItems: "center",
+                }}
+            >
                 <Box
                     sx={{
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        minWidth: 72,
+                        minWidth: 48,
                     }}
                 >
                     <ViewListIcon sx={{ fontSize: 30, color: "#2E2A5F" }} />
-                    <Typography sx={{ fontSize: "12px", lineHeight: 1.2, mt: 0.5 }}>
+                    <Typography
+                        sx={{
+                            fontSize: "12px",
+                            lineHeight: 1.2,
+                            mt: 0.5,
+                            color: "#2E2A5F",
+                        }}
+                    >
                         Contents
                     </Typography>
                 </Box>
@@ -65,11 +85,18 @@ export default function LessonMobileHeader({ onMenuClick }) {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        minWidth: 72,
+                        minWidth: 48,
                     }}
                 >
                     <SchoolIcon sx={{ fontSize: 30, color: "#2E2A5F" }} />
-                    <Typography sx={{ fontSize: "12px", lineHeight: 1.2, mt: 0.5 }}>
+                    <Typography
+                        sx={{
+                            fontSize: "12px",
+                            lineHeight: 1.2,
+                            mt: 0.5,
+                            color: "#2E2A5F",
+                        }}
+                    >
                         Categories
                     </Typography>
                 </Box>
