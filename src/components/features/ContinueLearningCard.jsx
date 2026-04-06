@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from "@mui/material"
+import { Box, Button } from "@mui/material"
 
 export default function ContinueLearningCard({
     title = "Continue Learning",
@@ -17,7 +17,8 @@ export default function ContinueLearningCard({
                 background: "var(--Color-Background-Paper, #FFF)",
             }}
         >
-            <Typography
+            <Box
+                component="h2"
                 sx={{
                     fontSize: "var(--FontSize-Headings-h2)",
                     fontWeight: 600,
@@ -28,7 +29,7 @@ export default function ContinueLearningCard({
                 }}
             >
                 {title}
-            </Typography>
+            </Box>
 
             {
                 children ? (
@@ -42,7 +43,8 @@ export default function ContinueLearningCard({
                             gap: "24px",
                         }}
                     >
-                        <Typography
+                        <Box
+                            component="p"
                             sx={{
                                 fontSize: "16px",
                                 lineHeight: "24px",
@@ -50,7 +52,7 @@ export default function ContinueLearningCard({
                             }}
                         >
                             {description}
-                        </Typography>
+                        </Box>
 
                         <Button
                             variant="contained"

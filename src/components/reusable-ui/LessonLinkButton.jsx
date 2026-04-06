@@ -55,6 +55,14 @@ const Content = styled(Box)(() => ({
     alignItems: "flex-start",
     padding: "20px 24px",
     gap: 6,
+    textAlign: "left",
+    "@media (max-width:650px)": {
+        padding: "16px",
+    },
+    "@media (max-width:470px)": {
+        padding: "0px",
+        gap: 3,
+    },
 }))
 
 const ActionBox = styled(Box)(() => ({
@@ -91,36 +99,43 @@ export default function LessonLinkButton({
             </IconBox>
 
             <Content>
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: "var(--FontSize-Body1)",
                         fontWeight: 600,
                         lineHeight: "var(--LineHeight-Body1)",
                         letterSpacing: "var(--LetterSpace-Body1)",
                         color: "var(--Color-Primary-Contrast)",
-                        "@media (max-width:650px)": {
+                        "@media (max-width:750px)": {
                             fontSize: "16px",
+                            lineHeight: "18px",
                         },
                     }}
                 >
                     {courseName}
-                </Typography>
+                </Box>
 
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: 14,
                         fontWeight: 400,
                         lineHeight: 1.4,
                         color: "inherit",
                         opacity: 0.9,
+                        "@media (max-width:750px)": {
+                            lineHeight: "18px",
+                        },
                     }}
                 >
                     {lessonTitle}
-                </Typography>
+                </Box>
             </Content>
 
             <ActionBox>
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: 14,
                         fontWeight: 600,
@@ -129,7 +144,7 @@ export default function LessonLinkButton({
                     }}
                 >
                     {actionLabel}
-                </Typography>
+                </Box>
             </ActionBox>
         </LessonButton >
     )
