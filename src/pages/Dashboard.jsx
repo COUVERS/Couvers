@@ -135,7 +135,7 @@ export default function Dashboard({ onStartCourse, onOpenRecommendedCourse, setP
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(460px, 1fr))",
+                    gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
                     gap: 3,
                     alignItems: "stretch",
                 }}
