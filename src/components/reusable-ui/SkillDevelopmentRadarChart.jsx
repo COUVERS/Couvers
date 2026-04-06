@@ -303,13 +303,19 @@ function RadarSvg({ metrics, size = CHART.SIZE }) {
 
 // Desktop layout 
 
-function DesktopChart({ metrics }) {
+function DesktopChart({ metrics, isTightDesktop = false }) {
+  const chartSize = isTightDesktop ? 230 : CHART.SIZE
+
   return (
     <CenteredContent>
-      <Box sx={{
-        position: "relative", width: CHART.SIZE, height: CHART.SIZE, height: `calc(${CHART.SIZE}px + 28px)`,
-        pt: "28px",
-      }}>
+      <Box
+        sx={{
+          position: "relative",
+          width: chartSize,
+          height: `calc(${chartSize}px + 28px)`,
+          pt: "28px",
+        }}
+      >
         {metrics.map((metric, index) => (
           <Box
             key={metric.label ?? metric.skill ?? index}
@@ -319,13 +325,20 @@ function DesktopChart({ metrics }) {
               width: 150,
               zIndex: 2,
               ...DESKTOP_LABEL_POSITIONS[index],
+
+              ...(isTightDesktop && index === 0 ? { top: 10 } : {}),
+              ...(isTightDesktop && index === 1 ? { right: -70 } : {}),
+              ...(isTightDesktop && index === 2 ? { bottom: -10, right: -20 } : {}),
+              ...(isTightDesktop && index === 3 ? { bottom: -10, left: -20 } : {}),
+              ...(isTightDesktop && index === 4 ? { left: -78 } : {}),
             }}
           >
             <SkillLabelText metric={metric} textAlign="center" />
           </Box>
         ))}
+
         <Box sx={{ position: "relative", zIndex: 1, pointerEvents: "none" }}>
-          <RadarSvg metrics={metrics} />
+          <RadarSvg metrics={metrics} size={chartSize} />
         </Box>
       </Box>
     </CenteredContent>
@@ -408,13 +421,21 @@ function EmptyState() {
 export default function SkillDevelopmentRadarChart({ metrics = [], loading = false }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
+  const isTightDesktop = useMediaQuery("(max-width:1150px)")
 
   if (loading) return <LoadingState />
   if (!Array.isArray(metrics) || metrics.length === 0) return <EmptyState />
 
   return (
     <CardShell>
-      {isMobile ? <MobileChart metrics={metrics} /> : <DesktopChart metrics={metrics} />}
+      {isMobile ? (
+        <MobileChart metrics={metrics} />
+      ) : (
+        <DesktopChart
+          metrics={metrics}
+          isTightDesktop={isTightDesktop}
+        />
+      )}
     </CardShell>
   )
 }
