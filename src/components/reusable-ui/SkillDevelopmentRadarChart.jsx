@@ -11,7 +11,7 @@ import HelpIcon from "@mui/icons-material/Help"
 
 // Constants 
 const CHART = {
-  SIZE: 260,
+  SIZE: 280,
   RADIUS: 78,
   LEVELS: 5,
 }
@@ -145,7 +145,7 @@ function CardShell({ loading = false, children }) {
         py: "40px",
         flexDirection: "column",
         alignItems: "flex-start",
-        gap: "8px",
+        gap:3,
         borderRadius: "8px",
         background: "var(--Color-Background-Paper, #FFF)",
         width: "100%",
