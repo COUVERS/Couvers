@@ -74,7 +74,15 @@ export default function CourseMainContent({
                 : course?.description || ""
 
     return (
-        <Box sx={{ flex: 1, pt: 0, px: 0, pb: viewMode === "lecture" ? 0 : 4, }}>
+        <Box sx={{
+            flex: 1,
+            pt: 0,
+            px: 0,
+            pb: viewMode === "lecture" ? 0 : 4,
+            display: "flex",
+            flexDirection: "column",
+            minWidth: 0,
+        }}>
             {isLoading && <p style={{ color: "var(--Color-Text-Primary)" }}>Loading...</p>}
             {error && <p style={{ color: "var(--Color-Error-Main)" }}>Error: {error}</p>}
             {(headerTitle || headerDescription) && (
@@ -84,7 +92,13 @@ export default function CourseMainContent({
                 />
             )}
 
-            <Box sx={{ px: viewMode === "lecture" ? 0 : 4 }}>
+            <Box sx={{
+                px: viewMode === "lecture" ? 0 : 4,
+                flex: 1,
+                minWidth: 0,
+                display: "flex",
+                flexDirection: "column",
+            }}>
                 {viewMode === "lessonList" && (
                     <CourseOverview
                         course={course}
