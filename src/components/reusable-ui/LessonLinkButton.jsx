@@ -55,6 +55,13 @@ const Content = styled(Box)(() => ({
     alignItems: "flex-start",
     padding: "20px 24px",
     gap: 6,
+    textAlign: "left",
+    "@media (max-width:650px)": {
+        padding: "16px",
+    },
+    "@media (max-width:470px)": {
+        padding: "12px 14px",
+    },
 }))
 
 const ActionBox = styled(Box)(() => ({
@@ -91,7 +98,8 @@ export default function LessonLinkButton({
             </IconBox>
 
             <Content>
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: "var(--FontSize-Body1)",
                         fontWeight: 600,
@@ -104,9 +112,10 @@ export default function LessonLinkButton({
                     }}
                 >
                     {courseName}
-                </Typography>
+                </Box>
 
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: 14,
                         fontWeight: 400,
@@ -116,11 +125,12 @@ export default function LessonLinkButton({
                     }}
                 >
                     {lessonTitle}
-                </Typography>
+                </Box>
             </Content>
 
             <ActionBox>
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: 14,
                         fontWeight: 600,
@@ -129,7 +139,7 @@ export default function LessonLinkButton({
                     }}
                 >
                     {actionLabel}
-                </Typography>
+                </Box>
             </ActionBox>
         </LessonButton >
     )
