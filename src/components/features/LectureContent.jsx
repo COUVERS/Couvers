@@ -41,6 +41,7 @@ const SectionHeading = styled(Box)(() => ({
     fontSize: "28px",
     fontWeight: 600,
     color: "var(--Color-Text-Primary)",
+    marginTop: "16px",
 }))
 
 const Paragraph = styled(Box)(() => ({
