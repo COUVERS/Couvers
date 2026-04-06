@@ -8,7 +8,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material"
-import LogoLarge from "../assets/Logo_large_dark.png"
+import LogoLarge from "../assets/Logo_large_dark.svg"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import { API_BASE_URL } from "../config"

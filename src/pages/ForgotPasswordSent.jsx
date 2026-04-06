@@ -1,6 +1,6 @@
 import { Link as RouterLink, useLocation } from "react-router-dom"
 import { Box, Button, Typography } from "@mui/material"
-import LogoLarge from "../assets/Logo_large_dark.png"
+import LogoLarge from "../assets/Logo_large_dark.svg"
 
 export default function ForgotPasswordSent() {
     const location = useLocation()

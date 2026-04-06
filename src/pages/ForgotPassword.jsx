@@ -7,7 +7,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material"
-import LogoLarge from "../assets/Logo_large_dark.png"
+import LogoLarge from "../assets/Logo_large_dark.svg"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
