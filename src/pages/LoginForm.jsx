@@ -11,7 +11,7 @@ import {
 } from "@mui/material"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
-import LogoLarge from "../assets/Logo_large_dark.png"
+import LogoLarge from "../assets/Logo_large_dark.svg"
 import { API_BASE_URL } from "../config"
 
 export default function LoginForm({ onGoSignup, onLoginSuccess }) {

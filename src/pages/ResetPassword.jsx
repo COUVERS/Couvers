@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import "../auth.css"
-import LogoLarge from "../assets/Logo_large_dark.png"
+import LogoLarge from "../assets/Logo_large_dark.svg"
 import Visibility from "../assets/icons/Visibility"
 import VisibilityOff from "../assets/icons/VisibilityOff"
 import { API_BASE_URL } from "../config"

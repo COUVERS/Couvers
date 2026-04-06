@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 import "../auth.css"
-import LogoLarge from "../assets/Logo_large_dark.png"
+import LogoLarge from "../assets/Logo_large_dark.svg"
 
 export default function PasswordResetSent() {
     const location = useLocation()
