@@ -44,7 +44,7 @@ const Content = styled(Box)(() => ({
     padding: "8px 32px",
     gap: 4,
     "@media (min-width:899px) and (max-width:1305px)": {
-        padding: "7px 10px",
+        padding: "2px 3px",
     },
     "@media (max-width:470px)": {
         padding: "0px",
@@ -60,7 +60,7 @@ const ActionBox = styled(Box)(() => ({
     whiteSpace: "nowrap",
     flexShrink: 0,
     "@media (min-width:899px) and (max-width:1305px)": {
-        paddingRight: 16,
+        paddingRight: 10,
     },
     "@media (max-width:650px)": {
         display: "none",
@@ -100,7 +100,7 @@ export default function ReviewCourseLinkButton({
                         letterSpacing: "var(--LetterSpace-Body1)",
                         color: "inherit",
                         "@media (min-width:899px) and (max-width:1305px)": {
-                            lineHeight: "22px",
+                            lineHeight: "16px",
                         },
                         "@media (max-width:470px)": {
                             lineHeight: "18px",
@@ -119,6 +119,9 @@ export default function ReviewCourseLinkButton({
                         lineHeight: 1.4,
                         color: "inherit",
                         opacity: 0.9,
+                         "@media (min-width:899px) and (max-width:1305px)": {
+                            lineHeight: "18px",
+                        },
                         "@media (max-width:470px)": {
                             lineHeight: "18px",
                         },
