@@ -13,6 +13,8 @@ export default function SignOutDialog({ open, onClose, onConfirm }) {
         PaperProps={{
             sx: {
             display: "flex",
+            width: { xs: "calc(100% - 32px)", md: "560px" },
+            maxWidth: { xs: "431px", md: "560px" },
             padding: "80px 40px",
             flexDirection: "column",
             justifyContent: "center",
@@ -63,33 +65,38 @@ export default function SignOutDialog({ open, onClose, onConfirm }) {
 
         <Box
             sx={{
-            width: "100%",
+            alignItems: "center",
             display: "flex",
-            justifyContent: "space-between",
+            alignSelf: "stretch",
             gap: "24px",
             }}
         >
             <Button
-            variant="outlined"
-            size="large"
-            onClick={onClose}
-            sx={{
-                display: "flex",
-                width: "var(--Button-Dialog, 240px)",
-                height: "48px",
-                textTransform: "none",
-                fontFamily: "IBM Plex Sans",
-                fontSize: "16px",
-                fontWeight: 500,
-                borderRadius: "4px",
-                color: "#3F3F7F",
-                border: "1px solid #A1A1C2",
-                whiteSpace: "nowrap",
-                "&:hover": {
-                border: "1px solid #7C7CB0",
-                backgroundColor: "transparent",
-                },
-            }}
+                variant="outlined"
+                size="large"
+                onClick={onClose}
+                sx={{
+                    display: "flex",
+                    height: "48px",
+                    padding: "12px 22px",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: { xs: "1 0 0", md: "1 0 0" },
+                    minWidth: 0,
+                    textTransform: "none",
+                    fontFamily: "IBM Plex Sans",
+                    fontSize: "16px",
+                    fontWeight: 500,
+                    borderRadius: "4px",
+                    color: "#3F3F7F",
+                    border: "1px solid #A1A1C2",
+                    whiteSpace: "nowrap",
+                    "&:hover": {
+                    border: "1px solid #7C7CB0",
+                    backgroundColor: "transparent",
+                    },
+                }}
             >
             Cancel
             </Button>
@@ -99,21 +106,26 @@ export default function SignOutDialog({ open, onClose, onConfirm }) {
             size="large"
             onClick={onConfirm}
             sx={{
-                display: "flex",
-                width: "var(--Button-Dialog, 240px)",
-                height: "48px",
-                textTransform: "none",
-                fontFamily: "IBM Plex Sans",
-                fontSize: "16px",
-                fontWeight: 500,
-                borderRadius: "var(--borderRadius, 4px)",
-                backgroundColor: "var(--Color-Primary-Main, #6B63FF)",
-                boxShadow: "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
-                whiteSpace: "nowrap",
-                "&:hover": {
-                backgroundColor: "#5658E6",
-                },
-            }}
+                        display: "flex",
+                        width: { xs: "120px", md: "240px" },
+                        height: "48px",
+                        padding: "12px 22px",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textTransform: "none",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: "16px",
+                        fontWeight: 500,
+                        borderRadius: "4px",
+                        backgroundColor: "var(--Color-Primary-Main, #6B63FF)",
+                        boxShadow:
+                        "0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20)",
+                        whiteSpace: "nowrap",
+                        "&:hover": {
+                        backgroundColor: "#5658E6",
+                        },
+                    }}
             >
             Sign Out
             </Button>
