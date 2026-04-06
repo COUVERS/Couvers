@@ -229,7 +229,8 @@ function SkillLabelText({ metric, textAlign = "center" }) {
             letterSpacing: "0.1px",
             whiteSpace: "nowrap",
 
-            "@media (max-width:1300px)": {
+
+            "@media (min-width:899px) and (max-width:1300px)": {
               whiteSpace: "normal",
               lineHeight: "18px",
               maxWidth: 110,
@@ -421,8 +422,9 @@ function EmptyState() {
 export default function SkillDevelopmentRadarChart({ metrics = [], loading = false }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
-  const isTightDesktop = useMediaQuery("(max-width:1150px)")
-
+  const isTightDesktop = useMediaQuery(
+    "(min-width:899px) and (max-width:1150px)"
+  )
   if (loading) return <LoadingState />
   if (!Array.isArray(metrics) || metrics.length === 0) return <EmptyState />
 
