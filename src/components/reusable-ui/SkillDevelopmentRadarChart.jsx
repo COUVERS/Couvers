@@ -235,6 +235,12 @@ function SkillLabelText({ metric, textAlign = "center" }) {
               lineHeight: "18px",
               maxWidth: 110,
             },
+
+            "@media (max-width:599px)": {
+              whiteSpace: "normal",
+              maxWidth: "110px",
+              textAlign: "center",
+            },
           }}
         >
           {name}
@@ -373,7 +379,7 @@ function MobileChart({ metrics }) {
       {/* SVG centred in row 2, col 2-3 */}
       <Box
         sx={{
-          gridColumn: "2 / span 2",
+          gridColumn: "1 / span 4",
           gridRow: 2,
           display: "flex",
           alignItems: "center",
@@ -381,7 +387,7 @@ function MobileChart({ metrics }) {
           height: 160,
         }}
       >
-        <RadarSvg metrics={metrics} size={160} />
+        <RadarSvg metrics={metrics} size={240} />
       </Box>
     </Box>
   )
