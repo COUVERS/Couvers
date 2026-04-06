@@ -11,8 +11,8 @@ import HelpIcon from "@mui/icons-material/Help"
 
 // Constants 
 const CHART = {
-  SIZE: 280,
-  RADIUS: 78,
+  SIZE: 300,
+  RADIUS: 95,
   LEVELS: 5,
 }
 const CENTER = CHART.SIZE / 2
@@ -145,7 +145,7 @@ function CardShell({ loading = false, children }) {
         py: "40px",
         flexDirection: "column",
         alignItems: "flex-start",
-        gap:3,
+        gap: 3,
         borderRadius: "8px",
         background: "var(--Color-Background-Paper, #FFF)",
         width: "100%",
@@ -211,7 +211,14 @@ function SkillLabelText({ metric, textAlign = "center" }) {
       enterTouchDelay={0}
       componentsProps={SKILL_TOOLTIP_COMPONENTS}
     >
-      <Box sx={{ cursor: "pointer", textAlign }}>
+      <Box sx={{
+        cursor: "pointer",
+        textAlign,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "4px",
+      }}>
         <Typography
           sx={{
             color: "var(--Color-Text-Primary, #0F172A)",
@@ -220,6 +227,13 @@ function SkillLabelText({ metric, textAlign = "center" }) {
             fontWeight: 500,
             lineHeight: "normal",
             letterSpacing: "0.1px",
+            whiteSpace: "nowrap",
+
+            "@media (max-width:1300px)": {
+              whiteSpace: "normal",
+              lineHeight: "18px",
+              maxWidth: 110,
+            },
           }}
         >
           {name}
@@ -292,7 +306,10 @@ function RadarSvg({ metrics, size = CHART.SIZE }) {
 function DesktopChart({ metrics }) {
   return (
     <CenteredContent>
-      <Box sx={{ position: "relative", width: CHART.SIZE, height: CHART.SIZE }}>
+      <Box sx={{
+        position: "relative", width: CHART.SIZE, height: CHART.SIZE, height: `calc(${CHART.SIZE}px + 28px)`,
+        pt: "28px",
+      }}>
         {metrics.map((metric, index) => (
           <Box
             key={metric.label ?? metric.skill ?? index}
