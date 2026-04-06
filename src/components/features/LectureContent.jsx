@@ -37,10 +37,13 @@ const StyledSummary = styled(AccordionSummary)(() => ({
     },
 }))
 
-const SectionHeading = styled(Box)(() => ({
-    fontSize: "28px",
+const SectionHeading = styled(Box)(({ theme }) => ({
+    fontSize: "24px",
     fontWeight: 600,
     color: "var(--Color-Text-Primary)",
+    [theme.breakpoints.up("md")]: {
+        fontSize: "28px",
+    },
 }))
 
 const Paragraph = styled(Box)(() => ({

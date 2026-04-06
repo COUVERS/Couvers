@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
 import Links from "../reusable-ui/Links"
 import LessonNumberBadge from "../reusable-ui/LessonNumberBadge"
 import VerifiedIcon from "@mui/icons-material/Verified"
@@ -68,17 +67,19 @@ export default function LessonListItem({
                     {title}
                 </Links>
 
-                <Typography
+                <Box
+                    component="p"
                     sx={{
                         fontFamily: "IBM Plex Sans",
                         fontSize: "14px",
                         fontWeight: 500,
                         letterSpacing: "0.1px",
+                        margin: 0,
                         color: isLocked ? "text.disabled" : "var(--Color-Text-Primary)",
                     }}
                 >
                     {description}
-                </Typography>
+                </Box>
 
                 {isCompleted && completedAt && (
                     <Box
@@ -94,7 +95,8 @@ export default function LessonListItem({
                                 color: "var(--Brand-Indigo-700)",
                             }}
                         />
-                        <Typography
+                        <Box
+                            component="span"
                             sx={{
                                 fontFamily: "IBM Plex Sans",
                                 fontSize: "16px",
@@ -105,7 +107,7 @@ export default function LessonListItem({
                             }}
                         >
                             {formatDate(completedAt)} completed!
-                        </Typography>
+                        </Box>
                     </Box>
                 )}
 
@@ -123,7 +125,8 @@ export default function LessonListItem({
                                 color: "var(--Brand-Indigo-700)",
                             }}
                         />
-                        <Typography
+                        <Box
+                            component="span"
                             sx={{
                                 fontFamily: "IBM Plex Sans",
                                 fontSize: "14px",
@@ -134,7 +137,7 @@ export default function LessonListItem({
                             }}
                         >
                             Quiz Pending!
-                        </Typography>
+                        </Box>
                     </Box>
                 )}
             </Box>

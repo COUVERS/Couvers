@@ -22,8 +22,8 @@ const Main = styled(Box)(({ theme }) => ({
     gap: "24px",
     minWidth: 0,
     minHeight: 0,
-
     paddingBottom: "110px",
+    marginTop: "32px",
 
     [theme.breakpoints.up("md")]: {
         paddingBottom: "143px",
