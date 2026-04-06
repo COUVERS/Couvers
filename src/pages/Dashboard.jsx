@@ -132,14 +132,14 @@ export default function Dashboard({ onStartCourse, onOpenRecommendedCourse, setP
     }
 
     return (
-        <Box
-            sx={{
-                display: "grid",
-                gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-                gap: 3,
-                alignItems: "stretch",
-            }}
-        >
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+                    gap: 3,
+                    alignItems: "stretch",
+                }}
+            >
             <Box sx={{ gridColumn: { xs: "auto", md: "1 / -1" } }}>
                 <ContinueLearningCard onStart={() => onStartCourse(null)}>
                     {nextLesson?.lessonId && nextLesson?.hasStartedLesson ? (

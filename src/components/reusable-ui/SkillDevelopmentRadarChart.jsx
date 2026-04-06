@@ -9,7 +9,7 @@ import {
 } from "@mui/material"
 import HelpIcon from "@mui/icons-material/Help"
 
-// Constants 
+// Constants
 const CHART = {
   SIZE: 300,
   RADIUS: 95,
@@ -50,18 +50,12 @@ const DESKTOP_LABEL_POSITIONS = [
   { top: "32%", left: -100 },
 ]
 
-
-//  Mobile: maps each skill index to a CSS-grid placement.(4-column grid)
+// Mobile: maps each skill index to a CSS-grid placement.(4-column grid)
 const MOBILE_GRID_PLACEMENTS = [
-  // index 0 – Lesson Structure
   { gridColumn: "1 / span 4", gridRow: 1, textAlign: "center", alignSelf: "center" },
-  // index 1 – Explanation Clarity
   { gridColumn: 4, gridRow: 2, textAlign: "left", alignSelf: "center" },
-  // index 2 – Assessment
   { gridColumn: "3 / span 2", gridRow: 3, textAlign: "center", alignSelf: "center" },
-  // index 3 – Pacing
   { gridColumn: "1 / span 2", gridRow: 3, textAlign: "center", alignSelf: "center" },
-  // index 4 – Student Engagement
   { gridColumn: 1, gridRow: 2, textAlign: "right", alignSelf: "center" },
 ]
 
@@ -77,7 +71,7 @@ const SKILL_DESCRIPTIONS = {
     "Ability to maintain learner attention, participation, and involvement during instruction.",
 }
 
-// tooltip styles 
+// tooltip styles
 function makeTooltipSx(bg, maxWidth = 140) {
   return {
     tooltip: {
@@ -109,7 +103,7 @@ const HELP_TOOLTIP_PROPS = {
 
 const SKILL_TOOLTIP_COMPONENTS = makeTooltipSx("#1E3A8A", 220)
 
-//  Sub-components
+// Sub-components
 
 function HelpTooltipButton() {
   return (
@@ -144,6 +138,8 @@ function CardShell({ loading = false, children }) {
         px: { xs: "16px", sm: "32px" },
         py: "40px",
         flexDirection: "column",
+        // alignItems: "stretch", // 여기 수정
+        // gap: "8px",
         alignItems: "flex-start",
         gap: 3,
         borderRadius: "8px",
@@ -152,38 +148,59 @@ function CardShell({ loading = false, children }) {
         boxSizing: "border-box",
       }}
     >
-      <Box sx={{ display: "inline-flex", alignItems: "center", gap: "10px", width: "fit-content" }}>
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          pr: "56px",
+          boxSizing: "border-box",
+        }}
+      >
         {loading ? (
           <>
             <Skeleton variant="text" width={250} height={48} />
-            <Skeleton variant="circular" width={32} height={32} />
+            <Box sx={{ position: "absolute", top: 0, right: 0 }}>
+              <Skeleton variant="circular" width={32} height={32} />
+            </Box>
           </>
         ) : (
           <>
             <Typography
-              variant="h2"
+              component="div"
               sx={{
                 color: "var(--Color-Text-Primary, #0F172A)",
                 fontFamily: '"IBM Plex Sans"',
-                fontSize: "var(--FontSize-Headings-h2, 32px)",
+                fontSize: {
+                  xs: "24px",
+                  sm: "28px",
+                  md: "32px",
+                },
                 fontWeight: 600,
                 letterSpacing: "-0.2px",
-                "@media (max-width:650px)": {
-                  fontSize: "24px",
-                },
+                lineHeight: 1.2,
+                whiteSpace: "nowrap",
               }}
             >
               Skill Development
             </Typography>
-            <HelpTooltipButton />
+
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+              }}
+            >
+              <HelpTooltipButton />
+            </Box>
           </>
         )}
       </Box>
+
       {children}
     </Box>
   )
 }
-
 function CenteredContent({ children }) {
   return (
     <Box sx={{ flex: 1, width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -217,6 +234,7 @@ function SkillLabelText({ metric, textAlign = "center" }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        // width: "100%",
         gap: "4px",
       }}>
         <Typography
@@ -225,7 +243,7 @@ function SkillLabelText({ metric, textAlign = "center" }) {
             fontFamily: '"IBM Plex Sans", sans-serif',
             fontSize: "14px",
             fontWeight: 500,
-            lineHeight: "normal",
+            lineHeight: "18px",
             letterSpacing: "0.1px",
             whiteSpace: "nowrap",
 
@@ -290,7 +308,6 @@ function RadarSvg({ metrics, size = CHART.SIZE }) {
         />
       ))}
 
-      {/* Outer border (100%) */}
       <polygon
         points={buildPolygonPoints(center, center, radius, metrics.length)}
         fill="none"
@@ -308,7 +325,7 @@ function RadarSvg({ metrics, size = CHART.SIZE }) {
   )
 }
 
-// Desktop layout 
+// Desktop layout
 
 function DesktopChart({ metrics, isTightDesktop = false }) {
   const chartSize = isTightDesktop ? 230 : CHART.SIZE
@@ -330,6 +347,7 @@ function DesktopChart({ metrics, isTightDesktop = false }) {
               position: "absolute",
               textAlign: "center",
               width: 150,
+              overflow: "hidden",
               zIndex: 2,
               ...DESKTOP_LABEL_POSITIONS[index],
 
@@ -352,7 +370,7 @@ function DesktopChart({ metrics, isTightDesktop = false }) {
   )
 }
 
-// Mobile layout (grid) 
+// Mobile layout (grid)
 function MobileChart({ metrics }) {
   return (
     <Box
@@ -376,7 +394,6 @@ function MobileChart({ metrics }) {
         )
       })}
 
-      {/* SVG centred in row 2, col 2-3 */}
       <Box
         sx={{
           gridColumn: "1 / span 4",
@@ -424,7 +441,7 @@ function EmptyState() {
   )
 }
 
-// Main component 
+// Main component
 export default function SkillDevelopmentRadarChart({ metrics = [], loading = false }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
