@@ -60,7 +60,8 @@ const Content = styled(Box)(() => ({
         padding: "16px",
     },
     "@media (max-width:470px)": {
-        padding: "12px 14px",
+        padding: "0px",
+        gap: 3,
     },
 }))
 
@@ -106,8 +107,9 @@ export default function LessonLinkButton({
                         lineHeight: "var(--LineHeight-Body1)",
                         letterSpacing: "var(--LetterSpace-Body1)",
                         color: "var(--Color-Primary-Contrast)",
-                        "@media (max-width:650px)": {
+                        "@media (max-width:750px)": {
                             fontSize: "16px",
+                            lineHeight: "18px",
                         },
                     }}
                 >
@@ -122,6 +124,9 @@ export default function LessonLinkButton({
                         lineHeight: 1.4,
                         color: "inherit",
                         opacity: 0.9,
+                        "@media (max-width:750px)": {
+                            lineHeight: "18px",
+                        },
                     }}
                 >
                     {lessonTitle}

@@ -1,6 +1,6 @@
-import { Button, Box, Typography } from "@mui/material"
+import { Button, Box } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
-import { styled, useTheme } from "@mui/material/styles"
+import { styled } from "@mui/material/styles"
 import courseIconMap from "../../assets/icons/CourseIconMap"
 
 const sizeStyles = {
@@ -31,16 +31,6 @@ const ReviewButton = styled(Button, {
     },
 }))
 
-const IconBox = styled(Box)(() => ({
-    width: 80,
-    display: "flex",
-    alignItems: "stretch",
-    alignSelf: "stretch",
-    justifyContent: "center",
-    flexShrink: 0,
-    overflow: "hidden",
-}))
-
 const Content = styled(Box)(() => ({
     flex: 1,
     minWidth: 0,
@@ -52,7 +42,11 @@ const Content = styled(Box)(() => ({
     padding: "8px 32px",
     gap: 4,
     "@media (min-width:899px) and (max-width:1305px)": {
-        padding: "8px 20px",
+        padding: "7px 10px",
+    },
+    "@media (max-width:470px)": {
+        padding: "0px",
+        gap: 3,
     },
 }))
 
@@ -78,7 +72,6 @@ export default function ReviewCourseLinkButton({
     size = "default",
     onClick,
 }) {
-    const theme = useTheme()
     const isMediumRange = useMediaQuery(
         "(min-width:899px) and (max-width:1305px)"
     )
@@ -95,45 +88,57 @@ export default function ReviewCourseLinkButton({
             {Icon && <Icon size={iconSize} />}
 
             <Content>
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: "var(--FontSize-Body1)",
                         fontWeight: 600,
+                        m: 0,
                         lineHeight: "var(--LineHeight-Body1)",
                         letterSpacing: "var(--LetterSpace-Body1)",
                         color: "inherit",
                         "@media (min-width:899px) and (max-width:1305px)": {
                             lineHeight: "22px",
                         },
+                        "@media (max-width:470px)": {
+                            lineHeight: "18px",
+                        },
                     }}
                 >
                     {courseName}
-                </Typography>
+                </Box>
 
-                <Typography
+                <Box
+                    component="span"
                     sx={{
+                        m: 0,
                         fontSize: 14,
                         fontWeight: 400,
                         lineHeight: 1.4,
                         color: "inherit",
                         opacity: 0.9,
+                        "@media (max-width:470px)": {
+                            lineHeight: "18px",
+                        },
                     }}
                 >
                     {reviewTitle}
-                </Typography>
+                </Box>
             </Content>
 
             <ActionBox>
-                <Typography
+                <Box
+                    component="span"
                     sx={{
                         fontSize: 14,
+                        m: 0,
                         fontWeight: 600,
                         lineHeight: 1.3,
                         color: "inherit",
                     }}
                 >
                     → Retake
-                </Typography>
+                </Box>
             </ActionBox>
         </ReviewButton>
     )
