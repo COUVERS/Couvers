@@ -42,13 +42,13 @@ export default function Navigation({
     }
 
     const navItems = [
-        { text: "Home", icon: <HomeIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "home" },
-        { text: "Course", icon: <CourseIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "courses" },
+        { text: "Home", icon: <HomeIcon size={32} color="var(--Color-Primary-_States-Active)" />, pageKey: "home" },
+        { text: "Course", icon: <CourseIcon size={32} color="var(--Color-Primary-_States-Active)" />, pageKey: "courses" },
     ]
 
     const bottomItems = [
-        { text: "Account", icon: <ProfileIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "account" },
-        { text: "Sign Out", icon: <SignOutIcon size={40} color="var(--Color-Primary-_States-Active)" />, pageKey: "signout" },
+        { text: "Account", icon: <ProfileIcon size={32} color="var(--Color-Primary-_States-Active)" />, pageKey: "account" },
+        { text: "Sign Out", icon: <SignOutIcon size={32} color="var(--Color-Primary-_States-Active)" />, pageKey: "signout" },
     ]
 
     return (
@@ -76,7 +76,7 @@ export default function Navigation({
                     alignItems: 'flex-start',
                     flexShrink: 0,
                     alignSelf: 'center',
-                    mb: isExpanded ? 0 : 1,
+                    mb: isExpanded ? 2 : 4,
                 }}
             >
                 <Box
