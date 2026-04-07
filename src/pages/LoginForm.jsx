@@ -388,7 +388,7 @@ export default function LoginForm({ onGoSignup, onLoginSuccess }) {
                     textUnderlineOffset: "3px",
                     }}
                 >
-                    Password Reset
+                    Reset Password
                 </Link>
                 </Box>
 
