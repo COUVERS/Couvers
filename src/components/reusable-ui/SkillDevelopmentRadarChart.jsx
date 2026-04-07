@@ -122,6 +122,9 @@ function HelpTooltipButton() {
           "&:hover": { color: "#3730A3", backgroundColor: "transparent", boxShadow: "none" },
           "&.Mui-focusVisible": { backgroundColor: "transparent", boxShadow: "none", outline: "none" },
           "& .MuiTouchRipple-root": { display: "none" },
+          "@media (max-width:899px)": {
+            top: "-4px",
+          },
         }}
       >
         <HelpIcon />
@@ -157,7 +160,7 @@ function CardShell({ loading = false, children }) {
       <Box
         sx={{
           position: "relative",
-          width: "100%",
+          // width: "100%",
           pr: "56px",
           boxSizing: "border-box",
         }}
