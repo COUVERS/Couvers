@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-// import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
 import CourseSidebar from "./CourseSidebar"
 import CourseMainContent from "./CourseMainContent"
 import { API_BASE_URL } from "../../../config"
-// import useMediaQuery from "@mui/material/useMediaQuery"
-// import LessonMobileHeader from "../../reusable-ui/LessonMobileHeader"
 import Drawer from "@mui/material/Drawer"
-// import Navigation from "../../layout/Navigation"
 
 export default function CourseContainer({
     continueCourseId,
@@ -243,17 +239,7 @@ export default function CourseContainer({
         navigate(`/courses/${courseId}`)
     }
 
-    // const [mobileNavOpen, setMobileNavOpen] = useState(false)
-
-    // const isMobile = useMediaQuery("(max-width:899px)")
-    // const isMobileHeaderView =
-    //     routeViewMode === "lecture" || routeViewMode === "quiz"
-
     return (
-        // <>
-        //     {isMobile && isMobileHeaderView && (
-        //         <LessonMobileHeader onMenuClick={() => setMobileNavOpen(true)} />
-        //     )}
 
         <Box sx={{ display: "flex", minHeight: "100vh", width: "100%", }}>
             {!isMobile && (
@@ -303,15 +289,12 @@ export default function CourseContainer({
                     }}
                 />
             </Box>
-            {/* {isMobile && isMobileHeaderView && ( */}
             {isMobile && (
                 <>
                     <Drawer
                         anchor="left"
                         open={mobileCourseNavOpen}
                         onClose={() => setMobileCourseNavOpen(false)}
-                        // open={mobileNavOpen}
-                        // onClose={() => setMobileNavOpen(false)}
                         sx={{
                             "& .MuiDrawer-paper": {
                                 width: "240px",
@@ -348,7 +331,6 @@ export default function CourseContainer({
                         />
                     </Drawer>
 
-                    {/* Contents Navigation */}
                     <Drawer
                         anchor="left"
                         open={mobileContentsNavOpen}
@@ -386,31 +368,8 @@ export default function CourseContainer({
                             }}
                             forceCollapsed={false}
                             isMobileDrawer={true}
-                        // {/* <Navigation
-                        // page="courses" */}
-                        // {/* setPage={(nextPage) => {
-                        //     setMobileNavOpen(false)
-
-                        //     if (nextPage === "courses") { */}
-                        // {/* goToCourseOverview()
-                        //         return
-                        //     }
-
-                        //     if (nextPage === "home") {
-                        //         navigate("/")
-                        //         return
-                        //     }
-
-                        //     if (nextPage === "account") {
-                        //         navigate("/account") */}
-                        //     }
-                        // }}
-                        // forceCollapsed={false}
-                        // drawerCustomWidth="100%"
-                        // isMobileDrawer={true}
                         />
                     </Drawer>
-                    {/* )} */}
                 </>
             )}
         </Box>
