@@ -122,6 +122,9 @@ function HelpTooltipButton() {
           "&:hover": { color: "#3730A3", backgroundColor: "transparent", boxShadow: "none" },
           "&.Mui-focusVisible": { backgroundColor: "transparent", boxShadow: "none", outline: "none" },
           "& .MuiTouchRipple-root": { display: "none" },
+          "@media (max-width:899px)": {
+            top: "-4px",
+          },
         }}
       >
         <HelpIcon />
@@ -136,22 +139,28 @@ function CardShell({ loading = false, children }) {
       sx={{
         display: "flex",
         px: { xs: "16px", sm: "32px" },
-        py: "40px",
+        pt: "40px",
+        pb: "70px",
         flexDirection: "column",
         // alignItems: "stretch", // 여기 수정
         // gap: "8px",
         alignItems: "flex-start",
-        gap: 3,
+        gap: 5,
         borderRadius: "8px",
         background: "var(--Color-Background-Paper, #FFF)",
         width: "100%",
         boxSizing: "border-box",
+
+        "@media (min-width:899px) and (max-width:1100px)": {
+          pb: "180px",
+          gap: 7,
+        },
       }}
     >
       <Box
         sx={{
           position: "relative",
-          width: "100%",
+          // width: "100%",
           pr: "56px",
           boxSizing: "border-box",
         }}
