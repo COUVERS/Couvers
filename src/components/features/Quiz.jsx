@@ -10,65 +10,66 @@ import {
 import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
 
-/* =========================
-   Styled Components
-========================= */
-
 const Container = styled(Box)(({ theme }) => ({
   width: "100%",
   boxSizing: "border-box",
   padding: "0 48px 0 48px",
 
   [theme.breakpoints.down("sm")]: {
-    padding: "0 0 16px 0",
+    padding: "0 0 104px 0",
   },
 }))
 
-const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: "var(--FontSize-Headings-h2)",
+const SmallSectionTitle = styled(Typography)(({ theme }) => ({
+  fontFamily: '"IBM Plex Sans", sans-serif',
   fontWeight: 600,
-  marginBottom: "8px",
-  lineHeight: 1.1,
   color: "var(--Color-Text-Primary)",
+  fontSize: "32px",
+  lineHeight: 1.2,
+  marginBottom: "8px",
 
   [theme.breakpoints.down("sm")]: {
-    fontSize: "44px",
-    marginBottom: "6px",
+    fontSize: "18px",
+    lineHeight: "28px",
+    marginBottom: "8px",
   },
 }))
 
 const QuestionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: "var(--FontSize-Headings-h3)",
+  fontFamily: '"IBM Plex Sans", sans-serif',
   fontWeight: 600,
-  padding: "0 32px",
-  marginTop: "8px",
-  marginBottom: "12px",
-  lineHeight: 1.1,
   color: "var(--Color-Text-Primary)",
+  padding: "0 32px",
+  marginTop: "12px",
+  marginBottom: "12px",
+  fontSize: "32px",
+  lineHeight: 1.2,
 
   [theme.breakpoints.down("sm")]: {
     padding: "0 24px",
-    marginTop: "0",
+    marginTop: "8px",
     marginBottom: "8px",
-    fontSize: "28px",
+    fontSize: "18px",
+    lineHeight: "28px",
   },
 }))
 
 const BodyText = styled(Typography)(({ theme }) => ({
-  fontSize: "var(--FontSize-Body1)",
-  marginBottom: "20px",
+  fontFamily: '"IBM Plex Sans", sans-serif',
+  fontSize: "16px",
+  lineHeight: "24px",
   color: "var(--Color-Text-Secondary)",
+  marginBottom: "0",
 
   [theme.breakpoints.down("sm")]: {
-    marginBottom: "16px",
-    fontSize: "15px",
-    lineHeight: 1.5,
+    fontSize: "16px",
+    lineHeight: "24px",
   },
 }))
 
 const AnswersContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  padding: "8px 32px 12px 32px",
+  padding: "16px 32px 24px 32px",
   flexDirection: "column",
   gap: "12px",
   width: "100%",
@@ -82,20 +83,21 @@ const AnswersContainer = styled(Box)(({ theme }) => ({
 
 const ScenarioWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
-  padding: "8px 32px 12px 32px",
   flexDirection: "column",
-  gap: "8px",
+  padding: "24px 32px",
+  gap: "24px",
   boxSizing: "border-box",
 
+  "@media (max-height:820px) and (min-width:601px)": {
+    padding: "20px 32px",
+    gap: "16px",
+  },
+
   [theme.breakpoints.down("sm")]: {
-    padding: "32px 24px 8px 24px",
-    gap: "8px",
+    padding: "32px 24px",
+    gap: "24px",
   },
 }))
-
-/* =========================
-   OPTION STYLE
-========================= */
 
 const OptionWrapper = styled(Box, {
   shouldForwardProp: (prop) =>
@@ -181,10 +183,6 @@ const SubmitButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-/* =========================
-   COMPONENT
-========================= */
-
 export default function Quiz({
   question,
   questionNumber,
@@ -201,41 +199,42 @@ export default function Quiz({
   const handleSubmit = () => {
     if (!showResult) {
       setShowResult(true)
-
-      if (isLastQuestion && onSubmit) {
-        onSubmit(selected)
-      }
-
       return
     }
 
-    if (onSubmit) onSubmit(selected)
+    if (onSubmit) {
+      onSubmit(selected, { isFinal: isLastQuestion })
+    }
   }
-
-  const shouldHideActionButton = showResult && isLastQuestion
 
   return (
     <Container>
       <ScenarioWrapper>
-        <SectionTitle>Scenario</SectionTitle>
-        <BodyText>{question.scenario}</BodyText>
+        <Box>
+          <SmallSectionTitle>Scenario</SmallSectionTitle>
+          <BodyText>{question.scenario}</BodyText>
+        </Box>
 
-        <SectionTitle>
-          Question ({questionNumber}/{totalQuestions})
-        </SectionTitle>
+        <Box>
+          <SmallSectionTitle>
+            Question ({questionNumber}/{totalQuestions})
+          </SmallSectionTitle>
 
-        <Typography
-          sx={{
-            fontSize: "var(--FontSize-Body1)",
-            color: "var(--Color-Text-Primary)",
-            "@media (max-width:600px)": {
-              fontSize: "15px",
-              lineHeight: 1.5,
-            },
-          }}
-        >
-          {question.question}
-        </Typography>
+          <Typography
+            sx={{
+              fontFamily: '"IBM Plex Sans", sans-serif',
+              fontSize: "16px",
+              lineHeight: "24px",
+              color: "var(--Color-Text-Primary)",
+              "@media (max-width:600px)": {
+                fontSize: "16px",
+                lineHeight: "24px",
+              },
+            }}
+          >
+            {question.question}
+          </Typography>
+        </Box>
       </ScenarioWrapper>
 
       <QuestionTitle>Select Your Answer</QuestionTitle>
@@ -276,7 +275,6 @@ export default function Quiz({
                   cursor: showResult ? "default" : "pointer"
                 }}
               >
-                {/* 🔥 ICON / RADIO FIX */}
                 <Box
                   sx={{
                     width: 32,
@@ -342,6 +340,7 @@ export default function Quiz({
         <Typography
           sx={{
             marginTop: "16px",
+            marginBottom: { xs: "24px", sm: "32px" },
             px: { xs: "24px", sm: "56px" },
             fontSize: { xs: "14px", sm: "var(--FontSize-Body1)" },
             color: "var(--Color-Text-Primary)",
@@ -351,37 +350,43 @@ export default function Quiz({
         </Typography>
       )}
 
-      {!shouldHideActionButton && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: "24px",
-            px: "32px",
-            boxSizing: "border-box",
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: showResult && isLastQuestion ? "flex-end" : "space-between",
+          alignItems: "center",
+          mt: { xs: "24px", sm: 0 },
+          ml: { xs: 0, sm: "-48px" },
+          width: { xs: "100%", sm: "calc(100% + 96px)" },
+          minHeight: { xs: "80px", sm: "104px" },
+          pl: { xs: "24px", sm: "56px" },
+          pr: { xs: "24px", sm: "110px" },
+          pt: { xs: "16px", sm: "24px" },
+          pb: { xs: "16px", sm: "24px" },
+          background: "var(--Color-Background-Paper)",
+          boxShadow: "0 1px 10px 0 rgba(0, 0, 0, 0.12)",
+          boxSizing: "border-box",
 
-            "@media (max-width:600px)": {
-              position: "fixed",
-              left: 0,
-              right: 0,
-              bottom: 0,
-              zIndex: 1200,
-              mt: 0,
-
-              px: "24px",
-              py: "16px",
-
-              background: "var(--Color-Background-Paper)",
-              boxShadow:
-                "0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.20)",
-
-              flexDirection: "row",
-              gap: "8px",
-              boxSizing: "border-box",
-            },
-          }}
-        >
+          "@media (max-width:600px)": {
+            position: "fixed",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1200,
+            mt: 0,
+            ml: 0,
+            width: "100%",
+            minHeight: "80px",
+            pl: "24px",
+            pr: "24px",
+            pt: "16px",
+            pb: "16px",
+            gap: "8px",
+            justifyContent: showResult && isLastQuestion ? "flex-end" : "space-between",
+          },
+        }}
+      >
+        {!(showResult && isLastQuestion) && (
           <Button
             variant="outlined"
             onClick={onBack}
@@ -392,17 +397,14 @@ export default function Quiz({
               py: "12px",
               borderRadius: "4px",
               border: "1px solid var(--Color-Secondary-_States-Outlined)",
-
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-
               color: "var(--Color-Secondary-Main)",
               fontSize: "15px",
               fontWeight: 500,
               textTransform: "none",
-              whiteSpace: "nowrap", // 🔥 importante
-
+              whiteSpace: "nowrap",
               "&:hover": {
                 border: "1px solid var(--Color-Secondary-_States-OutlinedHovered)",
                 backgroundColor: "var(--Color-Secondary-_States-HoverSubtle)",
@@ -411,23 +413,27 @@ export default function Quiz({
           >
             Return to Lecture
           </Button>
+        )}
 
-          <SubmitButton
-            variant="contained"
-            disabled={!selected}
-            onClick={handleSubmit}
-            sx={{
-              "@media (max-width:600px)": {
-                width: "50%",
-                minWidth: 0,
-                fontSize: "12px",
-              },
-            }}
-          >
-            {showResult ? "Next Question" : "Submit Answer"}
-          </SubmitButton>
-        </Box>
-      )}
+        <SubmitButton
+          variant="contained"
+          disabled={!selected && !showResult}
+          onClick={handleSubmit}
+          sx={{
+            "@media (max-width:600px)": {
+              width: "50%",
+              minWidth: 0,
+              fontSize: "12px",
+            },
+          }}
+        >
+          {showResult
+            ? isLastQuestion
+              ? "Check the Result"
+              : "Next Question"
+            : "Submit Answer"}
+        </SubmitButton>
+      </Box>
     </Container>
   )
 }

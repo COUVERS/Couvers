@@ -69,7 +69,13 @@ export default function LessonMobileHeader({ onMenuClick }) {
                     }}
                 >
                     <SchoolIcon sx={{ fontSize: 30, color: "#2E2A5F" }} />
-                    <Typography sx={{ fontSize: "12px", lineHeight: 1.2, mt: 0.5 }}>
+                    <Typography
+                        sx={{
+                            fontSize: "12px",
+                            lineHeight: 1.2,
+                            mt: 0.5
+                        }}
+                    >
                         Categories
                     </Typography>
                 </Box>
