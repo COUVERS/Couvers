@@ -136,16 +136,22 @@ function CardShell({ loading = false, children }) {
       sx={{
         display: "flex",
         px: { xs: "16px", sm: "32px" },
-        py: "40px",
+        pt: "40px",
+        pb: "70px",
         flexDirection: "column",
         // alignItems: "stretch", // 여기 수정
         // gap: "8px",
         alignItems: "flex-start",
-        gap: 3,
+        gap: 5,
         borderRadius: "8px",
         background: "var(--Color-Background-Paper, #FFF)",
         width: "100%",
         boxSizing: "border-box",
+
+        "@media (min-width:899px) and (max-width:1100px)": {
+          pb: "180px",
+          gap: 7,
+        },
       }}
     >
       <Box
