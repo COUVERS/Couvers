@@ -11,6 +11,8 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
+console.log("FIREBASE STORAGE BUCKET:", import.meta.env.VITE_FIREBASE_STORAGE_BUCKET)
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 
