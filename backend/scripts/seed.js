@@ -3484,9 +3484,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which issue most fundamentally limits the effectiveness of this lesson design?",
         option: [
+          "Insufficient assessment strategies to measure learning outcomes",
           "A lack of clearly defined learning objectives, resulting in unclear instructional direction",
           "An overemphasis on student engagement at the expense of content coverage",
-          "Insufficient assessment strategies to measure learning outcomes",
           "Excessive flexibility that reduces lesson structure",
         ],
         answer: "A lack of clearly defined learning objectives, resulting in unclear instructional direction",
@@ -3518,10 +3518,10 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "What is the most significant instructional consequence of this issue?",
         option: [
-          "Students may be engaged but fail to achieve the intended learning outcomes",
           "The lesson may become less structured but more flexible",
           "Students may develop broader knowledge beyond the objective",
           "Instruction may become more efficient due to varied activities",
+          "Students may be engaged but fail to achieve the intended learning outcomes",
         ],
         answer: "Students may be engaged but fail to achieve the intended learning outcomes",
         review:
@@ -3552,9 +3552,9 @@ await courses.insertMany([
         questionType: "multiple-choice",
         question: "Which underlying design issue most likely explains this outcome?",
         option: [
-          "A lack of clearly defined and communicated learning objectives guiding the lesson",
           "An insufficient number of practice activities during the lesson",
           "An imbalance between instruction and assessment",
+          "A lack of clearly defined and communicated learning objectives guiding the lesson",
           "A pacing issue that limits time for reflection",
         ],
         answer: "A lack of clearly defined and communicated learning objectives guiding the lesson",
