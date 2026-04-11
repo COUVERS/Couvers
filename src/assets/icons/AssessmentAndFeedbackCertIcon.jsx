@@ -24,7 +24,7 @@ const AssessmentAndFeedbackCertIcon = () => (
                 filterUnits="userSpaceOnUse"
                 colorInterpolationFilters="sRGB"
             >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                 <feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_dropShadow_3461_27029" />
                 <feOffset dy="2" />

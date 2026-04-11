@@ -610,25 +610,54 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
     let skillAccuracy = { show: false };
 
     if (passed) {
-      const previousPassedAttempt = await QuizAttempt.findOne({
-        userId,
-        lessonId: lesson._id,
-        passed: true,
-        submittedAt: { $lt: attempt.submittedAt },
-      })
-        .sort({ submittedAt: -1 })
-        .lean();
-
-      const previous = previousPassedAttempt
-        ? getLessonSkillContribution(
-          previousPassedAttempt.correctCount,
-          previousPassedAttempt.totalQuestions
-        )
-        : 0;
-
-      const current = getLessonSkillContribution(correctCount, totalQuestions);
-
       const skill = await Skill.findById(lesson.skillId).lean();
+
+      // same skill lessons across all courses
+      const skillLessons = await Lesson.find({
+        skillId: lesson.skillId,
+      }).select("_id");
+
+      const skillLessonIds = skillLessons.map((item) => String(item._id));
+
+      // before current submission
+      const previousAttempts = await QuizAttempt.find({
+        userId,
+        lessonId: { $in: skillLessonIds },
+        submittedAt: { $lt: attempt.submittedAt },
+      }).sort({ submittedAt: -1 });
+
+      // including current submission
+      const currentAttempts = await QuizAttempt.find({
+        userId,
+        lessonId: { $in: skillLessonIds },
+      }).sort({ submittedAt: -1 });
+
+      function calculateSkillTotal(attempts) {
+        const bestAttemptByLesson = new Map();
+
+        for (const item of attempts) {
+          const key = String(item.lessonId);
+          const lessonScore = item.passed
+            ? item.correctCount * 4
+            : 0;
+
+          const existing = bestAttemptByLesson.get(key);
+
+          if (!existing || lessonScore > existing.lessonScore) {
+            bestAttemptByLesson.set(key, { lessonScore });
+          }
+        }
+
+        let total = 0;
+        for (const { lessonScore } of bestAttemptByLesson.values()) {
+          total += lessonScore;
+        }
+
+        return total;
+      }
+
+      const previous = calculateSkillTotal(previousAttempts);
+      const current = calculateSkillTotal(currentAttempts);
 
       skillAccuracy = {
         show: true,
@@ -674,7 +703,6 @@ app.post("/api/lessons/:lessonId/submit", authMiddleware, async (req, res) => {
 
     // Get all lessons belonging to the same skill within the course
     const skillLessons = await Lesson.find({
-      courseId: lesson.courseId,
       skillId: lesson.skillId,
     }).select("_id");
 

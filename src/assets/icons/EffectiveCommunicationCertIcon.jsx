@@ -15,7 +15,7 @@ const EffectiveCommunicationCertIcon = () => (
         </g>
         <defs>
             <filter id="filter0_ddd_3461_26994" x="41.1006" y="0" width="44.4717" height="48.6967" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                 <feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_dropShadow_3461_26994" />
                 <feOffset dy="2" />
