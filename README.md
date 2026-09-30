@@ -1,16 +1,69 @@
-# React + Vite
+# TeTe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A teacher-training platform for partner schools. Educators sign up with their school email, work through short courses on core teaching skills, pass a quiz to unlock each next lesson, and earn a certificate when they finish a course. A dashboard shows their progress and a skill radar chart.
 
-Currently, two official plugins are available:
+Team project, Langara College, Web and Mobile App Design and Development (Jan–Apr 2026).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **School-only accounts.** Sign-up is restricted to registered school email domains. Passwords are hashed with bcrypt, sessions use JWT, and users can reset or change their password.
+- **Courses and lessons.** Five courses: Fundamentals of Teaching, Effective Communication, Empathy and Classroom Management, Lesson Planning, and Assessment and Feedback.
+- **Quiz-gated progress.** Each lesson ends with a 5-question quiz. Scoring 80% (4 of 5) or higher unlocks the next lesson. Every attempt is saved, the best score counts, and passed lessons add up to a 100-point score per skill.
+- **Certificates.** Completing every lesson in a course issues a certificate.
+- **Dashboard.** Skill radar chart, course progress, the next lesson to continue, lessons to review, and earned certificates.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+| Layer | Tools |
+| --- | --- |
+| Frontend | React 19, Vite, Material UI, React Router |
+| Backend | Node.js, Express 5, JWT, bcrypt |
+| Database | MongoDB, Mongoose (9 models) |
+| Storage | Firebase Storage |
+| Deployment | Render |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Data model
+
+`User` · `Course` · `Lesson` · `Quiz` · `Skill` · `LessonProgress` · `QuizAttempt` · `SkillProgress` · `Certificate`
+
+## API overview
+
+Every route except sign-up, login and password reset requires a JWT.
+
+| Route | Purpose |
+| --- | --- |
+| `POST /auth/signup`, `/auth/login`, `/auth/forgot-password`, `/auth/reset-password`, `/auth/change-password` | Accounts and passwords |
+| `GET /auth/me` | Current user |
+| `GET /api/courses`, `/api/courses/:id/full` | Course list and a course with its lessons |
+| `POST /api/lessons/:lessonId/start`, `/api/lessons/:lessonId/submit` | Start a lesson, submit its quiz |
+| `GET /api/dashboard/skills`, `/courses`, `/next-lesson`, `/review-lesson`, `/certificates` | Dashboard data |
+
+## Running locally
+
+**Backend**
+
+```bash
+cd backend
+npm install
+# create backend/.env with MONGO_URI, JWT_SECRET and PORT (default 5050)
+npm run seed:empathy   # optional: load sample course content
+npm start
+```
+
+**Frontend**
+
+```bash
+npm install
+# create .env with VITE_API_BASE_URL and the VITE_FIREBASE_* values
+npm run dev
+```
+
+## Team
+
+- Moonju (Bella) Ra — Full-Stack Developer 
+- Rika Goto — Full-Stack Developer
+- Carlos Martínez — Full-Stack Developer
+
+## License
+
+MIT
